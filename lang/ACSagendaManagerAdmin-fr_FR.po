@@ -1,0 +1,386 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: ACSagendaManager plugin 0.1\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/ACSagendaManager\n"
+"POT-Creation-Date: 2020-05-01 18:28+0200\n"
+"PO-Revision-Date: 2020-05-01 18:33+0200\n"
+"Last-Translator: FULL NAME andrea.cristalli@hispeed.ch\n"
+"Language-Team: \n"
+"Language: fr_CH\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.3\n"
+"X-Poedit-Basepath: ../class\n"
+"X-Domain: ACSagendaManagerAdmin\n"
+"Text Domain: ACSagendaManagerAdmin\n"
+"Domain Path: /lang/\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Poedit-SearchPath-0: acsadminagenda.php\n"
+"X-Poedit-SearchPath-1: acsagendaoptions.php\n"
+
+#: acsadminagenda.php:14
+msgid "title"
+msgstr "titre"
+
+#: acsadminagenda.php:15
+msgid "titles"
+msgstr "titres"
+
+#: acsadminagenda.php:68
+msgid "The event(s) has/have been definitevely removed!"
+msgstr "L'événement(s) a/ont supprimé(s)!"
+
+#: acsadminagenda.php:86
+msgid "No entry avaliable."
+msgstr "Il n'y a pas d'événement."
+
+#: acsadminagenda.php:109
+msgid "Select the event"
+msgstr "Sélectionnez l'événement"
+
+#: acsadminagenda.php:143
+msgid "Read more"
+msgstr "En savoir plus"
+
+#: acsadminagenda.php:143
+msgid "Hide"
+msgstr "Masquer"
+
+#: acsadminagenda.php:151
+msgid "Open the page"
+msgstr "Ouvrir la page"
+
+#: acsadminagenda.php:181
+msgid "Delete"
+msgstr "Supprimer"
+
+#: acsadminagenda.php:182
+msgid "Edit"
+msgstr "Modifier"
+
+#: acsadminagenda.php:187
+msgid "Shortcode for contact form"
+msgstr "Shortcode pour le formulaire de contact"
+
+#: acsadminagenda.php:189
+msgid "Dismiss this notice"
+msgstr "Ignorer cet avis"
+
+#: acsadminagenda.php:193
+msgid "Copy!"
+msgstr "Copier!"
+
+#: acsadminagenda.php:195
+msgid "Form shortcode"
+msgstr "Form shortcode"
+
+#: acsadminagenda.php:208 acsadminagenda.php:390
+msgid "Category"
+msgstr "Categorie"
+
+#: acsadminagenda.php:209 acsadminagenda.php:393
+msgid "Title"
+msgstr "Titre"
+
+#: acsadminagenda.php:210 acsadminagenda.php:396
+msgid "Emplacement"
+msgstr "Emplacement"
+
+#: acsadminagenda.php:211 acsadminagenda.php:399
+msgid "Image"
+msgstr "Image"
+
+#: acsadminagenda.php:212 acsadminagenda.php:402
+msgid "Description"
+msgstr "Description"
+
+#: acsadminagenda.php:213 acsadminagenda.php:405
+msgid "Full Page Link"
+msgstr "Lien de la page"
+
+#: acsadminagenda.php:214 acsadminagenda.php:408
+msgid "Schedule"
+msgstr "Planification"
+
+#: acsadminagenda.php:215 acsadminagenda.php:411
+msgid "Price"
+msgstr "Prix"
+
+#: acsadminagenda.php:216 acsadminagenda.php:414
+msgid "Advance Payment"
+msgstr "Acompte"
+
+#: acsadminagenda.php:217 acsadminagenda.php:417
+msgid "May be one day only"
+msgstr "Peut être un seul jour"
+
+#: acsadminagenda.php:218 acsadminagenda.php:420
+msgid "External url"
+msgstr "URL externe"
+
+#: acsadminagenda.php:219
+msgid "Created"
+msgstr "Créé"
+
+#: acsadminagenda.php:220
+msgid "Updated"
+msgstr "Mis à jour"
+
+#: acsadminagenda.php:296
+msgid "Search..."
+msgstr "Rechercher..."
+
+#: acsadminagenda.php:373 acsadminagenda.php:374 acsadminagenda.php:480
+#: acsadminagenda.php:484
+msgid "No"
+msgstr "Non"
+
+#: acsadminagenda.php:373 acsadminagenda.php:374 acsadminagenda.php:481
+#: acsadminagenda.php:485
+msgid "Yes"
+msgstr "Oui"
+
+#: acsadminagenda.php:373 acsadminagenda.php:486
+msgid "Keep event until the end"
+msgstr "Conserver l'événement jusqu'à la fin"
+
+#: acsadminagenda.php:377
+msgid "Go to Agenda"
+msgstr "Aller à l'agenda"
+
+#: acsadminagenda.php:383
+msgid "Agenda | Add"
+msgstr "Agenda | Ajouter"
+
+#: acsadminagenda.php:386
+msgid "Instructions"
+msgstr "Instructions"
+
+#: acsadminagenda.php:388
+msgid ""
+"You can add an event clicking on add button, a popup form will appear. You "
+"can always edit your event and delete if you don't need anymore."
+msgstr ""
+"Vous pouvez ajouter un événement en cliquant sur le bouton Ajouter, un "
+"formulaire contextuel apparaîtra. Vous pouvez toujours modifier votre "
+"événement et le supprimer si vous n'en avez plus besoin."
+
+#: acsadminagenda.php:390
+msgid ""
+"This is how you want to categorize your event. The category will be the "
+"first top field shown in the widget title (middle column)."
+msgstr ""
+"Voici comment vous souhaitez classer votre événement. La catégorie sera "
+"lepremier champ supérieur affiché dans le titre du widget (colonne du "
+"milieu)."
+
+#: acsadminagenda.php:393
+msgid "The event title shown in the middle column."
+msgstr "Le titre de l'événement affiché dans la colonne du milieu."
+
+#: acsadminagenda.php:396
+msgid "Where the event will be. It will be shown in the left column."
+msgstr "Où sera l'événement. Il sera affiché dans la colonne de gauche."
+
+#: acsadminagenda.php:399
+msgid "An image to associate to the event, shown in the right column."
+msgstr ""
+"Une image à associer à l'événement, affichée dans la colonne de droite."
+
+#: acsadminagenda.php:402
+msgid "The event introduction, something short that introduce the event."
+msgstr ""
+"L'introduction de l'événement, quelque chose de court qui présente "
+"l'événement."
+
+#: acsadminagenda.php:405
+msgid "An internal/external link to the page event."
+msgstr "Un lien interne / externe vers l'événement de page."
+
+#: acsadminagenda.php:408
+msgid ""
+"The event scheduling. May be one day, a range between two dates, several "
+"single dates."
+msgstr ""
+"La programmation de l'événement. Peut être un jour, une plage entre deux "
+"dates, plusieurs dates."
+
+#: acsadminagenda.php:411
+msgid ""
+"The price to participate. You can insert only numbers, only string, both of "
+"them. This field is consumed by ACScontactform plugin to build the "
+"inscription form."
+msgstr ""
+"Le prix pour participer. Vous pouvez insérer que des nombres, une chaîne des "
+"characters, les deux. Ce champ est utilisé par le plugin ACScontactform pour "
+"construire leformulaire d'inscription."
+
+#: acsadminagenda.php:414
+msgid ""
+"You can set if you accept advance payment or not. This field is consumed by "
+"ACScontactform plugin to build the inscription form."
+msgstr ""
+"Vous pouvez définir si vous acceptez le paiement partiel ou non. Ce champ "
+"est utilisé par le Plugin ACScontactform pour construire le formulaire "
+"d'inscription."
+
+#: acsadminagenda.php:417
+msgid ""
+"In the case of multiple days, if set to NO the event will disappear the day "
+"after the beginning automatically.<br />If set to YES, the event will be "
+"always shown until expiration, but each day already expired will be removed "
+"from view.<br />If set to the third option, all the days will be shown until "
+"expiraion of event."
+msgstr ""
+"Dans le cas de plusieurs jours, s'il est réglé sur NON, l'événement "
+"disparaîtra le jour après le début automatiquement. <br /> S'il est défini "
+"sur OUI, l'événement sera toujours affiché jusqu'à expiration, mais chaque "
+"jour déjà expiré sera supprimé de la vue. <br /> S'il est réglé sur la "
+"troisième option, tous les jours seront affichés jusqu'à l' expiration "
+"d'événement."
+
+#: acsadminagenda.php:420
+msgid ""
+"This a reference page to an event owned by somebody else. This field make "
+"sense if you installed ACScontactform plugin for inscriptions."
+msgstr ""
+"Ceci est une page de référence à un événement appartenant à quelqu'un "
+"d'autre. Ce champ a du sense si vous avez installé le plugin ACScontactform "
+"pour les inscriptions."
+
+#: acsadminagenda.php:424
+msgid "Help"
+msgstr "Aide"
+
+#: acsadminagenda.php:443
+msgid "Confirmation Required"
+msgstr "Confirmation requise"
+
+#: acsadminagenda.php:444
+msgid "Do you want really to delete"
+msgstr "Voulez-vous vraiment supprimer"
+
+#: acsadminagenda.php:453
+msgid "Copied"
+msgstr "Copié"
+
+#: acsadminagenda.php:475
+msgid "Close"
+msgstr "Fermer"
+
+#: acsadminagenda.php:477
+msgid "Calendar"
+msgstr "Calendrier"
+
+#: acsadminagenda.php:527
+msgid "Select or upload an image"
+msgstr "Sélectionnez ou téléchargez une image"
+
+#: acsadminagenda.php:547
+msgid "Filtered events"
+msgstr "Événements filtrés"
+
+#: acsadminagenda.php:561
+msgid "Confirm"
+msgstr "Confirmer"
+
+#: acsadminagenda.php:565 acsadminagenda.php:652 acsadminagenda.php:705
+msgid "Cancel"
+msgstr "Annuler"
+
+#: acsadminagenda.php:594
+msgid "Editor"
+msgstr "Modifier"
+
+#: acsadminagenda.php:621
+msgid "Update"
+msgstr "Mettre à jour"
+
+#: acsadminagenda.php:629
+msgid "the field"
+msgstr "le champ"
+
+#: acsadminagenda.php:629 acsadminagenda.php:682
+msgid "is empty"
+msgstr "est vide"
+
+#: acsadminagenda.php:662
+msgid "Add an event"
+msgstr "Ajouter un événement"
+
+#: acsadminagenda.php:674
+msgid "Add"
+msgstr "Ajouter"
+
+#: acsadminagenda.php:682
+msgid "The field"
+msgstr "Le champ"
+
+#: acsadminagenda.php:776
+msgid "Sorry, the event has not been updated, an error occurred!"
+msgstr "Désolé, l'événement n'a pas été mis à jour, une erreur s'est produite!"
+
+#: acsadminagenda.php:778
+msgid "The event has been updated!"
+msgstr "L'événement a été mis à jour!"
+
+#: acsadminagenda.php:795
+msgid "Sorry, the event has not been added, an error occurred!"
+msgstr "Désolé, l'événement n'a pas été ajouté, une erreur s'est produite!"
+
+#: acsadminagenda.php:797
+msgid "The event has been added!"
+msgstr "L' evenement a été ajouté!"
+
+#: acsagendaoptions.php:37
+msgid " $10, $20 or $50!"
+msgstr " $10, $20 ou $50!"
+
+#: acsagendaoptions.php:38
+msgid ""
+"If you like this plugin, please donate to support development and "
+"maintenance."
+msgstr ""
+"Si vous aimez ce plugin, veuillez faire un don pour soutenir le "
+"développement et la maintenance."
+
+#: acsagendaoptions.php:41
+msgid ""
+"This plugin is very simple, the only setting consists in how you want the "
+"agenda to appear. The defaul page is \"Agenda\" and it's created at "
+"activation. You can change the default page here, the one you choose will be "
+"created with the shortcode inside \"[agenda /]\" and the previous deleted."
+msgstr ""
+"Ce plugin est très simple, le seul paramètre consiste à savoir comment vous "
+"voulez la page agenda apparaît. La page par défaut est \" Agenda \" et elle "
+"est créé au moment de l' activation. Vous pouvez modifier la page par défaut "
+"ici, celle que vous choisirez sera créé avec le shortcode à l'intérieur "
+"\" [agenda /] \" et la précédent supprimé."
+
+#: acsagendaoptions.php:43
+msgid ""
+"To be consinstent trough different themes, this plugin uses a his own "
+"template. It has been tested on different default themes and Renden as well, "
+"if you have rendening problems you can contact me:"
+msgstr ""
+"Pour être cohérent à travers différents thèmes, ce plugin utilise son propre "
+"modèle. Il a été testé sur différents thèmes par défaut et Renden également,"
+"si vous avez des problèmes, vous pouvez me contacter:"
+
+#: acsagendaoptions.php:55
+msgid "Page name for Agenda"
+msgstr "Nom de la page pour l'agenda"
+
+#: acsagendaoptions.php:61
+msgid "Submit"
+msgstr "Soumettre"
+
+#: acsagendaoptions.php:89
+msgid "Sorry, your nonce is not correct. Please try again."
+msgstr "Désolé, votre nonce n'est pas correct. Veuillez réessayer."
+
+#: acsagendaoptions.php:121
+msgid "The new setting has been updated"
+msgstr "Le nouveau paramètre a été mis à jour"
