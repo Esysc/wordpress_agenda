@@ -32,12 +32,12 @@ wp option update timezone_string "Europe/Zurich"
 wp option update date_format "d/m/Y"
 wp option update permalink_structure "/%postname%/"
 
-# Activate the plugin
+# Activate the plugin (slug must match folder name)
 echo "[*] Activating ACS Agenda Manager plugin..."
-if wp plugin is-active ACSagendaManager 2>/dev/null; then
+if wp plugin is-active acs-agenda-manager 2>/dev/null; then
     echo "[OK] Plugin is already active"
 else
-    wp plugin activate ACSagendaManager
+    wp plugin activate acs-agenda-manager
     echo "[OK] Plugin activated successfully"
 fi
 
@@ -56,9 +56,9 @@ if [ "$EXISTING_EVENTS" = "0" ] || [ -z "$EXISTING_EVENTS" ]; then
 
     # Insert test events directly into database
     wp db query "INSERT INTO wp_acs_agenda_manager (categorie, title, emplacement, image, intro, link, date, price, account, candopartial) VALUES
-        ('Workshop', 'Introduction to WordPress', 'Zurich, Switzerland', '/wp-content/plugins/ACSagendaManager/css/images/default-event.jpg', 'Learn the basics of WordPress in this hands-on workshop. Perfect for beginners!', 'http://localhost:8080/agenda/', '${TOMORROW}', 'CHF 150', 1, 0),
-        ('Conference', 'Web Development Summit 2025', 'Geneva, Switzerland', '/wp-content/plugins/ACSagendaManager/css/images/default-event.jpg', 'Join us for the biggest web development conference of the year. Multiple tracks and networking opportunities.', 'http://localhost:8080/agenda/', '${NEXT_WEEK},${NEXT_MONTH}', 'CHF 500', 1, 2),
-        ('Course', 'PHP Advanced Programming', 'Online', '/wp-content/plugins/ACSagendaManager/css/images/default-event.jpg', 'Take your PHP skills to the next level with this comprehensive course covering modern PHP practices.', 'http://localhost:8080/agenda/', '${NEXT_MONTH}', 'CHF 300', 0, 1)
+        ('Workshop', 'Introduction to WordPress', 'Zurich, Switzerland', '/wp-content/plugins/acs-agenda-manager/css/images/default-event.jpg', 'Learn the basics of WordPress in this hands-on workshop. Perfect for beginners!', 'http://localhost:8080/agenda/', '${TOMORROW}', 'CHF 150', 1, 0),
+        ('Conference', 'Web Development Summit 2025', 'Geneva, Switzerland', '/wp-content/plugins/acs-agenda-manager/css/images/default-event.jpg', 'Join us for the biggest web development conference of the year. Multiple tracks and networking opportunities.', 'http://localhost:8080/agenda/', '${NEXT_WEEK},${NEXT_MONTH}', 'CHF 500', 1, 2),
+        ('Course', 'PHP Advanced Programming', 'Online', '/wp-content/plugins/acs-agenda-manager/css/images/default-event.jpg', 'Take your PHP skills to the next level with this comprehensive course covering modern PHP practices.', 'http://localhost:8080/agenda/', '${NEXT_MONTH}', 'CHF 300', 0, 1)
     " 2>/dev/null || echo "[WARN] Could not create test events (table might not exist yet)"
 
     echo "[OK] Test events created"

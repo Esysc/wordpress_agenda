@@ -138,6 +138,18 @@ class ACS_Agenda_List_Table extends WP_List_Table {
             esc_html($item['categorie'])
         );
 
+        $delete_url = wp_nonce_url(
+            add_query_arg(
+                [
+                    'page' => 'agenda',
+                    'action' => 'delete',
+                    'id' => $item['id'],
+                ],
+                admin_url('admin.php')
+            ),
+            'acs_delete_event'
+        );
+
         $actions = [
             'edit' => sprintf(
                 '<a href="#" data-id="%d" class="editItems button4 info">%s</a>',
@@ -145,10 +157,8 @@ class ACS_Agenda_List_Table extends WP_List_Table {
                 esc_html__('Edit', 'acs-agenda-manager')
             ),
             'delete' => sprintf(
-                '<a class="ACSdelete button4 danger" href="?page=%s&action=delete&id=%d&_wpnonce=%s">%s</a>',
-                esc_attr($_REQUEST['page'] ?? 'agenda'),
-                $item['id'],
-                $nonce,
+                '<a class="ACSdelete button4 danger" href="%s">%s</a>',
+                esc_url($delete_url),
                 esc_html__('Delete', 'acs-agenda-manager')
             ),
         ];
@@ -208,14 +218,17 @@ class ACS_Agenda_List_Table extends WP_List_Table {
         $per_page = $this->get_items_per_page('events_per_page', 10);
         $current_page = $this->get_pagenum();
 
+        // List table filtering/sorting/pagination uses WP's built-in list table nonce handling.
+        // phpcs:disable WordPress.Security.NonceVerification.Recommended
         $args = [
             'per_page' => $per_page,
             'page' => $current_page,
-            'orderby' => sanitize_text_field($_REQUEST['orderby'] ?? 'id'),
-            'order' => sanitize_text_field($_REQUEST['order'] ?? 'DESC'),
-            'search' => sanitize_text_field($_REQUEST['s'] ?? ''),
-            'filter' => sanitize_text_field($_REQUEST['event-filter'] ?? ''),
+            'orderby' => sanitize_text_field(wp_unslash($_REQUEST['orderby'] ?? 'id')),
+            'order' => sanitize_text_field(wp_unslash($_REQUEST['order'] ?? 'DESC')),
+            'search' => sanitize_text_field(wp_unslash($_REQUEST['s'] ?? '')),
+            'filter' => sanitize_text_field(wp_unslash($_REQUEST['event-filter'] ?? '')),
         ];
+        // phpcs:enable WordPress.Security.NonceVerification.Recommended
 
         $this->items = ACS_Database::get_events($args);
         $total_items = ACS_Database::count_events($args);
@@ -246,22 +259,17 @@ class ACS_Agenda_List_Table extends WP_List_Table {
             return;
         }
 
-        $current_filter = sanitize_text_field($_REQUEST['event-filter'] ?? '');
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Filter dropdown uses WP's built-in list table form with nonce.
+        $current_filter = sanitize_text_field(wp_unslash($_REQUEST['event-filter'] ?? ''));
 
         echo '<div class="alignleft actions">';
         echo '<select name="event-filter" class="ewc-filter-event">';
         echo '<option value="">' . esc_html__('All Events', 'acs-agenda-manager') . '</option>';
 
         foreach ($filters as $filter) {
-            $value = esc_attr($filter['title'] . '-' . $filter['categorie']);
-            $selected = selected($current_filter, $value, false);
-            printf(
-                '<option value="%s" %s>%s - %s</option>',
-                $value,
-                $selected,
-                esc_html($filter['title']),
-                esc_html($filter['categorie'])
-            );
+            $value = $filter['title'] . '-' . $filter['categorie'];
+            $selected_attr = selected($current_filter, $value, false);
+            echo '<option value="' . esc_attr($value) . '"' . esc_attr($selected_attr) . '>' . esc_html($filter['title']) . ' - ' . esc_html($filter['categorie']) . '</option>';
         }
 
         echo '</select>';
@@ -303,22 +311,29 @@ class ACS_Admin {
      */
     public function handle_actions(): void {
         // Only process on our admin page
-        if (!isset($_GET['page']) || $_GET['page'] !== 'agenda') {
+        $current_page = isset($_GET['page']) ? sanitize_key(wp_unslash($_GET['page'])) : '';
+        if ($current_page !== 'agenda') {
             return;
         }
 
         $redirect_url = admin_url('admin.php?page=agenda');
 
+        if ((isset($_POST['action']) && $_POST['action'] !== '') || (isset($_POST['action2']) && $_POST['action2'] !== '')) {
+            check_admin_referer('acs_agenda_admin_form', 'acs_agenda_admin_form_nonce');
+        }
+
         // Handle single delete action
         if (isset($_GET['action']) && $_GET['action'] === 'delete') {
-            if (!wp_verify_nonce($_REQUEST['_wpnonce'] ?? '', 'acs_delete_event')) {
-                wp_die(__('Security check failed', 'acs-agenda-manager'));
+            $nonce = isset($_REQUEST['_wpnonce']) ? sanitize_text_field(wp_unslash($_REQUEST['_wpnonce'])) : '';
+
+            if (!wp_verify_nonce($nonce, 'acs_delete_event')) {
+                wp_die(esc_html__('Security check failed', 'acs-agenda-manager'));
             }
 
-            $id = absint($_GET['id'] ?? 0);
+            $id = absint(isset($_GET['id']) ? wp_unslash($_GET['id']) : 0);
             if ($id) {
                 ACS_Database::delete_event($id);
-                wp_redirect($redirect_url . '&deleted=1');
+                wp_safe_redirect($redirect_url . '&deleted=1');
                 exit;
             }
         }
@@ -327,13 +342,17 @@ class ACS_Admin {
         if ((isset($_POST['action']) && $_POST['action'] === 'bulk-delete') ||
             (isset($_POST['action2']) && $_POST['action2'] === 'bulk-delete')) {
 
-            $ids = array_map('absint', $_POST['bulk-delete'] ?? []);
+            if (!check_admin_referer('acs_agenda_admin_form', 'acs_agenda_admin_form_nonce')) {
+                wp_die(esc_html__('Security check failed', 'acs-agenda-manager'));
+            }
+
+            $ids = array_map('absint', wp_unslash($_POST['bulk-delete'] ?? []));
 
             foreach ($ids as $id) {
                 ACS_Database::delete_event($id);
             }
 
-            wp_redirect($redirect_url . '&deleted=' . count($ids));
+            wp_safe_redirect($redirect_url . '&deleted=' . count($ids));
             exit;
         }
     }
@@ -373,58 +392,68 @@ class ACS_Admin {
     }
 
     public function ajax_update_event(): void {
-        check_ajax_referer('acs_agenda_admin_nonce', 'nonce', false);
-
-        if (!current_user_can('manage_options')) {
-            wp_send_json_error(__('Permission denied', 'acs-agenda-manager'));
+        $nonce = isset($_POST['nonce']) ? sanitize_text_field(wp_unslash($_POST['nonce'])) : '';
+        if (!wp_verify_nonce($nonce, 'acs_agenda_admin_nonce')) {
+            wp_send_json_error(esc_html__('Security check failed', 'acs-agenda-manager'));
         }
 
-        $id = absint($_POST['id'] ?? 0);
+        if (!current_user_can('manage_options')) {
+            wp_send_json_error(esc_html__('Permission denied', 'acs-agenda-manager'));
+        }
+
+        $id = absint(wp_unslash($_POST['id'] ?? 0));
 
         if (!$id) {
-            wp_send_json_error(__('Invalid event ID', 'acs-agenda-manager'));
+            wp_send_json_error(esc_html__('Invalid event ID', 'acs-agenda-manager'));
         }
 
         $data = $this->get_event_data_from_post();
         $success = ACS_Database::update_event($id, $data);
 
         if ($success) {
-            wp_send_json_success(__('Event updated successfully', 'acs-agenda-manager'));
+            wp_send_json_success(esc_html__('Event updated successfully', 'acs-agenda-manager'));
         } else {
-            wp_send_json_error(__('Failed to update event', 'acs-agenda-manager'));
+            wp_send_json_error(esc_html__('Failed to update event', 'acs-agenda-manager'));
         }
     }
 
     public function ajax_add_event(): void {
-        check_ajax_referer('acs_agenda_admin_nonce', 'nonce', false);
+        $nonce = isset($_POST['nonce']) ? sanitize_text_field(wp_unslash($_POST['nonce'])) : '';
+        if (!wp_verify_nonce($nonce, 'acs_agenda_admin_nonce')) {
+            wp_send_json_error(esc_html__('Security check failed', 'acs-agenda-manager'));
+        }
 
         if (!current_user_can('manage_options')) {
-            wp_send_json_error(__('Permission denied', 'acs-agenda-manager'));
+            wp_send_json_error(esc_html__('Permission denied', 'acs-agenda-manager'));
         }
 
         $data = $this->get_event_data_from_post();
         $id = ACS_Database::insert_event($data);
 
         if ($id) {
-            wp_send_json_success(__('Event added successfully', 'acs-agenda-manager'));
+            wp_send_json_success(esc_html__('Event added successfully', 'acs-agenda-manager'));
         } else {
-            wp_send_json_error(__('Failed to add event', 'acs-agenda-manager'));
+            wp_send_json_error(esc_html__('Failed to add event', 'acs-agenda-manager'));
         }
     }
 
     private function get_event_data_from_post(): array {
+        // Nonce is verified in calling methods (handle_ajax_add_event, handle_ajax_edit_event).
+        // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Nonce verified before this method is called.
+        $post_data = wp_unslash($_POST);
+
         return [
-            'categorie' => sanitize_text_field($_POST['categorie'] ?? ''),
-            'title' => sanitize_text_field($_POST['title'] ?? ''),
-            'emplacement' => sanitize_text_field($_POST['emplacement'] ?? ''),
-            'image' => sanitize_text_field($_POST['image'] ?? ''),
-            'intro' => sanitize_textarea_field($_POST['intro'] ?? ''),
-            'link' => esc_url_raw($_POST['link'] ?? ''),
-            'date' => sanitize_text_field($_POST['date'] ?? ''),
-            'price' => sanitize_text_field($_POST['price'] ?? ''),
-            'account' => absint($_POST['account'] ?? 0),
-            'candopartial' => absint($_POST['candopartial'] ?? 0),
-            'redirect' => esc_url_raw($_POST['redirect'] ?? ''),
+            'categorie' => sanitize_text_field($post_data['categorie'] ?? ''),
+            'title' => sanitize_text_field($post_data['title'] ?? ''),
+            'emplacement' => sanitize_text_field($post_data['emplacement'] ?? ''),
+            'image' => sanitize_text_field($post_data['image'] ?? ''),
+            'intro' => sanitize_textarea_field($post_data['intro'] ?? ''),
+            'link' => esc_url_raw($post_data['link'] ?? ''),
+            'date' => sanitize_text_field($post_data['date'] ?? ''),
+            'price' => sanitize_text_field($post_data['price'] ?? ''),
+            'account' => absint($post_data['account'] ?? 0),
+            'candopartial' => absint($post_data['candopartial'] ?? 0),
+            'redirect' => esc_url_raw($post_data['redirect'] ?? ''),
         ];
     }
 }

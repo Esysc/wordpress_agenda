@@ -54,7 +54,7 @@ class ACS_Options {
 
     public function render_settings_page(): void {
         if (!current_user_can('manage_options')) {
-            wp_die(__('Permission denied', 'acs-agenda-manager'));
+            wp_die(esc_html__('Permission denied', 'acs-agenda-manager'));
         }
 
         // Handle form submission
@@ -69,11 +69,15 @@ class ACS_Options {
     }
 
     private function save_settings(): void {
+        if (!check_admin_referer('acs_agenda_settings_nonce')) {
+            wp_die(esc_html__('Security check failed', 'acs-agenda-manager'));
+        }
+
         $old_page_name = get_option('acsagendapage', 'Agenda');
-        $new_page_name = sanitize_text_field($_POST['acsagendapage'] ?? 'Agenda');
+        $new_page_name = sanitize_text_field(wp_unslash($_POST['acsagendapage'] ?? 'Agenda'));
 
         // Save Google Maps API key
-        $api_key = sanitize_text_field($_POST['acs_google_maps_api_key'] ?? '');
+        $api_key = sanitize_text_field(wp_unslash($_POST['acs_google_maps_api_key'] ?? ''));
         update_option('acs_google_maps_api_key', $api_key);
 
         if ($old_page_name !== $new_page_name) {

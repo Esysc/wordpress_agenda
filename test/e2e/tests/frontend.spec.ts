@@ -21,21 +21,32 @@ test.describe('Frontend Agenda Display', () => {
     const eventTitle = `Frontend Test ${Date.now()}`;
 
     await page.click('#acs-add-event');
-    await page.waitForSelector('#acs-modal', { state: 'visible' });
+    // Wait for jQuery UI dialog to open
+    await page.waitForSelector('.ui-dialog:has(#acs-event-dialog)', { state: 'visible' });
 
-    await page.fill('input[name="title"]', eventTitle);
-    await page.fill('input[name="categorie"]', 'Frontend Test');
-    await page.fill('input[name="date"]', '2025-12-31');
-    await page.fill('textarea[name="intro"]', 'Test event for frontend display');
-
-    await page.click('#acs-save-event');
-    await page.waitForSelector('.notice-success, #acs-admin-notices .notice-success', {
-      state: 'visible',
-      timeout: 10000
+    // Fill the form using IDs inside the dialog
+    await page.fill('#event-title', eventTitle);
+    await page.fill('#event-categorie', 'Frontend Test');
+    // Set date via JavaScript since field is readonly
+    await page.evaluate(() => {
+      const input = document.getElementById('event-date') as HTMLInputElement;
+      if (input) {
+        input.readOnly = false;
+        input.value = '2025-12-31';
+      }
     });
+    await page.fill('#event-intro', 'Test event for frontend display');
+
+    // Click the submit button in jQuery UI dialog
+    const submitButton = page.locator('#acs-event-dialog').locator('..').locator('.ui-dialog-buttonset button').first();
+    await submitButton.click();
+    // Wait for page reload (the JS does location.reload() on success)
+    await page.waitForLoadState('networkidle');
+    // Give time for any background processes
+    await page.waitForTimeout(1000);
 
     // Now check the frontend
-    await page.goto('/agenda/');
+    await page.goto('/agenda/', { waitUntil: 'domcontentloaded' });
     await page.waitForLoadState('networkidle');
 
     // The event should be visible on the frontend

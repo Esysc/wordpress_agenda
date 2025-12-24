@@ -32,7 +32,7 @@ ACS Agenda Manager provides an easy way to create and manage an event agenda on 
 ### From GitHub
 
 1. Download the latest release from the [releases page](https://github.com/Esysc/wordpress_agenda/releases)
-2. Upload the `ACSagendaManager` folder to `/wp-content/plugins/`
+2. Upload the `acs-agenda-manager` folder to `/wp-content/plugins/`
 3. Activate the plugin through the 'Plugins' menu in WordPress
 4. Navigate to **Agenda** in the admin menu to start adding events
 
@@ -40,7 +40,7 @@ ACS Agenda Manager provides an easy way to create and manage an event agenda on 
 
 ```bash
 cd /path/to/wordpress/wp-content/plugins/
-git clone https://github.com/Esysc/wordpress_agenda.git ACSagendaManager
+git clone https://github.com/Esysc/wordpress_agenda.git acs-agenda-manager
 ```
 
 Then activate the plugin in your WordPress admin panel.
@@ -90,8 +90,8 @@ Navigate to **Agenda → Settings** to:
 ## File Structure
 
 ```
-ACSagendaManager/
-├── ACSagendaManager.php          # Main plugin file
+acs-agenda-manager/
+├── acs-agenda-manager.php        # Main plugin file
 ├── class/
 │   ├── class-acs-admin.php       # Admin functionality
 │   ├── class-acs-database.php    # Database operations

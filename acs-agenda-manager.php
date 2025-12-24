@@ -73,7 +73,6 @@ final class ACS_Agenda_Manager {
      * Initialize WordPress hooks
      */
     private function init_hooks(): void {
-        add_action('init', [$this, 'load_textdomains']);
         add_action('wp_enqueue_scripts', [$this, 'enqueue_frontend_assets']);
         add_action('admin_enqueue_scripts', [$this, 'enqueue_admin_assets']);
         add_action('plugins_loaded', [$this, 'check_version']);
@@ -87,13 +86,6 @@ final class ACS_Agenda_Manager {
 
         // Locale filter
         add_filter('locale', [$this, 'set_locale_from_browser']);
-    }
-
-    /**
-     * Load plugin text domains
-     */
-    public function load_textdomains(): void {
-        load_plugin_textdomain('acs-agenda-manager', false, dirname(plugin_basename(__FILE__)) . '/lang/');
     }
 
     /**
@@ -121,7 +113,11 @@ final class ACS_Agenda_Manager {
     /**
      * Enqueue frontend assets
      */
-    public function enqueue_frontend_assets(): void {
+    public function enqueue_frontend_assets(bool $force = false): void {
+        if (!$force && !$this->should_load_frontend_assets()) {
+            return;
+        }
+
         wp_enqueue_style(
             'acs-agenda-style',
             ACS_AGENDA_PLUGIN_URL . 'css/acs.css',
@@ -129,23 +125,20 @@ final class ACS_Agenda_Manager {
             ACS_AGENDA_VERSION
         );
 
-        wp_enqueue_style(
-            'jquery-ui-style',
-            'https://code.jquery.com/ui/1.13.2/themes/smoothness/jquery-ui.css',
-            [],
-            '1.13.2'
-        );
-
+        wp_enqueue_style('wp-jquery-ui-dialog');
         wp_enqueue_script('jquery');
         wp_enqueue_script('jquery-ui-dialog');
         wp_enqueue_script('jquery-ui-datepicker');
 
         wp_enqueue_script(
             'acs-multidatespicker',
-            'https://cdn.jsdelivr.net/npm/jquery-ui-multidatespicker@1.6.6/jquery-ui.multidatespicker.min.js',
+            ACS_AGENDA_PLUGIN_URL . 'js/jquery-ui-multidatespicker.min.js',
             ['jquery-ui-datepicker'],
-            '1.6.6',
-            true
+            ACS_AGENDA_VERSION,
+            [
+                'in_footer' => true,
+                'strategy' => 'defer',
+            ]
         );
 
         wp_enqueue_script(
@@ -153,7 +146,10 @@ final class ACS_Agenda_Manager {
             ACS_AGENDA_PLUGIN_URL . 'js/acs-frontend.js',
             ['jquery', 'jquery-ui-dialog'],
             ACS_AGENDA_VERSION,
-            true
+            [
+                'in_footer' => true,
+                'strategy' => 'defer',
+            ]
         );
 
         wp_localize_script('acs-agenda-frontend', 'acsAgenda', [
@@ -170,21 +166,32 @@ final class ACS_Agenda_Manager {
             return;
         }
 
-        $this->enqueue_frontend_assets();
+        $this->enqueue_frontend_assets(true);
 
         wp_enqueue_media();
         wp_enqueue_style('thickbox');
         wp_enqueue_script('thickbox');
 
-        // Load Google Maps API if key is configured
+        // Load Google Maps API if key is configured (only if supplied via option)
         $google_maps_api_key = get_option('acs_google_maps_api_key', '');
         if (!empty($google_maps_api_key)) {
+            $maps_url = add_query_arg(
+                [
+                    'key' => rawurlencode($google_maps_api_key),
+                    'libraries' => 'places',
+                    'loading' => 'async',
+                ],
+                'https://maps.googleapis.com/maps/api/js'
+            );
             wp_enqueue_script(
                 'google-maps-places',
-                'https://maps.googleapis.com/maps/api/js?key=' . esc_attr($google_maps_api_key) . '&libraries=places&loading=async',
+                $maps_url,
                 [],
-                null,
-                true
+                ACS_AGENDA_VERSION,
+                [
+                    'in_footer' => true,
+                    'strategy' => 'defer',
+                ]
             );
         }
 
@@ -193,7 +200,10 @@ final class ACS_Agenda_Manager {
             ACS_AGENDA_PLUGIN_URL . 'js/acs-admin.js',
             ['jquery', 'jquery-ui-dialog', 'acs-multidatespicker'],
             ACS_AGENDA_VERSION,
-            true
+            [
+                'in_footer' => true,
+                'strategy' => 'defer',
+            ]
         );
 
         wp_localize_script('acs-agenda-admin', 'acsAgendaAdmin', [
@@ -202,6 +212,31 @@ final class ACS_Agenda_Manager {
             'hasGoogleMaps' => !empty($google_maps_api_key),
             'i18n' => $this->get_admin_translations(),
         ]);
+    }
+
+    /**
+     * Decide if frontend assets should load to avoid enqueuing everywhere.
+     */
+    private function should_load_frontend_assets(): bool {
+        if (is_admin()) {
+            return false;
+        }
+
+        $should_load = false;
+
+        if (is_singular()) {
+            $post = get_post();
+            if ($post && has_shortcode($post->post_content, 'agenda')) {
+                $should_load = true;
+            }
+
+            $template = get_page_template_slug($post);
+            if ($template === 'page-agenda.php') {
+                $should_load = true;
+            }
+        }
+
+        return apply_filters('acs_agenda_should_enqueue_assets', $should_load);
     }
 
     /**
@@ -254,6 +289,8 @@ final class ACS_Agenda_Manager {
      * AJAX handler for read more dialog
      */
     public function ajax_read_more(): void {
+        check_ajax_referer('acs_agenda_nonce', 'nonce', true);
+
         $post_id = isset($_POST['postid']) ? absint($_POST['postid']) : 0;
         $href = isset($_POST['href']) ? esc_url_raw(wp_unslash($_POST['href'])) : '';
 
@@ -267,7 +304,7 @@ final class ACS_Agenda_Manager {
             wp_send_json_error(__('Post not found', 'acs-agenda-manager'));
         }
 
-        echo ACS_Template::render_read_more_dialog($post, $href);
+        echo wp_kses_post(ACS_Template::render_read_more_dialog($post, $href));
         wp_die();
     }
 
