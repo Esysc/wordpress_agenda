@@ -16,14 +16,14 @@ defined('ABSPATH') || exit;
  * @since 3.0.0
  */
 class ACS_Help {
-    
+
     /**
      * Singleton instance
      *
      * @var self|null
      */
     private static $instance = null;
-    
+
     /**
      * Get singleton instance
      *
@@ -35,14 +35,14 @@ class ACS_Help {
         }
         return self::$instance;
     }
-    
+
     /**
      * Private constructor for singleton
      */
     private function __construct() {
         add_action('admin_menu', [$this, 'add_submenu_page']);
     }
-    
+
     /**
      * Add the help submenu page
      *
@@ -58,7 +58,7 @@ class ACS_Help {
             [$this, 'render_help_page']
         );
     }
-    
+
     /**
      * Render the help page
      *
@@ -68,10 +68,10 @@ class ACS_Help {
         if (!current_user_can('manage_options')) {
             wp_die(esc_html__('Permission denied', 'acs-agenda-manager'));
         }
-        
+
         include ACS_AGENDA_PLUGIN_DIR . 'templates/help-page.php';
     }
-    
+
     /**
      * Get table of contents
      *

@@ -48,21 +48,19 @@ echo "[*] Creating test events..."
 EXISTING_EVENTS=$(wp db query "SELECT COUNT(*) FROM wp_acs_agenda_manager" --skip-column-names 2>/dev/null || echo "0")
 
 if [ "$EXISTING_EVENTS" = "0" ] || [ -z "$EXISTING_EVENTS" ]; then
-    # Get dates for test events (using POSIX-compatible date arithmetic)
-    TODAY=$(date +%d/%m/%Y)
     # Calculate dates using seconds since epoch (works with BusyBox)
     NOW=$(date +%s)
     TOMORROW=$(date -d "@$((NOW + 86400))" +%d/%m/%Y 2>/dev/null || date -r $((NOW + 86400)) +%d/%m/%Y 2>/dev/null || date +%d/%m/%Y)
     NEXT_WEEK=$(date -d "@$((NOW + 604800))" +%d/%m/%Y 2>/dev/null || date -r $((NOW + 604800)) +%d/%m/%Y 2>/dev/null || date +%d/%m/%Y)
     NEXT_MONTH=$(date -d "@$((NOW + 2592000))" +%d/%m/%Y 2>/dev/null || date -r $((NOW + 2592000)) +%d/%m/%Y 2>/dev/null || date +%d/%m/%Y)
-    
+
     # Insert test events directly into database
-    wp db query "INSERT INTO wp_acs_agenda_manager (categorie, title, emplacement, image, intro, link, date, price, account, candopartial) VALUES 
+    wp db query "INSERT INTO wp_acs_agenda_manager (categorie, title, emplacement, image, intro, link, date, price, account, candopartial) VALUES
         ('Workshop', 'Introduction to WordPress', 'Zurich, Switzerland', '/wp-content/plugins/ACSagendaManager/css/images/default-event.jpg', 'Learn the basics of WordPress in this hands-on workshop. Perfect for beginners!', 'http://localhost:8080/agenda/', '${TOMORROW}', 'CHF 150', 1, 0),
         ('Conference', 'Web Development Summit 2025', 'Geneva, Switzerland', '/wp-content/plugins/ACSagendaManager/css/images/default-event.jpg', 'Join us for the biggest web development conference of the year. Multiple tracks and networking opportunities.', 'http://localhost:8080/agenda/', '${NEXT_WEEK},${NEXT_MONTH}', 'CHF 500', 1, 2),
         ('Course', 'PHP Advanced Programming', 'Online', '/wp-content/plugins/ACSagendaManager/css/images/default-event.jpg', 'Take your PHP skills to the next level with this comprehensive course covering modern PHP practices.', 'http://localhost:8080/agenda/', '${NEXT_MONTH}', 'CHF 300', 0, 1)
     " 2>/dev/null || echo "[WARN] Could not create test events (table might not exist yet)"
-    
+
     echo "[OK] Test events created"
 else
     echo "[OK] Test events already exist ($EXISTING_EVENTS events found)"

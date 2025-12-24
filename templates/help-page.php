@@ -14,7 +14,7 @@ $agenda_page = get_option('acsagendapage', 'Agenda');
 
 <div class="wrap acs-help-page">
     <h1><?php esc_html_e('ACS Agenda Manager - User Guide', 'acs-agenda-manager'); ?></h1>
-    
+
     <div class="acs-help-container">
         <!-- Table of Contents -->
         <div class="acs-help-toc">
@@ -25,15 +25,15 @@ $agenda_page = get_option('acsagendapage', 'Agenda');
                 <?php endforeach; ?>
             </ul>
         </div>
-        
+
         <!-- Main Content -->
         <div class="acs-help-content">
-            
+
             <!-- Getting Started -->
             <section id="getting-started" class="acs-help-section">
                 <h2><?php esc_html_e('Getting Started', 'acs-agenda-manager'); ?></h2>
                 <p><?php esc_html_e('ACS Agenda Manager allows you to create and manage an event agenda on your WordPress site. When activated, the plugin automatically creates an Agenda page with the shortcode included.', 'acs-agenda-manager'); ?></p>
-                
+
                 <h3><?php esc_html_e('Quick Start', 'acs-agenda-manager'); ?></h3>
                 <ol>
                     <li><?php esc_html_e('Go to Agenda in the admin menu to view your events list', 'acs-agenda-manager'); ?></li>
@@ -42,12 +42,12 @@ $agenda_page = get_option('acsagendapage', 'Agenda');
                     <li><?php printf(esc_html__('Visit your %s page to see your events', 'acs-agenda-manager'), '<strong>' . esc_html($agenda_page) . '</strong>'); ?></li>
                 </ol>
             </section>
-            
+
             <!-- Adding Events -->
             <section id="adding-events" class="acs-help-section">
                 <h2><?php esc_html_e('Adding Events', 'acs-agenda-manager'); ?></h2>
                 <p><?php esc_html_e('To add a new event, click the "Add New Event" button on the Agenda admin page. A dialog will appear with the following fields:', 'acs-agenda-manager'); ?></p>
-                
+
                 <table class="widefat">
                     <thead>
                         <tr>
@@ -115,44 +115,44 @@ $agenda_page = get_option('acsagendapage', 'Agenda');
                     </tbody>
                 </table>
             </section>
-            
+
             <!-- Managing Events -->
             <section id="managing-events" class="acs-help-section">
                 <h2><?php esc_html_e('Managing Events', 'acs-agenda-manager'); ?></h2>
-                
+
                 <h3><?php esc_html_e('Editing Events', 'acs-agenda-manager'); ?></h3>
                 <p><?php esc_html_e('To edit an event, click on any field in the events list. A dialog will open allowing you to modify the event details. Click Update to save your changes.', 'acs-agenda-manager'); ?></p>
-                
+
                 <h3><?php esc_html_e('Deleting Events', 'acs-agenda-manager'); ?></h3>
                 <p><?php esc_html_e('To delete a single event, hover over the event row and click the Delete link. To delete multiple events, select them using the checkboxes and choose "Delete" from the Bulk Actions dropdown.', 'acs-agenda-manager'); ?></p>
-                
+
                 <h3><?php esc_html_e('Filtering Events', 'acs-agenda-manager'); ?></h3>
                 <p><?php esc_html_e('Use the filter dropdown above the events list to show only events matching a specific title and category combination.', 'acs-agenda-manager'); ?></p>
-                
+
                 <h3><?php esc_html_e('Searching Events', 'acs-agenda-manager'); ?></h3>
                 <p><?php esc_html_e('Use the search box to find events by title, category, location, or description.', 'acs-agenda-manager'); ?></p>
             </section>
-            
+
             <!-- Shortcode -->
             <section id="shortcode" class="acs-help-section">
                 <h2><?php esc_html_e('Using the Shortcode', 'acs-agenda-manager'); ?></h2>
                 <p><?php esc_html_e('Display your agenda on any page or post using the shortcode:', 'acs-agenda-manager'); ?></p>
-                
+
                 <div class="acs-code-block">
                     <code>[agenda]</code>
                 </div>
-                
+
                 <p><?php esc_html_e('The shortcode will display all upcoming events in a responsive card layout. Past events are automatically hidden based on their Partial Attendance setting.', 'acs-agenda-manager'); ?></p>
-                
+
                 <h3><?php esc_html_e('Default Agenda Page', 'acs-agenda-manager'); ?></h3>
                 <p><?php printf(esc_html__('The plugin creates a page called "%s" upon activation. You can change this name in Settings.', 'acs-agenda-manager'), esc_html($agenda_page)); ?></p>
             </section>
-            
+
             <!-- Partial Attendance -->
             <section id="partial-attendance" class="acs-help-section">
                 <h2><?php esc_html_e('Partial Attendance', 'acs-agenda-manager'); ?></h2>
                 <p><?php esc_html_e('The Partial Attendance setting controls how events with multiple dates behave when some dates have passed:', 'acs-agenda-manager'); ?></p>
-                
+
                 <table class="widefat">
                     <thead>
                         <tr>
@@ -176,11 +176,11 @@ $agenda_page = get_option('acsagendapage', 'Agenda');
                     </tbody>
                 </table>
             </section>
-            
+
             <!-- Customization -->
             <section id="customization" class="acs-help-section">
                 <h2><?php esc_html_e('Customization', 'acs-agenda-manager'); ?></h2>
-                
+
                 <h3><?php esc_html_e('Google Maps Location Autocomplete', 'acs-agenda-manager'); ?></h3>
                 <p><?php esc_html_e('You can enable Google Places Autocomplete for the Location field to help users find addresses easily.', 'acs-agenda-manager'); ?></p>
                 <ol>
@@ -190,10 +190,10 @@ $agenda_page = get_option('acsagendapage', 'Agenda');
                     <li><?php esc_html_e('Go to Agenda > Settings and enter your API key', 'acs-agenda-manager'); ?></li>
                 </ol>
                 <p><?php esc_html_e('Once configured, the Location field will show address suggestions as you type.', 'acs-agenda-manager'); ?></p>
-                
+
                 <h3><?php esc_html_e('CSS Styling', 'acs-agenda-manager'); ?></h3>
                 <p><?php esc_html_e('Override the default styles by adding custom CSS to your theme. The plugin uses CSS variables for easy customization:', 'acs-agenda-manager'); ?></p>
-                
+
                 <div class="acs-code-block">
                     <pre>/* Customize primary color */
 :root {
@@ -213,7 +213,7 @@ $agenda_page = get_option('acsagendapage', 'Agenda');
     background-color: #your-color;
 }</pre>
                 </div>
-                
+
                 <h3><?php esc_html_e('Template Override', 'acs-agenda-manager'); ?></h3>
                 <p><?php esc_html_e('For complete control over the agenda display, copy the template file from the plugin to your theme:', 'acs-agenda-manager'); ?></p>
                 <ol>
@@ -222,42 +222,42 @@ $agenda_page = get_option('acsagendapage', 'Agenda');
                     <li><?php esc_html_e('Customize the template as needed', 'acs-agenda-manager'); ?></li>
                 </ol>
             </section>
-            
+
             <!-- Troubleshooting -->
             <section id="troubleshooting" class="acs-help-section">
                 <h2><?php esc_html_e('Troubleshooting', 'acs-agenda-manager'); ?></h2>
-                
+
                 <h3><?php esc_html_e('Events not showing', 'acs-agenda-manager'); ?></h3>
                 <ul>
                     <li><?php esc_html_e('Check that the event has dates in the future', 'acs-agenda-manager'); ?></li>
                     <li><?php esc_html_e('Verify the shortcode [agenda] is on the page', 'acs-agenda-manager'); ?></li>
                     <li><?php esc_html_e('Check the Partial Attendance setting', 'acs-agenda-manager'); ?></li>
                 </ul>
-                
+
                 <h3><?php esc_html_e('Calendar not working', 'acs-agenda-manager'); ?></h3>
                 <ul>
                     <li><?php esc_html_e('Ensure jQuery UI is not being blocked by another plugin', 'acs-agenda-manager'); ?></li>
                     <li><?php esc_html_e('Check the browser console for JavaScript errors', 'acs-agenda-manager'); ?></li>
                     <li><?php esc_html_e('Try deactivating other plugins to check for conflicts', 'acs-agenda-manager'); ?></li>
                 </ul>
-                
+
                 <h3><?php esc_html_e('Styles not loading', 'acs-agenda-manager'); ?></h3>
                 <ul>
                     <li><?php esc_html_e('Clear your browser cache', 'acs-agenda-manager'); ?></li>
                     <li><?php esc_html_e('Check if your theme or a caching plugin is minifying CSS incorrectly', 'acs-agenda-manager'); ?></li>
                 </ul>
-                
+
                 <h3><?php esc_html_e('Need more help?', 'acs-agenda-manager'); ?></h3>
                 <p>
-                    <?php 
+                    <?php
                     printf(
                         esc_html__('Visit our %s for support and feature requests.', 'acs-agenda-manager'),
                         '<a href="https://github.com/Esysc/wordpress_agenda/issues" target="_blank">' . esc_html__('GitHub Issues page', 'acs-agenda-manager') . '</a>'
-                    ); 
+                    );
                     ?>
                 </p>
             </section>
-            
+
         </div>
     </div>
 </div>
@@ -373,7 +373,7 @@ $agenda_page = get_option('acsagendapage', 'Agenda');
     .acs-help-container {
         flex-direction: column;
     }
-    
+
     .acs-help-toc {
         position: static;
         flex: none;

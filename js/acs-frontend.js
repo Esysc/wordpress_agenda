@@ -4,21 +4,21 @@
  * @package ACSAgendaManager
  */
 
-(function($) {
+(function ($) {
     'use strict';
 
     const ACSAgendaFrontend = {
         /**
          * Initialize the frontend functionality
          */
-        init: function() {
+        init: function () {
             this.bindEvents();
         },
 
         /**
          * Bind event handlers
          */
-        bindEvents: function() {
+        bindEvents: function () {
             $(document).on('click', '.readmore', this.handleReadMore.bind(this));
             $(window).on('scroll', this.trackScroll);
         },
@@ -26,9 +26,9 @@
         /**
          * Handle "Read More" button click
          */
-        handleReadMore: function(e) {
+        handleReadMore: function (e) {
             e.preventDefault();
-            
+
             const $button = $(e.currentTarget);
             const postId = $button.data('postid');
             const sectionId = $button.data('id');
@@ -44,39 +44,39 @@
                 data: {
                     action: 'read_more',
                     postid: postId,
-                    href: href
+                    href: href,
                 },
-                success: function(response) {
+                success: function (response) {
                     $('#postid').html(response);
                     ACSAgendaFrontend.showDialog(sectionId);
                 },
-                error: function() {
+                error: function () {
                     console.error('Failed to load content');
-                }
+                },
             });
         },
 
         /**
          * Show the dialog
          */
-        showDialog: function(sectionId) {
+        showDialog: function (sectionId) {
             const $dialog = $('#dialog');
-            
+
             if (!$dialog.length) {
                 return;
             }
 
             $dialog.addClass('shown');
-            
+
             // Store scroll position
             const scrollY = window.scrollY;
             document.documentElement.style.setProperty('--scroll-y', scrollY + 'px');
-            
+
             // Lock body scroll
             $('body').css({
                 position: 'fixed',
                 top: '-' + scrollY + 'px',
-                width: '100%'
+                width: '100%',
             });
 
             // Store section ID for scroll-back
@@ -86,33 +86,33 @@
         /**
          * Track scroll position
          */
-        trackScroll: function() {
+        trackScroll: function () {
             document.documentElement.style.setProperty('--scroll-y', window.scrollY + 'px');
-        }
+        },
     };
 
     /**
      * Close the dialog (global function for onclick handler)
      */
-    window.closeDialog = function() {
+    window.closeDialog = function () {
         const $body = $('body');
         const scrollY = $body.css('top');
         const $dialog = $('#dialog');
         const sectionId = $dialog.data('section-id');
-        
+
         // Unlock body scroll
         $body.css({
             position: '',
             top: '',
-            width: ''
+            width: '',
         });
-        
+
         // Restore scroll position
         window.scrollTo(0, parseInt(scrollY || '0') * -1);
-        
+
         // Hide dialog
         $dialog.removeClass('shown');
-        
+
         // Scroll to original section
         if (sectionId) {
             const $section = $('#' + sectionId);
@@ -123,8 +123,7 @@
     };
 
     // Initialize on document ready
-    $(document).ready(function() {
+    $(document).ready(function () {
         ACSAgendaFrontend.init();
     });
-
 })(jQuery);

@@ -10,9 +10,9 @@ defined('ABSPATH') || exit;
 
 <div class="wrap">
     <h1><?php esc_html_e('Agenda Settings', 'acs-agenda-manager'); ?></h1>
-    
+
     <?php settings_errors('acs_agenda_settings'); ?>
-    
+
     <div class="notice notice-info">
         <p>
             <strong><?php esc_html_e('Support this plugin!', 'acs-agenda-manager'); ?></strong>
@@ -24,7 +24,7 @@ defined('ABSPATH') || exit;
             </a>
         </p>
     </div>
-    
+
     <div class="card">
         <h2><?php esc_html_e('About This Plugin', 'acs-agenda-manager'); ?></h2>
         <p>
@@ -43,21 +43,21 @@ defined('ABSPATH') || exit;
             <a href="https://www.linkedin.com/in/andrea-cristalli-72427213/" target="_blank">Andrea Cristalli</a>
         </p>
     </div>
-    
+
     <form method="post" action="">
         <?php wp_nonce_field('acs_agenda_settings_nonce'); ?>
-        
+
         <table class="form-table">
             <tr>
                 <th scope="row">
                     <label for="acsagendapage"><?php esc_html_e('Agenda Page Name', 'acs-agenda-manager'); ?></label>
                 </th>
                 <td>
-                    <input type="text" 
-                           name="acsagendapage" 
-                           id="acsagendapage" 
-                           value="<?php echo esc_attr($agenda_page); ?>" 
-                           class="regular-text" 
+                    <input type="text"
+                           name="acsagendapage"
+                           id="acsagendapage"
+                           value="<?php echo esc_attr($agenda_page); ?>"
+                           class="regular-text"
                            required />
                     <p class="description">
                         <?php esc_html_e('The name of the page where the agenda will be displayed.', 'acs-agenda-manager'); ?>
@@ -69,11 +69,11 @@ defined('ABSPATH') || exit;
                     <label for="acs_google_maps_api_key"><?php esc_html_e('Google Maps API Key', 'acs-agenda-manager'); ?></label>
                 </th>
                 <td>
-                    <input type="text" 
-                           name="acs_google_maps_api_key" 
-                           id="acs_google_maps_api_key" 
-                           value="<?php echo esc_attr($google_maps_api_key); ?>" 
-                           class="regular-text" 
+                    <input type="text"
+                           name="acs_google_maps_api_key"
+                           id="acs_google_maps_api_key"
+                           value="<?php echo esc_attr($google_maps_api_key); ?>"
+                           class="regular-text"
                            placeholder="AIza..." />
                     <p class="description">
                         <?php esc_html_e('Optional. Enter your Google Maps API key to enable location autocomplete.', 'acs-agenda-manager'); ?>
@@ -87,10 +87,10 @@ defined('ABSPATH') || exit;
                 </td>
             </tr>
         </table>
-        
+
         <?php submit_button(__('Save Settings', 'acs-agenda-manager')); ?>
     </form>
-    
+
     <div class="card">
         <h2><?php esc_html_e('Usage', 'acs-agenda-manager'); ?></h2>
         <p><?php esc_html_e('Use the shortcode below to display the agenda on any page:', 'acs-agenda-manager'); ?></p>

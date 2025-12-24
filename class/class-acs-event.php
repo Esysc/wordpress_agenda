@@ -11,7 +11,7 @@ defined('ABSPATH') || exit;
  * Handles event data and business logic
  */
 class ACS_Event {
-    
+
     /**
      * Get upcoming events (not expired)
      */
@@ -21,53 +21,53 @@ class ACS_Event {
             'orderby' => 'date',
             'order' => 'ASC',
         ]);
-        
+
         $now = time();
         $events = [];
-        
+
         foreach ($all_events as $event) {
             $processed = self::process_event($event, $now);
-            
+
             if ($processed !== null) {
                 $events[] = $processed;
             }
         }
-        
+
         // Sort by first date
         usort($events, function($a, $b) {
             $date_a = strtotime(str_replace('/', '-', $a['dates'][0]));
             $date_b = strtotime(str_replace('/', '-', $b['dates'][0]));
             return $date_a - $date_b;
         });
-        
+
         return $events;
     }
-    
+
     /**
      * Process a single event and filter expired dates
      */
     private static function process_event(array $event, int $now): ?array {
         $dates = array_filter(array_map('trim', explode(',', $event['date'])));
-        
+
         if (empty($dates)) {
             return null;
         }
-        
+
         $last_date_timestamp = strtotime(str_replace('/', '-', end($dates)));
         $one_day = 24 * 60 * 60;
-        
+
         // Event completely expired
         if ($last_date_timestamp + $one_day < $now) {
             return null;
         }
-        
+
         $candopartial = (int) $event['candopartial'];
         $valid_dates = [];
         $status = null;
-        
+
         foreach ($dates as $date) {
             $date_timestamp = strtotime(str_replace('/', '-', $date));
-            
+
             if ($date_timestamp + $one_day < $now) {
                 // Date has passed
                 if ($candopartial === 0) {
@@ -98,11 +98,11 @@ class ACS_Event {
                 ];
             }
         }
-        
+
         if (empty($valid_dates)) {
             return null;
         }
-        
+
         return [
             'id' => (int) $event['id'],
             'categorie' => $event['categorie'],
@@ -120,23 +120,23 @@ class ACS_Event {
             'status' => $status,
         ];
     }
-    
+
     /**
      * Parse a date string to components
      */
     public static function parse_date(string $date): array {
         $parts = explode('/', $date);
-        
+
         if (count($parts) !== 3) {
             return [];
         }
-        
+
         $day = (int) $parts[0];
         $month = (int) $parts[1];
         $year = (int) $parts[2];
-        
+
         $timestamp = mktime(0, 0, 0, $month, $day, $year);
-        
+
         return [
             'day' => $day,
             'month' => $month,
@@ -146,7 +146,7 @@ class ACS_Event {
             'month_name' => self::get_month_name($month),
         ];
     }
-    
+
     /**
      * Get localized weekday name
      */
@@ -160,10 +160,10 @@ class ACS_Event {
             __('Friday', 'acs-agenda-manager'),
             __('Saturday', 'acs-agenda-manager'),
         ];
-        
+
         return $weekdays[(int) date('w', $timestamp)];
     }
-    
+
     /**
      * Get localized month name
      */
@@ -182,7 +182,7 @@ class ACS_Event {
             11 => __('November', 'acs-agenda-manager'),
             12 => __('December', 'acs-agenda-manager'),
         ];
-        
+
         return $months[$month] ?? '';
     }
 }

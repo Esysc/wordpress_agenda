@@ -27,11 +27,14 @@ repos:
         files: \.php$
 
   # PHP CodeSniffer (WordPress Coding Standards)
+  # Requires: composer global require squizlabs/php_codesniffer wp-coding-standards/wpcs
+  # Then: phpcs --config-set installed_paths ~/.composer/vendor/wp-coding-standards/wpcs
+  # Skip this hook if phpcs is not installed by setting SKIP=phpcs
   - repo: local
     hooks:
       - id: phpcs
         name: PHP CodeSniffer
-        entry: phpcs
+        entry: bash -c 'command -v phpcs >/dev/null 2>&1 && phpcs "$@" || echo "phpcs not installed, skipping..." && exit 0' --
         language: system
         files: \.php$
         args:

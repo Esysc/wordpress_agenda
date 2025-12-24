@@ -15,10 +15,10 @@
 
     <!-- Show progress -->
     <arg value="p"/>
-    
+
     <!-- Use colors -->
     <arg name="colors"/>
-    
+
     <!-- Show sniff codes in reports -->
     <arg value="s"/>
 
@@ -29,10 +29,10 @@
     <rule ref="WordPress">
         <!-- Allow short array syntax -->
         <exclude name="Generic.Arrays.DisallowShortArraySyntax"/>
-        
+
         <!-- Allow short ternary -->
         <exclude name="WordPress.PHP.DisallowShortTernary"/>
-        
+
         <!-- File naming - we use class-* pattern -->
         <exclude name="WordPress.Files.FileName.InvalidClassFileName"/>
         <exclude name="WordPress.Files.FileName.NotHyphenatedLowercase"/>

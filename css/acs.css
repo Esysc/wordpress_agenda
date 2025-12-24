@@ -11,7 +11,7 @@
 :root {
     --acs-primary-color: #353433;
     --acs-secondary-color: #3d4e5b;
-    --acs-accent-color: #2ED5F0;
+    --acs-accent-color: #2ed5f0;
     --acs-danger-color: #f14e4e;
     --acs-warning-color: #f1bb4e;
     --acs-success-color: #84f14e;
@@ -250,7 +250,7 @@
 }
 
 .show:hover {
-    background: #A8ECF7 !important;
+    background: #a8ecf7 !important;
 }
 
 /* ==========================================================================
@@ -342,7 +342,9 @@
     display: block;
 }
 
-input.col-editagenda:not([type="submit"]):not([type="search"]):not([type="checkbox"]):not([type="radio"]),
+input.col-editagenda:not([type='submit']):not([type='search']):not([type='checkbox']):not(
+        [type='radio']
+    ),
 textarea.col-editagenda {
     width: 100%;
     margin: 0;
@@ -360,7 +362,7 @@ textarea.col-editagenda {
 }
 
 .modified-warning {
-    border: 2px solid #FFCC66 !important;
+    border: 2px solid #ffcc66 !important;
 }
 
 /* Admin form error state */
@@ -416,12 +418,12 @@ table.ui-datepicker-calendar {
         display: block;
         width: 100%;
     }
-    
+
     .column-left-container {
         justify-content: flex-start;
         padding: 1em;
     }
-    
+
     .image-agenda {
         max-width: 100%;
     }
@@ -432,7 +434,7 @@ table.ui-datepicker-calendar {
         display: block;
         margin: 0.2em auto;
     }
-    
+
     .container-agenda {
         margin: 0 0.5em;
     }

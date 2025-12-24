@@ -11,22 +11,22 @@ defined('ABSPATH') || exit;
  * Handles plugin settings
  */
 class ACS_Options {
-    
+
     /** @var self|null */
     private static $instance = null;
-    
+
     public static function get_instance(): self {
         if (null === self::$instance) {
             self::$instance = new self();
         }
         return self::$instance;
     }
-    
+
     private function __construct() {
         add_action('admin_menu', [$this, 'add_submenu_page']);
         add_action('admin_init', [$this, 'register_settings']);
     }
-    
+
     public function add_submenu_page(): void {
         add_submenu_page(
             'agenda',
@@ -37,52 +37,52 @@ class ACS_Options {
             [$this, 'render_settings_page']
         );
     }
-    
+
     public function register_settings(): void {
         register_setting('acs_agenda_settings', 'acsagendapage', [
             'type' => 'string',
             'sanitize_callback' => 'sanitize_text_field',
             'default' => 'Agenda',
         ]);
-        
+
         register_setting('acs_agenda_settings', 'acs_google_maps_api_key', [
             'type' => 'string',
             'sanitize_callback' => 'sanitize_text_field',
             'default' => '',
         ]);
     }
-    
+
     public function render_settings_page(): void {
         if (!current_user_can('manage_options')) {
             wp_die(__('Permission denied', 'acs-agenda-manager'));
         }
-        
+
         // Handle form submission
         if (isset($_POST['submit']) && check_admin_referer('acs_agenda_settings_nonce')) {
             $this->save_settings();
         }
-        
+
         $agenda_page = get_option('acsagendapage', 'Agenda');
         $google_maps_api_key = get_option('acs_google_maps_api_key', '');
-        
+
         include ACS_AGENDA_PLUGIN_DIR . 'templates/settings-page.php';
     }
-    
+
     private function save_settings(): void {
         $old_page_name = get_option('acsagendapage', 'Agenda');
         $new_page_name = sanitize_text_field($_POST['acsagendapage'] ?? 'Agenda');
-        
+
         // Save Google Maps API key
         $api_key = sanitize_text_field($_POST['acs_google_maps_api_key'] ?? '');
         update_option('acs_google_maps_api_key', $api_key);
-        
+
         if ($old_page_name !== $new_page_name) {
             // Delete old page
             $old_page = ACS_Agenda_Manager::get_page_by_title($old_page_name);
             if ($old_page) {
                 wp_delete_post($old_page->ID, true);
             }
-            
+
             // Create new page
             $existing_page = ACS_Agenda_Manager::get_page_by_title($new_page_name);
             if (!$existing_page) {
@@ -96,10 +96,10 @@ class ACS_Options {
                     'ping_status' => 'closed',
                 ]);
             }
-            
+
             update_option('acsagendapage', $new_page_name);
         }
-        
+
         add_settings_error(
             'acs_agenda_settings',
             'settings_updated',

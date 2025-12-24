@@ -10,21 +10,21 @@ defined('ABSPATH') || exit;
 
 <div class="wrap">
     <h1 class="wp-heading-inline"><?php esc_html_e('Agenda Manager', 'acs-agenda-manager'); ?></h1>
-    
+
     <a href="<?php echo esc_url($agenda_url); ?>" class="page-title-action" target="_blank">
         <?php esc_html_e('View Agenda', 'acs-agenda-manager'); ?>
     </a>
-    
+
     <hr class="wp-header-end">
-    
+
     <?php if (isset($_GET['deleted'])): ?>
         <div class="notice notice-success is-dismissible">
             <p><?php esc_html_e('Event(s) deleted successfully.', 'acs-agenda-manager'); ?></p>
         </div>
     <?php endif; ?>
-    
+
     <div id="acs-admin-notices"></div>
-    
+
     <div class="tablenav top">
         <div class="alignleft actions">
             <button type="button" class="button button-primary" id="acs-add-event">
@@ -39,7 +39,7 @@ defined('ABSPATH') || exit;
             </button>
         </div>
     </div>
-    
+
     <form method="post" id="acs-events-form">
         <?php
         $this->list_table->prepare_items();
@@ -109,7 +109,7 @@ defined('ABSPATH') || exit;
         <input type="hidden" name="id" id="event-id" value="" />
         <input type="hidden" name="action" id="event-action" value="add_item_agenda" />
         <input type="hidden" name="nonce" value="<?php echo esc_attr(wp_create_nonce('acs_agenda_admin_nonce')); ?>" />
-        
+
         <table class="form-table">
             <tr>
                 <th><label for="event-categorie"><?php esc_html_e('Category', 'acs-agenda-manager'); ?> *</label></th>

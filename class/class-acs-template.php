@@ -11,24 +11,24 @@ defined('ABSPATH') || exit;
  * Handles all template rendering
  */
 class ACS_Template {
-    
+
     /**
      * Render the main agenda display
      */
     public static function render_agenda(array $events): string {
         $output = self::render_admin_link();
         $output .= '<div class="container-agenda">';
-        
+
         foreach ($events as $index => $event) {
             $output .= self::render_event_card($event, $index);
         }
-        
+
         $output .= '</div>';
         $output .= '<div id="postid"></div>';
-        
+
         return $output;
     }
-    
+
     /**
      * Render admin link if user has permissions
      */
@@ -36,65 +36,65 @@ class ACS_Template {
         if (!is_user_logged_in() || !current_user_can('manage_options')) {
             return '';
         }
-        
+
         $admin_url = esc_url(admin_url('admin.php?page=agenda'));
-        
+
         return sprintf(
             '<h3><a href="%s" class="button4 warning">%s</a></h3>',
             $admin_url,
             esc_html__('Agenda Administration', 'acs-agenda-manager')
         );
     }
-    
+
     /**
      * Render a single event card
      */
     private static function render_event_card(array $event, int $index): string {
         $post_id = url_to_postid($event['link']);
         $section_id = 'section-' . $index;
-        
+
         $output = '<div class="acsagenda">';
-        
+
         // Left column - dates
         $output .= self::render_date_column($event);
-        
+
         // Center column - content
         $output .= self::render_content_column($event, $section_id, $post_id);
-        
+
         // Right column - image
         $output .= self::render_image_column($event);
-        
+
         // Contact form shortcode if available
         $output .= self::render_contact_form($event);
-        
+
         $output .= '</div>';
-        
+
         return $output;
     }
-    
+
     /**
      * Render the date column
      */
     private static function render_date_column(array $event): string {
         $years = [];
         $dates_html = '';
-        
+
         foreach ($event['dates_info'] as $date_info) {
             $parsed = ACS_Event::parse_date($date_info['date']);
-            
+
             if (empty($parsed)) {
                 continue;
             }
-            
+
             $years[] = $parsed['year'];
-            
+
             $class = 'ACSdate';
             if (!empty($date_info['today'])) {
                 $class .= ' blink_me';
             } elseif (!empty($date_info['expired'])) {
                 $class .= ' acsagendaexpired';
             }
-            
+
             $dates_html .= sprintf(
                 '<span class="%s">
                     <span class="month">%s</span>
@@ -107,13 +107,13 @@ class ACS_Template {
                 esc_html($parsed['weekday'])
             );
         }
-        
+
         // Determine year display
         $unique_years = array_unique($years);
-        $year_display = count($unique_years) > 1 
+        $year_display = count($unique_years) > 1
             ? implode(' - ', [min($unique_years), max($unique_years)])
             : (string) reset($unique_years);
-        
+
         return sprintf(
             '<div class="column-left">
                 <div class="acsAgenda-title">
@@ -131,7 +131,7 @@ class ACS_Template {
             esc_html($event['emplacement'])
         );
     }
-    
+
     /**
      * Render the content column
      */
@@ -142,7 +142,7 @@ class ACS_Template {
         } elseif ($event['status'] === 'running') {
             $status_badge = '<span class="blink_me">' . esc_html__('Running', 'acs-agenda-manager') . ':&nbsp;</span>';
         }
-        
+
         return sprintf(
             '<div class="column-center" id="%s">
                 <div class="acsAgenda-title">
@@ -165,7 +165,7 @@ class ACS_Template {
             esc_html__('Read more', 'acs-agenda-manager')
         );
     }
-    
+
     /**
      * Render the image column
      */
@@ -178,7 +178,7 @@ class ACS_Template {
             esc_attr($event['title'])
         );
     }
-    
+
     /**
      * Render contact form shortcode if available
      */
@@ -186,7 +186,7 @@ class ACS_Template {
         if (!shortcode_exists('ACScontactform')) {
             return '';
         }
-        
+
         $shortcode = sprintf(
             '[ACScontactform dates="%s" subject="%s" price="%s" account="%s" candopartial="%s" redirect="%s"]',
             esc_attr(implode(',', $event['dates'])),
@@ -196,10 +196,10 @@ class ACS_Template {
             esc_attr($event['candopartial']),
             esc_attr($event['redirect'])
         );
-        
+
         return do_shortcode($shortcode);
     }
-    
+
     /**
      * Render the read more dialog content
      */
