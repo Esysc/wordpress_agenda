@@ -1,0 +1,2 @@
+# Docker volumes are managed by Docker, not Git
+# Nothing to ignore here as volumes are external
