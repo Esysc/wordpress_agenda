@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<ruleset name="ACS Agenda Manager Coding Standards">
+    <description>PHP CodeSniffer ruleset for ACS Agenda Manager WordPress plugin</description>
+
+    <!-- Scan these files -->
+    <file>.</file>
+
+    <!-- Exclude paths -->
+    <exclude-pattern>/vendor/*</exclude-pattern>
+    <exclude-pattern>/node_modules/*</exclude-pattern>
+    <exclude-pattern>/test/*</exclude-pattern>
+    <exclude-pattern>/lang/*</exclude-pattern>
+    <exclude-pattern>*.min.js</exclude-pattern>
+    <exclude-pattern>*.min.css</exclude-pattern>
+
+    <!-- Show progress -->
+    <arg value="p"/>
+    
+    <!-- Use colors -->
+    <arg name="colors"/>
+    
+    <!-- Show sniff codes in reports -->
+    <arg value="s"/>
+
+    <!-- PHP compatibility -->
+    <config name="testVersion" value="7.4-"/>
+
+    <!-- WordPress Coding Standards -->
+    <rule ref="WordPress">
+        <!-- Allow short array syntax -->
+        <exclude name="Generic.Arrays.DisallowShortArraySyntax"/>
+        
+        <!-- Allow short ternary -->
+        <exclude name="WordPress.PHP.DisallowShortTernary"/>
+        
+        <!-- File naming - we use class-* pattern -->
+        <exclude name="WordPress.Files.FileName.InvalidClassFileName"/>
+        <exclude name="WordPress.Files.FileName.NotHyphenatedLowercase"/>
+    </rule>
+
+    <!-- Use short array syntax -->
+    <rule ref="Generic.Arrays.DisallowLongArraySyntax"/>
+
+    <!-- Enforce PSR-4 style class naming for our classes -->
+    <rule ref="Squiz.Classes.ValidClassName"/>
+
+    <!-- Text domain for translations -->
+    <rule ref="WordPress.WP.I18n">
+        <properties>
+            <property name="text_domain" type="array">
+                <element value="acs-agenda-manager"/>
+            </property>
+        </properties>
+    </rule>
+
+    <!-- Prefix for functions/classes -->
+    <rule ref="WordPress.NamingConventions.PrefixAllGlobals">
+        <properties>
+            <property name="prefixes" type="array">
+                <element value="acs"/>
+                <element value="ACS"/>
+            </property>
+        </properties>
+    </rule>
+
+    <!-- Allow some WordPress globals -->
+    <rule ref="WordPress.WP.GlobalVariablesOverride">
+        <properties>
+            <property name="custom_test_class_whitelist" type="array">
+                <element value="wpdb"/>
+            </property>
+        </properties>
+    </rule>
+</ruleset>
