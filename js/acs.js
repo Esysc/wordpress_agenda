@@ -1,3 +1,0 @@
-function fbgenerator() {
-    location.reload()
-    }
