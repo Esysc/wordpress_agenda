@@ -1,296 +1,439 @@
-.acsAgenda-title {
-	color: #888;
-	background: #353433;
-	display: flex;
-	flex-wrap: wrap;
-	align-items: center;
-	justify-content: center;
-        vertical-align: middle;
-	border-radius: 25px;
-	height: 3em;
-        margin: auto;
+/**
+ * ACS Agenda Manager Styles
+ *
+ * @package ACSAgendaManager
+ */
+
+/* ==========================================================================
+   Variables & Base
+   ========================================================================== */
+
+:root {
+    --acs-primary-color: #353433;
+    --acs-secondary-color: #3d4e5b;
+    --acs-accent-color: #2ED5F0;
+    --acs-danger-color: #f14e4e;
+    --acs-warning-color: #f1bb4e;
+    --acs-success-color: #84f14e;
+    --acs-info-color: #4e9af1;
+    --acs-text-color: #555;
+    --acs-border-radius: 25px;
 }
 
-.course-description.acsAgenda {
-	padding: 20px;
+/* ==========================================================================
+   Agenda Container
+   ========================================================================== */
+
+.container-agenda {
+    padding: 1em 2em;
+}
+
+.acs-agenda-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* ==========================================================================
+   Event Card
+   ========================================================================== */
+
+.acsagenda {
+    border-radius: var(--acs-border-radius);
+    border: 1px solid var(--acs-secondary-color);
+    width: 100%;
+    margin: 0 auto 1em;
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+    background-color: #fff;
+    overflow: hidden;
 }
 
 .acsAgenda {
-	position: relative;
-	z-index: 1;
-	padding: 13px 15px;
-	border: 1px solid #e1e1e1;
-	border-bottom: 1px solid #e1e1e1;
-	background: #fff;
-	color: #555;
+    position: relative;
+    z-index: 1;
+    padding: 13px 15px;
+    border: 1px solid #e1e1e1;
+    background: #fff;
+    color: var(--acs-text-color);
 }
 
-.spinner2 {
-	display: block;
-	position: fixed;
-	z-index: 1031;
-	width: 40px;
-	height: 40px;
-	top: calc( 50% - ( 40px));
-	/* where ... is the element's height */
-	right: calc( 50% - ( 40px));
-	/* where ... is the element's width */
-	background-image: url(images/spinner-2x.gif);
-	background-repeat: repeat;
+/* ==========================================================================
+   Title Bar
+   ========================================================================== */
+
+.acsAgenda-title {
+    background: var(--acs-primary-color);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+    border-radius: var(--acs-border-radius);
+    height: 3em;
+    margin: auto;
 }
 
-.container-agenda {
-	padding-bottom: 1em;
-	margin-right: 2em;
-	margin-left: 2em;
-	margin-top: 1em;
+.acsAgenda-title h4 {
+    color: #fff;
+    font-weight: bold;
+    padding-top: 0.4em;
+    margin: 0;
 }
 
-.acsagenda {
-	border-radius: 25px;
-	border: 1px solid #3d4e5b;
-	width: 100%;
-	margin: auto;
-	margin-bottom: 1em;
-	content: "";
-	clear: both;
-	display: table;
-	position: relative;
-	background-color: white;
+/* ==========================================================================
+   Columns Layout
+   ========================================================================== */
+
+.column-left {
+    float: left;
+    width: 15%;
+    margin-bottom: 1em;
+    margin-top: 0.2em;
+    padding-top: 10px;
 }
 
-.column-left{ float:left;width: 15%; margin-bottom: 1em; margin-top:0.2em; padding-top:10px;}
-.column-right{ float: right; width: 20%;margin-bottom: 1em;float: right;margin-top:1em ; display:flex;align-items: center;justify-content: center;  }
-.column-center{ display: inline-block; width: 55%; margin-bottom: 1em; ;margin-top:1em}
-.image-agenda {
-	border-radius: 25px;
-	border: 1px solid #3d4e5b;
-	max-width: 80%;
-	height: auto;
+.column-center {
+    display: inline-block;
+    width: 55%;
+    margin: 1em 0;
+}
+
+.column-right {
+    float: right;
+    width: 20%;
+    margin: 1em 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .column-left-container {
-	padding-top: 2.9em;
-	display: flex;
-	flex-wrap: wrap;
-	align-items: center;
-	justify-content: center;
+    padding-top: 2.9em;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
 }
 
-.placement {
-	text-align: center;
-}
+/* ==========================================================================
+   Date Display
+   ========================================================================== */
 
 .ACSdate {
-	float: left;
-	height: 52px;
-	width: 52px;
-	background: url(date.png) no-repeat;
-	padding-top: 3px;
-	line-height: 1;
-        font-size:0;
+    float: left;
+    height: 52px;
+    width: 52px;
+    background: url(images/date.png) no-repeat;
+    padding-top: 3px;
+    line-height: 1;
+    font-size: 0;
+    margin: 2px;
 }
-.ACSyear {
-  background: #353433;
-  color:white;
-  font-size: 20px;
-  align-items: center;
-  text-align:center;
-  justify-content: center;
-  border-radius: 5px;
-}
+
 .ACSdate .month {
-	display: block;
-	text-align: center;
-	color: #FFF;
-	font-size: 9px;
-	padding-top: 5px;
-	text-transform: uppercase;
+    display: block;
+    text-align: center;
+    color: #fff;
+    font-size: 9px;
+    padding-top: 5px;
+    text-transform: uppercase;
 }
 
 .ACSdate .day {
-	display: block;
-	text-align: center;
-	padding-top: 2px;
-	color: #222;
-	font-size: 18px;
-	font-weight: bold;
-        
+    display: block;
+    text-align: center;
+    padding-top: 2px;
+    color: #222;
+    font-size: 18px;
+    font-weight: bold;
 }
 
 .ACSdate .week {
-	display: block;
-	text-align: center;
-	top: 0;
-	color: #222;
-	font-size: 9px;
-	font-weight: bold;
+    display: block;
+    text-align: center;
+    color: #222;
+    font-size: 9px;
+    font-weight: bold;
 }
 
-@media screen and (max-width: 960px) {
-	.column-left {
-		float: none;
-		width: 100%;
-	}
-	.column-right {
-		float: none;
-		width: 100%;
-	}
-	.column-center {
-		display: block;
-		width: 100%;
-	}
+.ACSyear {
+    background: var(--acs-primary-color);
+    color: #fff;
+    font-size: 20px;
+    text-align: center;
+    border-radius: 5px;
+    padding: 5px 10px;
 }
+
+/* ==========================================================================
+   Location & Description
+   ========================================================================== */
+
+.placement {
+    text-align: center;
+}
+
+.placement h5 {
+    padding-top: 1em;
+}
+
+.course-description.acsAgenda {
+    padding: 20px;
+}
+
+/* ==========================================================================
+   Image
+   ========================================================================== */
+
+.image-agenda {
+    border-radius: var(--acs-border-radius);
+    border: 1px solid var(--acs-secondary-color);
+    max-width: 80%;
+    height: auto;
+}
+
+/* ==========================================================================
+   Buttons
+   ========================================================================== */
 
 .button4 {
-    display:inline-block;
-    padding:0.3em 1.2em 0.3em 1.2em;
-    margin:0 0.1em 0.1em 0;
-    border:0.16em solid rgba(255,255,255,0);
-    border-radius:2em!important;
+    display: inline-block;
+    padding: 0.3em 1.2em;
+    margin: 0 0.1em 0.1em 0;
+    border: 0.16em solid transparent;
+    border-radius: 2em !important;
     box-sizing: border-box;
-    box-sizing: border-box;
-    text-decoration:none;
-    font-family:'Roboto',sans-serif;
-    font-weight:bold!important;
-    color:#FFFFFF!important;
-    text-shadow: 0 0.04em 0.04em rgba(0,0,0,0.35);
-    text-align:center;
-    transition: all 0.2s;
+    text-decoration: none;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold !important;
+    color: #fff !important;
+    text-shadow: 0 0.04em 0.04em rgba(0, 0, 0, 0.35);
+    text-align: center;
+    transition: all 0.2s ease;
     cursor: pointer;
-    width:100%;
-    font-size:0.8em;
-}
-.button4:hover{
- border-color: rgba(255,255,255,1);
-}
-@media all and (max-width:30em){
- .button4{
-  display:block;
-  margin:0.2em auto;
- }
+    font-size: 0.8em;
 }
 
-.row-actions span {
-    display: block
+.button4:hover {
+    border-color: rgba(255, 255, 255, 1);
 }
+
 .button4.danger {
-	background-color: #f14e4e;
+    background-color: var(--acs-danger-color);
 }
 
 .button4.warning {
-	background-color: #f1bb4e;
+    background-color: var(--acs-warning-color);
 }
 
 .button4.success {
-	background-color: #84f14e;
+    background-color: var(--acs-success-color);
 }
 
 .button4.info {
-	background-color: #4e9af1;
+    background-color: var(--acs-info-color);
 }
 
-input.col-editagenda:not([type="submit"]):not([type="search"]):not([type="checkbox"]):not([type="radio"]),
-textarea {
-	width: 100%;
-	margin: 0px;
-}
-
-.alert {
-	border: 1pt solid grey;
-	padding-left: 2px;
-}
-
-.alert-success {
-	border-left: 2pt solid green;
-}
-
-.modified-warning {
-	border: 2pt solid #FFCC66!important;
-}
-
-#close {
-	position: sticky;
-	top: 5px;
-	left: 90%;
-	height: 50px;
-	width: 50px;
-	z-index: 9999999999;
-	background: #223445;
-	color: #FFF;
-	display: block;
-	font-size: 1.5em;
-	padding: 0.5em;
-	border: 1px solid #223445!important;
-	border-radius: 18px!important;
-	-webkit-font-smoothing: antialiased!important;
-}
-
+/* Read More Button */
 .show {
-	width: 200px;
-}
-
-.show {
-	background: #2ED5F0!important;
-	border: none;
-	color: #000;
-	display: block;
-	font-size: 1em;
-	padding: 1em;
+    background: var(--acs-accent-color) !important;
+    border: none;
+    color: #000;
+    display: block;
+    font-size: 1em;
+    padding: 1em;
+    width: 200px;
+    cursor: pointer;
+    transition: background 0.2s ease;
 }
 
 .show:hover {
-	background: #A8ECF7;
-	cursor: pointer;
+    background: #A8ECF7 !important;
 }
 
-#close:hover {
-	background: #000000;
-	cursor: pointer;
-}
+/* ==========================================================================
+   Dialog
+   ========================================================================== */
 
 #dialog {
-	display: none;
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	border: 1px solid #eee;
-	border-radius: 4px;
-	padding: 10px;
-	background-color: #FFF;
-	z-index: 1;
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    padding: 10px;
+    background-color: #fff;
+    z-index: 1;
+    overflow-y: auto;
 }
 
 #dialog.shown {
-	display: flex;
-	flex-direction: column;
-	z-index: 999999;
-	overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    z-index: 999999;
 }
 
+#close {
+    position: sticky;
+    top: 5px;
+    left: 90%;
+    height: 50px;
+    width: 50px;
+    z-index: 9999999999;
+    background: #223445;
+    color: #fff;
+    display: block;
+    font-size: 1.5em;
+    padding: 0.5em;
+    border: 1px solid #223445 !important;
+    border-radius: 18px !important;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+#close:hover {
+    background: #000;
+}
+
+/* ==========================================================================
+   Animations
+   ========================================================================== */
+
 .blink_me {
-	animation: blinker 3s linear infinite;
+    animation: blinker 3s linear infinite;
 }
 
 @keyframes blinker {
-	50% {
-		opacity: 0;
-	}
+    50% {
+        opacity: 0;
+    }
 }
+
 .acsagendaexpired {
-		opacity: 0.5;
-	}
-/* jQuery UI Datepicker moving pixels fix */
-table.ui-datepicker-calendar {border-collapse: separate;}
-.ui-datepicker-calendar td {border: 1px solid transparent;}
+    opacity: 0.5;
+}
 
-/* jQuery UI Datepicker hide datepicker helper */
-#ui-datepicker-div {display:none;}
+/* ==========================================================================
+   Spinner
+   ========================================================================== */
 
-/* jQuery UI Datepicker emphasis on selected dates */
+.spinner2 {
+    display: block;
+    position: fixed;
+    z-index: 1031;
+    width: 40px;
+    height: 40px;
+    top: calc(50% - 20px);
+    right: calc(50% - 20px);
+    background-image: url(images/spinner-2x.gif);
+    background-repeat: no-repeat;
+}
+
+/* ==========================================================================
+   Admin Styles
+   ========================================================================== */
+
+.row-actions span {
+    display: block;
+}
+
+input.col-editagenda:not([type="submit"]):not([type="search"]):not([type="checkbox"]):not([type="radio"]),
+textarea.col-editagenda {
+    width: 100%;
+    margin: 0;
+}
+
+.alert {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 5px 0;
+}
+
+.alert-success {
+    border-left: 3px solid #46b450;
+    background: #ecf7ed;
+}
+
+.modified-warning {
+    border: 2px solid #FFCC66 !important;
+}
+
+/* Admin form error state */
+input.error,
+textarea.error,
+select.error {
+    border-color: var(--acs-danger-color) !important;
+    box-shadow: 0 0 2px var(--acs-danger-color);
+}
+
+/* Datepicker container */
+#acs-datepicker-container {
+    margin-top: 10px;
+}
+
+#acs-datepicker-container.active {
+    padding: 10px;
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+/* ==========================================================================
+   jQuery UI Datepicker Fixes
+   ========================================================================== */
+
+table.ui-datepicker-calendar {
+    border-collapse: separate;
+}
+
+.ui-datepicker-calendar td {
+    border: 1px solid transparent;
+}
+
+#ui-datepicker-div {
+    display: none;
+}
+
 .ui-datepicker .ui-datepicker-calendar .ui-state-highlight a {
-	background: #245da3 none;
-	color: white;
-} 
+    background: #245da3;
+    color: #fff;
+}
+
+/* ==========================================================================
+   Responsive Design
+   ========================================================================== */
+
+@media screen and (max-width: 960px) {
+    .column-left,
+    .column-right,
+    .column-center {
+        float: none;
+        display: block;
+        width: 100%;
+    }
+    
+    .column-left-container {
+        justify-content: flex-start;
+        padding: 1em;
+    }
+    
+    .image-agenda {
+        max-width: 100%;
+    }
+}
+
+@media all and (max-width: 30em) {
+    .button4 {
+        display: block;
+        margin: 0.2em auto;
+    }
+    
+    .container-agenda {
+        margin: 0 0.5em;
+    }
+}

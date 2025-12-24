@@ -1,25 +1,41 @@
 <?php
-/**custom agenda pageall single posts and attachments
+/**
+ * Custom agenda page template
  *
- * @package ACSagendaManager
- * @subpackage page-agenda.php
- * @since ACSagendaManager 1.0
+ * This template is used to display the agenda page with consistent styling
+ * across different WordPress themes.
+ *
+ * @package ACSAgendaManager
+ * @since 1.0.0
  */
 
-get_header(); ?>
+defined('ABSPATH') || exit;
 
-<div id="primary" class="content-area">
-		<?php
-		// Start the loop.
-		while ( have_posts() ) :
-			the_post();
-			the_content();
-			// End the loop.
-		endwhile;
-		?>
-	<?php get_sidebar( 'content-bottom' ); ?>
+get_header();
+?>
 
-</div><!-- .content-area -->
+<main id="primary" class="site-main content-area">
+    <div class="acs-agenda-wrapper">
+        <?php
+        while (have_posts()) :
+            the_post();
+            ?>
+            <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+                <header class="entry-header">
+                    <?php the_title('<h1 class="entry-title">', '</h1>'); ?>
+                </header>
 
-<?php get_sidebar(); ?>
-<?php get_footer(); ?>
+                <div class="entry-content">
+                    <?php the_content(); ?>
+                </div>
+            </article>
+            <?php
+        endwhile;
+        ?>
+    </div>
+</main>
+
+<?php
+get_sidebar();
+get_footer();
+?>
