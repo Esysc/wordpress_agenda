@@ -39,7 +39,23 @@ $agenda_page = get_option('acsagendapage', 'Agenda');
                     <li><?php esc_html_e('Go to Agenda in the admin menu to view your events list', 'acs-agenda-manager'); ?></li>
                     <li><?php esc_html_e('Click "Add New Event" to create your first event', 'acs-agenda-manager'); ?></li>
                     <li><?php esc_html_e('Fill in the event details and click Add', 'acs-agenda-manager'); ?></li>
-                    <li><?php printf(esc_html__('Visit your %s page to see your events', 'acs-agenda-manager'), '<strong>' . esc_html($agenda_page) . '</strong>'); ?></li>
+                    <?php
+                    /* translators: %s: agenda page name. */
+                    $page_label = sprintf('<strong>%s</strong>', esc_html($agenda_page));
+                    ?>
+                    <li>
+                        <?php
+                        /* translators: %s: agenda page name. */
+                        printf(
+                            wp_kses(
+                                /* translators: %s: agenda page name. */
+                                esc_html__('Visit your %s page to see your events', 'acs-agenda-manager'),
+                                ['strong' => []]
+                            ),
+                            wp_kses($page_label, ['strong' => []])
+                        );
+                        ?>
+                    </li>
                 </ol>
             </section>
 
@@ -145,7 +161,23 @@ $agenda_page = get_option('acsagendapage', 'Agenda');
                 <p><?php esc_html_e('The shortcode will display all upcoming events in a responsive card layout. Past events are automatically hidden based on their Partial Attendance setting.', 'acs-agenda-manager'); ?></p>
 
                 <h3><?php esc_html_e('Default Agenda Page', 'acs-agenda-manager'); ?></h3>
-                <p><?php printf(esc_html__('The plugin creates a page called "%s" upon activation. You can change this name in Settings.', 'acs-agenda-manager'), esc_html($agenda_page)); ?></p>
+                <?php
+                /* translators: %s: agenda page name. */
+                $page_label = sprintf('<strong>%s</strong>', esc_html($agenda_page));
+                ?>
+                <p>
+                    <?php
+                    /* translators: %s: agenda page name. */
+                    printf(
+                        wp_kses(
+                            /* translators: %s: agenda page name. */
+                            esc_html__('The plugin creates a page called "%s" upon activation. You can change this name in Settings.', 'acs-agenda-manager'),
+                            ['strong' => []]
+                        ),
+                        wp_kses($page_label, ['strong' => []])
+                    );
+                    ?>
+                </p>
             </section>
 
             <!-- Partial Attendance -->
@@ -217,7 +249,7 @@ $agenda_page = get_option('acsagendapage', 'Agenda');
                 <h3><?php esc_html_e('Template Override', 'acs-agenda-manager'); ?></h3>
                 <p><?php esc_html_e('For complete control over the agenda display, copy the template file from the plugin to your theme:', 'acs-agenda-manager'); ?></p>
                 <ol>
-                    <li><?php esc_html_e('Copy: wp-content/plugins/ACSagendaManager/themefiles/page-agenda.php', 'acs-agenda-manager'); ?></li>
+                    <li><?php esc_html_e('Copy: wp-content/plugins/acs-agenda-manager/themefiles/page-agenda.php', 'acs-agenda-manager'); ?></li>
                     <li><?php esc_html_e('Paste to: wp-content/themes/your-theme/page-agenda.php', 'acs-agenda-manager'); ?></li>
                     <li><?php esc_html_e('Customize the template as needed', 'acs-agenda-manager'); ?></li>
                 </ol>
@@ -250,9 +282,17 @@ $agenda_page = get_option('acsagendapage', 'Agenda');
                 <h3><?php esc_html_e('Need more help?', 'acs-agenda-manager'); ?></h3>
                 <p>
                     <?php
+                    /* translators: %s: link to the GitHub issues page. */
                     printf(
-                        esc_html__('Visit our %s for support and feature requests.', 'acs-agenda-manager'),
-                        '<a href="https://github.com/Esysc/wordpress_agenda/issues" target="_blank">' . esc_html__('GitHub Issues page', 'acs-agenda-manager') . '</a>'
+                        wp_kses(
+                            /* translators: %s: link to the GitHub issues page. */
+                            esc_html__('Visit our %s for support and feature requests.', 'acs-agenda-manager'),
+                            ['a' => ['href' => [], 'target' => []]]
+                        ),
+                        wp_kses(
+                            '<a href="https://github.com/Esysc/wordpress_agenda/issues" target="_blank">' . esc_html__('GitHub Issues page', 'acs-agenda-manager') . '</a>',
+                            ['a' => ['href' => [], 'target' => []]]
+                        )
                     );
                     ?>
                 </p>

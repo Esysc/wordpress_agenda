@@ -40,7 +40,7 @@ This plugin integrates with the ACScontactform plugin to provide event registrat
 
 == Installation ==
 
-1. Upload the `ACSagendaManager` folder to the `/wp-content/plugins/` directory
+1. Upload the `acs-agenda-manager` folder to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. Navigate to Agenda in the admin menu to start adding events
 

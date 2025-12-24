@@ -4,6 +4,10 @@ set -e
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 cd "$SCRIPT_DIR"
 
+PLUGIN_SRC="$(cd "$SCRIPT_DIR/.." && pwd)"
+BUILD_DIR="$SCRIPT_DIR/.build"
+PLUGIN_DEST="$BUILD_DIR/acs-agenda-manager"
+
 echo "================================================"
 echo "  ACS Agenda Manager - Test Environment"
 echo "================================================"
@@ -14,6 +18,29 @@ if ! docker info > /dev/null 2>&1; then
     echo "❌ Error: Docker is not running. Please start Docker Desktop first."
     exit 1
 fi
+
+# Stage a clean copy of the plugin (exclude dev/test files)
+echo "📦 Staging plugin files..."
+rm -rf "$PLUGIN_DEST"
+mkdir -p "$BUILD_DIR"
+rsync -a "$PLUGIN_SRC"/ "$PLUGIN_DEST"/ \
+    --delete \
+    --exclude '.git/' \
+    --exclude '.gitignore' \
+    --exclude '.gitattributes' \
+    --exclude '.prettierignore' \
+    --exclude '.prettierrc' \
+    --exclude '.eslintrc.json' \
+    --exclude '.secrets.baseline' \
+    --exclude 'test/' \
+    --exclude 'test-results/' \
+    --exclude 'wp-cli/' \
+    --exclude 'themefiles/' \
+    --exclude 'README.md' \
+    --exclude 'CHANGELOG.md' \
+    --exclude 'phpcs.xml' \
+    --exclude 'lang/*.po' \
+    --exclude 'lang/*.pot'
 
 # Make setup script executable
 chmod +x wp-cli/setup.sh

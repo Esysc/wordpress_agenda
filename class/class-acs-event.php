@@ -161,7 +161,7 @@ class ACS_Event {
             __('Saturday', 'acs-agenda-manager'),
         ];
 
-        return $weekdays[(int) date('w', $timestamp)];
+        return $weekdays[(int) gmdate('w', $timestamp)];
     }
 
     /**

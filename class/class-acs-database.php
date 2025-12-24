@@ -8,9 +8,14 @@
 defined('ABSPATH') || exit;
 
 /**
- * Handles all database operations
+ * Handles all database operations with proper caching
  */
 class ACS_Database {
+
+    /**
+     * Cache group for this plugin
+     */
+    private const CACHE_GROUP = 'acs_agenda_manager';
 
     /**
      * Get full table name with prefix
@@ -59,42 +64,15 @@ class ACS_Database {
      * Update database schema for plugin updates
      */
     public static function update_schema(): bool {
-        global $wpdb;
+        return self::create_table();
+    }
 
-        $table_name = self::get_table_name();
-
-        // Check if table exists
-        $table_exists = $wpdb->get_var(
-            $wpdb->prepare("SHOW TABLES LIKE %s", $table_name)
-        );
-
-        if (!$table_exists) {
-            return self::create_table();
-        }
-
-        // Get existing columns
-        $existing_columns = $wpdb->get_col("DESC {$table_name}", 0);
-
-        $required_columns = [
-            'redirect' => 'VARCHAR(255) DEFAULT NULL',
-            'created_at' => 'TIMESTAMP DEFAULT CURRENT_TIMESTAMP',
-            'updated_at' => 'TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP',
-        ];
-
-        $alterations = [];
-
-        foreach ($required_columns as $column => $definition) {
-            if (!in_array($column, $existing_columns, true)) {
-                $alterations[] = "ADD COLUMN {$column} {$definition}";
-            }
-        }
-
-        if (!empty($alterations)) {
-            $sql = "ALTER TABLE {$table_name} " . implode(', ', $alterations);
-            $wpdb->query($sql);
-        }
-
-        return empty($wpdb->last_error);
+    /**
+     * Clear all caches for this plugin
+     */
+    public static function clear_cache(): void {
+        wp_cache_delete('event_filters', self::CACHE_GROUP);
+        wp_cache_flush_group(self::CACHE_GROUP);
     }
 
     /**
@@ -113,37 +91,61 @@ class ACS_Database {
         ];
 
         $args = wp_parse_args($args, $defaults);
+
+        // Generate cache key from arguments
+        $cache_key = 'events_' . md5(wp_json_encode($args));
+        $cached = wp_cache_get($cache_key, self::CACHE_GROUP);
+
+        if (false !== $cached) {
+            return $cached;
+        }
+
         $table_name = self::get_table_name();
 
-        $sql = "SELECT * FROM {$table_name} WHERE 1=1";
+        $clauses = ['1=1'];
         $params = [];
 
         if (!empty($args['search'])) {
-            $search = '%' . $wpdb->esc_like($args['search']) . '%';
-            $sql .= " AND (categorie LIKE %s OR title LIKE %s OR intro LIKE %s OR date LIKE %s)";
+            $search = '%' . $wpdb->esc_like(sanitize_text_field($args['search'])) . '%';
+            $clauses[] = '(categorie LIKE %s OR title LIKE %s OR intro LIKE %s OR date LIKE %s)';
             $params = array_merge($params, [$search, $search, $search, $search]);
         }
 
         if (!empty($args['filter'])) {
-            $filter_parts = explode('-', $args['filter']);
+            $filter_parts = explode('-', sanitize_text_field($args['filter']));
             if (!empty($filter_parts[0])) {
-                $sql .= " AND title LIKE %s";
-                $params[] = '%' . $wpdb->esc_like($filter_parts[0]) . '%';
+                $filter_like = '%' . $wpdb->esc_like($filter_parts[0]) . '%';
+                $clauses[] = 'title LIKE %s';
+                $params[] = $filter_like;
             }
         }
 
-        $allowed_orderby = ['id', 'categorie', 'title', 'date', 'price', 'created_at', 'updated_at'];
-        $orderby = in_array($args['orderby'], $allowed_orderby, true) ? $args['orderby'] : 'id';
-        $order = strtoupper($args['order']) === 'ASC' ? 'ASC' : 'DESC';
+        $params[] = (int) $args['per_page'];
+        $params[] = (int) (($args['page'] - 1) * $args['per_page']);
 
-        $sql .= " ORDER BY {$orderby} {$order}";
-        $sql .= $wpdb->prepare(" LIMIT %d OFFSET %d", $args['per_page'], ($args['page'] - 1) * $args['per_page']);
+        $clauses_sql = implode(' AND ', $clauses);
 
-        if (!empty($params)) {
-            $sql = $wpdb->prepare($sql, $params);
-        }
+        /*
+         * Table name is safe - comes from get_table_name() which uses $wpdb->prefix + constant.
+         * Clauses are hardcoded SQL fragments with %s placeholders for user input.
+         * WordPress doesn't have an identifier placeholder for table names.
+         * phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery
+         * phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+         * phpcs:disable WordPress.DB.PreparedSQLPlaceholders.ReplacementsWrongNumber
+         * phpcs:disable PluginCheck.Security.DirectDB.UnescapedDBParameter
+         */
+        $results = $wpdb->get_results(
+            $wpdb->prepare(
+                "SELECT * FROM {$table_name} WHERE {$clauses_sql} ORDER BY id DESC LIMIT %d OFFSET %d",
+                ...$params
+            ),
+            ARRAY_A
+        ) ?: [];
+        // phpcs:enable
 
-        return $wpdb->get_results($sql, ARRAY_A) ?: [];
+        wp_cache_set($cache_key, $results, self::CACHE_GROUP, HOUR_IN_SECONDS);
+
+        return $results;
     }
 
     /**
@@ -152,21 +154,49 @@ class ACS_Database {
     public static function count_events(array $args = []): int {
         global $wpdb;
 
+        // Generate cache key from search argument
+        $cache_key = 'count_' . md5(wp_json_encode($args));
+        $cached = wp_cache_get($cache_key, self::CACHE_GROUP);
+
+        if (false !== $cached) {
+            return (int) $cached;
+        }
+
         $table_name = self::get_table_name();
-        $sql = "SELECT COUNT(*) FROM {$table_name} WHERE 1=1";
+        $clauses = ['1=1'];
         $params = [];
 
         if (!empty($args['search'])) {
-            $search = '%' . $wpdb->esc_like($args['search']) . '%';
-            $sql .= " AND (categorie LIKE %s OR title LIKE %s OR intro LIKE %s)";
+            $search = '%' . $wpdb->esc_like(sanitize_text_field($args['search'])) . '%';
+            $clauses[] = '(categorie LIKE %s OR title LIKE %s OR intro LIKE %s)';
             $params = [$search, $search, $search];
         }
 
-        if (!empty($params)) {
-            $sql = $wpdb->prepare($sql, $params);
-        }
+        $where_sql = implode(' AND ', $clauses);
 
-        return (int) $wpdb->get_var($sql);
+        /*
+         * Table name is safe - comes from get_table_name() which uses $wpdb->prefix + constant.
+         * Where clauses are hardcoded SQL fragments with %s placeholders.
+         * phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery
+         * phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+         * phpcs:disable WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare
+         * phpcs:disable PluginCheck.Security.DirectDB.UnescapedDBParameter
+         */
+        if (!empty($params)) {
+            $count = (int) $wpdb->get_var(
+                $wpdb->prepare(
+                    "SELECT COUNT(*) FROM {$table_name} WHERE {$where_sql}",
+                    ...$params
+                )
+            );
+        } else {
+            $count = (int) $wpdb->get_var("SELECT COUNT(*) FROM {$table_name} WHERE {$where_sql}");
+        }
+        // phpcs:enable
+
+        wp_cache_set($cache_key, $count, self::CACHE_GROUP, HOUR_IN_SECONDS);
+
+        return $count;
     }
 
     /**
@@ -175,11 +205,29 @@ class ACS_Database {
     public static function get_event(int $id): ?array {
         global $wpdb;
 
+        $cache_key = 'event_' . $id;
+        $cached = wp_cache_get($cache_key, self::CACHE_GROUP);
+
+        if (false !== $cached) {
+            return $cached ?: null;
+        }
+
         $table_name = self::get_table_name();
+
+        /*
+         * Table name is safe - comes from get_table_name().
+         * phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery
+         * phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+         * phpcs:disable PluginCheck.Security.DirectDB.UnescapedDBParameter
+         */
         $result = $wpdb->get_row(
             $wpdb->prepare("SELECT * FROM {$table_name} WHERE id = %d", $id),
             ARRAY_A
         );
+        // phpcs:enable
+
+        // Cache the result (empty array if not found, to cache negative lookups)
+        wp_cache_set($cache_key, $result ?: [], self::CACHE_GROUP, HOUR_IN_SECONDS);
 
         return $result ?: null;
     }
@@ -193,9 +241,16 @@ class ACS_Database {
         $table_name = self::get_table_name();
         $sanitized = self::sanitize_event_data($data);
 
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery -- Custom plugin table.
         $wpdb->insert($table_name, $sanitized);
 
-        return (int) $wpdb->insert_id;
+        $insert_id = (int) $wpdb->insert_id;
+
+        if ($insert_id) {
+            self::clear_cache();
+        }
+
+        return $insert_id;
     }
 
     /**
@@ -207,7 +262,12 @@ class ACS_Database {
         $table_name = self::get_table_name();
         $sanitized = self::sanitize_event_data($data);
 
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Custom plugin table, cache cleared after.
         $result = $wpdb->update($table_name, $sanitized, ['id' => $id]);
+
+        if (false !== $result) {
+            self::clear_cache();
+        }
 
         return $result !== false;
     }
@@ -219,7 +279,13 @@ class ACS_Database {
         global $wpdb;
 
         $table_name = self::get_table_name();
+
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Custom plugin table, cache cleared after.
         $result = $wpdb->delete($table_name, ['id' => $id], ['%d']);
+
+        if (false !== $result) {
+            self::clear_cache();
+        }
 
         return $result !== false;
     }
@@ -230,12 +296,30 @@ class ACS_Database {
     public static function get_event_filters(): array {
         global $wpdb;
 
+        $cache_key = 'event_filters';
+        $cached = wp_cache_get($cache_key, self::CACHE_GROUP);
+
+        if (false !== $cached) {
+            return $cached;
+        }
+
         $table_name = self::get_table_name();
 
-        return $wpdb->get_results(
+        /*
+         * Table name is safe - comes from get_table_name().
+         * phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery
+         * phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+         * phpcs:disable PluginCheck.Security.DirectDB.UnescapedDBParameter
+         */
+        $results = $wpdb->get_results(
             "SELECT DISTINCT title, categorie FROM {$table_name} ORDER BY title ASC",
             ARRAY_A
         ) ?: [];
+        // phpcs:enable
+
+        wp_cache_set($cache_key, $results, self::CACHE_GROUP, HOUR_IN_SECONDS);
+
+        return $results;
     }
 
     /**

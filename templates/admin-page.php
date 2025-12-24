@@ -17,7 +17,10 @@ defined('ABSPATH') || exit;
 
     <hr class="wp-header-end">
 
-    <?php if (isset($_GET['deleted'])): ?>
+    <?php
+    // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Display-only notice, no data processing.
+    if (isset($_GET['deleted'])):
+    ?>
         <div class="notice notice-success is-dismissible">
             <p><?php esc_html_e('Event(s) deleted successfully.', 'acs-agenda-manager'); ?></p>
         </div>
@@ -41,6 +44,7 @@ defined('ABSPATH') || exit;
     </div>
 
     <form method="post" id="acs-events-form">
+        <?php wp_nonce_field('acs_agenda_admin_form', 'acs_agenda_admin_form_nonce'); ?>
         <?php
         $this->list_table->prepare_items();
         $this->list_table->search_box(__('Search Events', 'acs-agenda-manager'), 'event-search');
