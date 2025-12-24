@@ -78,7 +78,7 @@ echo ""
 echo "================================================"
 
 # GitHub Release (optional)
-if [ "$DO_RELEASE" = "release" ]; then
+if [ "$DO_RELEASE" = "release" ] || [ "$DO_RELEASE" = "--release" ]; then
     echo ""
     echo "[*] Creating GitHub Release..."
 
