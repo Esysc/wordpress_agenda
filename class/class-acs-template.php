@@ -111,24 +111,29 @@ class ACS_Template {
         // Determine year display
         $unique_years = array_unique($years);
         $year_display = count($unique_years) > 1
-            ? implode(' - ', [min($unique_years), max($unique_years)])
+            ? implode('-', [min($unique_years), max($unique_years)])
             : (string) reset($unique_years);
+
+        // Build location HTML only if location exists
+        $location_html = '';
+        if (!empty($event['emplacement'])) {
+            $location_html = sprintf(
+                '<div class="placement">
+                    <h5><span class="dashicons dashicons-location"></span> %s</h5>
+                </div>',
+                esc_html($event['emplacement'])
+            );
+        }
 
         return sprintf(
             '<div class="column-left">
-                <div class="acsAgenda-title">
-                    <h4 style="color: white; font-weight:bold; padding-top: 0.4em;">%s</h4>
-                </div>
                 <div class="column-left-container">%s</div>
-                <div class="placement">
-                    <h5 style="padding-top:1em">
-                        <span class="dashicons dashicons-location"></span>&nbsp;%s
-                    </h5>
-                </div>
+                <span class="ACSyear">%s</span>
+                %s
             </div>',
-            esc_html($year_display),
             $dates_html,
-            esc_html($event['emplacement'])
+            esc_html($year_display),
+            $location_html
         );
     }
 
@@ -138,25 +143,36 @@ class ACS_Template {
     private static function render_content_column(array $event, string $section_id, int $post_id): string {
         $status_badge = '';
         if ($event['status'] === 'today') {
-            $status_badge = '<span class="blink_me">' . esc_html__('Today', 'acs-agenda-manager') . ':&nbsp;</span>';
+            $status_badge = '<span class="status-badge status-today">' . esc_html__('Today', 'acs-agenda-manager') . '</span>';
         } elseif ($event['status'] === 'running') {
-            $status_badge = '<span class="blink_me">' . esc_html__('Running', 'acs-agenda-manager') . ':&nbsp;</span>';
+            $status_badge = '<span class="status-badge status-running">' . esc_html__('Running', 'acs-agenda-manager') . '</span>';
+        }
+
+        // Build category badge if exists
+        $category_html = '';
+        if (!empty($event['categorie'])) {
+            $category_html = sprintf(
+                '<span class="category-badge">%s</span>',
+                esc_html($event['categorie'])
+            );
         }
 
         return sprintf(
             '<div class="column-center" id="%s">
-                <div class="acsAgenda-title">
-                    <h4 style="color: white; font-weight:bold; padding-top: 0.4em;">%s%s</h4>
+                <div class="event-header">
+                    %s%s
                 </div>
-                <h3 style="text-align:center;">%s</h3>
-                <div class="course-description acsAgenda">
-                    <h5>%s</h5>
-                    <button data-href="%s" class="readmore show" data-postid="%d" data-id="%s">%s</button>
+                <h3 class="event-title">%s</h3>
+                <div class="event-intro">
+                    <p>%s</p>
                 </div>
+                <button data-href="%s" class="readmore show" data-postid="%d" data-id="%s">
+                    %s <span class="dashicons dashicons-arrow-right-alt2"></span>
+                </button>
             </div>',
             esc_attr($section_id),
             $status_badge,
-            esc_html($event['categorie']),
+            $category_html,
             esc_html($event['title']),
             esc_html($event['intro']),
             esc_url($event['link']),
@@ -170,12 +186,21 @@ class ACS_Template {
      * Render the image column
      */
     private static function render_image_column(array $event): string {
+        // Skip if no image provided
+        if (empty($event['image'])) {
+            return '';
+        }
+
         return sprintf(
             '<div class="column-right">
-                <img src="%s" class="image-agenda" alt="%s" loading="lazy" />
+                <img src="%s" class="image-agenda" alt="%s" loading="lazy" data-full-src="%s" role="button" tabindex="0" />
+                <span class="image-expand-hint">
+                    <span class="dashicons dashicons-search"></span>
+                </span>
             </div>',
             esc_url($event['image']),
-            esc_attr($event['title'])
+            esc_attr($event['title']),
+            esc_url($event['image'])
         );
     }
 

@@ -134,11 +134,8 @@ final class ACS_Agenda_Manager {
             'acs-multidatespicker',
             ACS_AGENDA_PLUGIN_URL . 'js/jquery-ui-multidatespicker.min.js',
             ['jquery-ui-datepicker'],
-            ACS_AGENDA_VERSION,
-            [
-                'in_footer' => true,
-                'strategy' => 'defer',
-            ]
+            '1.6.6',
+            true
         );
 
         wp_enqueue_script(

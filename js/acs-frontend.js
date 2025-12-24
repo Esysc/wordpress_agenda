@@ -19,8 +19,85 @@
          * Bind event handlers
          */
         bindEvents: function () {
+            const self = this;
+
             $(document).on('click', '.readmore', this.handleReadMore.bind(this));
             $(window).on('scroll', this.trackScroll);
+
+            // Image lightbox - use delegation on document
+            $(document).on('click', '.image-agenda', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                self.openLightbox(e);
+            });
+
+            $(document).on('keydown', '.image-agenda', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    self.openLightbox(e);
+                }
+            });
+
+            // Lightbox close handlers
+            $(document).on('click', '#acs-lightbox-overlay', function(e) {
+                self.closeLightbox(e);
+            });
+
+            $(document).on('click', '.acs-lightbox-close', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                self.closeLightbox();
+            });
+
+            $(document).on('keydown', function(e) {
+                if ($('#acs-lightbox-overlay').hasClass('active') && e.key === 'Escape') {
+                    self.closeLightbox();
+                }
+            });
+        },
+
+        /**
+         * Open lightbox with full-size image
+         */
+        openLightbox: function (e) {
+            const $img = $(e.currentTarget);
+            const fullSrc = $img.data('full-src') || $img.attr('src');
+            const alt = $img.attr('alt') || '';
+
+            // Create lightbox if it doesn't exist
+            if ($('#acs-lightbox-overlay').length === 0) {
+                $('body').append(
+                    '<div id="acs-lightbox-overlay" role="dialog" aria-modal="true" aria-label="Image preview">' +
+                    '<button class="acs-lightbox-close" aria-label="Close">&times;</button>' +
+                    '<img class="acs-lightbox-image" src="" alt="" />' +
+                    '</div>'
+                );
+            }
+
+            const $overlay = $('#acs-lightbox-overlay');
+            const $lightboxImg = $overlay.find('.acs-lightbox-image');
+
+            $lightboxImg.attr('src', fullSrc).attr('alt', alt);
+            $overlay.addClass('active');
+
+            // Lock body scroll
+            $('body').addClass('acs-lightbox-open');
+
+            // Focus the close button for accessibility
+            $overlay.find('.acs-lightbox-close').focus();
+        },
+
+        /**
+         * Close lightbox
+         */
+        closeLightbox: function (e) {
+            // Only close if clicking overlay background or close button
+            if (e && $(e.target).hasClass('acs-lightbox-image')) {
+                return;
+            }
+
+            $('#acs-lightbox-overlay').removeClass('active');
+            $('body').removeClass('acs-lightbox-open');
         },
 
         /**

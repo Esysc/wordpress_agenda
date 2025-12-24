@@ -13,6 +13,15 @@ defined('ABSPATH') || exit;
 class ACS_Event {
 
     /**
+     * Convert a date string to timestamp
+     * Supports formats: dd/mm/yy, dd/mm/yyyy, yyyy-mm-dd
+     */
+    public static function date_to_timestamp(string $date): int {
+        $parsed = self::parse_date($date);
+        return $parsed['timestamp'] ?? 0;
+    }
+
+    /**
      * Get upcoming events (not expired)
      */
     public static function get_upcoming_events(): array {
@@ -35,8 +44,8 @@ class ACS_Event {
 
         // Sort by first date
         usort($events, function($a, $b) {
-            $date_a = strtotime(str_replace('/', '-', $a['dates'][0]));
-            $date_b = strtotime(str_replace('/', '-', $b['dates'][0]));
+            $date_a = self::date_to_timestamp($a['dates'][0]);
+            $date_b = self::date_to_timestamp($b['dates'][0]);
             return $date_a - $date_b;
         });
 
@@ -53,7 +62,7 @@ class ACS_Event {
             return null;
         }
 
-        $last_date_timestamp = strtotime(str_replace('/', '-', end($dates)));
+        $last_date_timestamp = self::date_to_timestamp(end($dates));
         $one_day = 24 * 60 * 60;
 
         // Event completely expired
@@ -66,7 +75,7 @@ class ACS_Event {
         $status = null;
 
         foreach ($dates as $date) {
-            $date_timestamp = strtotime(str_replace('/', '-', $date));
+            $date_timestamp = self::date_to_timestamp($date);
 
             if ($date_timestamp + $one_day < $now) {
                 // Date has passed
@@ -123,17 +132,40 @@ class ACS_Event {
 
     /**
      * Parse a date string to components
+     * Supports formats: dd/mm/yy, dd/mm/yyyy, yyyy-mm-dd
      */
     public static function parse_date(string $date): array {
-        $parts = explode('/', $date);
+        $day = 0;
+        $month = 0;
+        $year = 0;
 
-        if (count($parts) !== 3) {
-            return [];
+        // Try dd/mm/yy or dd/mm/yyyy format
+        if (strpos($date, '/') !== false) {
+            $parts = explode('/', $date);
+            if (count($parts) === 3) {
+                $day = (int) $parts[0];
+                $month = (int) $parts[1];
+                $year = (int) $parts[2];
+                // Convert 2-digit year to 4-digit
+                if ($year < 100) {
+                    $year += 2000;
+                }
+            }
+        }
+        // Try yyyy-mm-dd format
+        elseif (strpos($date, '-') !== false) {
+            $parts = explode('-', $date);
+            if (count($parts) === 3) {
+                $year = (int) $parts[0];
+                $month = (int) $parts[1];
+                $day = (int) $parts[2];
+            }
         }
 
-        $day = (int) $parts[0];
-        $month = (int) $parts[1];
-        $year = (int) $parts[2];
+        // Validate parsed values
+        if ($day < 1 || $day > 31 || $month < 1 || $month > 12 || $year < 1900) {
+            return [];
+        }
 
         $timestamp = mktime(0, 0, 0, $month, $day, $year);
 

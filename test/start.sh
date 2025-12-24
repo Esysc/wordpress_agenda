@@ -40,7 +40,9 @@ rsync -a "$PLUGIN_SRC"/ "$PLUGIN_DEST"/ \
     --exclude 'CHANGELOG.md' \
     --exclude 'phpcs.xml' \
     --exclude 'lang/*.po' \
-    --exclude 'lang/*.pot'
+    --exclude 'lang/*.pot' \
+    --exclude 'build.sh' \
+    --exclude 'dist/'
 
 # Make setup script executable
 chmod +x wp-cli/setup.sh

@@ -57,6 +57,63 @@
 
             // Event filter change
             $('.ewc-filter-event').on('change', this.filterEvents.bind(this));
+
+            // Date field validation on blur
+            $(document).on('blur', '#event-date', this.validateDateField.bind(this));
+        },
+
+        /**
+         * Validate date field format
+         */
+        validateDateField: function (e) {
+            const $input = $(e.currentTarget);
+            const value = $input.val().trim();
+
+            if (!value) {
+                $input.removeClass('error');
+                return true;
+            }
+
+            // Split by comma and validate each date
+            const dates = value.split(',').map(function(d) {
+                return d.trim();
+            }).filter(function(d) {
+                return d;
+            });
+            const validDates = [];
+            const dateRegex = /^(\d{1,2})\/(\d{1,2})\/(\d{2,4})$/;
+
+            for (let i = 0; i < dates.length; i++) {
+                const match = dates[i].match(dateRegex);
+                if (!match) {
+                    $input.addClass('error');
+                    return false;
+                }
+
+                const day = parseInt(match[1], 10);
+                const month = parseInt(match[2], 10);
+                let year = parseInt(match[3], 10);
+
+                // Validate ranges
+                if (month < 1 || month > 12 || day < 1 || day > 31) {
+                    $input.addClass('error');
+                    return false;
+                }
+
+                // Normalize year to 2-digit
+                if (year >= 2000) {
+                    year = year - 2000;
+                }
+
+                // Format consistently
+                const formatted = ('0' + day).slice(-2) + '/' + ('0' + month).slice(-2) + '/' + ('0' + year).slice(-2);
+                validDates.push(formatted);
+            }
+
+            // Update with cleaned values
+            $input.val(validDates.join(', '));
+            $input.removeClass('error');
+            return true;
         },
 
         /**
@@ -351,23 +408,112 @@
                 return;
             }
 
-            const currentDates = $input.val() ? $input.val().split(',') : [];
+            // Get today at midnight for minDate check
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            // Helper function to get current dates from input
+            function getCurrentDates() {
+                const val = $input.val();
+                if (!val) {
+                    return [];
+                }
+                return val.split(',').map(function(d) {
+                    return d.trim();
+                }).filter(function(d) {
+                    return d;
+                });
+            }
+
+            // Check if we're editing an event with past dates (allow past dates if editing)
+            const initialDates = getCurrentDates();
+            let hasPastDates = false;
+            initialDates.forEach(function(dateStr) {
+                const parts = dateStr.split('/');
+                if (parts.length === 3) {
+                    let year = parseInt(parts[2], 10);
+                    if (year < 100) {
+                        year += 2000;
+                    }
+                    const date = new Date(year, parseInt(parts[1], 10) - 1, parseInt(parts[0], 10));
+                    if (date < today) {
+                        hasPastDates = true;
+                    }
+                }
+            });
 
             const options = {
                 dateFormat: 'dd/mm/yy',
-                altField: '#event-date',
-                separator: ',',
-                onSelect: function () {
-                    $input.val($container.multiDatesPicker('getDates').join(','));
+                changeMonth: true,
+                changeYear: true,
+                yearRange: 'c-10:c+10',
+                minDate: hasPastDates ? null : new Date(),
+                beforeShowDay: function(date) {
+                    // Format date to compare
+                    const d = ('0' + date.getDate()).slice(-2);
+                    const m = ('0' + (date.getMonth() + 1)).slice(-2);
+                    const y = date.getFullYear().toString().slice(-2);
+                    const dateStr = d + '/' + m + '/' + y;
+
+                    // Read current dates from input each time
+                    const currentDates = getCurrentDates();
+                    const isSelected = currentDates.indexOf(dateStr) !== -1;
+
+                    // Disable past dates for new events
+                    if (!hasPastDates) {
+                        const dateAtMidnight = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+                        if (dateAtMidnight < today) {
+                            return [false, 'ui-datepicker-unselectable ui-state-disabled acs-past-date', 'Date passée'];
+                        }
+                    }
+
+                    return [true, isSelected ? 'ui-state-highlight' : '', ''];
+                },
+                onSelect: function(dateText) {
+                    // Read current dates from input (not from cached array)
+                    const currentDates = getCurrentDates();
+
+                    const idx = currentDates.indexOf(dateText);
+                    if (idx === -1) {
+                        // Add date
+                        currentDates.push(dateText);
+                    } else {
+                        // Remove date
+                        currentDates.splice(idx, 1);
+                    }
+
+                    // Sort dates chronologically
+                    currentDates.sort(function(a, b) {
+                        const pa = a.split('/');
+                        const pb = b.split('/');
+                        const da = new Date(2000 + parseInt(pa[2], 10), parseInt(pa[1], 10) - 1, parseInt(pa[0], 10));
+                        const db = new Date(2000 + parseInt(pb[2], 10), parseInt(pb[1], 10) - 1, parseInt(pb[0], 10));
+                        return da - db;
+                    });
+
+                    // Update input
+                    $input.val(currentDates.join(', '));
+
+                    // Refresh datepicker to update highlighting
+                    $container.datepicker('refresh');
                 },
             };
 
-            if (currentDates.length) {
-                options.defaultDate = currentDates[0];
-                options.addDates = currentDates;
-            }
+            $container.addClass('active').datepicker(options);
 
-            $container.addClass('active').multiDatesPicker(options);
+            // Add close button after datepicker is created
+            const self = this;
+            setTimeout(function() {
+                if ($container.find('.acs-datepicker-close').length === 0) {
+                    const closeBtn = $('<button type="button" class="acs-datepicker-close">✕ ' + (acsAgendaAdmin.i18n.close || 'Close') + '</button>');
+                    $container.append(closeBtn);
+                    closeBtn.on('click', function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        self.destroyDatepicker();
+                    });
+                }
+            }, 50);
         },
 
         /**
@@ -377,7 +523,7 @@
             const $container = $('#acs-datepicker-container');
 
             if ($container.hasClass('active')) {
-                $container.removeClass('active').multiDatesPicker('destroy').empty();
+                $container.removeClass('active').datepicker('destroy').empty();
             }
         },
 

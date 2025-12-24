@@ -144,10 +144,10 @@ defined('ABSPATH') || exit;
             </tr>
             <tr>
                 <th><label for="event-date"><?php esc_html_e('Schedule', 'acs-agenda-manager'); ?> *</label></th>
-                <td>
-                    <input type="text" id="event-date" name="date" class="regular-text" required readonly />
-                    <button type="button" class="button acs-open-calendar"><?php esc_html_e('Open Calendar', 'acs-agenda-manager'); ?></button>
+                <td style="position: relative;">
                     <div id="acs-datepicker-container"></div>
+                    <input type="text" id="event-date" name="date" class="regular-text" required />
+                    <button type="button" class="button acs-open-calendar"><?php esc_html_e('Open Calendar', 'acs-agenda-manager'); ?></button>
                 </td>
             </tr>
             <tr>
