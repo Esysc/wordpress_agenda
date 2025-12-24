@@ -227,33 +227,8 @@ class ACS_Agenda_List_Table extends WP_List_Table {
     }
 
     public function process_bulk_action(): void {
-        $redirect_url = admin_url('admin.php?page=agenda');
-
-        if ('delete' === $this->current_action()) {
-            if (!wp_verify_nonce($_REQUEST['_wpnonce'] ?? '', 'acs_delete_event')) {
-                wp_die(__('Security check failed', 'acs-agenda-manager'));
-            }
-
-            $id = absint($_GET['id'] ?? 0);
-            if ($id) {
-                ACS_Database::delete_event($id);
-                wp_redirect($redirect_url . '&deleted=1');
-                exit;
-            }
-        }
-
-        if ((isset($_POST['action']) && $_POST['action'] === 'bulk-delete') ||
-            (isset($_POST['action2']) && $_POST['action2'] === 'bulk-delete')) {
-
-            $ids = array_map('absint', $_POST['bulk-delete'] ?? []);
-
-            foreach ($ids as $id) {
-                ACS_Database::delete_event($id);
-            }
-
-            wp_redirect($redirect_url . '&deleted=' . count($ids));
-            exit;
-        }
+        // Delete and bulk actions are now handled in handle_actions()
+        // which runs on admin_init before any output is sent.
     }
 
     public function no_items(): void {
@@ -316,10 +291,51 @@ class ACS_Admin {
     private function __construct() {
         add_action('admin_menu', [$this, 'add_menu_page']);
         add_filter('set-screen-option', [$this, 'set_screen_option'], 10, 3);
+        add_action('admin_init', [$this, 'handle_actions']);
 
         // AJAX handlers
         add_action('wp_ajax_update_agenda', [$this, 'ajax_update_event']);
         add_action('wp_ajax_add_item_agenda', [$this, 'ajax_add_event']);
+    }
+
+    /**
+     * Handle delete and bulk actions early, before any output is sent.
+     */
+    public function handle_actions(): void {
+        // Only process on our admin page
+        if (!isset($_GET['page']) || $_GET['page'] !== 'agenda') {
+            return;
+        }
+
+        $redirect_url = admin_url('admin.php?page=agenda');
+
+        // Handle single delete action
+        if (isset($_GET['action']) && $_GET['action'] === 'delete') {
+            if (!wp_verify_nonce($_REQUEST['_wpnonce'] ?? '', 'acs_delete_event')) {
+                wp_die(__('Security check failed', 'acs-agenda-manager'));
+            }
+
+            $id = absint($_GET['id'] ?? 0);
+            if ($id) {
+                ACS_Database::delete_event($id);
+                wp_redirect($redirect_url . '&deleted=1');
+                exit;
+            }
+        }
+
+        // Handle bulk delete action
+        if ((isset($_POST['action']) && $_POST['action'] === 'bulk-delete') ||
+            (isset($_POST['action2']) && $_POST['action2'] === 'bulk-delete')) {
+
+            $ids = array_map('absint', $_POST['bulk-delete'] ?? []);
+
+            foreach ($ids as $id) {
+                ACS_Database::delete_event($id);
+            }
+
+            wp_redirect($redirect_url . '&deleted=' . count($ids));
+            exit;
+        }
     }
 
     public function add_menu_page(): void {
