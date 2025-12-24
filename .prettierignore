@@ -1,0 +1,7 @@
+# Prettier ignore
+*.min.js
+*.min.css
+lang/
+test/
+vendor/
+node_modules/
