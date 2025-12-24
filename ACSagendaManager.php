@@ -1,476 +1,337 @@
 <?php
-/*
-Plugin Name: ACSagendaManager plugin
-Plugin URI:
-Description: This plugin is oriented to people who organize workshops of any kind 
-Version: 2.1.1
-@license           GPL-2.0-or-later
-Author: Andrea Cristalli
-Author URI: https://github.com/Esysc
-*/
+/**
+ * Plugin Name: ACS Agenda Manager
+ * Plugin URI: https://github.com/Esysc/wordpress_agenda
+ * Description: A WordPress plugin for managing and displaying event agendas. Perfect for workshops, courses, and event organizers.
+ * Version: 3.0.0
+ * Requires at least: 6.2
+ * Requires PHP: 7.4
+ * Author: Andrea Cristalli
+ * Author URI: https://github.com/Esysc
+ * License: GPL-2.0-or-later
+ * License URI: https://www.gnu.org/licenses/gpl-2.0.html
+ * Text Domain: acs-agenda-manager
+ * Domain Path: /lang
+ *
+ * @package ACSAgendaManager
+ */
 
-/*
- This program is free software; you can redistribute it and/or
-modify it under the terms of the GNU General Public License
-as published by the Free Software Foundation; either version 2
-of the License, or (at your option) any later version.
+defined('ABSPATH') || exit;
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+// Plugin constants
+define('ACS_AGENDA_VERSION', '3.0.0');
+define('ACS_AGENDA_PLUGIN_DIR', plugin_dir_path(__FILE__));
+define('ACS_AGENDA_PLUGIN_URL', plugin_dir_url(__FILE__));
+define('ACS_AGENDA_TABLE_NAME', 'acs_agenda_manager');
 
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-*/
-defined( 'ABSPATH' ) or die( 'Nope, not accessing this' ); 
-if (!defined('ACS_AGENDA_MANAGER_PLUGIN_VERSION'))
-    define('ACS_AGENDA_MANAGER_PLUGIN_VERSION', '2.1.1');
-
-
-
-function wpsx_redefine_locale() {  
-    $browserlang = substr($_SERVER["HTTP_ACCEPT_LANGUAGE"],0,2);
-    if ($browserlang == 'fr') {
-        $browserlang = 'fr_FR.UTF-8';
-        setlocale(LC_TIME, "");
-        setlocale(LC_TIME, $browserlang);
-    } else {
-        $browserlang = "en_US";
-    }
-    return $browserlang;
-}
-add_filter('locale','wpsx_redefine_locale');
+/**
+ * Main plugin class
+ */
+final class ACS_Agenda_Manager {
     
-function acsagendamanager_plugin_init() {
-  load_plugin_textdomain( 'ACSagendaManager', false, 'ACSagendaManager/lang/'  );
-  load_plugin_textdomain( 'ACSagendaManagerAdmin', false, 'ACSagendaManager/lang/'  );
-}
-add_action('init', 'acsagendamanager_plugin_init');
-
-function ACSagendaManager_enqueue_styles() {
-    wp_enqueue_style('acs.css', plugins_url('/css/acs.css', __FILE__));
-    wp_enqueue_style( 'jquery-ui.css', 'https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css' );
-    wp_enqueue_style('thickbox');
-}
-
-
-function ACSagendaManager_scripts() {
-        wp_enqueue_script('jquery');
-        wp_register_script('mdp', plugins_url('/js/multidatespicker.js', __FILE__),array('jquery-ui-datepicker'),'1',TRUE);
-        wp_enqueue_script('jquery-ui-dialog');
-        wp_register_script('sca', plugins_url('/js/acs.js', __FILE__));     
-        wp_enqueue_script('sca'); 
-        wp_enqueue_script('mdp'); 
-        wp_enqueue_script('thickbox');
-}
-add_action('wp_enqueue_scripts', 'ACSagendaManager_scripts');
-add_action('wp_enqueue_scripts', 'ACSagendaManager_enqueue_styles');
-add_action('admin_enqueue_scripts', 'ACSagendaManager_scripts');
-add_action('admin_enqueue_scripts', 'ACSagendaManager_enqueue_styles');
-function my_enqueue_media_lib_uploader() {
-if ( ! did_action( 'wp_enqueue_media' ) ) {
-        wp_enqueue_media();
+    /** @var self|null Singleton instance */
+    private static $instance = null;
+    
+    /**
+     * Get singleton instance
+     */
+    public static function get_instance(): self {
+        if (null === self::$instance) {
+            self::$instance = new self();
+        }
+        return self::$instance;
     }
-}
-add_action('admin_enqueue_scripts', 'my_enqueue_media_lib_uploader');
-
-
-function cmp($a, $b)
-{
-    $adate = strtotime(str_replace('/', '-', $a['date'][0]));
-    $bdate = strtotime(str_replace('/', '-', $b['date'][0]));
-    return $adate >= $bdate;
-}
-
-function agenda ($atts, $content = null) {
-require_once(ABSPATH . 'wp-load.php');
-global $wpdb;
-  $ajaxUrl = admin_url( 'admin-ajax.php' );
-  $table_name = $wpdb->prefix . 'acs_agenda_manager';
-  $result = $wpdb->get_results("SELECT * FROM $table_name");
-  $pages = []; 
-  $now = strtotime('now');
-$elements = $wpdb->get_col( "DESC " . $table_name, 0 );
-if (($key = array_search('id', $elements)) !== false) {
-    unset($elements[$key]);
-}
-$key = 0;
-foreach ($result as $value) {
-    foreach ($elements as $element) {
-        if(!is_null($value->$element) || $value->$element != '') {
-            if ($element == 'date') {
-                $dates = explode(',', $value->$element);
-                foreach ($dates as $index => $date) {
-                    $pages[$key][$element][$index] = $date;
-                }
-            } else {
-                $pages[$key][$element] = $value->$element;
-            }
+    
+    /**
+     * Private constructor for singleton
+     */
+    private function __construct() {
+        $this->load_dependencies();
+        $this->init_hooks();
+    }
+    
+    /**
+     * Load plugin dependencies
+     */
+    private function load_dependencies(): void {
+        require_once ACS_AGENDA_PLUGIN_DIR . 'class/class-acs-database.php';
+        require_once ACS_AGENDA_PLUGIN_DIR . 'class/class-acs-event.php';
+        require_once ACS_AGENDA_PLUGIN_DIR . 'class/class-acs-template.php';
+        require_once ACS_AGENDA_PLUGIN_DIR . 'class/class-acs-admin.php';
+        require_once ACS_AGENDA_PLUGIN_DIR . 'class/class-acs-options.php';
+        require_once ACS_AGENDA_PLUGIN_DIR . 'class/class-acs-help.php';
+        
+        // Initialize admin pages
+        if (is_admin()) {
+            ACS_Admin::get_instance();
+            ACS_Options::get_instance();
+            ACS_Help::get_instance();
         }
     }
-    $key++;
-}
-/* Remove expired events */
-foreach ($pages as $key => $page) {
-    $numberOfDates = count($page['date']);
-    $lastEventSecs = strtotime(str_replace('/', '-',$page['date'][$numberOfDates-1])) ; 
-    if ( $lastEventSecs + 24*60*60 < $now) {
-        unset($pages[$key]);
-    } else {
-        foreach($page['date'] as $index => $eventDay) {
-            $eventScheduleSecs = strtotime(str_replace('/', '-',$eventDay)) ; 
-            if ( $eventScheduleSecs + 24*60*60 < $now) { //keep event until today (add one day in seconds)
-                if ($page['candopartial'] != 1 && $page['candopartial'] != 2) {
-                    unset($pages[$key]);
-                } elseif ($page['candopartial'] == 1) {
-                    unset($pages[$key]['date'][$index]);
-                }
-                elseif ($page['candopartial'] == 2) { //Add a notice for running event
-                    $pages[$key]['today'] = __("Running", 'ACSagendaManager');
-                }
-            }
-            elseif ( $eventScheduleSecs < $now && $page['date'][0] == $eventDay) { //Add a notice for today event
-                $pages[$key]['today'] = __("Today", 'ACSagendaManager'); 
-            }
-        }
+    
+    /**
+     * Initialize WordPress hooks
+     */
+    private function init_hooks(): void {
+        add_action('init', [$this, 'load_textdomains']);
+        add_action('wp_enqueue_scripts', [$this, 'enqueue_frontend_assets']);
+        add_action('admin_enqueue_scripts', [$this, 'enqueue_admin_assets']);
+        add_action('plugins_loaded', [$this, 'check_version']);
+        
+        // AJAX handlers
+        add_action('wp_ajax_read_more', [$this, 'ajax_read_more']);
+        add_action('wp_ajax_nopriv_read_more', [$this, 'ajax_read_more']);
+        
+        // Shortcode
+        add_shortcode('agenda', [$this, 'render_agenda_shortcode']);
+        
+        // Locale filter
+        add_filter('locale', [$this, 'set_locale_from_browser']);
     }
-}
-$pages = array_values ($pages);
-/* Reorder events by date */
-
-usort($pages, "cmp");
-/* Parse the content as parameters */
-if ( is_user_logged_in() ) { // Only show the output below if a user is logged in
-    $admin_link  = esc_url( admin_url() ); // Escaped admin link
-    if ( current_user_can( 'manage_options' ) ) { // Current user is an admin, show the admin link
-        echo '<h3><a href="' . $admin_link . 'admin.php?page=agenda" class="button4 warning">Agenda Administration</a></h3>';
+    
+    /**
+     * Load plugin text domains
+     */
+    public function load_textdomains(): void {
+        load_plugin_textdomain('acs-agenda-manager', false, dirname(plugin_basename(__FILE__)) . '/lang/');
     }
-}
-$return = '';
-$return .= "<div class='container-agenda'>";
-$months = ["start"];
-for ($m=1; $m<=12; $m++) {
-     $month = strftime('%B', mktime(0,0,0,$m, 1, date('Y')));
-     array_push($months, $month) ;
-}
-
-foreach ($pages as $key => $page) {
-    $return .= "<div class='acsagenda'>";
-    $return .= '<div class="column-left">';
-    $elementDate = "";
-    $datesQty = count($page['date']);
-    $years = array();
-    foreach ($page['date'] as $i => $date) {
-        $tmp = explode('/', $date);
-        $years[$i] = $tmp[2];
-        $blink = '';$today='';
-        $eventScheduleSecs = strtotime(str_replace('/', '-',$date)) ;
-        if ($eventScheduleSecs < $now  && $eventScheduleSecs + 24*60*60 > $now ) {
-             $blink = 'blink_me';
-        } elseif ( $eventScheduleSecs < $now && $page['candopartial'] == 2  ) {
-            if ($i < $datesQty -1 && $datesQty ==  2) {
-                $today = date('d/m/Y');
-                if ($today == $page['date'][$i+1]) {
-                    $today = '';
-                }
-            }
-             $blink = 'acsagendaexpired';
+    
+    /**
+     * Set locale based on browser language
+     */
+    public function set_locale_from_browser(string $locale): string {
+        if (!isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
+            return $locale;
         }
         
-        $humanDate =  strftime("%A", mktime(0, 0, 0, $tmp[1], $tmp[0], $tmp[2]));
-        $elementDate .= "<span class='ACSdate $blink'>";
-        $day = $tmp[0];
-        $month = $months[(int)$tmp[1]];
-        $elementDate .= "<span class='month'>$month</span>";
-        $elementDate .= "<span class='day'>$day</span>";
-        $elementDate .= "<span class='week'>$humanDate</span>";
-        $elementDate .= "</span>";
-        if ($today !== '') {
-            $blink = 'blink_me';
-            $tmp = explode('/', $today);
-            $humanDate =  strftime("%A", mktime(0, 0, 0, $tmp[1], $tmp[0], $tmp[2]));
-            $elementDate .= "<span class='ACSdate $blink'>";
-            $day = $tmp[0];
-            $month = $months[(int)$tmp[1]];
-            $elementDate .= "<span class='month'>$month</span>";
-            $elementDate .= "<span class='day'>$day</span>";
-            $elementDate .= "<span class='week'>$humanDate</span>";
-            $elementDate .= "</span>";
+        $browser_lang = substr(sanitize_text_field(wp_unslash($_SERVER['HTTP_ACCEPT_LANGUAGE'])), 0, 2);
+        
+        $locale_map = [
+            'fr' => 'fr_FR.UTF-8',
+            'en' => 'en_US.UTF-8',
+        ];
+        
+        if (isset($locale_map[$browser_lang])) {
+            setlocale(LC_TIME, $locale_map[$browser_lang]);
+        }
+        
+        return $locale;
+    }
+    
+    /**
+     * Enqueue frontend assets
+     */
+    public function enqueue_frontend_assets(): void {
+        wp_enqueue_style(
+            'acs-agenda-style',
+            ACS_AGENDA_PLUGIN_URL . 'css/acs.css',
+            [],
+            ACS_AGENDA_VERSION
+        );
+        
+        wp_enqueue_style(
+            'jquery-ui-style',
+            'https://code.jquery.com/ui/1.13.2/themes/smoothness/jquery-ui.css',
+            [],
+            '1.13.2'
+        );
+        
+        wp_enqueue_script('jquery');
+        wp_enqueue_script('jquery-ui-dialog');
+        wp_enqueue_script('jquery-ui-datepicker');
+        
+        wp_enqueue_script(
+            'acs-multidatespicker',
+            'https://cdn.jsdelivr.net/npm/jquery-ui-multidatespicker@1.6.6/jquery-ui.multidatespicker.min.js',
+            ['jquery-ui-datepicker'],
+            '1.6.6',
+            true
+        );
+        
+        wp_enqueue_script(
+            'acs-agenda-frontend',
+            ACS_AGENDA_PLUGIN_URL . 'js/acs-frontend.js',
+            ['jquery', 'jquery-ui-dialog'],
+            ACS_AGENDA_VERSION,
+            true
+        );
+        
+        wp_localize_script('acs-agenda-frontend', 'acsAgenda', [
+            'ajaxUrl' => admin_url('admin-ajax.php'),
+            'nonce' => wp_create_nonce('acs_agenda_nonce'),
+        ]);
+    }
+    
+    /**
+     * Enqueue admin assets
+     */
+    public function enqueue_admin_assets(string $hook): void {
+        if (strpos($hook, 'agenda') === false) {
+            return;
+        }
+        
+        $this->enqueue_frontend_assets();
+        
+        wp_enqueue_media();
+        wp_enqueue_style('thickbox');
+        wp_enqueue_script('thickbox');
+        
+        // Load Google Maps API if key is configured
+        $google_maps_api_key = get_option('acs_google_maps_api_key', '');
+        if (!empty($google_maps_api_key)) {
+            wp_enqueue_script(
+                'google-maps-places',
+                'https://maps.googleapis.com/maps/api/js?key=' . esc_attr($google_maps_api_key) . '&libraries=places&loading=async',
+                [],
+                null,
+                true
+            );
+        }
+        
+        wp_enqueue_script(
+            'acs-agenda-admin',
+            ACS_AGENDA_PLUGIN_URL . 'js/acs-admin.js',
+            ['jquery', 'jquery-ui-dialog', 'acs-multidatespicker'],
+            ACS_AGENDA_VERSION,
+            true
+        );
+        
+        wp_localize_script('acs-agenda-admin', 'acsAgendaAdmin', [
+            'ajaxUrl' => admin_url('admin-ajax.php'),
+            'nonce' => wp_create_nonce('acs_agenda_admin_nonce'),
+            'hasGoogleMaps' => !empty($google_maps_api_key),
+            'i18n' => $this->get_admin_translations(),
+        ]);
+    }
+    
+    /**
+     * Get admin translations for JavaScript
+     */
+    private function get_admin_translations(): array {
+        return [
+            'confirm' => __('Confirm', 'acs-agenda-manager'),
+            'cancel' => __('Cancel', 'acs-agenda-manager'),
+            'update' => __('Update', 'acs-agenda-manager'),
+            'add' => __('Add', 'acs-agenda-manager'),
+            'close' => __('Close', 'acs-agenda-manager'),
+            'calendar' => __('Calendar', 'acs-agenda-manager'),
+            'copied' => __('Copied', 'acs-agenda-manager'),
+            'fieldEmpty' => __('The field is empty', 'acs-agenda-manager'),
+            'selectImage' => __('Select or upload an image', 'acs-agenda-manager'),
+            'filteredEvents' => __('Filtered events', 'acs-agenda-manager'),
+            'confirmDelete' => __('Do you really want to delete this event?', 'acs-agenda-manager'),
+            'editor' => __('Editor', 'acs-agenda-manager'),
+            'addEvent' => __('Add an event', 'acs-agenda-manager'),
+        ];
+    }
+    
+    /**
+     * Check and update plugin version
+     */
+    public function check_version(): void {
+        $installed_version = get_option('acs_agenda_manager_plugin_version', '0');
+        
+        if (version_compare($installed_version, ACS_AGENDA_VERSION, '<')) {
+            ACS_Database::update_schema();
+            update_option('acs_agenda_manager_plugin_version', ACS_AGENDA_VERSION);
         }
     }
-    /* Default value for year */
-    $year = $years[0];
-    if ( $datesQty ==  2 && $years[0] != $years[1]) {
-        $year = "$years[0] - $years[1]".PHP_EOL;
+    
+    /**
+     * Render agenda shortcode
+     */
+    public function render_agenda_shortcode($atts = [], ?string $content = null): string {
+        $events = ACS_Event::get_upcoming_events();
+        
+        if (empty($events)) {
+            return '<p>' . esc_html__('No upcoming events.', 'acs-agenda-manager') . '</p>';
+        }
+        
+        return ACS_Template::render_agenda($events);
     }
-    $postid = url_to_postid( $page['link'] );
-    $return .= '<div class="acsAgenda-title"><h4 style="color: white; font-weight:bold;padding-top: 0.4em;">'.$year.'</h4></div>'; 
-    $return .= '<div class="column-left-container">';
-    $return .= $elementDate;
-    $return .= '</div>';
-    $return .= '<div class="placement">';
-    $return .= "<h5 style='padding-top:1em'><span class='dashicons dashicons-location'></span>&nbsp;".$page['emplacement']."</h5>";
-    $return .= "</div>";
-    $return .= "</div>";
-    $return .= '<div class="column-center" id="section-'.$key.'">';
-    $today = $page['today']?"<span class='blink_me'>".$page['today'].":&nbsp;</span>":"";
-    $return .= "<div class='acsAgenda-title'><h4 style='color: white; font-weight:bold;padding-top: 0.4em;' >$today ".$page['categorie']."</h4></div>";
-    $return .= "<h3 style='text-align:center;'>".$page['title']."</h3>";
-    $return .= "<div class='course-description acsAgenda'>";
-    $return .= "<h5>".$page['intro']."</h5>";
-    $return .= "<button data-href='".$page['link']."' class='readmore show' data-postid='$postid' data-id='section-$key'>".__("Read more", 'ACSagendaManager')."</button>";
-    $return .= "</div></div>";
-    $return .= '<div class=column-right>';
-    $return .= "<img src='".$page['image']."'  class='image-agenda' alt='".$page['image']."'/>";
-    $return .= "</div>";
-    $ACScontactform = '[ACScontactform dates="'.implode(',',$page['date']).'" subject="'.$page['title'].'" price="'.$page['price'].'" account="'.$page['account'].'" candopartial="'.$page['candopartial'].'" redirect="'.$page['redirect'].'"]';
-    if (shortcode_exists('ACScontactform')) {
-        $return .= do_shortcode($ACScontactform);
+    
+    /**
+     * AJAX handler for read more dialog
+     */
+    public function ajax_read_more(): void {
+        $post_id = isset($_POST['postid']) ? absint($_POST['postid']) : 0;
+        $href = isset($_POST['href']) ? esc_url_raw(wp_unslash($_POST['href'])) : '';
+        
+        if (!$post_id) {
+            wp_send_json_error(__('Invalid post ID', 'acs-agenda-manager'));
+        }
+        
+        $post = get_post($post_id);
+        
+        if (!$post) {
+            wp_send_json_error(__('Post not found', 'acs-agenda-manager'));
+        }
+        
+        echo ACS_Template::render_read_more_dialog($post, $href);
+        wp_die();
     }
-    $return .= "</div>";
+    
+    /**
+     * Get a page by its title using WP_Query (replaces deprecated get_page_by_title)
+     *
+     * @param string $title Page title
+     * @return WP_Post|null
+     */
+    public static function get_page_by_title(string $title): ?WP_Post {
+        $query = new WP_Query([
+            'post_type' => 'page',
+            'title' => $title,
+            'post_status' => 'all',
+            'posts_per_page' => 1,
+            'no_found_rows' => true,
+            'ignore_sticky_posts' => true,
+            'update_post_term_cache' => false,
+            'update_post_meta_cache' => false,
+        ]);
+        
+        return $query->have_posts() ? $query->posts[0] : null;
+    }
+    
+    /**
+     * Plugin activation
+     */
+    public static function activate(): void {
+        require_once plugin_dir_path(__FILE__) . 'class/class-acs-database.php';
+        ACS_Database::create_table();
+        
+        $page_name = get_option('acsagendapage', 'Agenda');
+        $existing_page = self::get_page_by_title($page_name);
+        
+        if (!$existing_page) {
+            wp_insert_post([
+                'post_title' => $page_name,
+                'post_name' => sanitize_title($page_name),
+                'post_status' => 'publish',
+                'post_type' => 'page',
+                'post_content' => '[agenda]',
+                'comment_status' => 'closed',
+                'ping_status' => 'closed',
+            ]);
+        }
+        
+        update_option('acsagendapage', $page_name);
+        update_option('acs_agenda_manager_plugin_version', ACS_AGENDA_VERSION);
+    }
+    
+    /**
+     * Plugin deactivation
+     */
+    public static function deactivate(): void {
+        // Clean up transients if needed
+        delete_transient('acs_agenda_events_cache');
+    }
 }
-$return .= "</div>";
-$return .= '<div id="postid"></div>';
-//Add some javascript here
-$ajaxUrl = admin_url( 'admin-ajax.php' );
-$return .=<<<EOT
-    <script>
-    var id
-    jQuery(document).on('click', '.readmore', function(e) {
-    //return
-        e.preventDefault()
-        var ajaxurl = '$ajaxUrl';
-        var postid = jQuery(this).data('postid')
-        id = jQuery(this).data('id')
-        var data = {
-        'action': 'read_more',
-        'postid': postid,
-        'href': jQuery(this).data('href')
-        };
-        jQuery.post(ajaxurl, data, function(response) {
-            jQuery('#postid').html(response)
-            showDialog()
-        })
-    })
-    const showDialog = () => {
-  document.getElementById('dialog').classList.add('shown')
-  const scrollY = document.documentElement.style.getPropertyValue('--scroll-y');
-  const body = document.body;
-  body.style.position = 'absolute';(function ($) {
-  // initalise the dialog
-  $('#my-dialog').dialog({
-    title: 'My Dialog',
-    dialogClass: 'wp-dialog',
-    autoOpen: false,
-    draggable: false,
-    width: 'auto',
-    modal: true,
-    resizable: false,
-    closeOnEscape: true,
-    position: {
-      my: "center",
-      at: "center",
-      of: window
-    },
-    open: function () {
-      // close dialog by clicking the overlay behind it
-      $('.ui-widget-overlay').bind('click', function(){
-        $('#my-dialog').dialog('close');
-      })
-    },
-    create: function () {
-      // style fix for WordPress admin
-      $('.ui-dialog-titlebar-close').addClass('ui-button');
-    },
-  });
 
-  // bind a button or a link to open the dialog
-  $('a.open-my-dialog').click(function(e) {
-    e.preventDefault();
-    $('#my-dialog').dialog('open');
-  });
-})(jQuery);
-  body.style.top = "-"+scrollY;
-};
-const closeDialog = () => {
-  const body = document.body;
-  const scrollY = body.style.top;
-  body.style.position = '';
-  body.style.top = '';
-  window.scrollTo(0, parseInt(scrollY || '0') * -1);
-  document.getElementById('dialog').classList.remove('shown');
-  var elmnt = document.getElementById(id);
-  elmnt.scrollIntoView();
-}
-window.addEventListener('scroll', () => {
-  document.documentElement.style.setProperty('--scroll-y', window.scrollY+'px');
+// Activation/deactivation hooks
+register_activation_hook(__FILE__, ['ACS_Agenda_Manager', 'activate']);
+register_deactivation_hook(__FILE__, ['ACS_Agenda_Manager', 'deactivate']);
+
+// Initialize plugin
+add_action('plugins_loaded', function() {
+    ACS_Agenda_Manager::get_instance();
 });
-    </script>
-EOT;
-    return $return;
-}
-
-add_shortcode ('agenda', 'agenda');
-
-// for the admin area
-add_action( 'wp_ajax_read_more', 'callback_read_more' );
-// for the public area
-add_action( 'wp_ajax_nopriv_read_more', 'callback_read_more' );
-
-function callback_read_more() {
-    require_once(ABSPATH . 'wp-load.php');
-    $postid = intval( $_POST['postid'] );
-    $href = $_POST['href'];
-    $the_query  = new WP_Query(array('p' => $postid));
-    if ($the_query->have_posts()) {
-        while ( $the_query->have_posts() ) {
-            $the_query->the_post();
-
-            $data = '
-            <div id="dialog">
-  <button id="close"  onClick="closeDialog()">&times;</button>
-  <h2 style="text-align: center;">'.get_the_title().'</h2>
-  <p style="text-align: center;"><a href="'.$href.'" target="_blank">Aller sur la page</a></p>
-  '.do_shortcode(get_the_content()).'
-</div>
-               
-            ';
-
-        }
-    } 
-    else {
-        echo '<div id="postdata">'.__('Didnt find anything', 'ACSagendaManager').'</div>';
-    }
-    wp_reset_postdata();
-
-
-    echo '<div id="postdata">'.$data.'</div>';
-}
-function create_plugin_database_table()
-{
-    global $table_prefix, $wpdb;
-    $tblname = 'acs_agenda_manager';
-    $wp_ACSagendaManager_table = $table_prefix . "$tblname ";
-    #Check to see if the table exists already, if not, then create it
-    if($wpdb->get_var( "show tables like '$wp_ACSagendaManager_table'" ) != $wp_ACSagendaManager_table) 
-    {
-        $sql = "CREATE TABLE ". $wp_ACSagendaManager_table . " ( ";
-        $sql .= "  id  int(11)   NOT NULL auto_increment, ";
-        $sql .= "  categorie  VARCHAR(120) NOT NULL, ";
-        $sql .= "  title  VARCHAR(120) NOT NULL, ";
-        $sql .= "  emplacement  VARCHAR(120) NOT NULL, ";
-        $sql .= "  image  VARCHAR(120) NOT NULL, ";
-        $sql .= "  intro  VARCHAR(1200) NOT NULL, ";
-        $sql .= "  link  VARCHAR(120) NOT NULL, ";
-        $sql .= "  date  VARCHAR(120) NOT NULL, ";
-        $sql .= "  price  VARCHAR(60)  NULL, ";
-        $sql .= "  account  BOOLEAN DEFAULT TRUE, ";
-        $sql .= "  candopartial  BOOLEAN DEFAULT FALSE, ";
-        $sql .= "  redirect  VARCHAR(120) NULL, ";
-        $sql .= "  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP , ";
-        $sql .= "  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, ";
-        $sql .= "  PRIMARY KEY agendaid (id) "; 
-        $sql .= ") ; ";
-        require_once( ABSPATH . '/wp-admin/includes/upgrade.php' );
-        dbDelta($sql);
-        $success = empty($wpdb->last_error);
-        return $success;
-    }
-}
-function acs_agenda_manager_plugin_update() {
-    global $table_prefix, $wpdb;
-    $tblname = 'acs_agenda_manager';
-    $wp_ACSagendaManager_table = $table_prefix . "$tblname ";
-    $existing_columns = $wpdb->get_col("DESC {$wp_ACSagendaManager_table}", 0);
-    $db_structure = array(
-                          'id' => array('type' => 'int(11) NOT NULL AUTO_INCREMENT'),
-                          'categorie' => array('type' =>'varchar(120) NOT NULL'),
-                          'title' => array('type' =>'varchar(120) NOT NULL'),
-                          'emplacement' => array('type' =>'varchar(120) NOT NULL'),
-                          'image' => array('type' =>'varchar(120) NOT NULL'),
-                          'intro' => array('type' =>'varchar(1200) NOT NULL'),
-                          'link' => array('type' =>'varchar(1200) NOT NULL'),
-                          'date' => array('type' => 'varchar(1200) NOT NULL'),
-                          'price' => array('type' =>'varchar(60) DEFAULT NULL'),
-                          'account' => array('type' => "tinyint(1) DEFAULT '1'"),
-                          'candopartial' => array('type' => "tinyint(1) DEFAULT '0'"),
-                          'created_at' => array('type' =>'timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP'),
-                          'updated_at' => array('type' =>'timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP')
-                          );
-    foreach ( $existing_columns as $column) {
-        unset ($db_structure[$column]);
-    }
-    $success = true;
-    if (count($db_structure) > 0) {
-        $update = array();
-        foreach ($db_structure as $key => $value) {
-            $update[] = "ADD COLUMN ${key} ".$value['type'];
-        }
-        $sql = "ALTER TABLE ${wp_ACSagendaManager_table} ". implode(', ', $update) . ";";
-        require_once( ABSPATH . '/wp-admin/includes/upgrade.php' );
-            dbDelta($sql);
-            $success = empty($wpdb->last_error);
-            if ($success)
-                update_option('acs_agenda_manager_plugin_version', ACS_AGENDA_MANAGER_PLUGIN_VERSION);
-    }
-        return $success;
-}
-
-function my_plugin_ACS_agenda_install_function()
-  {
-   update_option('acs_agenda_manager_plugin_version', ACS_AGENDA_MANAGER_PLUGIN_VERSION);
-   //check if a previous installatio exists
-   $pageagenda = get_option('acsagendapage')?get_option('acsagendapage'):'Agenda';
-    $post = array(
-          'comment_status' => 'closed',
-          'ping_status' =>  'closed' ,
-          'post_author' => 1,
-          'post_date' => date('Y-m-d H:i:s'),
-          'post_name' => $pageagenda,
-          'post_status' => 'publish' ,
-          'post_title' => $pageagenda,
-          'post_type' => 'page',
-          'post_content' => '[agenda /]',
-          'page_template' => ABSPATH . 'wp-content/plugins/ACSagendaManager/themefiles/page-agenda.php'
-    );  
-     $the_page = get_page_by_title( $pageagenda );
-    if (! $the_page) {
-    wp_insert_post( $post, false );
-    update_option( 'acsagendapage', $pageagenda );
-    } 
-  }
- register_activation_hook( __FILE__, 'create_plugin_database_table' );
- register_activation_hook( __FILE__, 'my_plugin_ACS_agenda_install_function' );
- function acs_agenda_manager_check_version() {
-    if (ACS_AGENDA_MANAGER_PLUGIN_VERSION !== get_option('acs_agenda_manager_plugin_version'))
-        acs_agenda_manager_plugin_update();
-}
-
-add_action('plugins_loaded', 'acs_agenda_manager_check_version');
-include_once('class/acsadminagenda.php');
-
-//Template fallback
-add_action("template_redirect", 'ACS_agenda_redirect');
-
-function ACS_agenda_redirect() {
-    global $wp;
-    $plugindir = dirname( __FILE__ );
-    $templatefilename = 'page-agenda.php';
-    $return_template = $plugindir . '/themefiles/' . $templatefilename;
-    do_theme_redirect($return_template);
-    print_r($wp->query_vars);
-}
-
-function do_theme_redirect($url) {
-    global $post, $wp_query;
-    if (have_posts()) {
-        include($url);
-        die();
-    } else {
-        $wp_query->is_404 = true;
-    }
-}
-include_once('class/acsagendaoptions.php');
-?>
