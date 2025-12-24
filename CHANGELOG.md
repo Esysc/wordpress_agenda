@@ -19,6 +19,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Docker-based testing environment
 - User guide integrated in admin panel
 - WordPress.org compatible readme.txt
+- Complete internationalization with 6 locales:
+  - French (fr_FR, fr_CH)
+  - Italian (it_IT, it_CH)
+  - German (de_DE, de_CH)
+- New POT template file for translators
 
 ### Changed
 
