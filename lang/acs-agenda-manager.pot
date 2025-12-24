@@ -1,0 +1,515 @@
+# Copyright (C) 2025 ACS Agenda Manager
+# This file is distributed under the GPL-2.0-or-later.
+msgid ""
+msgstr ""
+"Project-Id-Version: ACS Agenda Manager 3.0.0\n"
+"Report-Msgid-Bugs-To: https://github.com/Esysc/wordpress_agenda/issues\n"
+"POT-Creation-Date: 2025-12-24 00:00+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"X-Generator: WP-CLI\n"
+"X-Domain: acs-agenda-manager\n"
+
+#. Plugin Name
+msgid "ACS Agenda Manager"
+msgstr ""
+
+#: ACSagendaManager.php, class/class-acs-admin.php
+msgid "Agenda"
+msgstr ""
+
+#: class/class-acs-admin.php
+msgid "Event"
+msgstr ""
+
+#: class/class-acs-admin.php
+msgid "Events"
+msgstr ""
+
+#: class/class-acs-admin.php
+msgid "Category"
+msgstr ""
+
+#: class/class-acs-admin.php
+msgid "Title"
+msgstr ""
+
+#: class/class-acs-admin.php
+msgid "Location"
+msgstr ""
+
+#: class/class-acs-admin.php
+msgid "Image"
+msgstr ""
+
+#: class/class-acs-admin.php
+msgid "Description"
+msgstr ""
+
+#: class/class-acs-admin.php
+msgid "Page Link"
+msgstr ""
+
+#: class/class-acs-admin.php
+msgid "Schedule"
+msgstr ""
+
+#: class/class-acs-admin.php
+msgid "Price"
+msgstr ""
+
+#: class/class-acs-admin.php
+msgid "Advance Payment"
+msgstr ""
+
+#: class/class-acs-admin.php
+msgid "Partial Attendance"
+msgstr ""
+
+#: class/class-acs-admin.php
+msgid "External URL"
+msgstr ""
+
+#: class/class-acs-admin.php
+msgid "Created"
+msgstr ""
+
+#: class/class-acs-admin.php
+msgid "Delete"
+msgstr ""
+
+#: class/class-acs-admin.php
+msgid "No"
+msgstr ""
+
+#: class/class-acs-admin.php
+msgid "Yes"
+msgstr ""
+
+#: class/class-acs-admin.php
+msgid "Keep until end"
+msgstr ""
+
+#: class/class-acs-admin.php
+msgid "Read more"
+msgstr ""
+
+#: class/class-acs-admin.php
+msgid "Hide"
+msgstr ""
+
+#: class/class-acs-admin.php
+msgid "Open page"
+msgstr ""
+
+#: class/class-acs-admin.php
+msgid "Edit"
+msgstr ""
+
+#: class/class-acs-admin.php
+msgid "Contact Form Shortcode"
+msgstr ""
+
+#: class/class-acs-admin.php
+msgid "Copy!"
+msgstr ""
+
+#: class/class-acs-admin.php
+msgid "Form shortcode"
+msgstr ""
+
+#: class/class-acs-admin.php
+msgid "All Events"
+msgstr ""
+
+#: class/class-acs-admin.php
+msgid "Filter"
+msgstr ""
+
+#: class/class-acs-admin.php
+msgid "Events per page"
+msgstr ""
+
+#: class/class-acs-admin.php
+msgid "No events found."
+msgstr ""
+
+#: class/class-acs-admin.php
+msgid "Security check failed"
+msgstr ""
+
+#: class/class-acs-admin.php
+msgid "Permission denied"
+msgstr ""
+
+#: class/class-acs-admin.php
+msgid "Invalid event ID"
+msgstr ""
+
+#: class/class-acs-admin.php
+msgid "Event updated successfully"
+msgstr ""
+
+#: class/class-acs-admin.php
+msgid "Failed to update event"
+msgstr ""
+
+#: class/class-acs-admin.php
+msgid "Event added successfully"
+msgstr ""
+
+#: class/class-acs-admin.php
+msgid "Failed to add event"
+msgstr ""
+
+#: class/class-acs-options.php
+msgid "Settings"
+msgstr ""
+
+#: class/class-acs-options.php
+msgid "Settings saved successfully."
+msgstr ""
+
+#: class/class-acs-options.php
+msgid "Save Settings"
+msgstr ""
+
+#: class/class-acs-help.php
+msgid "User Guide"
+msgstr ""
+
+#: class/class-acs-help.php
+msgid "Getting Started"
+msgstr ""
+
+#: class/class-acs-help.php
+msgid "Adding Events"
+msgstr ""
+
+#: class/class-acs-help.php
+msgid "Managing Events"
+msgstr ""
+
+#: class/class-acs-help.php
+msgid "Using the Shortcode"
+msgstr ""
+
+#: class/class-acs-help.php
+msgid "Customization"
+msgstr ""
+
+#: class/class-acs-help.php
+msgid "Troubleshooting"
+msgstr ""
+
+#: class/class-acs-event.php
+msgid "Sunday"
+msgstr ""
+
+#: class/class-acs-event.php
+msgid "Monday"
+msgstr ""
+
+#: class/class-acs-event.php
+msgid "Tuesday"
+msgstr ""
+
+#: class/class-acs-event.php
+msgid "Wednesday"
+msgstr ""
+
+#: class/class-acs-event.php
+msgid "Thursday"
+msgstr ""
+
+#: class/class-acs-event.php
+msgid "Friday"
+msgstr ""
+
+#: class/class-acs-event.php
+msgid "Saturday"
+msgstr ""
+
+#: class/class-acs-event.php
+msgid "January"
+msgstr ""
+
+#: class/class-acs-event.php
+msgid "February"
+msgstr ""
+
+#: class/class-acs-event.php
+msgid "March"
+msgstr ""
+
+#: class/class-acs-event.php
+msgid "April"
+msgstr ""
+
+#: class/class-acs-event.php
+msgid "May"
+msgstr ""
+
+#: class/class-acs-event.php
+msgid "June"
+msgstr ""
+
+#: class/class-acs-event.php
+msgid "July"
+msgstr ""
+
+#: class/class-acs-event.php
+msgid "August"
+msgstr ""
+
+#: class/class-acs-event.php
+msgid "September"
+msgstr ""
+
+#: class/class-acs-event.php
+msgid "October"
+msgstr ""
+
+#: class/class-acs-event.php
+msgid "November"
+msgstr ""
+
+#: class/class-acs-event.php
+msgid "December"
+msgstr ""
+
+#: class/class-acs-template.php
+msgid "Agenda Administration"
+msgstr ""
+
+#: class/class-acs-template.php
+msgid "Today"
+msgstr ""
+
+#: class/class-acs-template.php
+msgid "Running"
+msgstr ""
+
+#: class/class-acs-template.php
+msgid "Go to page"
+msgstr ""
+
+#: ACSagendaManager.php
+msgid "No upcoming events."
+msgstr ""
+
+#: ACSagendaManager.php
+msgid "Invalid post ID"
+msgstr ""
+
+#: ACSagendaManager.php
+msgid "Post not found"
+msgstr ""
+
+#: ACSagendaManager.php
+msgid "Confirm"
+msgstr ""
+
+#: ACSagendaManager.php
+msgid "Cancel"
+msgstr ""
+
+#: ACSagendaManager.php
+msgid "Update"
+msgstr ""
+
+#: ACSagendaManager.php
+msgid "Add"
+msgstr ""
+
+#: ACSagendaManager.php
+msgid "Close"
+msgstr ""
+
+#: ACSagendaManager.php
+msgid "Calendar"
+msgstr ""
+
+#: ACSagendaManager.php
+msgid "Copied"
+msgstr ""
+
+#: ACSagendaManager.php
+msgid "The field is empty"
+msgstr ""
+
+#: ACSagendaManager.php
+msgid "Select or upload an image"
+msgstr ""
+
+#: ACSagendaManager.php
+msgid "Filtered events"
+msgstr ""
+
+#: ACSagendaManager.php
+msgid "Do you really want to delete this event?"
+msgstr ""
+
+#: ACSagendaManager.php
+msgid "Editor"
+msgstr ""
+
+#: ACSagendaManager.php
+msgid "Add an event"
+msgstr ""
+
+#: templates/admin-page.php
+msgid "Agenda Manager"
+msgstr ""
+
+#: templates/admin-page.php
+msgid "View Agenda"
+msgstr ""
+
+#: templates/admin-page.php
+msgid "Event(s) deleted successfully."
+msgstr ""
+
+#: templates/admin-page.php
+msgid "Add New Event"
+msgstr ""
+
+#: templates/admin-page.php
+msgid "Help"
+msgstr ""
+
+#: templates/admin-page.php
+msgid "Search Events"
+msgstr ""
+
+#: templates/admin-page.php
+msgid "Field Descriptions"
+msgstr ""
+
+#: templates/admin-page.php
+msgid "How you want to categorize your event. Displayed in the widget title."
+msgstr ""
+
+#: templates/admin-page.php
+msgid "The event title shown in the middle column."
+msgstr ""
+
+#: templates/admin-page.php
+msgid "Where the event will be held. Shown in the left column."
+msgstr ""
+
+#: templates/admin-page.php
+msgid "An image associated with the event. Shown in the right column."
+msgstr ""
+
+#: templates/admin-page.php
+msgid "A short introduction to the event."
+msgstr ""
+
+#: templates/admin-page.php
+msgid "Internal or external link to the full event page."
+msgstr ""
+
+#: templates/admin-page.php
+msgid "Event dates. Can be a single day, a range, or multiple dates."
+msgstr ""
+
+#: templates/admin-page.php
+msgid "No: Event disappears after start. Yes: Past days are hidden. Keep until end: All days shown until expiration."
+msgstr ""
+
+#: templates/admin-page.php
+msgid "Confirm Delete"
+msgstr ""
+
+#: templates/admin-page.php
+msgid "Are you sure you want to delete this event?"
+msgstr ""
+
+#: templates/admin-page.php
+msgid "Select Image"
+msgstr ""
+
+#: templates/admin-page.php
+msgid "Open Calendar"
+msgstr ""
+
+#: templates/settings-page.php
+msgid "Agenda Settings"
+msgstr ""
+
+#: templates/settings-page.php
+msgid "Support this plugin!"
+msgstr ""
+
+#: templates/settings-page.php
+msgid "If you find this plugin useful, please consider making a donation to support development."
+msgstr ""
+
+#: templates/settings-page.php
+msgid "Donate via PayPal"
+msgstr ""
+
+#: templates/settings-page.php
+msgid "About This Plugin"
+msgstr ""
+
+#: templates/settings-page.php
+msgid "This plugin creates a simple agenda page where you can display events. The default page is \"Agenda\" and is created upon activation."
+msgstr ""
+
+#: templates/settings-page.php
+msgid "You can change the page name below. The old page will be deleted and a new one created with the shortcode [agenda]."
+msgstr ""
+
+#: templates/settings-page.php
+msgid "For consistent styling across themes, this plugin uses its own template. Tested with default themes and others."
+msgstr ""
+
+#: templates/settings-page.php
+msgid "Questions or issues?"
+msgstr ""
+
+#: templates/settings-page.php
+msgid "Report on GitHub"
+msgstr ""
+
+#: templates/settings-page.php
+msgid "or contact"
+msgstr ""
+
+#: templates/settings-page.php
+msgid "Agenda Page Name"
+msgstr ""
+
+#: templates/settings-page.php
+msgid "The name of the page where the agenda will be displayed."
+msgstr ""
+
+#: templates/settings-page.php
+msgid "Google Maps API Key"
+msgstr ""
+
+#: templates/settings-page.php
+msgid "Optional. Enter your Google Maps API key to enable location autocomplete."
+msgstr ""
+
+#: templates/settings-page.php
+msgid "Get an API key"
+msgstr ""
+
+#: templates/settings-page.php
+msgid "Required APIs: Maps JavaScript API, Places API"
+msgstr ""
+
+#: templates/settings-page.php
+msgid "Usage"
+msgstr ""
+
+#: templates/settings-page.php
+msgid "Use the shortcode below to display the agenda on any page:"
+msgstr ""
