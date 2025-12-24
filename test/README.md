@@ -93,3 +93,23 @@ If something is wrong, do a full clean restart:
 ./clean.sh
 ./start.sh
 ```
+
+## E2E Tests
+
+This project includes end-to-end tests using Playwright. See [e2e/README.md](e2e/README.md) for full documentation.
+
+### Quick Start
+
+```bash
+# Make sure Docker environment is running
+./start.sh
+
+# Run E2E tests
+./run-e2e.sh
+```
+
+### What's Tested
+
+- **Event Management**: Create, edit, delete, bulk delete events
+- **Frontend Display**: Agenda page rendering, event visibility
+- **Search & Filter**: Search, category filtering, pagination, sorting
