@@ -5,6 +5,32 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.2.0] - 2025-12-24
+
+### Added
+
+- Image lightbox: Click on event images to view full-size in a popup overlay
+- Close button for calendar date picker
+- Calendar tests in E2E test suite (15 new tests)
+- Modern frontend design with CSS Grid layout
+- Enhanced image display with hover effects and shadows
+- Accessibility improvements for images (keyboard navigation, focus states)
+
+### Changed
+
+- Redesigned frontend agenda page with modern color palette
+- Improved date column with gradient background and glass-morphism badges
+- Updated responsive design for better mobile experience
+- Refactored calendar date picker to read field value dynamically
+- Enhanced "Read more" button styling with outline design
+
+### Fixed
+
+- Calendar now properly grays out and disables past dates for new events
+- Calendar respects manually cleared date field
+- ESLint formatting issues in JavaScript files
+- Build exclusions for Plugin Check compliance
+
 ## [3.1.0] - 2025-12-24
 
 ### Added
