@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/donate?business=KG9SDHM7VUP6Y&currency_code=
 Tags: agenda, events, calendar, schedule, workshop
 Requires at least: 6.2
 Tested up to: 6.9
-Stable tag: 3.3.0
+Stable tag: 3.3.1
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -73,6 +73,12 @@ Yes, you can override the CSS in your theme or copy the template file to your th
 5. Plugin settings and configuration options
 
 == Changelog ==
+
+= 3.3.1 =
+* Added automated screenshot generation for WordPress.org
+* Added GitHub Actions workflow for WordPress.org deployment
+* Fixed Docker test environment SELinux compatibility
+* Fixed MySQL 8.4 authentication compatibility with WP-CLI
 
 = 3.3.0 =
 * Added Japanese language support

@@ -3,7 +3,7 @@
  * Plugin Name: ACS Agenda Manager
  * Plugin URI: https://github.com/Esysc/wordpress_agenda
  * Description: A WordPress plugin for managing and displaying event agendas. Perfect for workshops, courses, and event organizers.
- * Version: 3.3.0
+ * Version: 3.3.1
  * Requires at least: 6.2
  * Requires PHP: 7.4
  * Author: Andrea Cristalli
@@ -19,7 +19,7 @@
 defined('ABSPATH') || exit;
 
 // Plugin constants
-define('ACS_AGENDA_VERSION', '3.3.0');
+define('ACS_AGENDA_VERSION', '3.3.1');
 define('ACS_AGENDA_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('ACS_AGENDA_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('ACS_AGENDA_TABLE_NAME', 'acs_agenda_manager');
