@@ -17,8 +17,8 @@ services:
         define('SCRIPT_DEBUG', true);
     volumes:
       - wordpress_data:/var/www/html
-      - ./.build/acs-agenda-manager:/var/www/html/wp-content/plugins/acs-agenda-manager:ro
-      - ./wp-cli:/var/www/html/wp-cli
+      - ./.build/acs-agenda-manager:/var/www/html/wp-content/plugins/acs-agenda-manager:ro,z
+      - ./wp-cli:/var/www/html/wp-cli:z
     depends_on:
       db:
         condition: service_healthy
@@ -33,6 +33,7 @@ services:
     image: mysql:8.4
     container_name: acs_agenda_db
     restart: unless-stopped
+    command: --mysql-native-password=ON --authentication-policy=mysql_native_password
     environment:
       MYSQL_DATABASE: wordpress
       MYSQL_USER: wordpress
@@ -58,12 +59,12 @@ services:
       WORDPRESS_DB_NAME: wordpress
     volumes:
       - wordpress_data:/var/www/html
-      - ./.build/acs-agenda-manager:/var/www/html/wp-content/plugins/acs-agenda-manager:ro
-      - ./wp-cli:/var/www/html/wp-cli
+      - ./.build/acs-agenda-manager:/var/www/html/wp-content/plugins/acs-agenda-manager:ro,z
+      - ./wp-cli:/var/www/html/wp-cli:z
     depends_on:
       wordpress:
         condition: service_healthy
-    entrypoint: /var/www/html/wp-cli/setup.sh
+    entrypoint: ["sh", "/var/www/html/wp-cli/setup.sh"]
 
   phpmyadmin:
     image: phpmyadmin:latest

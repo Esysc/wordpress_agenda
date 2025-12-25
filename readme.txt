@@ -17,14 +17,16 @@ ACS Agenda Manager provides an easy way to create and manage an event agenda on 
 
 = Features =
 
-* Multi-date support: Events can span multiple days or have multiple occurrences
+* Multi-date support: Events can span multiple days with visual multi-date calendar picker
 * Media integration: Upload and display event images via WordPress Media Library
+* Image lightbox: Click images to view full-size in a popup overlay
 * Location display: Show event locations prominently
 * Linked pages: Connect events to detailed WordPress pages
 * Automatic expiration: Past events are automatically hidden
-* Responsive design: Looks great on all devices
-* Internationalization: Supports French and English translations
-* Easy administration: Intuitive admin interface with inline editing
+* Modern responsive design: CSS Grid layout with glass-morphism effects
+* Internationalization: Supports 7 languages (English, French, German, Italian, Japanese)
+* Easy administration: Intuitive admin interface with card-based form sections
+* Real-time validation: In-dialog error messages and success notifications
 
 = Usage =
 
@@ -64,19 +66,40 @@ Yes, you can override the CSS in your theme or copy the template file to your th
 
 == Screenshots ==
 
-1. Agenda display on the frontend
-2. Admin interface for managing events
-3. Event editor dialog
-4. Settings page
+1. Main admin dashboard showing the event list with search and bulk actions
+2. Event editor dialog with form fields for title, location, and description
+3. Multi-date calendar picker for selecting event dates
+4. Frontend agenda display with modern responsive layout
+5. Plugin settings and configuration options
 
 == Changelog ==
+
+= 3.3.0 =
+* Added Japanese language support
+* Added success notifications for event operations
+* Added in-dialog validation error messages
+* Improved form with card-based sections (Basic Info, Schedule, Media, Links & Pricing)
+* Fixed date field validation and dialog button styling
+* Split CSS into modular files for better organization
+
+= 3.2.0 =
+* Added image lightbox for full-size image viewing
+* Added close button for calendar date picker
+* Modern frontend redesign with CSS Grid and glass-morphism effects
+* Improved mobile responsive design
+* Fixed calendar to properly disable past dates
+
+= 3.1.0 =
+* Added E2E test suite using Playwright
+* Fixed "Headers already sent" error when deleting events
 
 = 3.0.0 =
 * Complete rewrite with modern PHP 7.4+ code
 * New class-based architecture
 * Improved security and performance
-* Better admin UI
+* Better admin UI with template files
 * User guide integrated in admin
+* Added German translations (de_DE, de_CH)
 
 = 2.1.1 =
 * Added French and Italian translations
@@ -86,6 +109,9 @@ Yes, you can override the CSS in your theme or copy the template file to your th
 * Initial public release
 
 == Upgrade Notice ==
+
+= 3.3.0 =
+New Japanese language support, improved form validation, and better admin UI.
 
 = 3.0.0 =
 Major update with complete code rewrite. Backup your database before upgrading.
