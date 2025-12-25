@@ -1,0 +1,115 @@
+/**
+ * ACS Agenda Manager - Common Styles
+ * Shared between frontend and admin
+ *
+ * @package ACSAgendaManager
+ */
+
+/* ==========================================================================
+   Variables
+   ========================================================================== */
+
+:root {
+    --acs-primary-color: #1a365d;
+    --acs-secondary-color: #2c5282;
+    --acs-accent-color: #38b2ac;
+    --acs-accent-light: #81e6d9;
+    --acs-danger-color: #e53e3e;
+    --acs-warning-color: #ed8936;
+    --acs-success-color: #48bb78;
+    --acs-info-color: #4299e1;
+    --acs-text-color: #2d3748;
+    --acs-text-muted: #718096;
+    --acs-bg-light: #f7fafc;
+    --acs-border-color: #e2e8f0;
+    --acs-border-radius: 12px;
+    --acs-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --acs-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* ==========================================================================
+   Action Buttons
+   ========================================================================== */
+
+.button4 {
+    display: inline-block;
+    padding: 0.4rem 0.75rem;
+    margin: 0.15rem 0.25rem 0.15rem 0;
+    border: none;
+    border-radius: 4px;
+    text-decoration: none !important;
+    font-family: inherit;
+    font-weight: 600;
+    font-size: 12px;
+    color: #fff !important;
+    text-align: center;
+    transition: all 0.15s ease;
+    cursor: pointer;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    line-height: 1.4;
+}
+
+.button4:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+    opacity: 0.9;
+}
+
+.button4:active {
+    transform: translateY(0);
+}
+
+.button4.danger {
+    background-color: var(--acs-danger-color);
+}
+
+.button4.danger:hover {
+    background-color: #c53030;
+}
+
+.button4.warning {
+    background-color: var(--acs-warning-color);
+    color: #744210 !important;
+}
+
+.button4.success {
+    background-color: var(--acs-success-color);
+}
+
+.button4.info {
+    background-color: var(--acs-info-color);
+}
+
+.button4.info:hover {
+    background-color: #3182ce;
+}
+
+/* ==========================================================================
+   Spinner
+   ========================================================================== */
+
+.spinner2 {
+    display: block;
+    position: fixed;
+    z-index: 1031;
+    width: 40px;
+    height: 40px;
+    top: calc(50% - 20px);
+    right: calc(50% - 20px);
+    background-image: url(images/spinner-2x.gif);
+    background-repeat: no-repeat;
+}
+
+/* ==========================================================================
+   Animations
+   ========================================================================== */
+
+.blink_me {
+    animation: blinker 3s linear infinite;
+}
+
+@keyframes blinker {
+    50% {
+        opacity: 0;
+    }
+}

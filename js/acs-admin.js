@@ -49,6 +49,12 @@
             // Image upload button
             $(document).on('click', '.acs-upload-image', this.openMediaLibrary.bind(this));
 
+            // Image remove button
+            $(document).on('click', '.acs-remove-image', this.removeImage.bind(this));
+
+            // Image URL change - update preview
+            $(document).on('input', '#event-image', this.updateImagePreview.bind(this));
+
             // Calendar button
             $(document).on('click', '.acs-open-calendar', this.openCalendar.bind(this));
 
@@ -243,6 +249,7 @@
          * Populate form with existing event data
          */
         populateForm: function (eventId) {
+            const self = this;
             const itemClass = '.origItem_' + eventId;
 
             $(itemClass).each(function () {
@@ -265,6 +272,9 @@
                     }
                 }
             });
+
+            // Update image preview after populating form
+            self.updateImagePreview();
         },
 
         /**
@@ -274,6 +284,7 @@
             this.$eventForm[0].reset();
             $('#event-id').val('');
             this.destroyDatepicker();
+            this.clearImagePreview();
         },
 
         /**
@@ -299,16 +310,22 @@
                     self.$spinner.hide();
 
                     if (response.success) {
-                        self.showNotice(response.data, 'success');
                         self.$eventDialog.dialog('close');
-                        location.reload();
+                        // Reload with success parameter to show notice
+                        const isUpdate = self.$eventForm.find('input[name="id"]').val();
+                        const url = new URL(window.location.href);
+                        url.searchParams.delete('deleted');
+                        url.searchParams.delete('updated');
+                        url.searchParams.delete('created');
+                        url.searchParams.set(isUpdate ? 'updated' : 'created', '1');
+                        window.location.href = url.toString();
                     } else {
-                        self.showNotice(response.data || 'Error occurred', 'error');
+                        self.showNotice(response.data || 'Error occurred', 'error', true);
                     }
                 },
                 error: function () {
                     self.$spinner.hide();
-                    self.showNotice('Request failed', 'error');
+                    self.showNotice('Request failed', 'error', true);
                 },
             });
         },
@@ -330,8 +347,42 @@
                 }
             });
 
+            // Validate date field format
+            const $dateField = $('#event-date');
+            const dateValue = $dateField.val().trim();
+            if (dateValue) {
+                const dateRegex = /^(\d{1,2})\/(\d{1,2})\/(\d{2,4})$/;
+                const dates = dateValue.split(',').map(function(d) {
+                    return d.trim();
+                }).filter(function(d) {
+                    return d;
+                });
+
+                let hasInvalidDate = false;
+                for (let i = 0; i < dates.length; i++) {
+                    const match = dates[i].match(dateRegex);
+                    if (!match) {
+                        hasInvalidDate = true;
+                        break;
+                    }
+                    const day = parseInt(match[1], 10);
+                    const month = parseInt(match[2], 10);
+                    if (month < 1 || month > 12 || day < 1 || day > 31) {
+                        hasInvalidDate = true;
+                        break;
+                    }
+                }
+
+                if (hasInvalidDate) {
+                    $dateField.addClass('error');
+                    isValid = false;
+                    this.showNotice(acsAgendaAdmin.i18n.invalidDate || 'Invalid date format. Use dd/mm/yy', 'error', true);
+                    return false;
+                }
+            }
+
             if (!isValid) {
-                this.showNotice(acsAgendaAdmin.i18n.fieldEmpty, 'error');
+                this.showNotice(acsAgendaAdmin.i18n.fieldEmpty, 'error', true);
             }
 
             return isValid;
@@ -376,8 +427,8 @@
         openMediaLibrary: function (e) {
             e.preventDefault();
 
-            const $button = $(e.currentTarget);
-            const $input = $button.siblings('input[type="text"]');
+            const self = this;
+            const $input = $('#event-image');
 
             const frame = wp.media({
                 title: acsAgendaAdmin.i18n.selectImage,
@@ -389,9 +440,54 @@
             frame.on('select', function () {
                 const attachment = frame.state().get('selection').first().toJSON();
                 $input.val(attachment.url);
+                self.updateImagePreview();
             });
 
             frame.open();
+        },
+
+        /**
+         * Update image preview
+         */
+        updateImagePreview: function () {
+            const $input = $('#event-image');
+            const $preview = $('#event-image-preview');
+            const $removeBtn = $('.acs-remove-image');
+            const imageUrl = $input.val().trim();
+
+            if (imageUrl) {
+                $preview
+                    .addClass('has-image')
+                    .html('<img src="' + imageUrl + '" alt="Preview" />');
+                $removeBtn.show();
+            } else {
+                this.clearImagePreview();
+            }
+        },
+
+        /**
+         * Clear image preview
+         */
+        clearImagePreview: function () {
+            const $preview = $('#event-image-preview');
+            const $removeBtn = $('.acs-remove-image');
+
+            $preview
+                .removeClass('has-image')
+                .html(
+                    '<span class="dashicons dashicons-format-image"></span>' +
+                    '<span class="acs-image-preview-text">No image selected</span>'
+                );
+            $removeBtn.hide();
+        },
+
+        /**
+         * Remove image
+         */
+        removeImage: function (e) {
+            e.preventDefault();
+            $('#event-image').val('');
+            this.clearImagePreview();
         },
 
         /**
@@ -412,16 +508,28 @@
             const today = new Date();
             today.setHours(0, 0, 0, 0);
 
-            // Helper function to get current dates from input
+            // Helper function to get current dates from input (only valid dates)
             function getCurrentDates() {
                 const val = $input.val();
                 if (!val) {
                     return [];
                 }
+                const dateRegex = /^(\d{1,2})\/(\d{1,2})\/(\d{2,4})$/;
                 return val.split(',').map(function(d) {
                     return d.trim();
                 }).filter(function(d) {
-                    return d;
+                    // Only keep strings that match date format
+                    if (!d) {
+                        return false;
+                    }
+                    const match = d.match(dateRegex);
+                    if (!match) {
+                        return false;
+                    }
+                    const day = parseInt(match[1], 10);
+                    const month = parseInt(match[2], 10);
+                    // Validate basic ranges
+                    return month >= 1 && month <= 12 && day >= 1 && day <= 31;
                 });
             }
 
@@ -563,8 +671,11 @@
 
         /**
          * Show admin notice
+         * @param {string} message - The message to display
+         * @param {string} type - 'success' or 'error'
+         * @param {boolean} inDialog - If true, show inside the dialog instead of main page
          */
-        showNotice: function (message, type) {
+        showNotice: function (message, type, inDialog) {
             const noticeClass = type === 'success' ? 'notice-success' : 'notice-error';
 
             const $notice = $(
@@ -578,7 +689,9 @@
                     '</div>'
             );
 
-            this.$notices.html($notice);
+            // Show in dialog or main page based on context
+            const $container = inDialog ? $('#acs-dialog-notices') : this.$notices;
+            $container.html($notice);
 
             $notice.find('.notice-dismiss').on('click', function () {
                 $notice.fadeOut(function () {

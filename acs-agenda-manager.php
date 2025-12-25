@@ -3,7 +3,7 @@
  * Plugin Name: ACS Agenda Manager
  * Plugin URI: https://github.com/Esysc/wordpress_agenda
  * Description: A WordPress plugin for managing and displaying event agendas. Perfect for workshops, courses, and event organizers.
- * Version: 3.2.0
+ * Version: 3.3.0
  * Requires at least: 6.2
  * Requires PHP: 7.4
  * Author: Andrea Cristalli
@@ -19,7 +19,7 @@
 defined('ABSPATH') || exit;
 
 // Plugin constants
-define('ACS_AGENDA_VERSION', '3.2.0');
+define('ACS_AGENDA_VERSION', '3.3.0');
 define('ACS_AGENDA_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('ACS_AGENDA_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('ACS_AGENDA_TABLE_NAME', 'acs_agenda_manager');
@@ -118,10 +118,19 @@ final class ACS_Agenda_Manager {
             return;
         }
 
+        // Common styles (variables, buttons, spinner)
+        wp_enqueue_style(
+            'acs-agenda-common',
+            ACS_AGENDA_PLUGIN_URL . 'css/acs-common.css',
+            [],
+            ACS_AGENDA_VERSION
+        );
+
+        // Frontend styles
         wp_enqueue_style(
             'acs-agenda-style',
             ACS_AGENDA_PLUGIN_URL . 'css/acs.css',
-            [],
+            ['acs-agenda-common'],
             ACS_AGENDA_VERSION
         );
 
@@ -163,7 +172,35 @@ final class ACS_Agenda_Manager {
             return;
         }
 
-        $this->enqueue_frontend_assets(true);
+        // Common styles (variables, buttons, spinner)
+        wp_enqueue_style(
+            'acs-agenda-common',
+            ACS_AGENDA_PLUGIN_URL . 'css/acs-common.css',
+            [],
+            ACS_AGENDA_VERSION
+        );
+
+        // Admin-specific styles
+        wp_enqueue_style(
+            'acs-agenda-admin-style',
+            ACS_AGENDA_PLUGIN_URL . 'css/acs-admin.css',
+            ['acs-agenda-common', 'wp-jquery-ui-dialog'],
+            ACS_AGENDA_VERSION
+        );
+
+        wp_enqueue_style('wp-jquery-ui-dialog');
+        wp_enqueue_script('jquery');
+        wp_enqueue_script('jquery-ui-dialog');
+        wp_enqueue_script('jquery-ui-datepicker');
+
+        // Multi-date picker
+        wp_enqueue_script(
+            'acs-multidatespicker',
+            ACS_AGENDA_PLUGIN_URL . 'js/jquery-ui-multidatespicker.min.js',
+            ['jquery-ui-datepicker'],
+            '1.6.6',
+            true
+        );
 
         wp_enqueue_media();
         wp_enqueue_style('thickbox');
@@ -249,6 +286,7 @@ final class ACS_Agenda_Manager {
             'calendar' => __('Calendar', 'acs-agenda-manager'),
             'copied' => __('Copied', 'acs-agenda-manager'),
             'fieldEmpty' => __('The field is empty', 'acs-agenda-manager'),
+            'invalidDate' => __('Invalid date format. Use dd/mm/yy', 'acs-agenda-manager'),
             'selectImage' => __('Select or upload an image', 'acs-agenda-manager'),
             'filteredEvents' => __('Filtered events', 'acs-agenda-manager'),
             'confirmDelete' => __('Do you really want to delete this event?', 'acs-agenda-manager'),

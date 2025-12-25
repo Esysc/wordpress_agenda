@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ACS Agenda Manager 3.0.0\n"
 "Report-Msgid-Bugs-To: https://github.com/Esysc/wordpress_agenda/issues\n"
-"POT-Creation-Date: 2025-12-24 00:00+0000\n"
+"POT-Creation-Date: 2025-12-25 00:00+0000\n"
 "PO-Revision-Date: 2025-12-24 00:00+0100\n"
 "Last-Translator: Andrea Cristalli <andrea.cristalli@hispeed.ch>\n"
 "Language-Team: French\n"
@@ -17,120 +17,568 @@ msgstr ""
 "X-Generator: Poedit 3.0\n"
 "X-Domain: acs-agenda-manager\n"
 
-#. Plugin Name
-msgid "ACS Agenda Manager"
+#, fuzzy
+msgid "A brief description of the event..."
+msgstr "Une breve introduction a l'evenement."
+
+msgid "A short introduction to the event."
+msgstr "Une breve introduction a l'evenement."
+
+msgid "About This Plugin"
+msgstr "A propos de ce plugin"
+
+#, fuzzy
+msgid "ACS Agenda Manager - User Guide"
 msgstr "ACS Gestionnaire d'Agenda"
 
-msgid "Agenda"
-msgstr "Agenda"
+msgid ""
+"ACS Agenda Manager allows you to create and manage an event agenda on your "
+"WordPress site. When activated, the plugin automatically creates an Agenda "
+"page with the shortcode included."
+msgstr ""
 
-msgid "Event"
-msgstr "Evenement"
+msgid "Add"
+msgstr "Ajouter"
 
-msgid "Events"
-msgstr "Evenements"
+msgid "Add an event"
+msgstr "Ajouter un evenement"
 
-msgid "Category"
-msgstr "Categorie"
+msgid "Add New Event"
+msgstr "Ajouter un nouvel evenement"
 
-msgid "Title"
-msgstr "Titre"
-
-msgid "Location"
-msgstr "Emplacement"
-
-msgid "Image"
-msgstr "Image"
-
-msgid "Description"
-msgstr "Description"
-
-msgid "Page Link"
-msgstr "Lien de la page"
-
-msgid "Schedule"
-msgstr "Dates"
-
-msgid "Price"
-msgstr "Prix"
+msgid "Adding Events"
+msgstr "Ajouter des evenements"
 
 msgid "Advance Payment"
 msgstr "Acompte"
 
-msgid "Partial Attendance"
-msgstr "Participation partielle"
+msgid "Agenda"
+msgstr "Agenda"
 
-msgid "External URL"
-msgstr "URL externe"
+msgid "Agenda Administration"
+msgstr "Administration de l'agenda"
 
-msgid "Created"
-msgstr "Cree"
+msgid "Agenda Manager"
+msgstr "Gestionnaire d'agenda"
 
-msgid "Delete"
-msgstr "Supprimer"
+msgid "Agenda Page Name"
+msgstr "Nom de la page d'agenda"
 
-msgid "No"
-msgstr "Non"
+msgid "Agenda Settings"
+msgstr "Parametres de l'agenda"
 
-msgid "Yes"
-msgstr "Oui"
-
-msgid "Keep until end"
-msgstr "Garder jusqu'a la fin"
-
-msgid "Read more"
-msgstr "En savoir plus"
-
-msgid "Hide"
-msgstr "Masquer"
-
-msgid "Open page"
-msgstr "Ouvrir la page"
-
-msgid "Edit"
-msgstr "Modifier"
-
-msgid "Contact Form Shortcode"
-msgstr "Shortcode du formulaire de contact"
-
-msgid "Copy!"
-msgstr "Copier!"
-
-msgid "Form shortcode"
-msgstr "Shortcode du formulaire"
+msgid ""
+"All dates remain visible until the last date passes. Use this for multi-day "
+"events where you want to show the complete schedule."
+msgstr ""
 
 msgid "All Events"
 msgstr "Tous les evenements"
 
-msgid "Filter"
-msgstr "Filtrer"
+msgid "An image associated with the event. Shown in the right column."
+msgstr "Une image associee a l'evenement. Affichee dans la colonne de droite."
 
-msgid "Events per page"
-msgstr "Evenements par page"
+msgid "April"
+msgstr "Avril"
 
-msgid "No events found."
-msgstr "Aucun evenement trouve."
+msgid "Are you sure you want to delete this event?"
+msgstr "Etes-vous sur de vouloir supprimer cet evenement?"
 
-msgid "Security check failed"
-msgstr "Verification de securite echouee"
+msgid "August"
+msgstr "Aout"
 
-msgid "Permission denied"
-msgstr "Permission refusee"
+msgid "Basic Information"
+msgstr ""
 
-msgid "Invalid event ID"
-msgstr "ID d'evenement invalide"
+msgid "Behavior"
+msgstr "Comportement"
 
-msgid "Event updated successfully"
-msgstr "Evenement mis a jour avec succes"
+msgid "Brief description shown in the \"Read More\" dialog"
+msgstr ""
 
-msgid "Failed to update event"
-msgstr "Echec de la mise a jour de l'evenement"
+msgid "Calendar"
+msgstr "Calendrier"
+
+msgid "Calendar not working"
+msgstr ""
+
+msgid "Cancel"
+msgstr "Annuler"
+
+msgid "Category"
+msgstr "Categorie"
+
+msgid "Check if your theme or a caching plugin is minifying CSS incorrectly"
+msgstr ""
+
+msgid "Check that the event has dates in the future"
+msgstr ""
+
+msgid "Check the browser console for JavaScript errors"
+msgstr ""
+
+#, fuzzy
+msgid "Check the Partial Attendance setting"
+msgstr "Participation partielle"
+
+msgid "Clear your browser cache"
+msgstr ""
+
+msgid "Click \"Add New Event\" to create your first event"
+msgstr ""
+
+msgid "Click calendar to select dates"
+msgstr ""
+
+msgid "Close"
+msgstr "Fermer"
+
+msgid "Confirm"
+msgstr "Confirmer"
+
+msgid "Confirm Delete"
+msgstr "Confirmer la suppression"
+
+msgid "Contact Form Shortcode"
+msgstr "Shortcode du formulaire de contact"
+
+msgid "Contents"
+msgstr "Sommaire"
+
+msgid "Controls how multi-day events behave when dates pass"
+msgstr ""
+
+msgid "Copied"
+msgstr "Copie"
+
+msgid "Copy: wp-content/plugins/acs-agenda-manager/themefiles/page-agenda.php"
+msgstr ""
+
+msgid "Copy!"
+msgstr "Copier!"
+
+msgid "Create an API key and restrict it to your domain"
+msgstr ""
+
+msgid "Created"
+msgstr "Cree"
+
+msgid "CSS Styling"
+msgstr ""
+
+msgid "Customization"
+msgstr "Personnalisation"
+
+msgid "Customize the template as needed"
+msgstr ""
+
+msgid "December"
+msgstr "Decembre"
+
+#, fuzzy
+msgid "Default Agenda Page"
+msgstr "Nom de la page d'agenda"
+
+msgid "Delete"
+msgstr "Supprimer"
+
+#, fuzzy
+msgid "Deleting Events"
+msgstr "Ajouter des evenements"
+
+msgid "Description"
+msgstr "Description"
+
+msgid "Display your agenda on any page or post using the shortcode:"
+msgstr ""
+
+msgid "Do you really want to delete this event?"
+msgstr "Voulez-vous vraiment supprimer cet evenement?"
+
+msgid "Donate via PayPal"
+msgstr "Faire un don via PayPal"
+
+msgid "e.g., CHF 150.-"
+msgstr ""
+
+msgid "e.g., Conference Room A"
+msgstr ""
+
+msgid "e.g., Workshop, Course, Seminar"
+msgstr ""
+
+msgid "Edit"
+msgstr "Modifier"
+
+#, fuzzy
+msgid "Editing Events"
+msgstr "Ajouter des evenements"
+
+msgid "Editor"
+msgstr "Editeur"
+
+#, fuzzy
+msgid "Enable the \"Maps JavaScript API\" and \"Places API\""
+msgstr "APIs requises: Maps JavaScript API, Places API"
+
+msgid "Ensure jQuery UI is not being blocked by another plugin"
+msgstr ""
+
+msgid "Enter event title..."
+msgstr ""
+
+msgid "Event"
+msgstr "Evenement"
 
 msgid "Event added successfully"
 msgstr "Evenement ajoute avec succes"
 
+msgid "Event cost (e.g., CHF 150, Free, On request)"
+msgstr ""
+
+#, fuzzy
+msgid "Event created successfully."
+msgstr "Evenement mis a jour avec succes"
+
+#, fuzzy
+msgid "Event Dates"
+msgstr "Evenements"
+
+msgid "Event dates. Can be a single day, a range, or multiple dates."
+msgstr ""
+"Dates de l'evenement. Peut etre un seul jour, une plage ou plusieurs dates."
+
+#, fuzzy
+msgid "Event Image"
+msgstr "Selectionner une image"
+
+msgid "Event updated successfully"
+msgstr "Evenement mis a jour avec succes"
+
+#, fuzzy
+msgid "Event updated successfully."
+msgstr "Evenement mis a jour avec succes"
+
+msgid "Event(s) deleted successfully."
+msgstr "Evenement(s) supprime(s) avec succes."
+
+msgid "Events"
+msgstr "Evenements"
+
+msgid "Events not showing"
+msgstr ""
+
+msgid "Events per page"
+msgstr "Evenements par page"
+
+msgid "External registration link"
+msgstr ""
+
+msgid "External URL"
+msgstr "URL externe"
+
 msgid "Failed to add event"
 msgstr "Echec de l'ajout de l'evenement"
+
+msgid "Failed to update event"
+msgstr "Echec de la mise a jour de l'evenement"
+
+msgid "February"
+msgstr "Fevrier"
+
+msgid "Field"
+msgstr "Champ"
+
+msgid "Field Descriptions"
+msgstr "Descriptions des champs"
+
+msgid "Fill in the event details and click Add"
+msgstr ""
+
+msgid "Filter"
+msgstr "Filtrer"
+
+msgid "Filtered events"
+msgstr "Evenements filtres"
+
+#, fuzzy
+msgid "Filtering Events"
+msgstr "Evenements filtres"
+
+msgid ""
+"For complete control over the agenda display, copy the template file from "
+"the plugin to your theme:"
+msgstr ""
+
+msgid ""
+"For consistent styling across themes, this plugin uses its own template. "
+"Tested with default themes and others."
+msgstr ""
+"Pour un style coherent entre les themes, ce plugin utilise son propre "
+"modele. Teste avec les themes par defaut et d'autres."
+
+msgid "Form shortcode"
+msgstr "Shortcode du formulaire"
+
+msgid "Friday"
+msgstr "Vendredi"
+
+msgid "Get an API key"
+msgstr "Obtenir une cle API"
+
+msgid "Getting Started"
+msgstr "Pour commencer"
+
+msgid "GitHub Issues page"
+msgstr ""
+
+msgid "Go to Agenda > Settings and enter your API key"
+msgstr ""
+
+msgid "Go to Agenda in the admin menu to view your events list"
+msgstr ""
+
+msgid "Go to page"
+msgstr "Aller a la page"
+
+msgid "Go to the Google Cloud Console and create a project"
+msgstr ""
+
+msgid "Google Maps API Key"
+msgstr "Cle API Google Maps"
+
+msgid "Google Maps Location Autocomplete"
+msgstr ""
+
+msgid "Group your events (e.g., Workshop, Conference, Course)"
+msgstr ""
+
+msgid "Help"
+msgstr "Aide"
+
+msgid "Hide"
+msgstr "Masquer"
+
+msgid "How you want to categorize your event. Displayed in the widget title."
+msgstr ""
+"Comment vous souhaitez categoriser votre evenement. Affiche dans le titre du "
+"widget."
+
+msgid "https://..."
+msgstr ""
+
+msgid ""
+"If you find this plugin useful, please consider making a donation to support "
+"development."
+msgstr ""
+"Si vous trouvez ce plugin utile, pensez a faire un don pour soutenir le "
+"developpement."
+
+msgid "Image"
+msgstr "Image"
+
+msgid "Image URL or select from library"
+msgstr ""
+
+msgid "Internal or external link to the full event page."
+msgstr "Lien interne ou externe vers la page complete de l'evenement."
+
+msgid "Invalid date format. Use dd/mm/yy"
+msgstr ""
+
+msgid "Invalid event ID"
+msgstr "ID d'evenement invalide"
+
+msgid "Invalid post ID"
+msgstr "ID de publication invalide"
+
+msgid "January"
+msgstr "Janvier"
+
+msgid "July"
+msgstr "Juillet"
+
+msgid "June"
+msgstr "Juin"
+
+msgid "Keep until end"
+msgstr "Garder jusqu'a la fin"
+
+#, fuzzy
+msgid "Keep until end - Show all dates"
+msgstr "Garder jusqu'a la fin"
+
+msgid "Link to a detailed event page on your site"
+msgstr ""
+
+msgid "Link to event details page"
+msgstr ""
+
+msgid "Links & Pricing"
+msgstr ""
+
+msgid "Location"
+msgstr "Emplacement"
+
+msgid "Managing Events"
+msgstr "Gerer les evenements"
+
+msgid "March"
+msgstr "Mars"
+
+msgid "May"
+msgstr "Mai"
+
+msgid "Media"
+msgstr ""
+
+msgid "Monday"
+msgstr "Lundi"
+
+msgid "Need more help?"
+msgstr ""
+
+msgid "No"
+msgstr "Non"
+
+msgid "No - Hide after first date"
+msgstr ""
+
+msgid "No events found."
+msgstr "Aucun evenement trouve."
+
+msgid "No image selected"
+msgstr ""
+
+msgid "No upcoming events."
+msgstr "Aucun evenement a venir."
+
+msgid ""
+"No: Event disappears after start. Yes: Past days are hidden. Keep until end: "
+"All days shown until expiration."
+msgstr ""
+"Non: L'evenement disparait apres le debut. Oui: Les jours passes sont "
+"masques. Garder jusqu'a la fin: Tous les jours affiches jusqu'a expiration."
+
+msgid "November"
+msgstr "Novembre"
+
+msgid "October"
+msgstr "Octobre"
+
+msgid ""
+"Once configured, the Location field will show address suggestions as you "
+"type."
+msgstr ""
+
+msgid "Open Calendar"
+msgstr "Ouvrir le calendrier"
+
+msgid "Open page"
+msgstr "Ouvrir la page"
+
+msgid "Option"
+msgstr "Option"
+
+msgid "Optional external link (e.g., registration on another site)"
+msgstr ""
+
+msgid ""
+"Optional. Enter your Google Maps API key to enable location autocomplete."
+msgstr ""
+"Optionnel. Entrez votre cle API Google Maps pour activer l'auto-completion "
+"de l'emplacement."
+
+msgid "or contact"
+msgstr "ou contacter"
+
+msgid ""
+"Override the default styles by adding custom CSS to your theme. The plugin "
+"uses CSS variables for easy customization:"
+msgstr ""
+
+msgid "Page Link"
+msgstr "Lien de la page"
+
+msgid "Partial Attendance"
+msgstr "Participation partielle"
+
+msgid ""
+"Past dates are hidden, but future dates remain visible. Use this for events "
+"where participants can join for remaining sessions."
+msgstr ""
+
+msgid "Paste to: wp-content/themes/your-theme/page-agenda.php"
+msgstr ""
+
+msgid "Permission denied"
+msgstr "Permission refusee"
+
+msgid "Post not found"
+msgstr "Publication non trouvee"
+
+msgid "Price"
+msgstr "Prix"
+
+msgid "Questions or issues?"
+msgstr "Questions ou problemes?"
+
+msgid "Quick Start"
+msgstr ""
+
+msgid "Read more"
+msgstr "En savoir plus"
+
+msgid "Report on GitHub"
+msgstr "Signaler sur GitHub"
+
+msgid "Required"
+msgstr "Requis"
+
+msgid "Required APIs: Maps JavaScript API, Places API"
+msgstr "APIs requises: Maps JavaScript API, Places API"
+
+msgid "Running"
+msgstr "En cours"
+
+msgid "Saturday"
+msgstr "Samedi"
+
+msgid "Save Settings"
+msgstr "Enregistrer les parametres"
+
+msgid "Schedule"
+msgstr "Dates"
+
+msgid "Search Events"
+msgstr "Rechercher des evenements"
+
+#, fuzzy
+msgid "Searching Events"
+msgstr "Rechercher des evenements"
+
+msgid "Security check failed"
+msgstr "Verification de securite echouee"
+
+#, fuzzy
+msgid "Select"
+msgstr "Selectionner une image"
+
+msgid "Select Image"
+msgstr "Selectionner une image"
+
+msgid "Select one or more dates using the calendar picker"
+msgstr ""
+
+msgid ""
+"Select one or more dates. Use the calendar for easy multi-date selection."
+msgstr ""
+
+msgid "Select or upload an image"
+msgstr "Selectionner ou telecharger une image"
+
+msgid "September"
+msgstr "Septembre"
 
 msgid "Settings"
 msgstr "Parametres"
@@ -138,272 +586,171 @@ msgstr "Parametres"
 msgid "Settings saved successfully."
 msgstr "Parametres enregistres avec succes."
 
-msgid "Save Settings"
-msgstr "Enregistrer les parametres"
-
-msgid "User Guide"
-msgstr "Guide utilisateur"
-
-msgid "Getting Started"
-msgstr "Pour commencer"
-
-msgid "Adding Events"
-msgstr "Ajouter des evenements"
-
-msgid "Managing Events"
-msgstr "Gerer les evenements"
-
-msgid "Using the Shortcode"
-msgstr "Utiliser le shortcode"
-
-msgid "Customization"
-msgstr "Personnalisation"
-
-msgid "Troubleshooting"
-msgstr "Depannage"
+msgid "Styles not loading"
+msgstr ""
 
 msgid "Sunday"
 msgstr "Dimanche"
 
-msgid "Monday"
-msgstr "Lundi"
+msgid "Support this plugin!"
+msgstr "Soutenez ce plugin!"
 
-msgid "Tuesday"
-msgstr "Mardi"
+msgid "Template Override"
+msgstr ""
 
-msgid "Wednesday"
-msgstr "Mercredi"
-
-msgid "Thursday"
-msgstr "Jeudi"
-
-msgid "Friday"
-msgstr "Vendredi"
-
-msgid "Saturday"
-msgstr "Samedi"
-
-msgid "January"
-msgstr "Janvier"
-
-msgid "February"
-msgstr "Fevrier"
-
-msgid "March"
-msgstr "Mars"
-
-msgid "April"
-msgstr "Avril"
-
-msgid "May"
-msgstr "Mai"
-
-msgid "June"
-msgstr "Juin"
-
-msgid "July"
-msgstr "Juillet"
-
-msgid "August"
-msgstr "Aout"
-
-msgid "September"
-msgstr "Septembre"
-
-msgid "October"
-msgstr "Octobre"
-
-msgid "November"
-msgstr "Novembre"
-
-msgid "December"
-msgstr "Decembre"
-
-msgid "Agenda Administration"
-msgstr "Administration de l'agenda"
-
-msgid "Today"
-msgstr "Aujourd'hui"
-
-msgid "Running"
-msgstr "En cours"
-
-msgid "Go to page"
-msgstr "Aller a la page"
-
-msgid "No upcoming events."
-msgstr "Aucun evenement a venir."
-
-msgid "Invalid post ID"
-msgstr "ID de publication invalide"
-
-msgid "Post not found"
-msgstr "Publication non trouvee"
-
-msgid "Confirm"
-msgstr "Confirmer"
-
-msgid "Cancel"
-msgstr "Annuler"
-
-msgid "Update"
-msgstr "Mettre a jour"
-
-msgid "Add"
-msgstr "Ajouter"
-
-msgid "Close"
-msgstr "Fermer"
-
-msgid "Calendar"
-msgstr "Calendrier"
-
-msgid "Copied"
-msgstr "Copie"
-
-msgid "The field is empty"
-msgstr "Le champ est vide"
-
-msgid "Select or upload an image"
-msgstr "Selectionner ou telecharger une image"
-
-msgid "Filtered events"
-msgstr "Evenements filtres"
-
-msgid "Do you really want to delete this event?"
-msgstr "Voulez-vous vraiment supprimer cet evenement?"
-
-msgid "Editor"
-msgstr "Editeur"
-
-msgid "Add an event"
-msgstr "Ajouter un evenement"
-
-msgid "Agenda Manager"
-msgstr "Gestionnaire d'agenda"
-
-msgid "View Agenda"
-msgstr "Voir l'agenda"
-
-msgid "Event(s) deleted successfully."
-msgstr "Evenement(s) supprime(s) avec succes."
-
-msgid "Add New Event"
-msgstr "Ajouter un nouvel evenement"
-
-msgid "Help"
-msgstr "Aide"
-
-msgid "Search Events"
-msgstr "Rechercher des evenements"
-
-msgid "Field Descriptions"
-msgstr "Descriptions des champs"
-
-msgid "How you want to categorize your event. Displayed in the widget title."
-msgstr "Comment vous souhaitez categoriser votre evenement. Affiche dans le titre du widget."
+msgid ""
+"The entire event disappears after the first date passes. Use this for single-"
+"session events where late registration is not possible."
+msgstr ""
 
 msgid "The event title shown in the middle column."
 msgstr "Le titre de l'evenement affiche dans la colonne du milieu."
 
-msgid "Where the event will be held. Shown in the left column."
-msgstr "Ou se tiendra l'evenement. Affiche dans la colonne de gauche."
-
-msgid "An image associated with the event. Shown in the right column."
-msgstr "Une image associee a l'evenement. Affichee dans la colonne de droite."
-
-msgid "A short introduction to the event."
-msgstr "Une breve introduction a l'evenement."
-
-msgid "Internal or external link to the full event page."
-msgstr "Lien interne ou externe vers la page complete de l'evenement."
-
-msgid "Event dates. Can be a single day, a range, or multiple dates."
-msgstr "Dates de l'evenement. Peut etre un seul jour, une plage ou plusieurs dates."
-
-msgid "No: Event disappears after start. Yes: Past days are hidden. Keep until end: All days shown until expiration."
-msgstr "Non: L'evenement disparait apres le debut. Oui: Les jours passes sont masques. Garder jusqu'a la fin: Tous les jours affiches jusqu'a expiration."
-
-msgid "Confirm Delete"
-msgstr "Confirmer la suppression"
-
-msgid "Are you sure you want to delete this event?"
-msgstr "Etes-vous sur de vouloir supprimer cet evenement?"
-
-msgid "Select Image"
-msgstr "Selectionner une image"
-
-msgid "Open Calendar"
-msgstr "Ouvrir le calendrier"
-
-msgid "Agenda Settings"
-msgstr "Parametres de l'agenda"
-
-msgid "Support this plugin!"
-msgstr "Soutenez ce plugin!"
-
-msgid "If you find this plugin useful, please consider making a donation to support development."
-msgstr "Si vous trouvez ce plugin utile, pensez a faire un don pour soutenir le developpement."
-
-msgid "Donate via PayPal"
-msgstr "Faire un don via PayPal"
-
-msgid "About This Plugin"
-msgstr "A propos de ce plugin"
-
-msgid "This plugin creates a simple agenda page where you can display events. The default page is \"Agenda\" and is created upon activation."
-msgstr "Ce plugin cree une page d'agenda simple ou vous pouvez afficher des evenements. La page par defaut est \"Agenda\" et est creee lors de l'activation."
-
-msgid "You can change the page name below. The old page will be deleted and a new one created with the shortcode [agenda]."
-msgstr "Vous pouvez changer le nom de la page ci-dessous. L'ancienne page sera supprimee et une nouvelle sera creee avec le shortcode [agenda]."
-
-msgid "For consistent styling across themes, this plugin uses its own template. Tested with default themes and others."
-msgstr "Pour un style coherent entre les themes, ce plugin utilise son propre modele. Teste avec les themes par defaut et d'autres."
-
-msgid "Questions or issues?"
-msgstr "Questions ou problemes?"
-
-msgid "Report on GitHub"
-msgstr "Signaler sur GitHub"
-
-msgid "or contact"
-msgstr "ou contacter"
-
-msgid "Agenda Page Name"
-msgstr "Nom de la page d'agenda"
+msgid "The field is empty"
+msgstr "Le champ est vide"
 
 msgid "The name of the page where the agenda will be displayed."
 msgstr "Le nom de la page ou l'agenda sera affiche."
 
-msgid "Google Maps API Key"
-msgstr "Cle API Google Maps"
+msgid "The name of your event"
+msgstr ""
 
-msgid "Optional. Enter your Google Maps API key to enable location autocomplete."
-msgstr "Optionnel. Entrez votre cle API Google Maps pour activer l'auto-completion de l'emplacement."
+msgid ""
+"The Partial Attendance setting controls how events with multiple dates "
+"behave when some dates have passed:"
+msgstr ""
 
-msgid "Get an API key"
-msgstr "Obtenir une cle API"
+msgid ""
+"The plugin creates a page called \"%s\" upon activation. You can change this "
+"name in Settings."
+msgstr ""
 
-msgid "Required APIs: Maps JavaScript API, Places API"
-msgstr "APIs requises: Maps JavaScript API, Places API"
+msgid ""
+"The shortcode will display all upcoming events in a responsive card layout. "
+"Past events are automatically hidden based on their Partial Attendance "
+"setting."
+msgstr ""
+
+msgid ""
+"This plugin creates a simple agenda page where you can display events. The "
+"default page is \"Agenda\" and is created upon activation."
+msgstr ""
+"Ce plugin cree une page d'agenda simple ou vous pouvez afficher des "
+"evenements. La page par defaut est \"Agenda\" et est creee lors de "
+"l'activation."
+
+msgid "Thursday"
+msgstr "Jeudi"
+
+msgid "Title"
+msgstr "Titre"
+
+msgid "Title is required"
+msgstr ""
+
+msgid ""
+"To add a new event, click the \"Add New Event\" button on the Agenda admin "
+"page. A dialog will appear with the following fields:"
+msgstr ""
+
+msgid ""
+"To delete a single event, hover over the event row and click the Delete "
+"link. To delete multiple events, select them using the checkboxes and choose "
+"\"Delete\" from the Bulk Actions dropdown."
+msgstr ""
+
+msgid ""
+"To edit an event, click on any field in the events list. A dialog will open "
+"allowing you to modify the event details. Click Update to save your changes."
+msgstr ""
+
+msgid "Today"
+msgstr "Aujourd'hui"
+
+msgid "Troubleshooting"
+msgstr "Depannage"
+
+msgid "Try deactivating other plugins to check for conflicts"
+msgstr ""
+
+msgid "Tuesday"
+msgstr "Mardi"
+
+msgid "Update"
+msgstr "Mettre a jour"
+
+msgid "Upload or select an image from the Media Library"
+msgstr ""
 
 msgid "Usage"
 msgstr "Utilisation"
 
-msgid "Use the shortcode below to display the agenda on any page:"
-msgstr "Utilisez le shortcode ci-dessous pour afficher l'agenda sur n'importe quelle page:"
+msgid ""
+"Use the filter dropdown above the events list to show only events matching a "
+"specific title and category combination."
+msgstr ""
 
-msgid "Required"
+msgid ""
+"Use the search box to find events by title, category, location, or "
+"description."
+msgstr ""
+
+msgid "Use the shortcode below to display the agenda on any page:"
+msgstr ""
+"Utilisez le shortcode ci-dessous pour afficher l'agenda sur n'importe quelle "
+"page:"
+
+msgid "User Guide"
+msgstr "Guide utilisateur"
+
+msgid "Using the Shortcode"
+msgstr "Utiliser le shortcode"
+
+#, fuzzy
+msgid "Verify the shortcode [agenda] is on the page"
+msgstr ""
+"Utilisez le shortcode ci-dessous pour afficher l'agenda sur n'importe quelle "
+"page:"
+
+msgid "View Agenda"
+msgstr "Voir l'agenda"
+
+msgid "Visit our %s for support and feature requests."
+msgstr ""
+
+msgid "Visit your %s page to see your events"
+msgstr ""
+
+msgid "Wednesday"
+msgstr "Mercredi"
+
+msgid "Where the event takes place"
+msgstr ""
+
+msgid "Where the event will be held. Shown in the left column."
+msgstr "Ou se tiendra l'evenement. Affiche dans la colonne de gauche."
+
+msgid "Whether advance payment is accepted for this event"
+msgstr ""
+
+msgid "Yes"
+msgstr "Oui"
+
+msgid "Yes - Hide past dates only"
+msgstr ""
+
+#, fuzzy
+msgid "Yes - Required"
 msgstr "Requis"
 
-msgid "Field"
-msgstr "Champ"
+msgid ""
+"You can change the page name below. The old page will be deleted and a new "
+"one created with the shortcode [agenda]."
+msgstr ""
+"Vous pouvez changer le nom de la page ci-dessous. L'ancienne page sera "
+"supprimee et une nouvelle sera creee avec le shortcode [agenda]."
 
-msgid "Option"
-msgstr "Option"
-
-msgid "Behavior"
-msgstr "Comportement"
-
-msgid "Contents"
-msgstr "Sommaire"
+msgid ""
+"You can enable Google Places Autocomplete for the Location field to help "
+"users find addresses easily."
+msgstr ""

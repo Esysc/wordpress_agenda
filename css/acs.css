@@ -1,30 +1,8 @@
 /**
- * ACS Agenda Manager Styles
+ * ACS Agenda Manager - Frontend Styles
  *
  * @package ACSAgendaManager
  */
-
-/* ==========================================================================
-   Variables & Base
-   ========================================================================== */
-
-:root {
-    --acs-primary-color: #1a365d;
-    --acs-secondary-color: #2c5282;
-    --acs-accent-color: #38b2ac;
-    --acs-accent-light: #81e6d9;
-    --acs-danger-color: #e53e3e;
-    --acs-warning-color: #ed8936;
-    --acs-success-color: #48bb78;
-    --acs-info-color: #4299e1;
-    --acs-text-color: #2d3748;
-    --acs-text-muted: #718096;
-    --acs-bg-light: #f7fafc;
-    --acs-border-color: #e2e8f0;
-    --acs-border-radius: 12px;
-    --acs-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    --acs-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-}
 
 /* ==========================================================================
    Agenda Container
@@ -444,49 +422,9 @@ body.acs-lightbox-open {
 }
 
 /* ==========================================================================
-   Buttons
+   Read More Button
    ========================================================================== */
 
-.button4 {
-    display: inline-block;
-    padding: 0.5rem 1.25rem;
-    margin: 0 0.25rem 0.25rem 0;
-    border: none;
-    border-radius: 6px;
-    text-decoration: none;
-    font-family: inherit;
-    font-weight: 600;
-    font-size: 0.8rem;
-    color: #fff;
-    text-align: center;
-    transition: all 0.2s ease;
-    cursor: pointer;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
-}
-
-.button4:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
-}
-
-.button4.danger {
-    background-color: var(--acs-danger-color);
-}
-
-.button4.warning {
-    background-color: var(--acs-warning-color);
-    color: #744210;
-}
-
-.button4.success {
-    background-color: var(--acs-success-color);
-}
-
-.button4.info {
-    background-color: var(--acs-info-color);
-}
-
-/* Read More Button */
 .readmore.show {
     background: transparent;
     border: 2px solid var(--acs-accent-color);
@@ -522,7 +460,7 @@ body.acs-lightbox-open {
 }
 
 /* ==========================================================================
-   Dialog
+   Dialog (Frontend Event Details)
    ========================================================================== */
 
 #dialog {
@@ -569,157 +507,11 @@ body.acs-lightbox-open {
 }
 
 /* ==========================================================================
-   Animations
+   Expired Events
    ========================================================================== */
-
-.blink_me {
-    animation: blinker 3s linear infinite;
-}
-
-@keyframes blinker {
-    50% {
-        opacity: 0;
-    }
-}
 
 .acsagendaexpired {
     opacity: 0.5;
-}
-
-/* ==========================================================================
-   Spinner
-   ========================================================================== */
-
-.spinner2 {
-    display: block;
-    position: fixed;
-    z-index: 1031;
-    width: 40px;
-    height: 40px;
-    top: calc(50% - 20px);
-    right: calc(50% - 20px);
-    background-image: url(images/spinner-2x.gif);
-    background-repeat: no-repeat;
-}
-
-/* ==========================================================================
-   Admin Styles
-   ========================================================================== */
-
-.row-actions span {
-    display: block;
-}
-
-input.col-editagenda:not([type='submit']):not([type='search']):not([type='checkbox']):not(
-        [type='radio']
-    ),
-textarea.col-editagenda {
-    width: 100%;
-    margin: 0;
-}
-
-.alert {
-    border: 1px solid #ccc;
-    padding: 10px;
-    margin: 5px 0;
-}
-
-.alert-success {
-    border-left: 3px solid #46b450;
-    background: #ecf7ed;
-}
-
-.modified-warning {
-    border: 2px solid #ffcc66 !important;
-}
-
-/* Admin form error state */
-input.error,
-textarea.error,
-select.error {
-    border-color: var(--acs-danger-color) !important;
-    box-shadow: 0 0 2px var(--acs-danger-color);
-}
-
-/* Datepicker container */
-#acs-datepicker-container {
-    display: none;
-}
-
-#acs-datepicker-container.active {
-    display: block;
-    position: absolute;
-    bottom: 100%;
-    left: 0;
-    margin-bottom: 5px;
-    padding: 10px;
-    background: #fff;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    z-index: 10000;
-}
-
-/* Datepicker close button */
-.acs-datepicker-close {
-    display: block;
-    width: 100%;
-    margin-top: 10px;
-    padding: 10px 16px;
-    background: #2271b1;
-    color: #fff !important;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: 600;
-    font-size: 13px;
-    text-align: center;
-    transition: background 0.2s ease;
-}
-
-.acs-datepicker-close:hover {
-    background: #135e96;
-}
-
-.acs-datepicker-close:focus {
-    outline: 2px solid #2271b1;
-    outline-offset: 2px;
-}
-
-/* ==========================================================================
-   jQuery UI Datepicker Fixes
-   ========================================================================== */
-
-table.ui-datepicker-calendar {
-    border-collapse: separate;
-}
-
-.ui-datepicker-calendar td {
-    border: 1px solid transparent;
-}
-
-#ui-datepicker-div {
-    display: none;
-}
-
-.ui-datepicker .ui-datepicker-calendar .ui-state-highlight a {
-    background: #245da3;
-    color: #fff;
-}
-
-/* Past dates styling - grayed out and not clickable */
-.ui-datepicker td.ui-datepicker-unselectable,
-.ui-datepicker td.ui-state-disabled,
-.ui-datepicker td.acs-past-date {
-    opacity: 0.4;
-    pointer-events: none;
-}
-
-.ui-datepicker td.ui-datepicker-unselectable span,
-.ui-datepicker td.ui-state-disabled span,
-.ui-datepicker td.acs-past-date span {
-    color: #999;
-    text-decoration: line-through;
 }
 
 /* ==========================================================================
@@ -804,3 +596,5 @@ table.ui-datepicker-calendar {
     .readmore.show {
         width: 100%;
         justify-content: center;
+    }
+}

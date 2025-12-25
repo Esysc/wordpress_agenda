@@ -5,6 +5,32 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.3.0] - 2025-12-25
+
+### Added
+
+- Japanese language support (ja)
+- Success notifications for event create/update operations
+- In-dialog validation error messages (no longer appear behind modal)
+- Backend date validation to sanitize invalid date formats
+- New translation strings for validation messages
+
+### Changed
+
+- Split CSS into 3 files for better organization:
+  - `acs-common.css`: Shared variables, buttons, spinner
+  - `acs.css`: Frontend-only styles
+  - `acs-admin.css`: Admin-only styles
+- Modernized admin form with card-based sections (Basic Info, Schedule, Media, Links & Pricing)
+- Improved jQuery UI dialog button styling with calculated min-height
+- Updated all translation files (.pot, .po, .mo) with new strings
+
+### Fixed
+
+- Date field now filters out invalid/garbage text when using calendar picker
+- Dialog buttons no longer clipped at bottom
+- Form validation errors now display inside the modal dialog
+
 ## [3.2.0] - 2025-12-24
 
 ### Added

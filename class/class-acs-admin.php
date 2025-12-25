@@ -408,6 +408,11 @@ class ACS_Admin {
         }
 
         $data = $this->get_event_data_from_post();
+        $validation_error = $this->validate_event_data($data);
+        if ($validation_error) {
+            wp_send_json_error($validation_error);
+        }
+
         $success = ACS_Database::update_event($id, $data);
 
         if ($success) {
@@ -428,6 +433,11 @@ class ACS_Admin {
         }
 
         $data = $this->get_event_data_from_post();
+        $validation_error = $this->validate_event_data($data);
+        if ($validation_error) {
+            wp_send_json_error($validation_error);
+        }
+
         $id = ACS_Database::insert_event($data);
 
         if ($id) {
@@ -435,6 +445,58 @@ class ACS_Admin {
         } else {
             wp_send_json_error(esc_html__('Failed to add event', 'acs-agenda-manager'));
         }
+    }
+
+    /**
+     * Validate event data before saving
+     *
+     * @param array $data Event data to validate.
+     * @return string|null Error message if validation fails, null if valid.
+     */
+    private function validate_event_data(array &$data): ?string {
+        // Validate required fields.
+        if (empty($data['title'])) {
+            return esc_html__('Title is required', 'acs-agenda-manager');
+        }
+
+        // Validate and sanitize date field.
+        if (!empty($data['date'])) {
+            $dates = array_map('trim', explode(',', $data['date']));
+            $valid_dates = [];
+
+            foreach ($dates as $date_str) {
+                if (empty($date_str)) {
+                    continue;
+                }
+
+                // Check format: dd/mm/yy or dd/mm/yyyy.
+                if (!preg_match('/^(\d{1,2})\/(\d{1,2})\/(\d{2,4})$/', $date_str, $matches)) {
+                    continue; // Skip invalid format.
+                }
+
+                $day = (int) $matches[1];
+                $month = (int) $matches[2];
+                $year = (int) $matches[3];
+
+                // Validate ranges.
+                if ($month < 1 || $month > 12 || $day < 1 || $day > 31) {
+                    continue; // Skip invalid date.
+                }
+
+                // Normalize year to 2-digit.
+                if ($year >= 2000) {
+                    $year -= 2000;
+                }
+
+                // Format consistently.
+                $valid_dates[] = sprintf('%02d/%02d/%02d', $day, $month, $year);
+            }
+
+            // Update data with only valid dates.
+            $data['date'] = implode(', ', $valid_dates);
+        }
+
+        return null;
     }
 
     private function get_event_data_from_post(): array {
