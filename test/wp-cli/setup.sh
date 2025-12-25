@@ -44,22 +44,48 @@ fi
 # Create some test events
 echo "[*] Creating test events..."
 
+# Ensure the plugin's database table exists
+echo "   Ensuring database table exists..."
+wp db query "CREATE TABLE IF NOT EXISTS wp_acs_agenda_manager (
+    id INT(11) NOT NULL AUTO_INCREMENT,
+    categorie VARCHAR(120) NOT NULL,
+    title VARCHAR(120) NOT NULL,
+    emplacement VARCHAR(120) NOT NULL,
+    image VARCHAR(255) NOT NULL DEFAULT '',
+    intro TEXT NOT NULL,
+    link VARCHAR(255) NOT NULL DEFAULT '',
+    date VARCHAR(255) NOT NULL,
+    price VARCHAR(60) DEFAULT NULL,
+    account TINYINT(1) DEFAULT 1,
+    candopartial TINYINT(1) DEFAULT 0,
+    redirect VARCHAR(255) DEFAULT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (id)
+);" || echo "   [WARN] Table creation query failed"
+
 # Check if test events already exist
 EXISTING_EVENTS=$(wp db query "SELECT COUNT(*) FROM wp_acs_agenda_manager" --skip-column-names 2>/dev/null || echo "0")
+echo "   Found $EXISTING_EVENTS existing events"
 
 if [ "$EXISTING_EVENTS" = "0" ] || [ -z "$EXISTING_EVENTS" ]; then
-    # Calculate dates using seconds since epoch (works with BusyBox)
+    # Calculate dates
     NOW=$(date +%s)
-    TOMORROW=$(date -d "@$((NOW + 86400))" +%d/%m/%Y 2>/dev/null || date -r $((NOW + 86400)) +%d/%m/%Y 2>/dev/null || date +%d/%m/%Y)
-    NEXT_WEEK=$(date -d "@$((NOW + 604800))" +%d/%m/%Y 2>/dev/null || date -r $((NOW + 604800)) +%d/%m/%Y 2>/dev/null || date +%d/%m/%Y)
-    NEXT_MONTH=$(date -d "@$((NOW + 2592000))" +%d/%m/%Y 2>/dev/null || date -r $((NOW + 2592000)) +%d/%m/%Y 2>/dev/null || date +%d/%m/%Y)
+    DAY1=$(date -d "@$((NOW + 86400))" +%d/%m/%Y 2>/dev/null || echo "26/12/2025")
+    DAY2=$(date -d "@$((NOW + 604800))" +%d/%m/%Y 2>/dev/null || echo "01/01/2026")
+    DAY3=$(date -d "@$((NOW + 1209600))" +%d/%m/%Y 2>/dev/null || echo "08/01/2026")
+    DAY4=$(date -d "@$((NOW + 2592000))" +%d/%m/%Y 2>/dev/null || echo "24/01/2026")
 
-    # Insert test events directly into database
-    wp db query "INSERT INTO wp_acs_agenda_manager (categorie, title, emplacement, image, intro, link, date, price, account, candopartial) VALUES
-        ('Workshop', 'Introduction to WordPress', 'Zurich, Switzerland', '/wp-content/plugins/acs-agenda-manager/css/images/default-event.jpg', 'Learn the basics of WordPress in this hands-on workshop. Perfect for beginners!', 'http://localhost:8080/agenda/', '${TOMORROW}', 'CHF 150', 1, 0),
-        ('Conference', 'Web Development Summit 2025', 'Geneva, Switzerland', '/wp-content/plugins/acs-agenda-manager/css/images/default-event.jpg', 'Join us for the biggest web development conference of the year. Multiple tracks and networking opportunities.', 'http://localhost:8080/agenda/', '${NEXT_WEEK},${NEXT_MONTH}', 'CHF 500', 1, 2),
-        ('Course', 'PHP Advanced Programming', 'Online', '/wp-content/plugins/acs-agenda-manager/css/images/default-event.jpg', 'Take your PHP skills to the next level with this comprehensive course covering modern PHP practices.', 'http://localhost:8080/agenda/', '${NEXT_MONTH}', 'CHF 300', 0, 1)
-    " 2>/dev/null || echo "[WARN] Could not create test events (table might not exist yet)"
+    echo "   Inserting 4 test events..."
+
+    # Insert events one by one for better error handling
+    wp db query "INSERT INTO wp_acs_agenda_manager (categorie, title, emplacement, image, intro, link, date, price, account, candopartial) VALUES ('Wellness', 'Yoga Workshop', 'Community Center, Zurich', '', 'Join us for a relaxing yoga session suitable for all levels.', '', '$DAY1', 'CHF 25.-', 1, 0);" && echo "   ✓ Event 1 created" || echo "   ✗ Event 1 failed"
+
+    wp db query "INSERT INTO wp_acs_agenda_manager (categorie, title, emplacement, image, intro, link, date, price, account, candopartial) VALUES ('Art', 'Photography Course', 'Studio 42, Basel', '', 'Master the art of photography with our expert instructor.', '', '$DAY2', 'CHF 150.-', 1, 0);" && echo "   ✓ Event 2 created" || echo "   ✗ Event 2 failed"
+
+    wp db query "INSERT INTO wp_acs_agenda_manager (categorie, title, emplacement, image, intro, link, date, price, account, candopartial) VALUES ('Culinary', 'Cooking Class: Italian', 'Chef Kitchen, Geneva', '', 'Discover the secrets of authentic Italian cooking.', '', '$DAY3', 'CHF 80.-', 1, 0);" && echo "   ✓ Event 3 created" || echo "   ✗ Event 3 failed"
+
+    wp db query "INSERT INTO wp_acs_agenda_manager (categorie, title, emplacement, image, intro, link, date, price, account, candopartial) VALUES ('Technology', 'Web Development Bootcamp', 'Tech Hub, Lausanne', '', 'Intensive bootcamp covering modern web development.', '', '$DAY4', 'CHF 350.-', 1, 0);" && echo "   ✓ Event 4 created" || echo "   ✗ Event 4 failed"
 
     echo "[OK] Test events created"
 else

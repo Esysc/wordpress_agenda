@@ -1,0 +1,31 @@
+# Directories
+.git
+.github
+test
+node_modules
+.wordpress-org
+
+# Files
+.distignore
+.gitignore
+.editorconfig
+.gitattributes
+phpcs.xml
+build.sh
+CHANGELOG.md
+README.md
+composer.json
+composer.lock
+package.json
+package-lock.json
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.idea
+.vscode
+*.swp
+*.swo
