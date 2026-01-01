@@ -8,7 +8,7 @@
 
 defined('ABSPATH') || exit;
 
-$toc = ACS_Help::get_toc();
+$toc = ACSAGMA_Help::get_toc();
 $agenda_page = get_option('acsagma_page', 'Agenda');
 ?>
 

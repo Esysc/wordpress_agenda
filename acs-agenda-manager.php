@@ -121,7 +121,7 @@ final class ACSAGMA_Agenda_Manager {
         // Common styles (variables, buttons, spinner)
         wp_enqueue_style(
             'acs-agenda-common',
-            ACS_AGENDA_PLUGIN_URL . 'css/acs-common.css',
+            ACSAGMA_AGENDA_PLUGIN_URL . 'css/acs-common.css',
             [],
             ACSAGMA_AGENDA_VERSION
         );

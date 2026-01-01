@@ -523,6 +523,6 @@ class ACSAGMA_Admin {
 // Initialize admin
 add_action('plugins_loaded', function() {
     if (is_admin()) {
-        ACS_Admin::get_instance();
+        ACSAGMA_Admin::get_instance();
     }
 });
