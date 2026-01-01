@@ -206,7 +206,7 @@
             e.preventDefault();
 
             this.resetForm();
-            $('#event-action').val('add_item_agenda');
+            $('#event-action').val('acsagma_add_item_agenda');
 
             this.$eventDialog.dialog('option', 'title', acsagmaAgendaAdmin.i18n.addEvent);
             this.$eventDialog.dialog('option', 'buttons', {
@@ -232,7 +232,7 @@
             this.populateForm(eventId);
 
             $('#event-id').val(eventId);
-            $('#event-action').val('update_agenda');
+            $('#event-action').val('acsagma_update_agenda');
 
             this.$eventDialog.dialog('option', 'title', acsagmaAgendaAdmin.i18n.editor);
             this.$eventDialog.dialog('option', 'buttons', {
