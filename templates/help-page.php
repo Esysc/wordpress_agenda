@@ -8,8 +8,8 @@
 
 defined('ABSPATH') || exit;
 
-$toc = ACSAGMA_Help::get_toc();
-$agenda_page = get_option('acsagma_page', 'Agenda');
+$acsagma_toc = ACSAGMA_Help::get_toc();
+$acsagma_agenda_page = get_option('acsagma_page', 'Agenda');
 ?>
 
 <div class="wrap acs-help-page">
@@ -20,7 +20,7 @@ $agenda_page = get_option('acsagma_page', 'Agenda');
         <div class="acs-help-toc">
             <h2><?php esc_html_e('Contents', 'acs-agenda-manager'); ?></h2>
             <ul>
-                <?php foreach ($toc as $id => $title) : ?>
+                <?php foreach ($acsagma_toc as $id => $title) : ?>
                     <li><a href="#<?php echo esc_attr($id); ?>"><?php echo esc_html($title); ?></a></li>
                 <?php endforeach; ?>
             </ul>
@@ -41,7 +41,7 @@ $agenda_page = get_option('acsagma_page', 'Agenda');
                     <li><?php esc_html_e('Fill in the event details and click Add', 'acs-agenda-manager'); ?></li>
                     <?php
                     /* translators: %s: agenda page name. */
-                    $page_label = sprintf('<strong>%s</strong>', esc_html($agenda_page));
+                    $acsagma_page_label = sprintf('<strong>%s</strong>', esc_html($acsagma_agenda_page));
                     ?>
                     <li>
                         <?php
@@ -52,7 +52,7 @@ $agenda_page = get_option('acsagma_page', 'Agenda');
                                 esc_html__('Visit your %s page to see your events', 'acs-agenda-manager'),
                                 ['strong' => []]
                             ),
-                            wp_kses($page_label, ['strong' => []])
+                            wp_kses($acsagma_page_label, ['strong' => []])
                         );
                         ?>
                     </li>
@@ -163,7 +163,7 @@ $agenda_page = get_option('acsagma_page', 'Agenda');
                 <h3><?php esc_html_e('Default Agenda Page', 'acs-agenda-manager'); ?></h3>
                 <?php
                 /* translators: %s: agenda page name. */
-                $page_label = sprintf('<strong>%s</strong>', esc_html($agenda_page));
+                $acsagma_page_label = sprintf('<strong>%s</strong>', esc_html($acsagma_agenda_page));
                 ?>
                 <p>
                     <?php
@@ -174,7 +174,7 @@ $agenda_page = get_option('acsagma_page', 'Agenda');
                             esc_html__('The plugin creates a page called "%s" upon activation. You can change this name in Settings.', 'acs-agenda-manager'),
                             ['strong' => []]
                         ),
-                        wp_kses($page_label, ['strong' => []])
+                        wp_kses($acsagma_page_label, ['strong' => []])
                     );
                     ?>
                 </p>
