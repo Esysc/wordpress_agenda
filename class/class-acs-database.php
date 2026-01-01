@@ -10,19 +10,19 @@ defined('ABSPATH') || exit;
 /**
  * Handles all database operations with proper caching
  */
-class ACS_Database {
+class ACSAGMA_Database {
 
     /**
      * Cache group for this plugin
      */
-    private const CACHE_GROUP = 'acs_agenda_manager';
+    private const CACHE_GROUP = 'acsagma_agenda_manager';
 
     /**
      * Get full table name with prefix
      */
     public static function get_table_name(): string {
         global $wpdb;
-        return $wpdb->prefix . ACS_AGENDA_TABLE_NAME;
+        return $wpdb->prefix . ACSAGMA_AGENDA_TABLE_NAME;
     }
 
     /**

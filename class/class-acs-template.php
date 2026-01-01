@@ -10,7 +10,7 @@ defined('ABSPATH') || exit;
 /**
  * Handles all template rendering
  */
-class ACS_Template {
+class ACSAGMA_Template {
 
     /**
      * Render the main agenda display
@@ -37,7 +37,7 @@ class ACS_Template {
             return '';
         }
 
-        $admin_url = esc_url(admin_url('admin.php?page=agenda'));
+        $admin_url = esc_url(admin_url('admin.php?page=acsagma-agenda'));
 
         return sprintf(
             '<h3><a href="%s" class="button4 warning">%s</a></h3>',

@@ -11,7 +11,7 @@ defined('ABSPATH') || exit;
 <div class="wrap">
     <h1><?php esc_html_e('Agenda Settings', 'acs-agenda-manager'); ?></h1>
 
-    <?php settings_errors('acs_agenda_settings'); ?>
+    <?php settings_errors('acsagma_agenda_settings'); ?>
 
     <div class="notice notice-info">
         <p>
@@ -45,17 +45,17 @@ defined('ABSPATH') || exit;
     </div>
 
     <form method="post" action="">
-        <?php wp_nonce_field('acs_agenda_settings_nonce'); ?>
+        <?php wp_nonce_field('acsagma_agenda_settings_nonce'); ?>
 
         <table class="form-table">
             <tr>
                 <th scope="row">
-                    <label for="acsagendapage"><?php esc_html_e('Agenda Page Name', 'acs-agenda-manager'); ?></label>
+                    <label for="acsagma_page"><?php esc_html_e('Agenda Page Name', 'acs-agenda-manager'); ?></label>
                 </th>
                 <td>
                     <input type="text"
-                           name="acsagendapage"
-                           id="acsagendapage"
+                           name="acsagma_page"
+                           id="acsagma_page"
                            value="<?php echo esc_attr($agenda_page); ?>"
                            class="regular-text"
                            required />
@@ -66,12 +66,12 @@ defined('ABSPATH') || exit;
             </tr>
             <tr>
                 <th scope="row">
-                    <label for="acs_google_maps_api_key"><?php esc_html_e('Google Maps API Key', 'acs-agenda-manager'); ?></label>
+                    <label for="acsagma_google_maps_api_key"><?php esc_html_e('Google Maps API Key', 'acs-agenda-manager'); ?></label>
                 </th>
                 <td>
                     <input type="text"
-                           name="acs_google_maps_api_key"
-                           id="acs_google_maps_api_key"
+                           name="acsagma_google_maps_api_key"
+                           id="acsagma_google_maps_api_key"
                            value="<?php echo esc_attr($google_maps_api_key); ?>"
                            class="regular-text"
                            placeholder="AIza..." />

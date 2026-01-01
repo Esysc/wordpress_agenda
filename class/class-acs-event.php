@@ -10,7 +10,7 @@ defined('ABSPATH') || exit;
 /**
  * Handles event data and business logic
  */
-class ACS_Event {
+class ACSAGMA_Event {
 
     /**
      * Convert a date string to timestamp
@@ -25,7 +25,7 @@ class ACS_Event {
      * Get upcoming events (not expired)
      */
     public static function get_upcoming_events(): array {
-        $all_events = ACS_Database::get_events([
+        $all_events = ACSAGMA_Database::get_events([
             'per_page' => 100,
             'orderby' => 'date',
             'order' => 'ASC',

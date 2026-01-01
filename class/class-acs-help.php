@@ -15,7 +15,7 @@ defined('ABSPATH') || exit;
  *
  * @since 3.0.0
  */
-class ACS_Help {
+class ACSAGMA_Help {
 
     /**
      * Singleton instance
@@ -41,6 +41,26 @@ class ACS_Help {
      */
     private function __construct() {
         add_action('admin_menu', [$this, 'add_submenu_page']);
+        add_action('admin_enqueue_scripts', [$this, 'enqueue_help_styles']);
+    }
+
+    /**
+     * Enqueue help page styles
+     *
+     * @param string $hook The current admin page hook.
+     * @return void
+     */
+    public function enqueue_help_styles(string $hook): void {
+        if ('acsagma-agenda_page_acsagma-help' !== $hook) {
+            return;
+        }
+
+        wp_enqueue_style(
+            'acs-agenda-help',
+            ACSAGMA_AGENDA_PLUGIN_URL . 'css/acs-help.css',
+            [],
+            ACSAGMA_AGENDA_VERSION
+        );
     }
 
     /**
@@ -50,11 +70,11 @@ class ACS_Help {
      */
     public function add_submenu_page(): void {
         add_submenu_page(
-            'agenda',
+            'acsagma-agenda',
             __('User Guide', 'acs-agenda-manager'),
             __('User Guide', 'acs-agenda-manager'),
             'manage_options',
-            'agenda-help',
+            'acsagma-help',
             [$this, 'render_help_page']
         );
     }
@@ -69,7 +89,7 @@ class ACS_Help {
             wp_die(esc_html__('Permission denied', 'acs-agenda-manager'));
         }
 
-        include ACS_AGENDA_PLUGIN_DIR . 'templates/help-page.php';
+        include ACSAGMA_AGENDA_PLUGIN_DIR . 'templates/help-page.php';
     }
 
     /**

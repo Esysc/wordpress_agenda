@@ -10,7 +10,7 @@ defined('ABSPATH') || exit;
 /**
  * Handles plugin settings
  */
-class ACS_Options {
+class ACSAGMA_Options {
 
     /** @var self|null */
     private static $instance = null;
@@ -29,23 +29,23 @@ class ACS_Options {
 
     public function add_submenu_page(): void {
         add_submenu_page(
-            'agenda',
+            'acsagma-agenda',
             __('Settings', 'acs-agenda-manager'),
             __('Settings', 'acs-agenda-manager'),
             'manage_options',
-            'agenda-settings',
+            'acsagma-settings',
             [$this, 'render_settings_page']
         );
     }
 
     public function register_settings(): void {
-        register_setting('acs_agenda_settings', 'acsagendapage', [
+        register_setting('acsagma_agenda_settings', 'acsagma_page', [
             'type' => 'string',
             'sanitize_callback' => 'sanitize_text_field',
             'default' => 'Agenda',
         ]);
 
-        register_setting('acs_agenda_settings', 'acs_google_maps_api_key', [
+        register_setting('acsagma_agenda_settings', 'acsagma_google_maps_api_key', [
             'type' => 'string',
             'sanitize_callback' => 'sanitize_text_field',
             'default' => '',
@@ -58,37 +58,37 @@ class ACS_Options {
         }
 
         // Handle form submission
-        if (isset($_POST['submit']) && check_admin_referer('acs_agenda_settings_nonce')) {
+        if (isset($_POST['submit']) && check_admin_referer('acsagma_agenda_settings_nonce')) {
             $this->save_settings();
         }
 
-        $agenda_page = get_option('acsagendapage', 'Agenda');
-        $google_maps_api_key = get_option('acs_google_maps_api_key', '');
+        $agenda_page = get_option('acsagma_page', 'Agenda');
+        $google_maps_api_key = get_option('acsagma_google_maps_api_key', '');
 
-        include ACS_AGENDA_PLUGIN_DIR . 'templates/settings-page.php';
+        include ACSAGMA_AGENDA_PLUGIN_DIR . 'templates/settings-page.php';
     }
 
     private function save_settings(): void {
-        if (!check_admin_referer('acs_agenda_settings_nonce')) {
+        if (!check_admin_referer('acsagma_agenda_settings_nonce')) {
             wp_die(esc_html__('Security check failed', 'acs-agenda-manager'));
         }
 
-        $old_page_name = get_option('acsagendapage', 'Agenda');
-        $new_page_name = sanitize_text_field(wp_unslash($_POST['acsagendapage'] ?? 'Agenda'));
+        $old_page_name = get_option('acsagma_page', 'Agenda');
+        $new_page_name = sanitize_text_field(wp_unslash($_POST['acsagma_page'] ?? 'Agenda'));
 
         // Save Google Maps API key
-        $api_key = sanitize_text_field(wp_unslash($_POST['acs_google_maps_api_key'] ?? ''));
-        update_option('acs_google_maps_api_key', $api_key);
+        $api_key = sanitize_text_field(wp_unslash($_POST['acsagma_google_maps_api_key'] ?? ''));
+        update_option('acsagma_google_maps_api_key', $api_key);
 
         if ($old_page_name !== $new_page_name) {
             // Delete old page
-            $old_page = ACS_Agenda_Manager::get_page_by_title($old_page_name);
+            $old_page = ACSAGMA_Agenda_Manager::get_page_by_title($old_page_name);
             if ($old_page) {
                 wp_delete_post($old_page->ID, true);
             }
 
             // Create new page
-            $existing_page = ACS_Agenda_Manager::get_page_by_title($new_page_name);
+            $existing_page = ACSAGMA_Agenda_Manager::get_page_by_title($new_page_name);
             if (!$existing_page) {
                 wp_insert_post([
                     'post_title' => $new_page_name,
@@ -101,11 +101,11 @@ class ACS_Options {
                 ]);
             }
 
-            update_option('acsagendapage', $new_page_name);
+            update_option('acsagma_page', $new_page_name);
         }
 
         add_settings_error(
-            'acs_agenda_settings',
+            'acsagma_agenda_settings',
             'settings_updated',
             __('Settings saved successfully.', 'acs-agenda-manager'),
             'updated'
@@ -116,6 +116,6 @@ class ACS_Options {
 // Initialize options
 add_action('plugins_loaded', function() {
     if (is_admin()) {
-        ACS_Options::get_instance();
+        ACSAGMA_Options::get_instance();
     }
 });
