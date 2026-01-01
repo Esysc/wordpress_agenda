@@ -26,12 +26,18 @@ mkdir -p "$BUILD_DIR"
 rsync -a "$PLUGIN_SRC"/ "$PLUGIN_DEST"/ \
     --delete \
     --exclude '.git/' \
+    --exclude '.github/' \
     --exclude '.gitignore' \
     --exclude '.gitattributes' \
+    --exclude '.distignore' \
     --exclude '.prettierignore' \
     --exclude '.prettierrc' \
     --exclude '.eslintrc.json' \
     --exclude '.secrets.baseline' \
+    --exclude '.pre-commit-config.yaml' \
+    --exclude 'node_modules/' \
+    --exclude 'package.json' \
+    --exclude 'package-lock.json' \
     --exclude 'test/' \
     --exclude 'test-results/' \
     --exclude 'wp-cli/' \
@@ -39,10 +45,17 @@ rsync -a "$PLUGIN_SRC"/ "$PLUGIN_DEST"/ \
     --exclude 'README.md' \
     --exclude 'CHANGELOG.md' \
     --exclude 'phpcs.xml' \
-    --exclude 'lang/*.po' \
-    --exclude 'lang/*.pot' \
+    --exclude 'composer.json' \
+    --exclude 'composer.lock' \
+    --exclude 'vendor/' \
+    --exclude 'dist/' \
     --exclude 'build.sh' \
-    --exclude 'dist/'
+    --exclude '*.log' \
+    --exclude '.DS_Store' \
+    --exclude 'Thumbs.db'
+
+# Keep only .mo files, exclude .po and .pot
+find "$PLUGIN_DEST/lang" -type f \( -name "*.po" -o -name "*.pot" \) -delete 2>/dev/null || true
 
 # Make setup script executable
 chmod +x wp-cli/setup.sh

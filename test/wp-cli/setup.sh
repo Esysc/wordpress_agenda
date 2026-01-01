@@ -41,6 +41,20 @@ else
     echo "[OK] Plugin activated successfully"
 fi
 
+# Install and activate Plugin Check
+echo "[*] Installing Plugin Check..."
+if wp plugin is-installed plugin-check 2>/dev/null; then
+    echo "[OK] Plugin Check is already installed"
+    wp plugin activate plugin-check 2>/dev/null || true
+else
+    wp plugin install plugin-check --activate || echo "[WARN] Failed to install Plugin Check"
+    echo "[OK] Plugin Check installed and activated"
+fi
+
+# Run Plugin Check on the plugin
+echo "[*] Running Plugin Check on ACS Agenda Manager..."
+wp plugin check acs-agenda-manager --format=table || echo "[WARN] Plugin Check found issues"
+
 # Create some test events
 echo "[*] Creating test events..."
 
