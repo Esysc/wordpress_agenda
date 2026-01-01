@@ -62,7 +62,7 @@ defined('ABSPATH') || exit;
     </div>
 
     <form method="post" id="acs-events-form">
-        <?php wp_nonce_field('acs_agenda_admin_form', 'acs_agenda_admin_form_nonce'); ?>
+        <?php wp_nonce_field('acsagma_agenda_admin_form', 'acsagma_agenda_admin_form_nonce'); ?>
         <?php
         $this->list_table->prepare_items();
         $this->list_table->search_box(__('Search Events', 'acs-agenda-manager'), 'event-search');
@@ -130,8 +130,8 @@ defined('ABSPATH') || exit;
     <div id="acs-dialog-notices"></div>
     <form id="acs-event-form" class="acs-modern-form">
         <input type="hidden" name="id" id="event-id" value="" />
-        <input type="hidden" name="action" id="event-action" value="add_item_agenda" />
-        <input type="hidden" name="nonce" value="<?php echo esc_attr(wp_create_nonce('acs_agenda_admin_nonce')); ?>" />
+        <input type="hidden" name="action" id="event-action" value="acsagma_add_item_agenda" />
+        <input type="hidden" name="nonce" value="<?php echo esc_attr(wp_create_nonce('acsagma_agenda_admin_nonce')); ?>" />
 
         <!-- Basic Info Section -->
         <div class="acs-form-section">

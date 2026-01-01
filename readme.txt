@@ -1,5 +1,5 @@
 === ACS Agenda Manager ===
-Contributors: esysc
+Contributors: masteracs, esysc
 Donate link: https://www.paypal.com/donate?business=KG9SDHM7VUP6Y&currency_code=CHF
 Tags: agenda, events, calendar, schedule, workshop
 Requires at least: 6.2
@@ -39,6 +39,22 @@ The plugin automatically creates an "Agenda" page upon activation with the short
 = Integration =
 
 This plugin integrates with the ACScontactform plugin to provide event registration forms.
+
+== External Services ==
+
+This plugin uses external services as follows:
+
+= Google Maps API =
+
+When a Google Maps API key is configured in the plugin settings, the plugin loads the Google Maps JavaScript API to display location maps for events.
+
+* **What data is sent:** Event location addresses (only when viewing events with locations)
+* **When:** The API is loaded when viewing pages that display the agenda with events containing location information
+* **Service provider:** Google LLC
+* **Terms of Service:** https://developers.google.com/maps/terms
+* **Privacy Policy:** https://policies.google.com/privacy
+
+Note: Google Maps integration is optional. The plugin works without an API key, but maps will not be displayed.
 
 == Installation ==
 
@@ -124,5 +140,8 @@ Major update with complete code rewrite. Backup your database before upgrading.
 
 == Credits ==
 
-* jQuery UI Multi Dates Picker: Loaded from jsDelivr CDN
+* jQuery UI Multi Dates Picker v1.6.6: https://github.com/dubrox/Multiple-Dates-Picker-for-jQuery-UI
+  - Loaded as minified version (js/jquery-ui-multidatespicker.min.js)
+  - Source code available at: https://github.com/dubrox/Multiple-Dates-Picker-for-jQuery-UI
+  - Licensed under MIT License
 * Icons: WordPress Dashicons

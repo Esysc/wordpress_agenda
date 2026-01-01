@@ -51,18 +51,18 @@ rsync -av --progress \
 # Create the zip file
 echo "[*] Creating zip package..."
 cd "$BUILD_DIR"
-zip -r "${PLUGIN_SLUG}-${VERSION:-dev}.zip" "$PLUGIN_SLUG" -x "*.DS_Store" -x "*__MACOSX*"
+zip -r "${PLUGIN_SLUG}.zip" "$PLUGIN_SLUG" -x "*.DS_Store" -x "*__MACOSX*"
 cd ..
 
 # Show package contents
 echo ""
 echo "[*] Package contents:"
-unzip -l "${BUILD_DIR}/${PLUGIN_SLUG}-${VERSION:-dev}.zip" | head -40
+unzip -l "${BUILD_DIR}/${PLUGIN_SLUG}.zip" | head -40
 echo "..."
 
 # Show package size
-PACKAGE_SIZE=$(du -h "${BUILD_DIR}/${PLUGIN_SLUG}-${VERSION:-dev}.zip" | cut -f1)
-ZIP_FILE="${BUILD_DIR}/${PLUGIN_SLUG}-${VERSION:-dev}.zip"
+PACKAGE_SIZE=$(du -h "${BUILD_DIR}/${PLUGIN_SLUG}.zip" | cut -f1)
+ZIP_FILE="${BUILD_DIR}/${PLUGIN_SLUG}.zip"
 
 echo ""
 echo "================================================"

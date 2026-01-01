@@ -126,7 +126,7 @@
          * Initialize Google Places Autocomplete
          */
         initPlacesAutocomplete: function () {
-            if (!acsAgendaAdmin.hasGoogleMaps || typeof google === 'undefined') {
+            if (!acsagmaAgendaAdmin.hasGoogleMaps || typeof google === 'undefined') {
                 return;
             }
 
@@ -192,7 +192,7 @@
                 modal: true,
                 width: 700,
                 buttons: {
-                    [acsAgendaAdmin.i18n.close]: function () {
+                    [acsagmaAgendaAdmin.i18n.close]: function () {
                         $(this).dialog('close');
                     },
                 },
@@ -206,12 +206,12 @@
             e.preventDefault();
 
             this.resetForm();
-            $('#event-action').val('add_item_agenda');
+            $('#event-action').val('acsagma_add_item_agenda');
 
-            this.$eventDialog.dialog('option', 'title', acsAgendaAdmin.i18n.addEvent);
+            this.$eventDialog.dialog('option', 'title', acsagmaAgendaAdmin.i18n.addEvent);
             this.$eventDialog.dialog('option', 'buttons', {
-                [acsAgendaAdmin.i18n.add]: this.submitEvent.bind(this),
-                [acsAgendaAdmin.i18n.cancel]: function () {
+                [acsagmaAgendaAdmin.i18n.add]: this.submitEvent.bind(this),
+                [acsagmaAgendaAdmin.i18n.cancel]: function () {
                     $(this).dialog('close');
                 },
             });
@@ -232,12 +232,12 @@
             this.populateForm(eventId);
 
             $('#event-id').val(eventId);
-            $('#event-action').val('update_agenda');
+            $('#event-action').val('acsagma_update_agenda');
 
-            this.$eventDialog.dialog('option', 'title', acsAgendaAdmin.i18n.editor);
+            this.$eventDialog.dialog('option', 'title', acsagmaAgendaAdmin.i18n.editor);
             this.$eventDialog.dialog('option', 'buttons', {
-                [acsAgendaAdmin.i18n.update]: this.submitEvent.bind(this),
-                [acsAgendaAdmin.i18n.cancel]: function () {
+                [acsagmaAgendaAdmin.i18n.update]: this.submitEvent.bind(this),
+                [acsagmaAgendaAdmin.i18n.cancel]: function () {
                     $(this).dialog('close');
                 },
             });
@@ -303,7 +303,7 @@
             const formData = this.$eventForm.serialize();
 
             $.ajax({
-                url: acsAgendaAdmin.ajaxUrl,
+                url: acsagmaAgendaAdmin.ajaxUrl,
                 type: 'POST',
                 data: formData,
                 success: function (response) {
@@ -376,13 +376,13 @@
                 if (hasInvalidDate) {
                     $dateField.addClass('error');
                     isValid = false;
-                    this.showNotice(acsAgendaAdmin.i18n.invalidDate || 'Invalid date format. Use dd/mm/yy', 'error', true);
+                    this.showNotice(acsagmaAgendaAdmin.i18n.invalidDate || 'Invalid date format. Use dd/mm/yy', 'error', true);
                     return false;
                 }
             }
 
             if (!isValid) {
-                this.showNotice(acsAgendaAdmin.i18n.fieldEmpty, 'error', true);
+                this.showNotice(acsagmaAgendaAdmin.i18n.fieldEmpty, 'error', true);
             }
 
             return isValid;
@@ -402,10 +402,10 @@
             $('#acs-delete-event-name').text(eventName);
 
             this.$deleteDialog.dialog('option', 'buttons', {
-                [acsAgendaAdmin.i18n.confirm]: function () {
+                [acsagmaAgendaAdmin.i18n.confirm]: function () {
                     window.location.href = targetUrl;
                 },
-                [acsAgendaAdmin.i18n.cancel]: function () {
+                [acsagmaAgendaAdmin.i18n.cancel]: function () {
                     $(this).dialog('close');
                 },
             });
@@ -431,7 +431,7 @@
             const $input = $('#event-image');
 
             const frame = wp.media({
-                title: acsAgendaAdmin.i18n.selectImage,
+                title: acsagmaAgendaAdmin.i18n.selectImage,
                 library: { type: 'image' },
                 button: { text: 'Select' },
                 multiple: false,
@@ -613,7 +613,7 @@
             const self = this;
             setTimeout(function() {
                 if ($container.find('.acs-datepicker-close').length === 0) {
-                    const closeBtn = $('<button type="button" class="acs-datepicker-close">✕ ' + (acsAgendaAdmin.i18n.close || 'Close') + '</button>');
+                    const closeBtn = $('<button type="button" class="acs-datepicker-close">✕ ' + (acsagmaAgendaAdmin.i18n.close || 'Close') + '</button>');
                     $container.append(closeBtn);
                     closeBtn.on('click', function(e) {
                         e.preventDefault();
@@ -660,7 +660,7 @@
          */
         filterEvents: function (e) {
             const filter = $(e.currentTarget).val();
-            const baseUrl = 'admin.php?page=agenda';
+            const baseUrl = 'admin.php?page=acsagma-agenda';
 
             if (filter) {
                 window.location.href = baseUrl + '&event-filter=' + encodeURIComponent(filter);
@@ -710,7 +710,7 @@
         document.execCommand('copy');
         $textarea.prop('disabled', true);
 
-        $('#ACSmessage' + textareaId).html('<strong>' + acsAgendaAdmin.i18n.copied + '!</strong>');
+        $('#ACSmessage' + textareaId).html('<strong>' + acsagmaAgendaAdmin.i18n.copied + '!</strong>');
         $('#MSGWrapper' + textareaId).show();
     };
 

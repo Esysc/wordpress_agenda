@@ -11,8 +11,8 @@
   },
   "globals": {
     "wp": "readonly",
-    "acsAgenda": "readonly",
-    "acsAgendaAdmin": "readonly",
+    "acsagmaAgenda": "readonly",
+    "acsagmaAgendaAdmin": "readonly",
     "google": "readonly"
   },
   "rules": {

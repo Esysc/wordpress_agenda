@@ -14,7 +14,7 @@ if (!class_exists('WP_List_Table')) {
 /**
  * Custom list table for agenda events
  */
-class ACS_Agenda_List_Table extends WP_List_Table {
+class ACSAGMA_Agenda_List_Table extends WP_List_Table {
 
     public function __construct() {
         parent::__construct([
@@ -128,7 +128,7 @@ class ACS_Agenda_List_Table extends WP_List_Table {
     }
 
     public function column_categorie($item): string {
-        $nonce = wp_create_nonce('acs_delete_event');
+        $nonce = wp_create_nonce('acsagma_delete_event');
         $item_class = sprintf('origItem_%d', $item['id']);
 
         $name = sprintf(
@@ -141,13 +141,13 @@ class ACS_Agenda_List_Table extends WP_List_Table {
         $delete_url = wp_nonce_url(
             add_query_arg(
                 [
-                    'page' => 'agenda',
+                    'page' => 'acsagma-agenda',
                     'action' => 'delete',
                     'id' => $item['id'],
                 ],
                 admin_url('admin.php')
             ),
-            'acs_delete_event'
+            'acsagma_delete_event'
         );
 
         $actions = [
@@ -230,8 +230,8 @@ class ACS_Agenda_List_Table extends WP_List_Table {
         ];
         // phpcs:enable WordPress.Security.NonceVerification.Recommended
 
-        $this->items = ACS_Database::get_events($args);
-        $total_items = ACS_Database::count_events($args);
+        $this->items = ACSAGMA_Database::get_events($args);
+        $total_items = ACSAGMA_Database::count_events($args);
 
         $this->set_pagination_args([
             'total_items' => $total_items,
@@ -253,7 +253,7 @@ class ACS_Agenda_List_Table extends WP_List_Table {
             return;
         }
 
-        $filters = ACS_Database::get_event_filters();
+        $filters = ACSAGMA_Database::get_event_filters();
 
         if (empty($filters)) {
             return;
@@ -281,12 +281,12 @@ class ACS_Agenda_List_Table extends WP_List_Table {
 /**
  * Admin page controller
  */
-class ACS_Admin {
+class ACSAGMA_Admin {
 
     /** @var self|null */
     private static $instance = null;
 
-    /** @var ACS_Agenda_List_Table */
+    /** @var ACSAGMA_Agenda_List_Table */
     private $list_table;
 
     public static function get_instance(): self {
@@ -302,8 +302,8 @@ class ACS_Admin {
         add_action('admin_init', [$this, 'handle_actions']);
 
         // AJAX handlers
-        add_action('wp_ajax_update_agenda', [$this, 'ajax_update_event']);
-        add_action('wp_ajax_add_item_agenda', [$this, 'ajax_add_event']);
+        add_action('wp_ajax_acsagma_update_agenda', [$this, 'ajax_update_event']);
+        add_action('wp_ajax_acsagma_add_item_agenda', [$this, 'ajax_add_event']);
     }
 
     /**
@@ -312,27 +312,27 @@ class ACS_Admin {
     public function handle_actions(): void {
         // Only process on our admin page
         $current_page = isset($_GET['page']) ? sanitize_key(wp_unslash($_GET['page'])) : '';
-        if ($current_page !== 'agenda') {
+        if ($current_page !== 'acsagma-agenda') {
             return;
         }
 
-        $redirect_url = admin_url('admin.php?page=agenda');
+        $redirect_url = admin_url('admin.php?page=acsagma-agenda');
 
         if ((isset($_POST['action']) && $_POST['action'] !== '') || (isset($_POST['action2']) && $_POST['action2'] !== '')) {
-            check_admin_referer('acs_agenda_admin_form', 'acs_agenda_admin_form_nonce');
+            check_admin_referer('acsagma_agenda_admin_form', 'acsagma_agenda_admin_form_nonce');
         }
 
         // Handle single delete action
         if (isset($_GET['action']) && $_GET['action'] === 'delete') {
             $nonce = isset($_REQUEST['_wpnonce']) ? sanitize_text_field(wp_unslash($_REQUEST['_wpnonce'])) : '';
 
-            if (!wp_verify_nonce($nonce, 'acs_delete_event')) {
+            if (!wp_verify_nonce($nonce, 'acsagma_delete_event')) {
                 wp_die(esc_html__('Security check failed', 'acs-agenda-manager'));
             }
 
             $id = absint(isset($_GET['id']) ? wp_unslash($_GET['id']) : 0);
             if ($id) {
-                ACS_Database::delete_event($id);
+                ACSAGMA_Database::delete_event($id);
                 wp_safe_redirect($redirect_url . '&deleted=1');
                 exit;
             }
@@ -342,14 +342,14 @@ class ACS_Admin {
         if ((isset($_POST['action']) && $_POST['action'] === 'bulk-delete') ||
             (isset($_POST['action2']) && $_POST['action2'] === 'bulk-delete')) {
 
-            if (!check_admin_referer('acs_agenda_admin_form', 'acs_agenda_admin_form_nonce')) {
+            if (!check_admin_referer('acsagma_agenda_admin_form', 'acsagma_agenda_admin_form_nonce')) {
                 wp_die(esc_html__('Security check failed', 'acs-agenda-manager'));
             }
 
             $ids = array_map('absint', wp_unslash($_POST['bulk-delete'] ?? []));
 
             foreach ($ids as $id) {
-                ACS_Database::delete_event($id);
+                ACSAGMA_Database::delete_event($id);
             }
 
             wp_safe_redirect($redirect_url . '&deleted=' . count($ids));
@@ -362,7 +362,7 @@ class ACS_Admin {
             __('Agenda', 'acs-agenda-manager'),
             __('Agenda', 'acs-agenda-manager'),
             'manage_options',
-            'agenda',
+            'acsagma-agenda',
             [$this, 'render_admin_page'],
             'dashicons-calendar-alt'
         );
@@ -377,7 +377,7 @@ class ACS_Admin {
             'option' => 'events_per_page',
         ]);
 
-        $this->list_table = new ACS_Agenda_List_Table();
+        $this->list_table = new ACSAGMA_Agenda_List_Table();
     }
 
     public function set_screen_option($status, $option, $value) {
@@ -385,15 +385,15 @@ class ACS_Admin {
     }
 
     public function render_admin_page(): void {
-        $agenda_page = ACS_Agenda_Manager::get_page_by_title(get_option('acsagendapage', 'Agenda'));
+        $agenda_page = ACSAGMA_Agenda_Manager::get_page_by_title(get_option('acsagma_page', 'Agenda'));
         $agenda_url = $agenda_page ? get_permalink($agenda_page) : '#';
 
-        include ACS_AGENDA_PLUGIN_DIR . 'templates/admin-page.php';
+        include ACSAGMA_AGENDA_PLUGIN_DIR . 'templates/admin-page.php';
     }
 
     public function ajax_update_event(): void {
         $nonce = isset($_POST['nonce']) ? sanitize_text_field(wp_unslash($_POST['nonce'])) : '';
-        if (!wp_verify_nonce($nonce, 'acs_agenda_admin_nonce')) {
+        if (!wp_verify_nonce($nonce, 'acsagma_agenda_admin_nonce')) {
             wp_send_json_error(esc_html__('Security check failed', 'acs-agenda-manager'));
         }
 
@@ -413,7 +413,7 @@ class ACS_Admin {
             wp_send_json_error($validation_error);
         }
 
-        $success = ACS_Database::update_event($id, $data);
+        $success = ACSAGMA_Database::update_event($id, $data);
 
         if ($success) {
             wp_send_json_success(esc_html__('Event updated successfully', 'acs-agenda-manager'));
@@ -424,7 +424,7 @@ class ACS_Admin {
 
     public function ajax_add_event(): void {
         $nonce = isset($_POST['nonce']) ? sanitize_text_field(wp_unslash($_POST['nonce'])) : '';
-        if (!wp_verify_nonce($nonce, 'acs_agenda_admin_nonce')) {
+        if (!wp_verify_nonce($nonce, 'acsagma_agenda_admin_nonce')) {
             wp_send_json_error(esc_html__('Security check failed', 'acs-agenda-manager'));
         }
 
@@ -438,7 +438,7 @@ class ACS_Admin {
             wp_send_json_error($validation_error);
         }
 
-        $id = ACS_Database::insert_event($data);
+        $id = ACSAGMA_Database::insert_event($data);
 
         if ($id) {
             wp_send_json_success(esc_html__('Event added successfully', 'acs-agenda-manager'));
@@ -519,10 +519,3 @@ class ACS_Admin {
         ];
     }
 }
-
-// Initialize admin
-add_action('plugins_loaded', function() {
-    if (is_admin()) {
-        ACS_Admin::get_instance();
-    }
-});
