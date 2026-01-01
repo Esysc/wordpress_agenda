@@ -131,7 +131,7 @@ defined('ABSPATH') || exit;
     <form id="acs-event-form" class="acs-modern-form">
         <input type="hidden" name="id" id="event-id" value="" />
         <input type="hidden" name="action" id="event-action" value="acsagma_add_item_agenda" />
-        <input type="hidden" name="nonce" value="<?php echo esc_attr(wp_create_nonce('acs_agenda_admin_nonce')); ?>" />
+        <input type="hidden" name="nonce" value="<?php echo esc_attr(wp_create_nonce('acsagma_agenda_admin_nonce')); ?>" />
 
         <!-- Basic Info Section -->
         <div class="acs-form-section">
