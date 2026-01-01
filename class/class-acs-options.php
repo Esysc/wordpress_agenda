@@ -112,10 +112,3 @@ class ACSAGMA_Options {
         );
     }
 }
-
-// Initialize options
-add_action('plugins_loaded', function() {
-    if (is_admin()) {
-        ACSAGMA_Options::get_instance();
-    }
-});

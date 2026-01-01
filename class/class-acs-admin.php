@@ -519,10 +519,3 @@ class ACSAGMA_Admin {
         ];
     }
 }
-
-// Initialize admin
-add_action('plugins_loaded', function() {
-    if (is_admin()) {
-        ACSAGMA_Admin::get_instance();
-    }
-});
