@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/donate?business=KG9SDHM7VUP6Y&currency_code=
 Tags: agenda, events, calendar, schedule, workshop
 Requires at least: 6.2
 Tested up to: 6.9
-Stable tag: 3.3.1
+Stable tag: 3.3.2
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -89,6 +89,15 @@ Yes, you can override the CSS in your theme or copy the template file to your th
 5. Plugin settings and configuration options
 
 == Changelog ==
+
+= 3.3.2 =
+* Fixed all WordPress.org plugin review compliance issues
+* Updated all prefixes from 'acs' (3 chars) to 'acsagma' (7 chars) for uniqueness
+* Fixed AJAX action names to use proper acsagma_ prefix
+* Fixed menu slugs after prefix rename
+* Fixed E2E tests: calendar navigation, frontend event display, and filter functionality
+* Updated calendar tests to read dropdown values correctly
+* Fixed event creation date to use future dates for frontend visibility
 
 = 3.3.1 =
 * Added automated screenshot generation for WordPress.org

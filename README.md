@@ -5,7 +5,7 @@ A WordPress plugin for managing and displaying event agendas. Perfect for worksh
 ![WordPress Version](https://img.shields.io/badge/WordPress-6.2%2B-blue)
 ![PHP Version](https://img.shields.io/badge/PHP-7.4%2B-purple)
 ![License](https://img.shields.io/badge/License-GPL--2.0--or--later-green)
-![Version](https://img.shields.io/badge/Version-3.0.0-orange)
+![Version](https://img.shields.io/badge/Version-3.3.2-orange)
 
 ## Description
 
@@ -137,27 +137,6 @@ Copy `themefiles/page-agenda.php` to your theme directory to customize the agend
 ## Integration with ACScontactform
 
 This plugin integrates with the [ACScontactform](https://github.com/Esysc) plugin to provide event registration forms. When ACScontactform is active, a shortcode button appears in the event list for easy form generation.
-
-## Changelog
-
-### 3.0.0 (2024)
-
-- **Complete rewrite**: Modern PHP 7.4+ code with proper class structure
-- **Separated concerns**: Database, templates, and admin logic in separate classes
-- **Improved security**: Better input sanitization and nonce verification
-- **Clean JavaScript**: Separated admin and frontend scripts
-- **Modern admin UI**: Updated dialogs and form handling
-- **Better translations**: Improved i18n support
-- **Performance**: Optimized database queries
-
-### 2.1.1
-
-- Added French and Italian translations
-- Various bug fixes
-
-### 2.0.0
-
-- Initial public release
 
 ## Contributing
 

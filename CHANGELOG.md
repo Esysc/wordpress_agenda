@@ -5,6 +5,29 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.3.2] - 2026-01-01
+
+### Fixed
+
+- **WordPress.org Compliance**: Updated all prefixes from 'acs' (3 chars) to 'acsagma' (7 chars) for uniqueness requirements
+- Fixed AJAX action names to use proper `acsagma_` prefix instead of generic names
+- Fixed menu slugs throughout the plugin after prefix rename (`agenda` → `acsagma-agenda`)
+- Fixed JavaScript `filterEvents()` function to use correct menu slug
+- Fixed E2E tests after identifier changes:
+  - Calendar navigation tests now read dropdown values instead of concatenated text
+  - Frontend test creates events with future dates for proper visibility
+  - Search/filter tests use `waitForPageReload()` for better reliability
+  - Updated all test fixtures with new menu slugs
+
+### Changed
+
+- All constants now use `ACSAGMA_` prefix (was `ACS_`)
+- All classes now use `ACSAGMA_` prefix (was `ACS_`)
+- All options now use `acsagma_` prefix (was `acs_` or mixed)
+- All menu/submenu slugs now use `acsagma-` prefix
+- All AJAX actions now use `acsagma_` prefix
+- JavaScript localized objects now use `acsagma` prefix
+
 ## [3.3.1] - 2025-12-25
 
 ### Added
