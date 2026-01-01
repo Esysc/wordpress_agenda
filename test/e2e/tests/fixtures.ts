@@ -13,7 +13,7 @@ export class AgendaPage {
   constructor(private page: Page) {}
 
   async goto() {
-    await this.page.goto('/wp-admin/admin.php?page=agenda');
+    await this.page.goto('/wp-admin/admin.php?page=acsagma-agenda');
     await this.page.waitForLoadState('networkidle');
   }
 
@@ -130,7 +130,7 @@ export class AgendaPage {
     await confirmButton.click();
 
     // Wait for redirect back to the list
-    await this.page.waitForURL('**/admin.php?page=agenda**');
+    await this.page.waitForURL('**/admin.php?page=acsagma-agenda**');
     await this.page.waitForLoadState('networkidle');
   }
 
@@ -166,7 +166,7 @@ export class AgendaPage {
   async performBulkDelete() {
     await this.page.selectOption('select[name="action"]', 'bulk-delete');
     await this.page.click('#doaction');
-    await this.page.waitForURL('**/admin.php?page=agenda**');
+    await this.page.waitForURL('**/admin.php?page=acsagma-agenda**');
     await this.page.waitForLoadState('networkidle');
   }
 }

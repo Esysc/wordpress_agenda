@@ -660,7 +660,7 @@
          */
         filterEvents: function (e) {
             const filter = $(e.currentTarget).val();
-            const baseUrl = 'admin.php?page=agenda';
+            const baseUrl = 'admin.php?page=acsagma-agenda';
 
             if (filter) {
                 window.location.href = baseUrl + '&event-filter=' + encodeURIComponent(filter);

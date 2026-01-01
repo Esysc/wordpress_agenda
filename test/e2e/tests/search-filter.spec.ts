@@ -16,10 +16,10 @@ test.describe('Search and Filter', () => {
     await agendaPage.fillEventForm({
       title: uniqueTitle,
       category: 'Search Test',
-      date: '2025-12-31',
+      date: '31/12/25',
     });
     await agendaPage.submitForm();
-    await agendaPage.waitForSuccess();
+    await agendaPage.waitForPageReload();
 
     // Search for the event
     await agendaPage.goto();
@@ -57,10 +57,10 @@ test.describe('Search and Filter', () => {
     await agendaPage.fillEventForm({
       title: eventTitle,
       category: category,
-      date: '2025-12-31',
+      date: '31/12/25',
     });
     await agendaPage.submitForm();
-    await agendaPage.waitForSuccess();
+    await agendaPage.waitForPageReload();
 
     // Reload page to get fresh filter options
     await agendaPage.goto();
@@ -90,6 +90,9 @@ test.describe('Search and Filter', () => {
         // Wait for navigation triggered by the filter select
         await page.waitForLoadState('networkidle');
         await page.waitForTimeout(500); // Extra stability
+
+        // Verify we're still on the admin page (not a permission error)
+        expect(page.url()).toContain('wp-admin/admin.php?page=acsagma-agenda');
 
         // The filtered event should still be visible
         const existsFiltered = await agendaPage.eventExists(eventTitle);

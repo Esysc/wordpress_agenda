@@ -140,20 +140,29 @@ test.describe('Calendar Functionality', () => {
 
     // Open calendar
     await page.click('.acs-open-calendar');
-    await page.waitForSelector('.ui-datepicker', { state: 'visible' });
+    await page.waitForSelector('#acs-datepicker-container .ui-datepicker', { state: 'visible' });
 
-    // Get current month text
-    const currentMonth = await page.locator('.ui-datepicker-month').textContent();
+    // Wait for datepicker to fully render
+    await page.waitForTimeout(500);
+
+    // Get current month and year from the dropdown selected values
+    const currentMonth = await page.locator('#acs-datepicker-container .ui-datepicker-month').inputValue();
+    const currentYear = await page.locator('#acs-datepicker-container .ui-datepicker-year').inputValue();
+    const currentDisplay = `${currentMonth}-${currentYear}`;
 
     // Click next month button
-    await page.click('.ui-datepicker-next');
-    await page.waitForTimeout(200);
+    await page.locator('#acs-datepicker-container .ui-datepicker-next').click();
 
-    // Get new month text
-    const nextMonth = await page.locator('.ui-datepicker-month').textContent();
+    // Wait longer for animation and update
+    await page.waitForTimeout(1000);
 
-    // Months should be different
-    expect(nextMonth).not.toBe(currentMonth);
+    // Get new month and year
+    const nextMonth = await page.locator('#acs-datepicker-container .ui-datepicker-month').inputValue();
+    const nextYear = await page.locator('#acs-datepicker-container .ui-datepicker-year').inputValue();
+    const nextDisplay = `${nextMonth}-${nextYear}`;
+
+    // Display should be different
+    expect(nextDisplay).not.toBe(currentDisplay);
   });
 
   test('should navigate to previous month', async ({ page }) => {
@@ -161,22 +170,37 @@ test.describe('Calendar Functionality', () => {
 
     // Open calendar
     await page.click('.acs-open-calendar');
-    await page.waitForSelector('.ui-datepicker', { state: 'visible' });
+    await page.waitForSelector('#acs-datepicker-container .ui-datepicker', { state: 'visible' });
 
-    // First go to next month so we can go back
-    await page.click('.ui-datepicker-next');
-    await page.waitForTimeout(200);
+    // Wait for datepicker to fully render
+    await page.waitForTimeout(500);
 
-    const currentMonth = await page.locator('.ui-datepicker-month').textContent();
+    // Get initial month and year from dropdown selected values
+    const initialMonth = await page.locator('#acs-datepicker-container .ui-datepicker-month').inputValue();
+    const initialYear = await page.locator('#acs-datepicker-container .ui-datepicker-year').inputValue();
+    const initialDisplay = `${initialMonth}-${initialYear}`;
+
+    // Go to next month first
+    await page.locator('#acs-datepicker-container .ui-datepicker-next').click();
+    await page.waitForTimeout(1000);
+
+    const nextMonth = await page.locator('#acs-datepicker-container .ui-datepicker-month').inputValue();
+    const nextYear = await page.locator('#acs-datepicker-container .ui-datepicker-year').inputValue();
+    const nextDisplay = `${nextMonth}-${nextYear}`;
+
+    // Verify we moved forward
+    expect(nextDisplay).not.toBe(initialDisplay);
 
     // Click previous month button
-    await page.click('.ui-datepicker-prev');
-    await page.waitForTimeout(200);
+    await page.locator('#acs-datepicker-container .ui-datepicker-prev').click();
+    await page.waitForTimeout(1000);
 
-    const prevMonth = await page.locator('.ui-datepicker-month').textContent();
+    const backMonth = await page.locator('#acs-datepicker-container .ui-datepicker-month').inputValue();
+    const backYear = await page.locator('#acs-datepicker-container .ui-datepicker-year').inputValue();
+    const backDisplay = `${backMonth}-${backYear}`;
 
-    // Months should be different
-    expect(prevMonth).not.toBe(currentMonth);
+    // Should be back to the initial month
+    expect(backDisplay).toBe(initialDisplay);
   });
 
   test('should validate date field format on blur', async ({ page }) => {

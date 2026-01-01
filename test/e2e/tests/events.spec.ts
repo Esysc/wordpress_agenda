@@ -34,7 +34,7 @@ test.describe('Event Management', () => {
       title: eventTitle,
       category: 'E2E Test',
       location: 'Test Location',
-      date: '2025-12-31',
+      date: '31/12/25',
       intro: 'This is a test event created by E2E tests',
       price: 'Free',
     });
@@ -58,7 +58,7 @@ test.describe('Event Management', () => {
     await agendaPage.fillEventForm({
       title: originalTitle,
       category: 'E2E Test',
-      date: '2025-12-31',
+      date: '31/12/25',
     });
     await agendaPage.submitForm();
     await agendaPage.waitForPageReload();
@@ -88,7 +88,7 @@ test.describe('Event Management', () => {
     await agendaPage.fillEventForm({
       title: eventTitle,
       category: 'E2E Delete Test',
-      date: '2025-12-31',
+      date: '31/12/25',
     });
     await agendaPage.submitForm();
     await agendaPage.waitForPageReload();
@@ -125,7 +125,7 @@ test.describe('Event Management', () => {
       await agendaPage.fillEventForm({
         title,
         category: 'Bulk Delete Test',
-        date: '2025-12-31',
+        date: '31/12/25',
       });
       await agendaPage.submitForm();
       await agendaPage.waitForPageReload();
