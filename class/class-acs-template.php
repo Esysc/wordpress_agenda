@@ -80,7 +80,7 @@ class ACSAGMA_Template {
         $dates_html = '';
 
         foreach ($event['dates_info'] as $date_info) {
-            $parsed = ACS_Event::parse_date($date_info['date']);
+            $parsed = ACSAGMA_Event::parse_date($date_info['date']);
 
             if (empty($parsed)) {
                 continue;
