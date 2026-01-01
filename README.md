@@ -5,7 +5,7 @@ A WordPress plugin for managing and displaying event agendas. Perfect for worksh
 ![WordPress Version](https://img.shields.io/badge/WordPress-6.2%2B-blue)
 ![PHP Version](https://img.shields.io/badge/PHP-7.4%2B-purple)
 ![License](https://img.shields.io/badge/License-GPL--2.0--or--later-green)
-![Version](https://img.shields.io/badge/Version-3.3.2-orange)
+![Version](https://img.shields.io/badge/Version-3.3.3-orange)
 
 ## Description
 

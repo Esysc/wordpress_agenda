@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.3.3] - 2026-01-01
+
+### Fixed
+
+- Fixed global variable naming in `templates/help-page.php` to comply with WordPress coding standards
+  - `$toc` → `$acsagma_toc`
+  - `$agenda_page` → `$acsagma_agenda_page`
+  - `$page_label` → `$acsagma_page_label`
+- Updated test environment setup to exclude all development files for Plugin Check compliance
+  - Added exclusions: `.github/`, `.distignore`, `node_modules/`, `package.json`, `composer.json`, etc.
+  - Only compiled `.mo` translation files are included (`.po` and `.pot` excluded)
+
+### Added
+
+- Integrated Plugin Check tool in Docker test environment for automated compliance validation
+
 ## [3.3.2] - 2026-01-01
 
 ### Fixed
