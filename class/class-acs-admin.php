@@ -359,8 +359,8 @@ class ACSAGMA_Admin {
 
     public function add_menu_page(): void {
         $hook = add_menu_page(
-            __('Agenda', 'acs-agenda-manager'),
-            __('Agenda', 'acs-agenda-manager'),
+            __('ACS Agenda', 'acs-agenda-manager'),
+            __('ACS Agenda', 'acs-agenda-manager'),
             'manage_options',
             'acsagma-agenda',
             [$this, 'render_admin_page'],

@@ -54,11 +54,24 @@ test.describe('Search and Filter', () => {
     // Create an event with a specific category
     await agendaPage.goto();
     await agendaPage.clickAddEvent();
-    await agendaPage.fillEventForm({
-      title: eventTitle,
-      category: category,
-      date: '31/12/25',
+
+    // Fill form fields directly to use a dynamic future date
+    await page.fill('#event-title', eventTitle);
+    await page.fill('#event-categorie', category);
+    // Use a future date (tomorrow)
+    await page.evaluate(() => {
+      const input = document.getElementById('event-date') as HTMLInputElement;
+      if (input) {
+        input.readOnly = false;
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        const day = String(tomorrow.getDate()).padStart(2, '0');
+        const month = String(tomorrow.getMonth() + 1).padStart(2, '0');
+        const year = String(tomorrow.getFullYear()).slice(-2);
+        input.value = `${day}/${month}/${year}`;
+      }
     });
+
     await agendaPage.submitForm();
     await agendaPage.waitForPageReload();
 
@@ -118,7 +131,7 @@ test.describe('Search and Filter', () => {
         await page.waitForLoadState('networkidle');
 
         // Should still be on agenda page
-        await expect(page).toHaveURL(/page=agenda/);
+        await expect(page).toHaveURL(/page=acsagma-agenda/);
       }
     }
   });

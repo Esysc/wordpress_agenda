@@ -82,7 +82,7 @@ final class ACSAGMA_Agenda_Manager {
         add_action('wp_ajax_nopriv_acsagma_read_more', [$this, 'ajax_read_more']);
 
         // Shortcode
-        add_shortcode('agenda', [$this, 'render_agenda_shortcode']);
+        add_shortcode('acsagma_agenda', [$this, 'render_agenda_shortcode']);
 
         // Locale filter
         add_filter('locale', [$this, 'set_locale_from_browser']);
@@ -260,7 +260,7 @@ final class ACSAGMA_Agenda_Manager {
 
         if (is_singular()) {
             $post = get_post();
-            if ($post && has_shortcode($post->post_content, 'agenda')) {
+            if ($post && has_shortcode($post->post_content, 'acsagma_agenda')) {
                 $should_load = true;
             }
 
@@ -380,7 +380,7 @@ final class ACSAGMA_Agenda_Manager {
                 'post_name' => sanitize_title($page_name),
                 'post_status' => 'publish',
                 'post_type' => 'page',
-                'post_content' => '[agenda]',
+                'post_content' => '[acsagma_agenda]',
                 'comment_status' => 'closed',
                 'ping_status' => 'closed',
             ]);

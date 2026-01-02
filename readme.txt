@@ -32,7 +32,7 @@ ACS Agenda Manager provides an easy way to create and manage an event agenda on 
 
 Display the agenda on any page or post using the shortcode:
 
-`[agenda]`
+`[acsagma_agenda]`
 
 The plugin automatically creates an "Agenda" page upon activation with the shortcode included.
 
@@ -66,7 +66,7 @@ Note: Google Maps integration is optional. The plugin works without an API key, 
 
 = How do I display the agenda? =
 
-Use the `[agenda]` shortcode on any page or post.
+Use the `[acsagma_agenda]` shortcode on any page or post.
 
 = Can events have multiple dates? =
 

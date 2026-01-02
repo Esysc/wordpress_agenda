@@ -155,7 +155,7 @@ $acsagma_agenda_page = get_option('acsagma_page', 'Agenda');
                 <p><?php esc_html_e('Display your agenda on any page or post using the shortcode:', 'acs-agenda-manager'); ?></p>
 
                 <div class="acs-code-block">
-                    <code>[agenda]</code>
+                    <code>[acsagma_agenda]</code>
                 </div>
 
                 <p><?php esc_html_e('The shortcode will display all upcoming events in a responsive card layout. Past events are automatically hidden based on their Partial Attendance setting.', 'acs-agenda-manager'); ?></p>
@@ -262,7 +262,7 @@ $acsagma_agenda_page = get_option('acsagma_page', 'Agenda');
                 <h3><?php esc_html_e('Events not showing', 'acs-agenda-manager'); ?></h3>
                 <ul>
                     <li><?php esc_html_e('Check that the event has dates in the future', 'acs-agenda-manager'); ?></li>
-                    <li><?php esc_html_e('Verify the shortcode [agenda] is on the page', 'acs-agenda-manager'); ?></li>
+                    <li><?php esc_html_e('Verify the shortcode [acsagma_agenda] is on the page', 'acs-agenda-manager'); ?></li>
                     <li><?php esc_html_e('Check the Partial Attendance setting', 'acs-agenda-manager'); ?></li>
                 </ul>
 

@@ -95,7 +95,7 @@ class ACSAGMA_Options {
                     'post_name' => sanitize_title($new_page_name),
                     'post_status' => 'publish',
                     'post_type' => 'page',
-                    'post_content' => '[agenda]',
+                    'post_content' => '[acsagma_agenda]',
                     'comment_status' => 'closed',
                     'ping_status' => 'closed',
                 ]);
