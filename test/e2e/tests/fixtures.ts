@@ -94,10 +94,28 @@ export class AgendaPage {
     return rows;
   }
 
-  async eventExists(title: string): Promise<boolean> {
+  async eventExists(title: string, useSearch: boolean = false): Promise<boolean> {
     await this.page.waitForLoadState('networkidle');
-    // Look for the title in table cells
-    const rows = this.page.locator('table.wp-list-table tbody tr');
+
+    // Optionally use search to find the event (handles pagination)
+    if (useSearch) {
+      const searchInput = this.page.locator('input[name="s"]');
+      if (await searchInput.isVisible()) {
+        await searchInput.fill(title);
+        await this.page.click('#search-submit');
+        await this.page.waitForLoadState('networkidle');
+      }
+    }
+
+    // First try a simple text check on the page
+    const titleElement = this.page.locator(`table.wp-list-table td:has-text("${title}")`);
+    const directCount = await titleElement.count();
+    if (directCount > 0) {
+      return true;
+    }
+
+    // Fallback: Look for the title in table rows
+    const rows = this.page.locator('table.wp-list-table tbody tr:not(.no-items)');
     const count = await rows.count();
 
     for (let i = 0; i < count; i++) {
@@ -169,4 +187,19 @@ export class AgendaPage {
     await this.page.waitForURL('**/admin.php?page=acsagma-agenda**');
     await this.page.waitForLoadState('networkidle');
   }
+}
+
+// Helper function to get the agenda frontend URL from settings
+export async function getAgendaPageUrl(page: Page): Promise<string> {
+  // Go to settings page to get the current agenda page name
+  await page.goto('/wp-admin/admin.php?page=acsagma-settings');
+  await page.waitForLoadState('networkidle');
+
+  // Get the page name from input
+  const pageNameInput = page.locator('input[name="acsagma_page"]');
+  const pageName = await pageNameInput.inputValue();
+
+  // Convert page name to slug (lowercase, spaces to hyphens, remove special chars)
+  const slug = pageName.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+  return `/${slug}/`;
 }
