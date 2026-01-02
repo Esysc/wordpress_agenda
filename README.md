@@ -52,7 +52,7 @@ Then activate the plugin in your WordPress admin panel.
 Display the agenda on any page or post using the shortcode:
 
 ```
-[agenda]
+[acsagma_agenda]
 ```
 
 The plugin automatically creates an "Agenda" page upon activation with the shortcode included.

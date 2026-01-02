@@ -118,7 +118,7 @@ test.describe('Search and Filter', () => {
         await page.waitForLoadState('networkidle');
 
         // Should still be on agenda page
-        await expect(page).toHaveURL(/page=agenda/);
+        await expect(page).toHaveURL(/page=acsagma-agenda/);
       }
     }
   });

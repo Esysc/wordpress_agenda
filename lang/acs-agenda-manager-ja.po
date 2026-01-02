@@ -8,711 +8,748 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2025-12-25 10:23+0100\n"
-"Last-Translator: Andrea Cristalli <andreacristalli@mac-mini.home>\n"
+"PO-Revision-Date: 2026-01-02 12:00+0100\n"
+"Last-Translator: GitHub Copilot <copilot@github.com>\n"
 "Language-Team: Japanese <translation-team-ja@lists.sourceforge.net>\n"
-"X-Generator: WP-CLI\n"
+"X-Generator: GitHub Copilot\n"
 "X-Domain: acs-agenda-manager\n"
 "Language: ja\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 msgid "A brief description of the event..."
-msgstr ""
+msgstr "イベントの簡単な説明..."
 
 msgid "A short introduction to the event."
-msgstr ""
+msgstr "イベントの簡単な紹介。"
 
 msgid "About This Plugin"
-msgstr ""
+msgstr "このプラグインについて"
 
 msgid "ACS Agenda Manager - User Guide"
-msgstr ""
+msgstr "ACS アジェンダマネージャー - ユーザーガイド"
 
 msgid ""
 "ACS Agenda Manager allows you to create and manage an event agenda on your "
 "WordPress site. When activated, the plugin automatically creates an Agenda "
 "page with the shortcode included."
 msgstr ""
+"ACS アジェンダマネージャーは、WordPressサイトでイベントアジェンダを作成・管理できます。"
+"有効化すると、ショートコードを含むアジェンダページが自動的に作成されます。"
 
 msgid "Add"
-msgstr ""
+msgstr "追加"
 
 msgid "Add an event"
-msgstr ""
+msgstr "イベントを追加"
 
 msgid "Add New Event"
-msgstr ""
+msgstr "新しいイベントを追加"
 
 msgid "Adding Events"
-msgstr ""
+msgstr "イベントの追加"
 
 msgid "Advance Payment"
-msgstr ""
+msgstr "前払い"
 
 msgid "Agenda"
-msgstr ""
+msgstr "アジェンダ"
 
 msgid "Agenda Administration"
-msgstr ""
+msgstr "アジェンダ管理"
 
 msgid "Agenda Manager"
-msgstr ""
+msgstr "アジェンダマネージャー"
 
 msgid "Agenda Page Name"
-msgstr ""
+msgstr "アジェンダページ名"
 
 msgid "Agenda Settings"
-msgstr ""
+msgstr "アジェンダ設定"
 
 msgid ""
 "All dates remain visible until the last date passes. Use this for multi-day "
 "events where you want to show the complete schedule."
 msgstr ""
+"最終日が過ぎるまで全ての日付が表示されます。完全なスケジュールを表示したい複数日イベント"
+"に使用してください。"
 
 msgid "All Events"
-msgstr ""
+msgstr "全イベント"
 
 msgid "An image associated with the event. Shown in the right column."
-msgstr ""
+msgstr "イベントに関連する画像。右列に表示されます。"
 
 msgid "April"
-msgstr ""
+msgstr "4月"
 
 msgid "Are you sure you want to delete this event?"
-msgstr ""
+msgstr "このイベントを削除してもよろしいですか？"
 
 msgid "August"
-msgstr ""
+msgstr "8月"
 
 msgid "Basic Information"
-msgstr ""
+msgstr "基本情報"
 
 msgid "Behavior"
-msgstr ""
+msgstr "動作"
 
 msgid "Brief description shown in the \"Read More\" dialog"
-msgstr ""
+msgstr "「もっと読む」ダイアログに表示される簡単な説明"
 
 msgid "Calendar"
-msgstr ""
+msgstr "カレンダー"
 
 msgid "Calendar not working"
-msgstr ""
+msgstr "カレンダーが動作しない"
 
 msgid "Cancel"
-msgstr ""
+msgstr "キャンセル"
 
 msgid "Category"
-msgstr ""
+msgstr "カテゴリー"
 
 msgid "Check if your theme or a caching plugin is minifying CSS incorrectly"
-msgstr ""
+msgstr "テーマまたはキャッシュプラグインがCSSを誤って縮小していないか確認してください"
 
 msgid "Check that the event has dates in the future"
-msgstr ""
+msgstr "イベントに将来の日付があるか確認してください"
 
 msgid "Check the browser console for JavaScript errors"
-msgstr ""
+msgstr "ブラウザコンソールでJavaScriptエラーを確認してください"
 
 msgid "Check the Partial Attendance setting"
-msgstr ""
+msgstr "部分出席設定を確認してください"
 
 msgid "Clear your browser cache"
-msgstr ""
+msgstr "ブラウザキャッシュをクリアしてください"
 
 msgid "Click \"Add New Event\" to create your first event"
-msgstr ""
+msgstr "「新しいイベントを追加」をクリックして最初のイベントを作成してください"
 
 msgid "Click calendar to select dates"
-msgstr ""
+msgstr "カレンダーをクリックして日付を選択"
 
 msgid "Close"
-msgstr ""
+msgstr "閉じる"
 
 msgid "Confirm"
-msgstr ""
+msgstr "確認"
 
 msgid "Confirm Delete"
-msgstr ""
+msgstr "削除の確認"
 
 msgid "Contact Form Shortcode"
-msgstr ""
+msgstr "お問い合わせフォームショートコード"
 
 msgid "Contents"
-msgstr ""
+msgstr "目次"
 
 msgid "Controls how multi-day events behave when dates pass"
-msgstr ""
+msgstr "日付が過ぎた時の複数日イベントの動作を制御"
 
 msgid "Copied"
-msgstr ""
+msgstr "コピーしました"
 
 msgid "Copy: wp-content/plugins/acs-agenda-manager/themefiles/page-agenda.php"
-msgstr ""
+msgstr "コピー元: wp-content/plugins/acs-agenda-manager/themefiles/page-agenda.php"
 
 msgid "Copy!"
-msgstr ""
+msgstr "コピー！"
 
 msgid "Create an API key and restrict it to your domain"
-msgstr ""
+msgstr "APIキーを作成してドメインを制限してください"
 
 msgid "Created"
-msgstr ""
+msgstr "作成日"
 
 msgid "CSS Styling"
-msgstr ""
+msgstr "CSSスタイル"
 
 msgid "Customization"
-msgstr ""
+msgstr "カスタマイズ"
 
 msgid "Customize the template as needed"
-msgstr ""
+msgstr "必要に応じてテンプレートをカスタマイズ"
 
 msgid "December"
-msgstr ""
+msgstr "12月"
 
 msgid "Default Agenda Page"
-msgstr ""
+msgstr "デフォルトアジェンダページ"
 
 msgid "Delete"
-msgstr ""
+msgstr "削除"
 
 msgid "Deleting Events"
-msgstr ""
+msgstr "イベントの削除"
 
 msgid "Description"
-msgstr ""
+msgstr "説明"
 
 msgid "Display your agenda on any page or post using the shortcode:"
-msgstr ""
+msgstr "ショートコードを使用して任意のページまたは投稿にアジェンダを表示："
 
 msgid "Do you really want to delete this event?"
-msgstr ""
+msgstr "本当にこのイベントを削除しますか？"
 
 msgid "Donate via PayPal"
-msgstr ""
+msgstr "PayPalで寄付"
 
 msgid "e.g., CHF 150.-"
-msgstr ""
+msgstr "例: CHF 150.-"
 
 msgid "e.g., Conference Room A"
-msgstr ""
+msgstr "例: 会議室A"
 
 msgid "e.g., Workshop, Course, Seminar"
-msgstr ""
+msgstr "例: ワークショップ、コース、セミナー"
 
 msgid "Edit"
-msgstr ""
+msgstr "編集"
 
 msgid "Editing Events"
-msgstr ""
+msgstr "イベントの編集"
 
 msgid "Editor"
-msgstr ""
+msgstr "編集者"
 
 msgid "Enable the \"Maps JavaScript API\" and \"Places API\""
-msgstr ""
+msgstr "「Maps JavaScript API」と「Places API」を有効にしてください"
 
 msgid "Ensure jQuery UI is not being blocked by another plugin"
-msgstr ""
+msgstr "jQuery UIが他のプラグインによってブロックされていないことを確認してください"
 
 msgid "Enter event title..."
-msgstr ""
+msgstr "イベントタイトルを入力..."
 
 msgid "Event"
-msgstr ""
+msgstr "イベント"
 
 msgid "Event added successfully"
-msgstr ""
+msgstr "イベントが正常に追加されました"
 
 msgid "Event cost (e.g., CHF 150, Free, On request)"
-msgstr ""
+msgstr "イベント費用（例: CHF 150、無料、要相談）"
 
 msgid "Event created successfully."
-msgstr ""
+msgstr "イベントが正常に作成されました。"
 
 msgid "Event Dates"
-msgstr ""
+msgstr "イベント日程"
 
 msgid "Event dates. Can be a single day, a range, or multiple dates."
-msgstr ""
+msgstr "イベント日程。単日、期間、または複数日を指定できます。"
 
 msgid "Event Image"
-msgstr ""
+msgstr "イベント画像"
 
 msgid "Event updated successfully"
-msgstr ""
+msgstr "イベントが正常に更新されました"
 
 msgid "Event updated successfully."
-msgstr ""
+msgstr "イベントが正常に更新されました。"
 
 msgid "Event(s) deleted successfully."
-msgstr ""
+msgstr "イベントが正常に削除されました。"
 
 msgid "Events"
-msgstr ""
+msgstr "イベント"
 
 msgid "Events not showing"
-msgstr ""
+msgstr "イベントが表示されない"
 
 msgid "Events per page"
-msgstr ""
+msgstr "ページあたりのイベント数"
 
 msgid "External registration link"
-msgstr ""
+msgstr "外部登録リンク"
 
 msgid "External URL"
-msgstr ""
+msgstr "外部URL"
 
 msgid "Failed to add event"
-msgstr ""
+msgstr "イベントの追加に失敗しました"
 
 msgid "Failed to update event"
-msgstr ""
+msgstr "イベントの更新に失敗しました"
 
 msgid "February"
-msgstr ""
+msgstr "2月"
 
 msgid "Field"
-msgstr ""
+msgstr "フィールド"
 
 msgid "Field Descriptions"
-msgstr ""
+msgstr "フィールドの説明"
 
 msgid "Fill in the event details and click Add"
-msgstr ""
+msgstr "イベント詳細を入力して追加をクリック"
 
 msgid "Filter"
-msgstr ""
+msgstr "フィルター"
 
 msgid "Filtered events"
-msgstr ""
+msgstr "フィルターされたイベント"
 
 msgid "Filtering Events"
-msgstr ""
+msgstr "イベントのフィルタリング"
 
 msgid ""
 "For complete control over the agenda display, copy the template file from "
 "the plugin to your theme:"
 msgstr ""
+"アジェンダ表示を完全に制御するには、プラグインからテーマにテンプレートファイルをコピー"
+"してください："
 
 msgid ""
 "For consistent styling across themes, this plugin uses its own template. "
 "Tested with default themes and others."
 msgstr ""
+"テーマ間で一貫したスタイリングを実現するため、このプラグインは独自のテンプレートを使用"
+"します。デフォルトテーマなどでテスト済みです。"
 
 msgid "Form shortcode"
-msgstr ""
+msgstr "フォームショートコード"
 
 msgid "Friday"
-msgstr ""
+msgstr "金曜日"
 
 msgid "Get an API key"
-msgstr ""
+msgstr "APIキーを取得"
 
 msgid "Getting Started"
-msgstr ""
+msgstr "はじめに"
 
 msgid "GitHub Issues page"
-msgstr ""
+msgstr "GitHub Issuesページ"
 
 msgid "Go to Agenda > Settings and enter your API key"
-msgstr ""
+msgstr "アジェンダ > 設定に移動してAPIキーを入力してください"
 
 msgid "Go to Agenda in the admin menu to view your events list"
-msgstr ""
+msgstr "管理メニューのアジェンダに移動してイベントリストを表示"
 
 msgid "Go to page"
-msgstr ""
+msgstr "ページに移動"
 
 msgid "Go to the Google Cloud Console and create a project"
-msgstr ""
+msgstr "Google Cloud Consoleに移動してプロジェクトを作成してください"
 
 msgid "Google Maps API Key"
-msgstr ""
+msgstr "Google Maps APIキー"
 
 msgid "Google Maps Location Autocomplete"
-msgstr ""
+msgstr "Google Maps位置情報オートコンプリート"
 
 msgid "Group your events (e.g., Workshop, Conference, Course)"
-msgstr ""
+msgstr "イベントをグループ化（例: ワークショップ、会議、コース）"
 
 msgid "Help"
-msgstr ""
+msgstr "ヘルプ"
 
 msgid "Hide"
-msgstr ""
+msgstr "非表示"
 
 msgid "How you want to categorize your event. Displayed in the widget title."
-msgstr ""
+msgstr "イベントの分類方法。ウィジェットタイトルに表示されます。"
 
 msgid "https://..."
-msgstr ""
+msgstr "https://..."
 
 msgid ""
 "If you find this plugin useful, please consider making a donation to support "
 "development."
 msgstr ""
+"このプラグインが役立つと思われた場合は、開発をサポートするための寄付をご検討ください。"
 
 msgid "Image"
-msgstr ""
+msgstr "画像"
 
 msgid "Image URL or select from library"
-msgstr ""
+msgstr "画像URLまたはライブラリから選択"
 
 msgid "Internal or external link to the full event page."
-msgstr ""
+msgstr "完全なイベントページへの内部または外部リンク。"
 
 msgid "Invalid date format. Use dd/mm/yy"
-msgstr ""
+msgstr "無効な日付形式です。dd/mm/yyを使用してください"
 
 msgid "Invalid event ID"
-msgstr ""
+msgstr "無効なイベントID"
 
 msgid "Invalid post ID"
-msgstr ""
+msgstr "無効な投稿ID"
 
 msgid "January"
-msgstr ""
+msgstr "1月"
 
 msgid "July"
-msgstr ""
+msgstr "7月"
 
 msgid "June"
-msgstr ""
+msgstr "6月"
 
 msgid "Keep until end"
-msgstr ""
+msgstr "最後まで保持"
 
 msgid "Keep until end - Show all dates"
-msgstr ""
+msgstr "最後まで保持 - 全ての日付を表示"
 
 msgid "Link to a detailed event page on your site"
-msgstr ""
+msgstr "サイト上の詳細なイベントページへのリンク"
 
 msgid "Link to event details page"
-msgstr ""
+msgstr "イベント詳細ページへのリンク"
 
 msgid "Links & Pricing"
-msgstr ""
+msgstr "リンクと料金"
 
 msgid "Location"
-msgstr ""
+msgstr "場所"
 
 msgid "Managing Events"
-msgstr ""
+msgstr "イベントの管理"
 
 msgid "March"
-msgstr ""
+msgstr "3月"
 
 msgid "May"
-msgstr ""
+msgstr "5月"
 
 msgid "Media"
-msgstr ""
+msgstr "メディア"
 
 msgid "Monday"
-msgstr ""
+msgstr "月曜日"
 
 msgid "Need more help?"
-msgstr ""
+msgstr "さらにヘルプが必要ですか？"
 
 msgid "No"
-msgstr ""
+msgstr "いいえ"
 
 msgid "No - Hide after first date"
-msgstr ""
+msgstr "いいえ - 最初の日付後に非表示"
 
 msgid "No events found."
-msgstr ""
+msgstr "イベントが見つかりません。"
 
 msgid "No image selected"
-msgstr ""
+msgstr "画像が選択されていません"
 
 msgid "No upcoming events."
-msgstr ""
+msgstr "今後のイベントはありません。"
 
 msgid ""
 "No: Event disappears after start. Yes: Past days are hidden. Keep until end: "
 "All days shown until expiration."
 msgstr ""
+"いいえ: イベントは開始後に消えます。はい: 過去の日付は非表示になります。最後まで保持: "
+"期限まで全ての日付が表示されます。"
 
 msgid "November"
-msgstr ""
+msgstr "11月"
 
 msgid "October"
-msgstr ""
+msgstr "10月"
 
 msgid ""
 "Once configured, the Location field will show address suggestions as you "
 "type."
-msgstr ""
+msgstr "設定すると、場所フィールドに入力時に住所の候補が表示されます。"
 
 msgid "Open Calendar"
-msgstr ""
+msgstr "カレンダーを開く"
 
 msgid "Open page"
-msgstr ""
+msgstr "ページを開く"
 
 msgid "Option"
-msgstr ""
+msgstr "オプション"
 
 msgid "Optional external link (e.g., registration on another site)"
-msgstr ""
+msgstr "オプションの外部リンク（例: 他サイトでの登録）"
 
 msgid ""
 "Optional. Enter your Google Maps API key to enable location autocomplete."
-msgstr ""
+msgstr "オプション。位置情報オートコンプリートを有効にするにはGoogle Maps APIキーを入力してください。"
 
 msgid "or contact"
-msgstr ""
+msgstr "またはお問い合わせ"
 
 msgid ""
 "Override the default styles by adding custom CSS to your theme. The plugin "
 "uses CSS variables for easy customization:"
 msgstr ""
+"テーマにカスタムCSSを追加してデフォルトスタイルを上書きできます。プラグインは簡単な"
+"カスタマイズのためにCSS変数を使用しています："
 
 msgid "Page Link"
-msgstr ""
+msgstr "ページリンク"
 
 msgid "Partial Attendance"
-msgstr ""
+msgstr "部分出席"
 
 msgid ""
 "Past dates are hidden, but future dates remain visible. Use this for events "
 "where participants can join for remaining sessions."
 msgstr ""
+"過去の日付は非表示になりますが、将来の日付は表示されたままです。参加者が残りのセッション"
+"に参加できるイベントに使用してください。"
 
 msgid "Paste to: wp-content/themes/your-theme/page-agenda.php"
-msgstr ""
+msgstr "貼り付け先: wp-content/themes/your-theme/page-agenda.php"
 
 msgid "Permission denied"
-msgstr ""
+msgstr "権限がありません"
 
 msgid "Post not found"
-msgstr ""
+msgstr "投稿が見つかりません"
 
 msgid "Price"
-msgstr ""
+msgstr "料金"
 
 msgid "Questions or issues?"
-msgstr ""
+msgstr "質問や問題がありますか？"
 
 msgid "Quick Start"
-msgstr ""
+msgstr "クイックスタート"
 
 msgid "Read more"
-msgstr ""
+msgstr "もっと読む"
 
 msgid "Report on GitHub"
-msgstr ""
+msgstr "GitHubで報告"
 
 msgid "Required"
-msgstr ""
+msgstr "必須"
 
 msgid "Required APIs: Maps JavaScript API, Places API"
-msgstr ""
+msgstr "必要なAPI: Maps JavaScript API、Places API"
 
 msgid "Running"
-msgstr ""
+msgstr "実行中"
 
 msgid "Saturday"
-msgstr ""
+msgstr "土曜日"
 
 msgid "Save Settings"
-msgstr ""
+msgstr "設定を保存"
 
 msgid "Schedule"
-msgstr ""
+msgstr "スケジュール"
 
 msgid "Search Events"
-msgstr ""
+msgstr "イベントを検索"
 
 msgid "Searching Events"
-msgstr ""
+msgstr "イベントの検索"
 
 msgid "Security check failed"
-msgstr ""
+msgstr "セキュリティチェックに失敗しました"
 
 msgid "Select"
-msgstr ""
+msgstr "選択"
 
 msgid "Select Image"
-msgstr ""
+msgstr "画像を選択"
 
 msgid "Select one or more dates using the calendar picker"
-msgstr ""
+msgstr "カレンダーピッカーを使用して1つ以上の日付を選択"
 
 msgid ""
 "Select one or more dates. Use the calendar for easy multi-date selection."
-msgstr ""
+msgstr "1つ以上の日付を選択してください。複数日の選択にはカレンダーを使用してください。"
 
 msgid "Select or upload an image"
-msgstr ""
+msgstr "画像を選択またはアップロード"
 
 msgid "September"
-msgstr ""
+msgstr "9月"
 
 msgid "Settings"
-msgstr ""
+msgstr "設定"
 
 msgid "Settings saved successfully."
-msgstr ""
+msgstr "設定が正常に保存されました。"
 
 msgid "Styles not loading"
-msgstr ""
+msgstr "スタイルが読み込まれない"
 
 msgid "Sunday"
-msgstr ""
+msgstr "日曜日"
 
 msgid "Support this plugin!"
-msgstr ""
+msgstr "このプラグインをサポート！"
 
 msgid "Template Override"
-msgstr ""
+msgstr "テンプレートのオーバーライド"
 
 msgid ""
 "The entire event disappears after the first date passes. Use this for single-"
 "session events where late registration is not possible."
 msgstr ""
+"最初の日付が過ぎるとイベント全体が消えます。遅れての登録ができない単回セッションのイベント"
+"に使用してください。"
 
 msgid "The event title shown in the middle column."
-msgstr ""
+msgstr "中央列に表示されるイベントタイトル。"
 
 msgid "The field is empty"
-msgstr ""
+msgstr "フィールドが空です"
 
 msgid "The name of the page where the agenda will be displayed."
-msgstr ""
+msgstr "アジェンダが表示されるページの名前。"
 
 msgid "The name of your event"
-msgstr ""
+msgstr "イベントの名前"
 
 msgid ""
 "The Partial Attendance setting controls how events with multiple dates "
 "behave when some dates have passed:"
 msgstr ""
+"部分出席設定は、一部の日付が過ぎた時に複数日イベントがどのように動作するかを制御します："
 
 msgid ""
 "The plugin creates a page called \"%s\" upon activation. You can change this "
 "name in Settings."
 msgstr ""
+"プラグインは有効化時に「%s」というページを作成します。この名前は設定で変更できます。"
 
 msgid ""
 "The shortcode will display all upcoming events in a responsive card layout. "
 "Past events are automatically hidden based on their Partial Attendance "
 "setting."
 msgstr ""
+"ショートコードは、今後のイベントをすべてレスポンシブなカードレイアウトで表示します。"
+"過去のイベントは部分出席設定に基づいて自動的に非表示になります。"
 
 msgid ""
 "This plugin creates a simple agenda page where you can display events. The "
 "default page is \"Agenda\" and is created upon activation."
 msgstr ""
+"このプラグインは、イベントを表示できるシンプルなアジェンダページを作成します。デフォルト"
+"ページは「アジェンダ」で、有効化時に作成されます。"
 
 msgid "Thursday"
-msgstr ""
+msgstr "木曜日"
 
 msgid "Title"
-msgstr ""
+msgstr "タイトル"
 
 msgid "Title is required"
-msgstr ""
+msgstr "タイトルは必須です"
 
 msgid ""
 "To add a new event, click the \"Add New Event\" button on the Agenda admin "
 "page. A dialog will appear with the following fields:"
 msgstr ""
+"新しいイベントを追加するには、アジェンダ管理ページの「新しいイベントを追加」ボタンを"
+"クリックしてください。次のフィールドを含むダイアログが表示されます："
 
 msgid ""
 "To delete a single event, hover over the event row and click the Delete "
 "link. To delete multiple events, select them using the checkboxes and choose "
 "\"Delete\" from the Bulk Actions dropdown."
 msgstr ""
+"単一のイベントを削除するには、イベント行にマウスを合わせて削除リンクをクリックしてください。"
+"複数のイベントを削除するには、チェックボックスで選択し、一括操作ドロップダウンから「削除」を"
+"選択してください。"
 
 msgid ""
 "To edit an event, click on any field in the events list. A dialog will open "
 "allowing you to modify the event details. Click Update to save your changes."
 msgstr ""
+"イベントを編集するには、イベントリストの任意のフィールドをクリックしてください。イベント詳細を"
+"変更できるダイアログが開きます。変更を保存するには更新をクリックしてください。"
 
 msgid "Today"
-msgstr ""
+msgstr "今日"
 
 msgid "Troubleshooting"
-msgstr ""
+msgstr "トラブルシューティング"
 
 msgid "Try deactivating other plugins to check for conflicts"
-msgstr ""
+msgstr "競合をチェックするために他のプラグインを無効にしてみてください"
 
 msgid "Tuesday"
-msgstr ""
+msgstr "火曜日"
 
 msgid "Update"
-msgstr ""
+msgstr "更新"
 
 msgid "Upload or select an image from the Media Library"
-msgstr ""
+msgstr "メディアライブラリから画像をアップロードまたは選択"
 
 msgid "Usage"
-msgstr ""
+msgstr "使用方法"
 
 msgid ""
 "Use the filter dropdown above the events list to show only events matching a "
 "specific title and category combination."
 msgstr ""
+"イベントリストの上にあるフィルタードロップダウンを使用して、特定のタイトルとカテゴリーの"
+"組み合わせに一致するイベントのみを表示します。"
 
 msgid ""
 "Use the search box to find events by title, category, location, or "
 "description."
 msgstr ""
+"検索ボックスを使用して、タイトル、カテゴリー、場所、または説明でイベントを検索します。"
 
 msgid "Use the shortcode below to display the agenda on any page:"
-msgstr ""
+msgstr "以下のショートコードを使用して任意のページにアジェンダを表示："
 
 msgid "User Guide"
-msgstr ""
+msgstr "ユーザーガイド"
 
 msgid "Using the Shortcode"
-msgstr ""
+msgstr "ショートコードの使用"
 
-msgid "Verify the shortcode [agenda] is on the page"
-msgstr ""
+msgid "Verify the shortcode [acsagma_agenda] is on the page"
+msgstr "ページにショートコード [acsagma_agenda] があることを確認してください"
 
 msgid "View Agenda"
-msgstr ""
+msgstr "アジェンダを表示"
 
 msgid "Visit our %s for support and feature requests."
-msgstr ""
+msgstr "サポートと機能リクエストについては %s をご覧ください。"
 
 msgid "Visit your %s page to see your events"
-msgstr ""
+msgstr "イベントを確認するには %s ページにアクセスしてください"
 
 msgid "Wednesday"
-msgstr ""
+msgstr "水曜日"
 
 msgid "Where the event takes place"
-msgstr ""
+msgstr "イベントが開催される場所"
 
 msgid "Where the event will be held. Shown in the left column."
-msgstr ""
+msgstr "イベントが開催される場所。左列に表示されます。"
 
 msgid "Whether advance payment is accepted for this event"
-msgstr ""
+msgstr "このイベントで前払いが受け付けられるかどうか"
 
 msgid "Yes"
-msgstr ""
+msgstr "はい"
 
 msgid "Yes - Hide past dates only"
-msgstr ""
+msgstr "はい - 過去の日付のみ非表示"
 
 msgid "Yes - Required"
-msgstr ""
+msgstr "はい - 必須"
 
 msgid ""
 "You can change the page name below. The old page will be deleted and a new "
-"one created with the shortcode [agenda]."
+"one created with the shortcode [acsagma_agenda]."
 msgstr ""
+"以下でページ名を変更できます。古いページは削除され、ショートコード [acsagma_agenda] "
+"を含む新しいページが作成されます。"
 
 msgid ""
 "You can enable Google Places Autocomplete for the Location field to help "
 "users find addresses easily."
 msgstr ""
+"場所フィールドでGoogle Places オートコンプリートを有効にして、ユーザーが住所を簡単に"
+"見つけられるようにできます。"

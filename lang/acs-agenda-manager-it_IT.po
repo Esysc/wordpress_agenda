@@ -704,7 +704,7 @@ msgid "Using the Shortcode"
 msgstr "Usare lo shortcode"
 
 #, fuzzy
-msgid "Verify the shortcode [agenda] is on the page"
+msgid "Verify the shortcode [acsagma_agenda] is on the page"
 msgstr ""
 "Usa lo shortcode qui sotto per visualizzare l'agenda su qualsiasi pagina:"
 
@@ -741,10 +741,10 @@ msgstr "Obbligatorio"
 
 msgid ""
 "You can change the page name below. The old page will be deleted and a new "
-"one created with the shortcode [agenda]."
+"one created with the shortcode [acsagma_agenda]."
 msgstr ""
 "Puoi cambiare il nome della pagina qui sotto. La vecchia pagina sara "
-"eliminata e ne verra creata una nuova con lo shortcode [agenda]."
+"eliminata e ne verra creata una nuova con lo shortcode [acsagma_agenda]."
 
 msgid ""
 "You can enable Google Places Autocomplete for the Location field to help "

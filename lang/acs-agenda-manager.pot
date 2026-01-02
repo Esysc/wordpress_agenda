@@ -630,7 +630,7 @@ msgstr ""
 msgid "Using the Shortcode"
 msgstr ""
 
-msgid "Verify the shortcode [agenda] is on the page"
+msgid "Verify the shortcode [acsagma_agenda] is on the page"
 msgstr ""
 
 msgid "View Agenda"
@@ -663,7 +663,7 @@ msgstr ""
 msgid "Yes - Required"
 msgstr ""
 
-msgid "You can change the page name below. The old page will be deleted and a new one created with the shortcode [agenda]."
+msgid "You can change the page name below. The old page will be deleted and a new one created with the shortcode [acsagma_agenda]."
 msgstr ""
 
 msgid "You can enable Google Places Autocomplete for the Location field to help users find addresses easily."

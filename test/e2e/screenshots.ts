@@ -35,7 +35,7 @@ const screenshots: ScreenshotConfig[] = [
     width: 1280,
     height: 800,
     action: async (page) => {
-      await page.goto(`${BASE_URL}/wp-admin/admin.php?page=agenda`, { timeout: 30000 });
+      await page.goto(`${BASE_URL}/wp-admin/admin.php?page=acsagma-agenda`, { timeout: 30000 });
       await page.waitForLoadState('networkidle');
       // Wait for the table to be visible
       await page.waitForSelector('#acs-add-event', { state: 'visible', timeout: 10000 });
@@ -48,7 +48,7 @@ const screenshots: ScreenshotConfig[] = [
     width: 1280,
     height: 900,
     action: async (page) => {
-      await page.goto(`${BASE_URL}/wp-admin/admin.php?page=agenda`, { timeout: 30000 });
+      await page.goto(`${BASE_URL}/wp-admin/admin.php?page=acsagma-agenda`, { timeout: 30000 });
       await page.waitForLoadState('networkidle');
       await page.click('#acs-add-event');
       await page.waitForSelector('.ui-dialog:has(#acs-event-dialog)', { state: 'visible', timeout: 10000 });
@@ -67,7 +67,7 @@ const screenshots: ScreenshotConfig[] = [
     width: 1280,
     height: 900,
     action: async (page) => {
-      await page.goto(`${BASE_URL}/wp-admin/admin.php?page=agenda`, { timeout: 30000 });
+      await page.goto(`${BASE_URL}/wp-admin/admin.php?page=acsagma-agenda`, { timeout: 30000 });
       await page.waitForLoadState('networkidle');
       await page.click('#acs-add-event');
       await page.waitForSelector('.ui-dialog:has(#acs-event-dialog)', { state: 'visible', timeout: 10000 });
@@ -93,7 +93,7 @@ const screenshots: ScreenshotConfig[] = [
     width: 1280,
     height: 800,
     action: async (page) => {
-      await page.goto(`${BASE_URL}/wp-admin/admin.php?page=agenda-settings`, { timeout: 30000 });
+      await page.goto(`${BASE_URL}/wp-admin/admin.php?page=acsagma-settings`, { timeout: 30000 });
       await page.waitForLoadState('networkidle');
     }
   }
@@ -137,7 +137,7 @@ async function createSampleEvents(page: Page): Promise<void> {
   console.log('📅 Checking for existing events...');
 
   try {
-    await page.goto(`${BASE_URL}/wp-admin/admin.php?page=agenda`);
+    await page.goto(`${BASE_URL}/wp-admin/admin.php?page=acsagma-agenda`);
     await page.waitForLoadState('networkidle');
     await page.waitForSelector('#acs-add-event', { state: 'visible', timeout: 10000 });
 
