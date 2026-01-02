@@ -25,6 +25,9 @@ msgstr "イベントの簡単な紹介。"
 msgid "About This Plugin"
 msgstr "このプラグインについて"
 
+msgid "ACS Agenda"
+msgstr "ACS アジェンダ"
+
 msgid "ACS Agenda Manager - User Guide"
 msgstr "ACS アジェンダマネージャー - ユーザーガイド"
 
