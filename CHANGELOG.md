@@ -5,6 +5,29 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.3.4] - 2026-01-02
+
+### Fixed
+
+- **WordPress.org Compliance**: Renamed shortcode from `[acsagma_agenda]` to `[acsagma_agenda]` with proper unique prefix
+- Improved admin menu branding: renamed top-level menu from "Agenda" to "ACS Agenda" for better identification
+- Complete Japanese translation now available
+
+### Changed
+
+- Updated all translation files (.po/.mo) with new shortcode name references
+- Help page and settings page updated to display the correct shortcode
+
+### Added
+
+- Comprehensive E2E test coverage with new test files:
+  - `advanced-fields.spec.ts` - Tests for partial attendance, advance payment, external URLs, and price fields
+  - `help.spec.ts` - Tests for help page content and navigation
+  - `image-management.spec.ts` - Tests for image upload, preview, and removal
+  - `settings.spec.ts` - Tests for plugin settings page
+  - `validation.spec.ts` - Tests for form validation (required fields, URL validation, date format)
+- Improved test fixtures with dynamic agenda page URL detection and better event search handling
+
 ## [3.3.3] - 2026-01-01
 
 ### Fixed

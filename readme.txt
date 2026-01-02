@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/donate?business=KG9SDHM7VUP6Y&currency_code=
 Tags: agenda, events, calendar, schedule, workshop
 Requires at least: 6.2
 Tested up to: 6.9
-Stable tag: 3.3.3
+Stable tag: 3.3.4
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -90,6 +90,13 @@ Yes, you can override the CSS in your theme or copy the template file to your th
 
 == Changelog ==
 
+= 3.3.4 =
+* Fixed shortcode naming for WordPress.org compliance
+* Improved admin menu branding: renamed "Agenda" to "ACS Agenda" for better identification
+* Complete Japanese translation now available
+* Updated all translation files with correct shortcode references
+* Added comprehensive E2E test coverage for advanced fields, help page, image management, settings, and form validation
+
 = 3.3.3 =
 * Fixed global variable naming in help-page.php template to use proper acsagma prefix
 * Updated test environment to exclude development files for Plugin Check compliance
@@ -145,6 +152,9 @@ Yes, you can override the CSS in your theme or copy the template file to your th
 * Initial public release
 
 == Upgrade Notice ==
+
+= 3.3.4 =
+Improved WordPress.org compliance with proper shortcode naming and complete Japanese translation.
 
 = 3.3.0 =
 New Japanese language support, improved form validation, and better admin UI.
