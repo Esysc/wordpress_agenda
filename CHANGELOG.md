@@ -6,6 +6,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.4.0] - 2026-01-03
+
+### Added
+
+- **Delete Data on Uninstall**: New option in Settings to optionally remove all plugin data (events table and Agenda page) when uninstalling the plugin
+- **Proper uninstall cleanup**: Added `uninstall.php` to clean up translation files and options on plugin removal
+- **Translation installation**: Translations are now automatically copied to WordPress languages directory on activation
+- **E2E language tests**: Added comprehensive tests for translation verification across all supported languages
+
+### Changed
+
+- Removed Swiss French (fr_CH) and Swiss Italian (it_CH) translations as WordPress core doesn't support these locales
+- Improved build script to include `uninstall.php` in distribution package
+
+### Fixed
+
+- SQL injection prevention: Added proper escaping for database table name in uninstall script
+
 ## [3.3.4] - 2026-01-02
 
 ### Fixed

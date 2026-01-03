@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/donate?business=KG9SDHM7VUP6Y&currency_code=
 Tags: agenda, events, calendar, schedule, workshop
 Requires at least: 6.2
 Tested up to: 6.9
-Stable tag: 3.3.4
+Stable tag: 3.4.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -96,6 +96,13 @@ Yes, you can override the CSS in your theme or copy the template file to your th
 5. Plugin settings and configuration options
 
 == Changelog ==
+
+= 3.4.0 =
+* Added "Delete Data on Uninstall" option in Settings to optionally remove all plugin data when uninstalling
+* Added proper uninstall cleanup with uninstall.php
+* Translations are now automatically installed to WordPress languages directory on activation
+* Removed Swiss French (fr_CH) and Swiss Italian (it_CH) translations (not supported by WordPress core)
+* Fixed SQL injection prevention in uninstall script
 
 = 3.3.4 =
 * Fixed shortcode naming for WordPress.org compliance
