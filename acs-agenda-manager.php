@@ -73,6 +73,7 @@ final class ACSAGMA_Agenda_Manager {
      * Initialize WordPress hooks
      */
     private function init_hooks(): void {
+        add_action('init', [$this, 'load_textdomain']);
         add_action('wp_enqueue_scripts', [$this, 'enqueue_frontend_assets']);
         add_action('admin_enqueue_scripts', [$this, 'enqueue_admin_assets']);
         add_action('plugins_loaded', [$this, 'check_version']);
@@ -86,6 +87,17 @@ final class ACSAGMA_Agenda_Manager {
 
         // Locale filter
         add_filter('locale', [$this, 'set_locale_from_browser']);
+    }
+
+    /**
+     * Load plugin textdomain for translations
+     */
+    public function load_textdomain(): void {
+        load_plugin_textdomain(
+            'acs-agenda-manager',
+            false,
+            dirname(plugin_basename(__FILE__)) . '/lang'
+        );
     }
 
     /**
