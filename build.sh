@@ -38,6 +38,7 @@ echo "[*] Copying plugin files..."
 # Use rsync with include-only logic for a clean copy
 rsync -av --progress \
     --include='acs-agenda-manager.php' \
+    --include='uninstall.php' \
     --include='readme.txt' \
     --include='class/***' \
     --include='css/***' \

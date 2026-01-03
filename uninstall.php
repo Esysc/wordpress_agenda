@@ -16,8 +16,11 @@ if (!defined('WP_UNINSTALL_PLUGIN')) {
  * Remove plugin data on uninstall.
  */
 function acsagma_uninstall_cleanup() {
-    // Check if user wants to delete all data
-    $acsagma_delete_all_data = get_option('acsagma_delete_data_on_uninstall', false);
+    // Check if user wants to delete all data (stored as '1' or true)
+    $acsagma_delete_all_data = (bool) get_option('acsagma_delete_data_on_uninstall', false);
+
+    // Debug: Log to file for troubleshooting (remove in production)
+    // error_log('ACS Uninstall: delete_all_data = ' . ($acsagma_delete_all_data ? 'true' : 'false'));
 
     // Always remove installed translation files (they're just copies)
     $acsagma_lang_dir = WP_LANG_DIR . '/plugins/';
@@ -46,9 +49,9 @@ function acsagma_uninstall_cleanup() {
     if ($acsagma_delete_all_data) {
         // Remove the database table
         global $wpdb;
-        $acsagma_table_name = $wpdb->prefix . 'acs_agenda_manager';
-        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange
-        $wpdb->query($wpdb->prepare('DROP TABLE IF EXISTS %i', $acsagma_table_name));
+        $acsagma_table_name = esc_sql($wpdb->prefix . 'acs_agenda_manager');
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        $wpdb->query("DROP TABLE IF EXISTS `{$acsagma_table_name}`");
 
         // Remove the Agenda page
         $acsagma_page_name = get_option('acsagma_page', 'Agenda');
