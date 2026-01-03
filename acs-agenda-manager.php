@@ -73,7 +73,6 @@ final class ACSAGMA_Agenda_Manager {
      * Initialize WordPress hooks
      */
     private function init_hooks(): void {
-        add_action('init', [$this, 'load_textdomain']);
         add_action('wp_enqueue_scripts', [$this, 'enqueue_frontend_assets']);
         add_action('admin_enqueue_scripts', [$this, 'enqueue_admin_assets']);
         add_action('plugins_loaded', [$this, 'check_version']);
@@ -87,17 +86,6 @@ final class ACSAGMA_Agenda_Manager {
 
         // Locale filter
         add_filter('locale', [$this, 'set_locale_from_browser']);
-    }
-
-    /**
-     * Load plugin textdomain for translations
-     */
-    public function load_textdomain(): void {
-        load_plugin_textdomain(
-            'acs-agenda-manager',
-            false,
-            dirname(plugin_basename(__FILE__)) . '/lang'
-        );
     }
 
     /**
@@ -383,6 +371,9 @@ final class ACSAGMA_Agenda_Manager {
         require_once plugin_dir_path(__FILE__) . 'class/class-acs-database.php';
         ACSAGMA_Database::create_table();
 
+        // Install bundled translations to WordPress languages directory
+        self::install_translations();
+
         $page_name = get_option('acsagma_page', 'Agenda');
         $existing_page = self::get_page_by_title($page_name);
 
@@ -400,6 +391,37 @@ final class ACSAGMA_Agenda_Manager {
 
         update_option('acsagma_page', $page_name);
         update_option('acsagma_agenda_manager_plugin_version', ACSAGMA_AGENDA_VERSION);
+    }
+
+    /**
+     * Install bundled translations to WordPress languages directory.
+     * This allows WordPress to auto-load translations without load_plugin_textdomain().
+     */
+    private static function install_translations(): void {
+        $source_dir = plugin_dir_path(__FILE__) . 'lang/';
+        $target_dir = WP_LANG_DIR . '/plugins/';
+
+        // Create target directory if it doesn't exist
+        if (!is_dir($target_dir)) {
+            wp_mkdir_p($target_dir);
+        }
+
+        // Get all .mo files from bundled translations
+        $mo_files = glob($source_dir . '*.mo');
+
+        if (!$mo_files) {
+            return;
+        }
+
+        foreach ($mo_files as $mo_file) {
+            $filename = basename($mo_file);
+            $target_file = $target_dir . $filename;
+
+            // Only copy if source is newer or target doesn't exist
+            if (!file_exists($target_file) || filemtime($mo_file) > filemtime($target_file)) {
+                copy($mo_file, $target_file);
+            }
+        }
     }
 
     /**

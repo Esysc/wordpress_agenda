@@ -756,3 +756,12 @@ msgid ""
 msgstr ""
 "場所フィールドでGoogle Places オートコンプリートを有効にして、ユーザーが住所を簡単に"
 "見つけられるようにできます。"
+
+msgid "Delete Data on Uninstall"
+msgstr "アンインストール時にデータを削除"
+
+msgid "Remove all plugin data (events, settings, database table) when the plugin is deleted"
+msgstr "プラグイン削除時にすべてのプラグインデータ（イベント、設定、データベーステーブル）を削除する"
+
+msgid "Warning: This will permanently delete all your events and settings!"
+msgstr "警告：これによりすべてのイベントと設定が完全に削除されます！"

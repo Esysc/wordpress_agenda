@@ -756,3 +756,12 @@ msgid ""
 "You can enable Google Places Autocomplete for the Location field to help "
 "users find addresses easily."
 msgstr ""
+
+msgid "Delete Data on Uninstall"
+msgstr "Daten bei Deinstallation löschen"
+
+msgid "Remove all plugin data (events, settings, database table) when the plugin is deleted"
+msgstr "Alle Plugin-Daten (Ereignisse, Einstellungen, Datenbanktabelle) löschen, wenn das Plugin gelöscht wird"
+
+msgid "Warning: This will permanently delete all your events and settings!"
+msgstr "Warnung: Dadurch werden alle Ihre Ereignisse und Einstellungen dauerhaft gelöscht!"

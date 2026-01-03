@@ -50,6 +50,12 @@ class ACSAGMA_Options {
             'sanitize_callback' => 'sanitize_text_field',
             'default' => '',
         ]);
+
+        register_setting('acsagma_agenda_settings', 'acsagma_delete_data_on_uninstall', [
+            'type' => 'boolean',
+            'sanitize_callback' => 'rest_sanitize_boolean',
+            'default' => false,
+        ]);
     }
 
     public function render_settings_page(): void {
@@ -64,6 +70,7 @@ class ACSAGMA_Options {
 
         $agenda_page = get_option('acsagma_page', 'Agenda');
         $google_maps_api_key = get_option('acsagma_google_maps_api_key', '');
+        $delete_data_on_uninstall = get_option('acsagma_delete_data_on_uninstall', false);
 
         include ACSAGMA_AGENDA_PLUGIN_DIR . 'templates/settings-page.php';
     }
@@ -79,6 +86,10 @@ class ACSAGMA_Options {
         // Save Google Maps API key
         $api_key = sanitize_text_field(wp_unslash($_POST['acsagma_google_maps_api_key'] ?? ''));
         update_option('acsagma_google_maps_api_key', $api_key);
+
+        // Save delete data on uninstall option
+        $delete_data = isset($_POST['acsagma_delete_data_on_uninstall']) ? true : false;
+        update_option('acsagma_delete_data_on_uninstall', $delete_data);
 
         if ($old_page_name !== $new_page_name) {
             // Delete old page

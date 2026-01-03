@@ -86,6 +86,24 @@ defined('ABSPATH') || exit;
                     </p>
                 </td>
             </tr>
+            <tr>
+                <th scope="row">
+                    <label for="acsagma_delete_data_on_uninstall"><?php esc_html_e('Delete Data on Uninstall', 'acs-agenda-manager'); ?></label>
+                </th>
+                <td>
+                    <label>
+                        <input type="checkbox"
+                               name="acsagma_delete_data_on_uninstall"
+                               id="acsagma_delete_data_on_uninstall"
+                               value="1"
+                               <?php checked($delete_data_on_uninstall, true); ?> />
+                        <?php esc_html_e('Remove all plugin data (events, settings, database table) when the plugin is deleted', 'acs-agenda-manager'); ?>
+                    </label>
+                    <p class="description" style="color: #d63638;">
+                        <?php esc_html_e('Warning: This will permanently delete all your events and settings!', 'acs-agenda-manager'); ?>
+                    </p>
+                </td>
+            </tr>
         </table>
 
         <?php submit_button(__('Save Settings', 'acs-agenda-manager')); ?>
