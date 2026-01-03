@@ -30,9 +30,9 @@ ACS Agenda Manager provides an easy way to create and manage an event agenda on 
 = Supported Languages =
 
 * English (en_US) - Default
-* French (fr_FR, fr_CH)
+* French (fr_FR)
 * German (de_DE, de_CH)
-* Italian (it_IT, it_CH)
+* Italian (it_IT)
 * Japanese (ja)
 
 = Usage =

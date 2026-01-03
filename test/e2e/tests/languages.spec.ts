@@ -57,23 +57,13 @@ function parsePoFile(filePath: string): Map<string, string> {
   return translations;
 }
 
-// Get all available language files
+// Get all available language files dynamically from lang directory
 function getAvailableLanguages(): Array<{ locale: string; name: string; filePath: string }> {
   const langDir = path.resolve(__dirname, '../../../lang');
   const languages: Array<{ locale: string; name: string; filePath: string }> = [];
 
-  const localeNames: Record<string, string> = {
-    'en_US': 'English',
-    'fr_FR': 'French (France)',
-    'fr_CH': 'French (Switzerland)',
-    'de_DE': 'German (Germany)',
-    'de_CH': 'German (Switzerland)',
-    'it_IT': 'Italian (Italy)',
-    'it_CH': 'Italian (Switzerland)',
-    'ja': 'Japanese',
-  };
-
   if (!fs.existsSync(langDir)) {
+    console.log('Lang directory not found:', langDir);
     return languages;
   }
 
@@ -85,15 +75,18 @@ function getAvailableLanguages(): Array<{ locale: string; name: string; filePath
       const match = file.match(/acs-agenda-manager-([a-z]{2}(?:_[A-Z]{2})?)\.po/);
       if (match) {
         const locale = match[1];
+        // Generate readable name from locale code
+        const name = locale.replace('_', ' (') + (locale.includes('_') ? ')' : '');
         languages.push({
           locale,
-          name: localeNames[locale] || locale,
+          name,
           filePath: path.join(langDir, file),
         });
       }
     }
   }
 
+  console.log(`Found ${languages.length} language files:`, languages.map(l => l.locale).join(', '));
   return languages;
 }
 
@@ -125,18 +118,21 @@ test.describe('Language Translations', () => {
       const localeSelect = page.locator('select#WPLANG');
 
       if (await localeSelect.isVisible()) {
-        try {
-          // WordPress uses empty string for en_US
-          const selectValue = lang.locale === 'en_US' ? '' : lang.locale;
-          await localeSelect.selectOption(selectValue);
-          await page.click('input#submit');
-          await page.waitForLoadState('networkidle');
-        } catch (e) {
-          // Locale might not be installed, skip
-          console.log(`Locale ${lang.locale} not available, skipping`);
+        // WordPress uses empty string for en_US
+        const selectValue = lang.locale === 'en_US' ? '' : lang.locale;
+
+        // Check if the locale is available in the dropdown
+        const optionExists = await localeSelect.locator(`option[value="${selectValue}"]`).count() > 0;
+
+        if (!optionExists) {
+          console.log(`Locale ${lang.locale} not installed in WordPress, skipping`);
           test.skip();
           return;
         }
+
+        await localeSelect.selectOption(selectValue);
+        await page.click('input#submit');
+        await page.waitForLoadState('networkidle');
       }
 
       // Step 2: Go to plugin admin page

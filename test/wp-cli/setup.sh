@@ -32,6 +32,11 @@ wp option update timezone_string "Europe/Zurich"
 wp option update date_format "d/m/Y"
 wp option update permalink_structure "/%postname%/"
 
+# Install language packs for translation testing
+echo "[*] Installing WordPress language packs..."
+wp language core install fr_FR de_DE de_CH it_IT ja || echo "[WARN] Some language packs may not be available"
+echo "[OK] Language packs installed"
+
 # Activate the plugin (slug must match folder name)
 echo "[*] Activating ACS Agenda Manager plugin..."
 if wp plugin is-active acs-agenda-manager 2>/dev/null; then
