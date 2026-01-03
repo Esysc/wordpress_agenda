@@ -24,9 +24,16 @@ ACS Agenda Manager provides an easy way to create and manage an event agenda on 
 * Linked pages: Connect events to detailed WordPress pages
 * Automatic expiration: Past events are automatically hidden
 * Modern responsive design: CSS Grid layout with glass-morphism effects
-* Internationalization: Supports 7 languages (English, French, German, Italian, Japanese)
 * Easy administration: Intuitive admin interface with card-based form sections
 * Real-time validation: In-dialog error messages and success notifications
+
+= Supported Languages =
+
+* English (en_US) - Default
+* French (fr_FR, fr_CH)
+* German (de_DE, de_CH)
+* Italian (it_IT, it_CH)
+* Japanese (ja)
 
 = Usage =
 
