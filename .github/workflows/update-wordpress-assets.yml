@@ -1,11 +1,6 @@
 name: Update WordPress.org Assets
 
 on:
-  push:
-    branches:
-      - master
-    paths:
-      - '.wordpress-org/**'
   workflow_dispatch:
 
 jobs:
