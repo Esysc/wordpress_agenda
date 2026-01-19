@@ -1,27 +1,25 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:base", "schedule:weekly"],
-  "docker": {
-    "enabled": true
-  },
+  "extends": ["config:recommended", "schedule:weekly"],
   "dockerfile": {
     "enabled": true
   },
   "npm": {
     "enabled": true
   },
-  "ignorePaths": [
-    "node_modules/**",
-    "vendor/**"
-  ],
+  "ignorePaths": ["node_modules/**", "vendor/**"],
   "packageRules": [
+    {
+      "matchCategories": ["docker"],
+      "enabled": true
+    },
     {
       "description": "WordPress image - notify on major updates for plugin compatibility check",
       "matchDatasources": ["docker"],
-      "matchPackagePatterns": ["^wordpress"],
       "groupName": "WordPress updates",
       "labels": ["wordpress-compatibility"],
-      "automerge": false
+      "automerge": false,
+      "matchPackageNames": ["/^wordpress/"]
     },
     {
       "description": "Automatically merge minor updates for dev dependencies",
@@ -31,9 +29,7 @@
     }
   ],
   "semanticCommits": "enabled",
-  "postUpdateOptions": [
-    "npmDedupe"
-  ],
+  "postUpdateOptions": ["npmDedupe"],
   "vulnerabilityAlerts": {
     "enabled": true
   }
