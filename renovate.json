@@ -7,6 +7,9 @@
   "dockerfile": {
     "enabled": true
   },
+  "compose": {
+    "enabled": true
+  },
   "npm": {
     "enabled": true
   },
@@ -28,12 +31,6 @@
       "matchDepTypes": ["devDependencies"],
       "matchUpdateTypes": ["minor", "patch"],
       "automerge": true
-    },
-    {
-      "description": "Group other Docker updates",
-      "matchDatasources": ["docker"],
-      "matchPackagePatterns": ["^(?!wordpress)"],
-      "groupName": "Docker updates"
     }
   ],
   "semanticCommits": "enabled",
