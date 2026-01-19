@@ -10,7 +10,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Update WordPress.org assets
         uses: 10up/action-wordpress-plugin-asset-update@stable
