@@ -7,9 +7,6 @@
   "dockerfile": {
     "enabled": true
   },
-  "compose": {
-    "enabled": true
-  },
   "npm": {
     "enabled": true
   },
