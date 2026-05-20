@@ -1,6 +1,6 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:recommended", "schedule:weekly"],
+  "extends": ["config:recommended", "schedule:weekly", "docker:enableMajor"],
   "dockerfile": {
     "enabled": true
   },
@@ -19,7 +19,7 @@
       "groupName": "WordPress updates",
       "labels": ["wordpress-compatibility"],
       "automerge": false,
-      "matchPackageNames": ["/^wordpress/"]
+      "matchPackageNames": ["wordpress"]
     },
     {
       "description": "Automatically merge minor updates for dev dependencies",
