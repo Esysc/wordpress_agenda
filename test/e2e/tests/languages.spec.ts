@@ -106,7 +106,9 @@ async function setUserAdminLocale(page: import('@playwright/test').Page, locale:
     return;
   }
 
-  const selectValue = locale === 'en_US' ? 'en_US' : locale;
+  // WordPress user-profile locale uses '' (Site Default) for English,
+  // not 'en_US', so selecting by value 'en_US' would silently no-op.
+  const selectValue = locale === 'en_US' ? '' : locale;
   const optionExists = (await userLocaleSelect.locator(`option[value="${selectValue}"]`).count()) > 0;
 
   if (!optionExists) {

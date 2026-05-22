@@ -115,7 +115,20 @@ class ACSAGMA_Template {
     private static function render_event_card(array $event, int $index): string {
         $post_id = url_to_postid($event['link']);
         $section_id = 'section-' . $index;
-        $first_date = $event['dates'][0] ?? '';
+
+        // For candopartial=2 events, leading dates in dates_info may be expired.
+        // Use the first non-expired date so data-date-ts reflects when the event
+        // is actually relevant, not when it started.
+        $first_date = '';
+        foreach ($event['dates_info'] as $date_info) {
+            if (empty($date_info['expired'])) {
+                $first_date = $date_info['date'];
+                break;
+            }
+        }
+        if ('' === $first_date) {
+            $first_date = $event['dates'][0] ?? '';
+        }
         $parsed = !empty($first_date) ? ACSAGMA_Event::parse_date($first_date) : [];
         $date_ts = (int) ($parsed['timestamp'] ?? 0);
         $month_group = !empty($parsed)
