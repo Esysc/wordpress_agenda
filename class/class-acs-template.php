@@ -17,16 +17,79 @@ class ACSAGMA_Template {
      */
     public static function render_agenda(array $events): string {
         $output = self::render_admin_link();
-        $output .= '<div class="container-agenda">';
+        $output .= self::render_agenda_controls();
+        $output .= '<div class="container-agenda" id="acs-agenda-list">';
 
         foreach ($events as $index => $event) {
             $output .= self::render_event_card($event, $index);
         }
 
         $output .= '</div>';
+        $output .= '<p id="acs-no-results" class="acs-no-results" hidden>'
+            . esc_html__('No events match your filters.', 'acs-agenda-manager')
+            . '</p>';
+        $output .= '<div id="acs-pagination" class="acs-pagination" role="navigation" aria-label="'
+            . esc_attr__('Agenda pagination', 'acs-agenda-manager')
+            . '"></div>';
         $output .= '<div id="postid"></div>';
 
         return $output;
+    }
+
+    /**
+     * Render frontend toolbar controls.
+     */
+    private static function render_agenda_controls(): string {
+        return sprintf(
+            '<div class="acs-agenda-toolbar" role="region" aria-label="%s">
+                <div class="acs-agenda-toolbar-grid">
+                    <label class="acs-filter-item">
+                        <span>%s</span>
+                        <input type="search" id="acs-filter-search" placeholder="%s" />
+                    </label>
+                    <label class="acs-filter-item">
+                        <span>%s</span>
+                        <select id="acs-filter-category">
+                            <option value="">%s</option>
+                        </select>
+                    </label>
+                    <label class="acs-filter-item">
+                        <span>%s</span>
+                        <select id="acs-filter-date">
+                            <option value="all">%s</option>
+                            <option value="today">%s</option>
+                            <option value="week">%s</option>
+                            <option value="month">%s</option>
+                        </select>
+                    </label>
+                    <label class="acs-filter-item">
+                        <span>%s</span>
+                        <select id="acs-sort-order">
+                            <option value="soonest">%s</option>
+                            <option value="latest">%s</option>
+                            <option value="title">%s</option>
+                        </select>
+                    </label>
+                    <button type="button" id="acs-compact-toggle" class="acs-compact-toggle" aria-pressed="false">%s</button>
+                </div>
+                <p id="acs-results-count" class="acs-results-count"></p>
+            </div>',
+            esc_attr__('Agenda filters and sorting', 'acs-agenda-manager'),
+            esc_html__('Search', 'acs-agenda-manager'),
+            esc_attr__('Search title or description', 'acs-agenda-manager'),
+            esc_html__('Category', 'acs-agenda-manager'),
+            esc_html__('All categories', 'acs-agenda-manager'),
+            esc_html__('Date', 'acs-agenda-manager'),
+            esc_html__('All dates', 'acs-agenda-manager'),
+            esc_html__('Today', 'acs-agenda-manager'),
+            esc_html__('This week', 'acs-agenda-manager'),
+            esc_html__('This month', 'acs-agenda-manager'),
+            esc_html__('Sort', 'acs-agenda-manager'),
+            esc_html__('Soonest first', 'acs-agenda-manager'),
+            esc_html__('Latest first', 'acs-agenda-manager'),
+            esc_html__('Title A-Z', 'acs-agenda-manager'),
+            esc_html__('Compact mode', 'acs-agenda-manager')
+        );
     }
 
     /**
@@ -53,7 +116,34 @@ class ACSAGMA_Template {
         $post_id = url_to_postid($event['link']);
         $section_id = 'section-' . $index;
 
-        $output = '<div class="acsagenda">';
+        // For candopartial=2 events, leading dates in dates_info may be expired.
+        // Use the first non-expired date so data-date-ts reflects when the event
+        // is actually relevant, not when it started.
+        $first_date = '';
+        foreach ($event['dates_info'] as $date_info) {
+            if (empty($date_info['expired'])) {
+                $first_date = $date_info['date'];
+                break;
+            }
+        }
+        if ('' === $first_date) {
+            $first_date = $event['dates'][0] ?? '';
+        }
+        $parsed = !empty($first_date) ? ACSAGMA_Event::parse_date($first_date) : [];
+        $date_ts = (int) ($parsed['timestamp'] ?? 0);
+        $month_group = !empty($parsed)
+            ? sprintf('%s %d', $parsed['month_name'], $parsed['year'])
+            : '';
+
+        $output = sprintf(
+            '<div class="acsagenda" data-category="%s" data-title="%s" data-location="%s" data-intro="%s" data-date-ts="%d" data-month-group="%s">',
+            esc_attr((string) ($event['categorie'] ?? '')),
+            esc_attr((string) ($event['title'] ?? '')),
+            esc_attr((string) ($event['emplacement'] ?? '')),
+            esc_attr((string) ($event['intro'] ?? '')),
+            $date_ts,
+            esc_attr($month_group)
+        );
 
         // Left column - dates
         $output .= self::render_date_column($event);
@@ -157,6 +247,19 @@ class ACSAGMA_Template {
             );
         }
 
+        $read_more_html = '';
+        if (self::should_show_read_more($post_id)) {
+            $read_more_html = sprintf(
+                '<button type="button" data-href="%s" class="readmore show" data-postid="%d" data-id="%s">
+                    %s <span class="dashicons dashicons-arrow-right-alt2" aria-hidden="true" focusable="false"></span>
+                </button>',
+                esc_url($event['link']),
+                $post_id,
+                esc_attr($section_id),
+                esc_html__('Read more', 'acs-agenda-manager')
+            );
+        }
+
         return sprintf(
             '<div class="column-center" id="%s">
                 <div class="event-header">
@@ -166,20 +269,33 @@ class ACSAGMA_Template {
                 <div class="event-intro">
                     <p>%s</p>
                 </div>
-                <button data-href="%s" class="readmore show" data-postid="%d" data-id="%s">
-                    %s <span class="dashicons dashicons-arrow-right-alt2"></span>
-                </button>
+                %s
             </div>',
             esc_attr($section_id),
             $status_badge,
             $category_html,
             esc_html($event['title']),
             esc_html($event['intro']),
-            esc_url($event['link']),
-            $post_id,
-            esc_attr($section_id),
-            esc_html__('Read more', 'acs-agenda-manager')
+            $read_more_html
         );
+    }
+
+    /**
+     * Determine whether Read more should be displayed.
+     */
+    private static function should_show_read_more(int $post_id): bool {
+        if ($post_id <= 0) {
+            return false;
+        }
+
+        $post = get_post($post_id);
+        if (!$post instanceof WP_Post) {
+            return false;
+        }
+
+        $content_text = trim(wp_strip_all_tags(strip_shortcodes((string) $post->post_content)));
+
+        return $content_text !== '';
     }
 
     /**
@@ -231,15 +347,18 @@ class ACSAGMA_Template {
     public static function render_read_more_dialog(WP_Post $post, string $href): string {
         return sprintf(
             '<div id="postdata">
-                <div id="dialog">
-                    <button id="close" onclick="closeDialog()">&times;</button>
-                    <h2 style="text-align: center;">%s</h2>
-                    <p style="text-align: center;">
-                        <a href="%s" target="_blank">%s</a>
-                    </p>
-                    %s
+                <div id="dialog" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="acs-readmore-title">
+                    <div class="acs-dialog-panel">
+                        <button id="close" type="button" onclick="closeDialog()" aria-label="%s">&times;</button>
+                        <h2 id="acs-readmore-title">%s</h2>
+                        <p class="acs-dialog-link">
+                            <a href="%s" target="_blank" rel="noopener noreferrer">%s</a>
+                        </p>
+                        %s
+                    </div>
                 </div>
             </div>',
+            esc_attr__('Close dialog', 'acs-agenda-manager'),
             esc_html(get_the_title($post)),
             esc_url($href),
             esc_html__('Go to page', 'acs-agenda-manager'),

@@ -3,7 +3,7 @@
  * Plugin Name: ACS Agenda Manager
  * Plugin URI: https://github.com/Esysc/wordpress_agenda
  * Description: A WordPress plugin for managing and displaying event agendas. Perfect for workshops, courses, and event organizers.
- * Version: 3.4.0
+ * Version: 3.5.0
  * Requires at least: 6.2
  * Requires PHP: 7.4
  * Author: Andrea Cristalli
@@ -19,7 +19,7 @@
 defined('ABSPATH') || exit;
 
 // Plugin constants
-define('ACSAGMA_AGENDA_VERSION', '3.4.0');
+define('ACSAGMA_AGENDA_VERSION', '3.5.0');
 define('ACSAGMA_AGENDA_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('ACSAGMA_AGENDA_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('ACSAGMA_AGENDA_TABLE_NAME', 'acs_agenda_manager');
@@ -83,31 +83,6 @@ final class ACSAGMA_Agenda_Manager {
 
         // Shortcode
         add_shortcode('acsagma_agenda', [$this, 'render_agenda_shortcode']);
-
-        // Locale filter
-        add_filter('locale', [$this, 'set_locale_from_browser']);
-    }
-
-    /**
-     * Set locale based on browser language
-     */
-    public function set_locale_from_browser(string $locale): string {
-        if (!isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
-            return $locale;
-        }
-
-        $browser_lang = substr(sanitize_text_field(wp_unslash($_SERVER['HTTP_ACCEPT_LANGUAGE'])), 0, 2);
-
-        $locale_map = [
-            'fr' => 'fr_FR.UTF-8',
-            'en' => 'en_US.UTF-8',
-        ];
-
-        if (isset($locale_map[$browser_lang])) {
-            setlocale(LC_TIME, $locale_map[$browser_lang]);
-        }
-
-        return $locale;
     }
 
     /**
@@ -161,6 +136,16 @@ final class ACSAGMA_Agenda_Manager {
         wp_localize_script('acs-agenda-frontend', 'acsagmaAgenda', [
             'ajaxUrl' => admin_url('admin-ajax.php'),
             'nonce' => wp_create_nonce('acsagma_agenda_nonce'),
+            'fallbackImage' => ACSAGMA_AGENDA_PLUGIN_URL . 'css/images/Accept-icon.png',
+            'i18n' => [
+                'readMoreError' => __('Unable to load details. Please try again.', 'acs-agenda-manager'),
+                'noResults' => __('No events match your filters.', 'acs-agenda-manager'),
+                'resultsLabel' => __('Showing %1$d-%2$d of %3$d events', 'acs-agenda-manager'),
+                'compactOn' => __('Compact mode on', 'acs-agenda-manager'),
+                'compactOff' => __('Compact mode off', 'acs-agenda-manager'),
+                'prev' => __('Previous', 'acs-agenda-manager'),
+                'next' => __('Next', 'acs-agenda-manager'),
+            ],
         ]);
     }
 

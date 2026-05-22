@@ -6,16 +6,16 @@ test.describe('Help Page', () => {
     await page.goto('/wp-admin/admin.php?page=acsagma-help');
     await page.waitForLoadState('networkidle');
 
-    // Check page title
-    await expect(page.locator('h1')).toContainText('User Guide');
+    // Check page title is visible (text is locale-dependent)
+    await expect(page.locator('.acs-help-page h1')).toBeVisible();
   });
 
   test('should display table of contents', async ({ page }) => {
     await page.goto('/wp-admin/admin.php?page=acsagma-help');
     await page.waitForLoadState('networkidle');
 
-    // Should have table of contents section
-    const toc = page.locator('text=/Contents|Table of Contents/i');
+    // Should have table of contents section (class is locale-independent)
+    const toc = page.locator('.acs-help-toc');
     await expect(toc).toBeVisible();
   });
 
@@ -23,7 +23,8 @@ test.describe('Help Page', () => {
     await page.goto('/wp-admin/admin.php?page=acsagma-help');
     await page.waitForLoadState('networkidle');
 
-    const gettingStarted = page.locator('h2:has-text("Getting Started")');
+    // Use the stable section ID instead of translated heading text
+    const gettingStarted = page.locator('section#getting-started h2');
     await expect(gettingStarted).toBeVisible();
   });
 
@@ -40,8 +41,8 @@ test.describe('Help Page', () => {
     await page.goto('/wp-admin/admin.php?page=acsagma-help');
     await page.waitForLoadState('networkidle');
 
-    // Should have adding events section with field table
-    const fieldDescriptions = page.locator('h2:has-text("Adding Events")');
+    // Use stable section ID instead of translated heading text
+    const fieldDescriptions = page.locator('section#adding-events h2');
     await expect(fieldDescriptions).toBeVisible();
     // Verify the field table exists
     const fieldTable = page.locator('table.widefat').first();
@@ -52,20 +53,21 @@ test.describe('Help Page', () => {
     await page.goto('/wp-admin/admin.php?page=acsagma-help');
     await page.waitForLoadState('networkidle');
 
-    // Should have partial attendance explanation
-    const partialAttendance = page.locator('h2:has-text("Partial Attendance")');
+    // Use stable section ID instead of translated heading text
+    const partialAttendance = page.locator('section#partial-attendance h2');
     await expect(partialAttendance).toBeVisible();
 
-    // Should explain the three options in the table
-    const optionKeep = page.locator('text=/Keep until end/i');
-    await expect(optionKeep).toBeVisible();
+    // Should have a table with 3 option rows (No / Yes / Keep until end)
+    const optionRows = page.locator('section#partial-attendance table.widefat tbody tr');
+    await expect(optionRows).toHaveCount(3);
   });
 
   test('should display troubleshooting section', async ({ page }) => {
     await page.goto('/wp-admin/admin.php?page=acsagma-help');
     await page.waitForLoadState('networkidle');
 
-    const troubleshooting = page.locator('h2:has-text("Troubleshooting")');
+    // Use stable section ID instead of translated heading text
+    const troubleshooting = page.locator('section#troubleshooting h2');
     await expect(troubleshooting).toBeVisible();
   });
 
@@ -73,7 +75,8 @@ test.describe('Help Page', () => {
     await page.goto('/wp-admin/admin.php?page=acsagma-help');
     await page.waitForLoadState('networkidle');
 
-    const eventsNotShowing = page.locator('text=/Events not showing/i');
+    // First h3 inside troubleshooting section (text is locale-dependent)
+    const eventsNotShowing = page.locator('section#troubleshooting h3').first();
     await expect(eventsNotShowing).toBeVisible();
   });
 
@@ -81,7 +84,8 @@ test.describe('Help Page', () => {
     await page.goto('/wp-admin/admin.php?page=acsagma-help');
     await page.waitForLoadState('networkidle');
 
-    const calendarIssues = page.locator('text=/Calendar not working/i');
+    // Second h3 inside troubleshooting section (text is locale-dependent)
+    const calendarIssues = page.locator('section#troubleshooting h3').nth(1);
     await expect(calendarIssues).toBeVisible();
   });
 
@@ -98,8 +102,8 @@ test.describe('Help Page', () => {
     await page.goto('/wp-admin/admin.php?page=acsagma-help');
     await page.waitForLoadState('networkidle');
 
-    // Should have "Need more help?" text and GitHub link
-    const support = page.locator('text=/Need more help/i');
+    // GitHub link inside troubleshooting section confirms support info is present
+    const support = page.locator('section#troubleshooting a[href*="github"]');
     await expect(support).toBeVisible();
   });
 
@@ -116,8 +120,8 @@ test.describe('Help Page', () => {
     await page.goto('/wp-admin/admin.php?page=acsagma-help');
     await page.waitForLoadState('networkidle');
 
-    // Should show plugin name in title
-    const pluginName = page.locator('h1:has-text("ACS Agenda Manager")');
+    // "ACS" is preserved in all locales
+    const pluginName = page.locator('h1:has-text("ACS")');
     await expect(pluginName).toBeVisible();
   });
 
@@ -125,8 +129,8 @@ test.describe('Help Page', () => {
     await page.goto('/wp-admin/admin.php?page=acsagma-help');
     await page.waitForLoadState('networkidle');
 
-    // Should have customization section
-    const customization = page.locator('h2:has-text("Customization")');
+    // Use stable section ID instead of translated heading text
+    const customization = page.locator('section#customization h2');
     await expect(customization).toBeVisible();
   });
 
@@ -134,8 +138,8 @@ test.describe('Help Page', () => {
     await page.goto('/wp-admin/admin.php?page=acsagma-help');
     await page.waitForLoadState('networkidle');
 
-    // Should mention CSS Styling as a heading
-    const css = page.locator('h3:has-text("CSS Styling")');
+    // CSS variable code block is never translated
+    const css = page.locator('section#customization pre:has-text("--acs-primary-color")');
     await expect(css).toBeVisible();
   });
 
@@ -143,8 +147,8 @@ test.describe('Help Page', () => {
     await page.goto('/wp-admin/admin.php?page=acsagma-help');
     await page.waitForLoadState('networkidle');
 
-    // Should have Managing Events section
-    const managing = page.locator('h2:has-text("Managing Events")');
+    // Use stable section ID instead of translated heading text
+    const managing = page.locator('section#managing-events h2');
     await expect(managing).toBeVisible();
   });
 
@@ -152,9 +156,9 @@ test.describe('Help Page', () => {
     await page.goto('/wp-admin/admin.php?page=acsagma-help');
     await page.waitForLoadState('networkidle');
 
-    // Should have Filtering Events or Searching Events section
-    const filtering = page.locator('h3:has-text("Filtering Events")');
-    await expect(filtering).toBeVisible();
+    // Use stable section ID; the managing-events section has h3 sub-sections for filtering/searching
+    const filtering = page.locator('section#managing-events h3');
+    await expect(filtering.first()).toBeVisible();
   });
 
   test('should be accessible from admin menu', async ({ page }) => {
@@ -165,8 +169,8 @@ test.describe('Help Page', () => {
     await page.goto('/wp-admin/admin.php?page=acsagma-help');
     await page.waitForLoadState('networkidle');
 
-    // Should successfully load
-    await expect(page.locator('h1')).toContainText('User Guide');
+    // Should successfully load (text is locale-dependent)
+    await expect(page.locator('.acs-help-page h1')).toBeVisible();
   });
 
   test('should have anchor links for navigation', async ({ page }) => {

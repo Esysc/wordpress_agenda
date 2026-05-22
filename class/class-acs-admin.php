@@ -107,13 +107,26 @@ class ACSAGMA_Agenda_List_Table extends WP_List_Table {
                 );
 
             case 'link':
+                $page_link = trim((string) ($item[$column_name] ?? ''));
+                $valid_page_link = esc_url_raw($page_link);
+
+                if ($valid_page_link === '') {
+                    return sprintf(
+                        '<span style="max-width:100%%" class="%s" %s>%s</span><span class="acs-no-link">%s</span>',
+                        esc_attr($item_class),
+                        $name_attr,
+                        esc_html($page_link),
+                        esc_html__('No page link', 'acs-agenda-manager')
+                    );
+                }
+
                 return sprintf(
                     '<span style="max-width:100%%" class="%s" %s>%s</span>
-                    <a href="%s" target="_blank" class="button4 info">%s</a>',
+                    <a href="%s" target="_blank" rel="noopener noreferrer" class="button4 info">%s</a>',
                     esc_attr($item_class),
                     $name_attr,
-                    esc_html($item[$column_name]),
-                    esc_url($item[$column_name]),
+                    esc_html($page_link),
+                    esc_url($valid_page_link),
                     esc_html__('Open page', 'acs-agenda-manager')
                 );
 
@@ -267,9 +280,9 @@ class ACSAGMA_Agenda_List_Table extends WP_List_Table {
         echo '<option value="">' . esc_html__('All Events', 'acs-agenda-manager') . '</option>';
 
         foreach ($filters as $filter) {
-            $value = $filter['title'] . '-' . $filter['categorie'];
+            $value = wp_json_encode(['t' => $filter['title'], 'c' => $filter['categorie']]);
             $selected_attr = selected($current_filter, $value, false);
-            echo '<option value="' . esc_attr($value) . '"' . esc_attr($selected_attr) . '>' . esc_html($filter['title']) . ' - ' . esc_html($filter['categorie']) . '</option>';
+            echo '<option value="' . esc_attr($value) . '"' . $selected_attr . '>' . esc_html($filter['title']) . ' - ' . esc_html($filter['categorie']) . '</option>';
         }
 
         echo '</select>';
@@ -324,6 +337,10 @@ class ACSAGMA_Admin {
 
         // Handle single delete action
         if (isset($_GET['action']) && $_GET['action'] === 'delete') {
+            if (!current_user_can('manage_options')) {
+                wp_die(esc_html__('Permission denied', 'acs-agenda-manager'));
+            }
+
             $nonce = isset($_REQUEST['_wpnonce']) ? sanitize_text_field(wp_unslash($_REQUEST['_wpnonce'])) : '';
 
             if (!wp_verify_nonce($nonce, 'acsagma_delete_event')) {
@@ -341,6 +358,10 @@ class ACSAGMA_Admin {
         // Handle bulk delete action
         if ((isset($_POST['action']) && $_POST['action'] === 'bulk-delete') ||
             (isset($_POST['action2']) && $_POST['action2'] === 'bulk-delete')) {
+
+            if (!current_user_can('manage_options')) {
+                wp_die(esc_html__('Permission denied', 'acs-agenda-manager'));
+            }
 
             if (!check_admin_referer('acsagma_agenda_admin_form', 'acsagma_agenda_admin_form_nonce')) {
                 wp_die(esc_html__('Security check failed', 'acs-agenda-manager'));

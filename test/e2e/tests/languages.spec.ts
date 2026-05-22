@@ -92,10 +92,33 @@ function getAvailableLanguages(): Array<{ locale: string; name: string; filePath
 
 // Key strings to check (must exist in all translations)
 const TEST_STRINGS = [
-  'Add',
-  'Agenda',
-  'Settings',
+  'Agenda Manager',
+  'Add New Event',
+  'Help',
 ];
+
+async function setUserAdminLocale(page: import('@playwright/test').Page, locale: string) {
+  await page.goto('/wp-admin/profile.php');
+  await page.waitForLoadState('networkidle');
+
+  const userLocaleSelect = page.locator('select#locale');
+  if (!(await userLocaleSelect.isVisible())) {
+    return;
+  }
+
+  // WordPress user-profile locale uses '' (Site Default) for English,
+  // not 'en_US', so selecting by value 'en_US' would silently no-op.
+  const selectValue = locale === 'en_US' ? '' : locale;
+  const optionExists = (await userLocaleSelect.locator(`option[value="${selectValue}"]`).count()) > 0;
+
+  if (!optionExists) {
+    return;
+  }
+
+  await userLocaleSelect.selectOption(selectValue);
+  await page.click('input#submit');
+  await page.waitForLoadState('networkidle');
+}
 
 test.describe('Language Translations', () => {
   const languages = getAvailableLanguages();
@@ -111,28 +134,31 @@ test.describe('Language Translations', () => {
 
   for (const lang of allLanguages) {
     test(`should display correct translations for ${lang.name} (${lang.locale})`, async ({ page }) => {
-      // Step 1: Change WordPress language
+      // Step 1: Set user/admin locale (admin UI uses user locale in WordPress)
+      await setUserAdminLocale(page, lang.locale);
+
+      // Also set site locale as fallback to keep frontend and defaults aligned
       await page.goto('/wp-admin/options-general.php');
       await page.waitForLoadState('networkidle');
 
       const localeSelect = page.locator('select#WPLANG');
 
       if (await localeSelect.isVisible()) {
-        // WordPress uses empty string for en_US
         const selectValue = lang.locale === 'en_US' ? '' : lang.locale;
 
-        // Check if the locale is available in the dropdown
         const optionExists = await localeSelect.locator(`option[value="${selectValue}"]`).count() > 0;
 
-        if (!optionExists) {
+        if (!optionExists && lang.locale !== 'en_US') {
           console.log(`Locale ${lang.locale} not installed in WordPress, skipping`);
           test.skip();
           return;
         }
 
-        await localeSelect.selectOption(selectValue);
-        await page.click('input#submit');
-        await page.waitForLoadState('networkidle');
+        if (optionExists) {
+          await localeSelect.selectOption(selectValue);
+          await page.click('input#submit');
+          await page.waitForLoadState('networkidle');
+        }
       }
 
       // Step 2: Go to plugin admin page
@@ -177,8 +203,15 @@ test.describe('Language Translations', () => {
   }
 
   test.afterAll(async ({ browser }) => {
-    // Reset to English after all tests
+    // Reset both site and user locale to English after all tests
     const page = await browser.newPage();
+
+    try {
+      await setUserAdminLocale(page, 'en_US');
+    } catch {
+      // Ignore
+    }
+
     await page.goto('/wp-admin/options-general.php');
     await page.waitForLoadState('networkidle');
 

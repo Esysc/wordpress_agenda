@@ -18,6 +18,20 @@ class ACSAGMA_Database {
     private const CACHE_GROUP = 'acsagma_agenda_manager';
 
     /**
+     * Allowed sortable columns for admin list table.
+     */
+    private const SORTABLE_COLUMNS = [
+        'id',
+        'categorie',
+        'title',
+        'emplacement',
+        'date',
+        'price',
+        'created_at',
+        'updated_at',
+    ];
+
+    /**
      * Get full table name with prefix
      */
     public static function get_table_name(): string {
@@ -47,11 +61,13 @@ class ACSAGMA_Database {
             account TINYINT(1) DEFAULT 1,
             candopartial TINYINT(1) DEFAULT 0,
             redirect VARCHAR(255) DEFAULT NULL,
+            last_date_ts INT DEFAULT NULL,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
             PRIMARY KEY (id),
             INDEX idx_date (date),
-            INDEX idx_categorie (categorie)
+            INDEX idx_categorie (categorie),
+            INDEX idx_last_date_ts (last_date_ts)
         ) {$charset_collate};";
 
         require_once ABSPATH . 'wp-admin/includes/upgrade.php';
@@ -64,7 +80,22 @@ class ACSAGMA_Database {
      * Update database schema for plugin updates
      */
     public static function update_schema(): bool {
-        return self::create_table();
+        global $wpdb;
+
+        $result = self::create_table();
+
+        // Backfill last_date_ts for rows added before this column existed.
+        // STR_TO_DATE with '%d/%m/%y' parses dd/mm/yy; SUBSTRING_INDEX gets the
+        // last comma-separated date which represents the event's end date.
+        $table_name = self::get_table_name();
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- One-time migration, no user input.
+        $wpdb->query(
+            "UPDATE {$table_name}
+             SET last_date_ts = UNIX_TIMESTAMP(STR_TO_DATE(TRIM(SUBSTRING_INDEX(TRIM(date), ',', -1)), '%d/%m/%y'))
+             WHERE last_date_ts IS NULL"
+        );
+
+        return $result;
     }
 
     /**
@@ -112,18 +143,27 @@ class ACSAGMA_Database {
         }
 
         if (!empty($args['filter'])) {
-            $filter_parts = explode('-', sanitize_text_field($args['filter']));
-            if (!empty($filter_parts[0])) {
-                $filter_like = '%' . $wpdb->esc_like($filter_parts[0]) . '%';
-                $clauses[] = 'title LIKE %s';
-                $params[] = $filter_like;
+            $filter_data = json_decode($args['filter'], true);
+            if (is_array($filter_data) && isset($filter_data['t'], $filter_data['c'])) {
+                $clauses[] = 'title = %s AND categorie = %s';
+                $params[] = sanitize_text_field($filter_data['t']);
+                $params[] = sanitize_text_field($filter_data['c']);
             }
+        }
+
+        // Optional pre-filter: skip events whose last date ended before the given timestamp.
+        // Rows with last_date_ts = NULL (pre-migration data) are always included as a safe fallback.
+        if (isset($args['min_last_date_ts'])) {
+            $clauses[] = '(last_date_ts IS NULL OR last_date_ts >= %d)';
+            $params[] = (int) $args['min_last_date_ts'];
         }
 
         $params[] = (int) $args['per_page'];
         $params[] = (int) (($args['page'] - 1) * $args['per_page']);
 
         $clauses_sql = implode(' AND ', $clauses);
+        $orderby = self::sanitize_orderby($args['orderby']);
+        $order = self::sanitize_order($args['order']);
 
         /*
          * Table name is safe - comes from get_table_name() which uses $wpdb->prefix + constant.
@@ -136,7 +176,7 @@ class ACSAGMA_Database {
          */
         $results = $wpdb->get_results(
             $wpdb->prepare(
-                "SELECT * FROM {$table_name} WHERE {$clauses_sql} ORDER BY id DESC LIMIT %d OFFSET %d",
+                "SELECT * FROM {$table_name} WHERE {$clauses_sql} ORDER BY {$orderby} {$order} LIMIT %d OFFSET %d",
                 ...$params
             ),
             ARRAY_A
@@ -168,8 +208,17 @@ class ACSAGMA_Database {
 
         if (!empty($args['search'])) {
             $search = '%' . $wpdb->esc_like(sanitize_text_field($args['search'])) . '%';
-            $clauses[] = '(categorie LIKE %s OR title LIKE %s OR intro LIKE %s)';
-            $params = [$search, $search, $search];
+            $clauses[] = '(categorie LIKE %s OR title LIKE %s OR intro LIKE %s OR date LIKE %s)';
+            $params = [$search, $search, $search, $search];
+        }
+
+        if (!empty($args['filter'])) {
+            $filter_data = json_decode($args['filter'], true);
+            if (is_array($filter_data) && isset($filter_data['t'], $filter_data['c'])) {
+                $clauses[] = 'title = %s AND categorie = %s';
+                $params[] = sanitize_text_field($filter_data['t']);
+                $params[] = sanitize_text_field($filter_data['c']);
+            }
         }
 
         $where_sql = implode(' AND ', $clauses);
@@ -197,6 +246,26 @@ class ACSAGMA_Database {
         wp_cache_set($cache_key, $count, self::CACHE_GROUP, HOUR_IN_SECONDS);
 
         return $count;
+    }
+
+    /**
+     * Sanitize order by column against a whitelist.
+     */
+    private static function sanitize_orderby($orderby): string {
+        $orderby = sanitize_key((string) $orderby);
+
+        if (!in_array($orderby, self::SORTABLE_COLUMNS, true)) {
+            return 'id';
+        }
+
+        return $orderby;
+    }
+
+    /**
+     * Sanitize sort direction.
+     */
+    private static function sanitize_order($order): string {
+        return strtoupper((string) $order) === 'ASC' ? 'ASC' : 'DESC';
     }
 
     /**
@@ -350,6 +419,33 @@ class ACSAGMA_Database {
             }
         }
 
+        // Compute last_date_ts for efficient DB-level expiry filtering.
+        if (!empty($sanitized['date'])) {
+            $date_parts = explode(',', $sanitized['date']);
+            $last_ts = self::parse_last_date_timestamp(trim(end($date_parts)));
+            if (null !== $last_ts) {
+                $sanitized['last_date_ts'] = $last_ts;
+            }
+        }
+
         return $sanitized;
+    }
+
+    /**
+     * Parse the last date in a dd/mm/yy or dd/mm/yyyy string to a Unix timestamp.
+     *
+     * Returns null when the string cannot be parsed so callers can skip setting
+     * the column (the DB DEFAULT NULL then applies).
+     */
+    private static function parse_last_date_timestamp(string $date_str): ?int {
+        if (!preg_match('/^(\d{1,2})\/(\d{1,2})\/(\d{2,4})$/', $date_str, $m)) {
+            return null;
+        }
+        $year = (int) $m[3];
+        if ($year < 100) {
+            $year += 2000;
+        }
+        $ts = mktime(0, 0, 0, (int) $m[2], (int) $m[1], $year);
+        return $ts !== false ? $ts : null;
     }
 }

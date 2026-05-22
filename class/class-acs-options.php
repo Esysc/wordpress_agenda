@@ -76,9 +76,7 @@ class ACSAGMA_Options {
     }
 
     private function save_settings(): void {
-        if (!check_admin_referer('acsagma_agenda_settings_nonce')) {
-            wp_die(esc_html__('Security check failed', 'acs-agenda-manager'));
-        }
+        // Nonce is verified in render_settings_page() before this method is called.
 
         $old_page_name = get_option('acsagma_page', 'Agenda');
         $new_page_name = sanitize_text_field(wp_unslash($_POST['acsagma_page'] ?? 'Agenda'));
@@ -92,15 +90,17 @@ class ACSAGMA_Options {
         update_option('acsagma_delete_data_on_uninstall', $delete_data);
 
         if ($old_page_name !== $new_page_name) {
-            // Delete old page
+            // Prefer updating the existing page to avoid data loss and broken links.
             $old_page = ACSAGMA_Agenda_Manager::get_page_by_title($old_page_name);
-            if ($old_page) {
-                wp_delete_post($old_page->ID, true);
-            }
-
-            // Create new page
             $existing_page = ACSAGMA_Agenda_Manager::get_page_by_title($new_page_name);
-            if (!$existing_page) {
+
+            if ($old_page && (!$existing_page || (int) $existing_page->ID === (int) $old_page->ID)) {
+                wp_update_post([
+                    'ID' => $old_page->ID,
+                    'post_title' => $new_page_name,
+                    'post_name' => sanitize_title($new_page_name),
+                ]);
+            } elseif (!$existing_page) {
                 wp_insert_post([
                     'post_title' => $new_page_name,
                     'post_name' => sanitize_title($new_page_name),
