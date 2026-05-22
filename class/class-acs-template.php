@@ -17,16 +17,79 @@ class ACSAGMA_Template {
      */
     public static function render_agenda(array $events): string {
         $output = self::render_admin_link();
-        $output .= '<div class="container-agenda">';
+        $output .= self::render_agenda_controls();
+        $output .= '<div class="container-agenda" id="acs-agenda-list">';
 
         foreach ($events as $index => $event) {
             $output .= self::render_event_card($event, $index);
         }
 
         $output .= '</div>';
+        $output .= '<p id="acs-no-results" class="acs-no-results" hidden>'
+            . esc_html__('No events match your filters.', 'acs-agenda-manager')
+            . '</p>';
+        $output .= '<div id="acs-pagination" class="acs-pagination" aria-label="'
+            . esc_attr__('Agenda pagination', 'acs-agenda-manager')
+            . '"></div>';
         $output .= '<div id="postid"></div>';
 
         return $output;
+    }
+
+    /**
+     * Render frontend toolbar controls.
+     */
+    private static function render_agenda_controls(): string {
+        return sprintf(
+            '<div class="acs-agenda-toolbar" role="region" aria-label="%s">
+                <div class="acs-agenda-toolbar-grid">
+                    <label class="acs-filter-item">
+                        <span>%s</span>
+                        <input type="search" id="acs-filter-search" placeholder="%s" />
+                    </label>
+                    <label class="acs-filter-item">
+                        <span>%s</span>
+                        <select id="acs-filter-category">
+                            <option value="">%s</option>
+                        </select>
+                    </label>
+                    <label class="acs-filter-item">
+                        <span>%s</span>
+                        <select id="acs-filter-date">
+                            <option value="all">%s</option>
+                            <option value="today">%s</option>
+                            <option value="week">%s</option>
+                            <option value="month">%s</option>
+                        </select>
+                    </label>
+                    <label class="acs-filter-item">
+                        <span>%s</span>
+                        <select id="acs-sort-order">
+                            <option value="soonest">%s</option>
+                            <option value="latest">%s</option>
+                            <option value="title">%s</option>
+                        </select>
+                    </label>
+                    <button type="button" id="acs-compact-toggle" class="acs-compact-toggle" aria-pressed="false">%s</button>
+                </div>
+                <p id="acs-results-count" class="acs-results-count"></p>
+            </div>',
+            esc_attr__('Agenda filters and sorting', 'acs-agenda-manager'),
+            esc_html__('Search', 'acs-agenda-manager'),
+            esc_attr__('Search title or description', 'acs-agenda-manager'),
+            esc_html__('Category', 'acs-agenda-manager'),
+            esc_html__('All categories', 'acs-agenda-manager'),
+            esc_html__('Date', 'acs-agenda-manager'),
+            esc_html__('All dates', 'acs-agenda-manager'),
+            esc_html__('Today', 'acs-agenda-manager'),
+            esc_html__('This week', 'acs-agenda-manager'),
+            esc_html__('This month', 'acs-agenda-manager'),
+            esc_html__('Sort', 'acs-agenda-manager'),
+            esc_html__('Soonest first', 'acs-agenda-manager'),
+            esc_html__('Latest first', 'acs-agenda-manager'),
+            esc_html__('Title A-Z', 'acs-agenda-manager'),
+            esc_html__('Compact mode', 'acs-agenda-manager')
+        );
     }
 
     /**
@@ -52,8 +115,22 @@ class ACSAGMA_Template {
     private static function render_event_card(array $event, int $index): string {
         $post_id = url_to_postid($event['link']);
         $section_id = 'section-' . $index;
+        $first_date = $event['dates'][0] ?? '';
+        $parsed = !empty($first_date) ? ACSAGMA_Event::parse_date($first_date) : [];
+        $date_ts = (int) ($parsed['timestamp'] ?? 0);
+        $month_group = !empty($parsed)
+            ? sprintf('%s %d', $parsed['month_name'], $parsed['year'])
+            : '';
 
-        $output = '<div class="acsagenda">';
+        $output = sprintf(
+            '<div class="acsagenda" data-category="%s" data-title="%s" data-location="%s" data-intro="%s" data-date-ts="%d" data-month-group="%s">',
+            esc_attr((string) ($event['categorie'] ?? '')),
+            esc_attr((string) ($event['title'] ?? '')),
+            esc_attr((string) ($event['emplacement'] ?? '')),
+            esc_attr((string) ($event['intro'] ?? '')),
+            $date_ts,
+            esc_attr($month_group)
+        );
 
         // Left column - dates
         $output .= self::render_date_column($event);

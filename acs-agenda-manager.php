@@ -136,6 +136,16 @@ final class ACSAGMA_Agenda_Manager {
         wp_localize_script('acs-agenda-frontend', 'acsagmaAgenda', [
             'ajaxUrl' => admin_url('admin-ajax.php'),
             'nonce' => wp_create_nonce('acsagma_agenda_nonce'),
+            'fallbackImage' => ACSAGMA_AGENDA_PLUGIN_URL . 'css/images/Accept-icon.png',
+            'i18n' => [
+                'readMoreError' => __('Unable to load details. Please try again.', 'acs-agenda-manager'),
+                'noResults' => __('No events match your filters.', 'acs-agenda-manager'),
+                'resultsLabel' => __('Showing %1$d-%2$d of %3$d events', 'acs-agenda-manager'),
+                'compactOn' => __('Compact mode on', 'acs-agenda-manager'),
+                'compactOff' => __('Compact mode off', 'acs-agenda-manager'),
+                'prev' => __('Previous', 'acs-agenda-manager'),
+                'next' => __('Next', 'acs-agenda-manager'),
+            ],
         ]);
     }
 
