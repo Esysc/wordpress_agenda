@@ -14,13 +14,18 @@ async function globalSetup(config: FullConfig) {
     // Login to WordPress and save auth state
     console.log('🔐 Logging into WordPress admin...');
 
-    await page.goto(`${baseURL}/wp-login.php`);
+    await page.goto(`${baseURL}/wp-login.php`, { waitUntil: 'domcontentloaded' });
     await page.fill('#user_login', 'admin');
     await page.fill('#user_pass', 'admin');
     await page.click('#wp-submit');
 
-    // Wait for dashboard to load
-    await page.waitForURL('**/wp-admin/**', { timeout: 30000 });
+    // Wait for admin redirect by observing current URL instead of navigation events,
+    // which can be flaky with some local WordPress/docker setups.
+    await page.waitForFunction(
+      () => window.location.pathname.startsWith('/wp-admin/'),
+      { timeout: 30000 }
+    );
+    await page.waitForSelector('#wpadminbar', { timeout: 30000 });
 
     console.log('✅ Login successful');
 
