@@ -157,6 +157,19 @@ class ACSAGMA_Template {
             );
         }
 
+        $read_more_html = '';
+        if (self::should_show_read_more($post_id)) {
+            $read_more_html = sprintf(
+                '<button data-href="%s" class="readmore show" data-postid="%d" data-id="%s">
+                    %s <span class="dashicons dashicons-arrow-right-alt2"></span>
+                </button>',
+                esc_url($event['link']),
+                $post_id,
+                esc_attr($section_id),
+                esc_html__('Read more', 'acs-agenda-manager')
+            );
+        }
+
         return sprintf(
             '<div class="column-center" id="%s">
                 <div class="event-header">
@@ -166,20 +179,33 @@ class ACSAGMA_Template {
                 <div class="event-intro">
                     <p>%s</p>
                 </div>
-                <button data-href="%s" class="readmore show" data-postid="%d" data-id="%s">
-                    %s <span class="dashicons dashicons-arrow-right-alt2"></span>
-                </button>
+                %s
             </div>',
             esc_attr($section_id),
             $status_badge,
             $category_html,
             esc_html($event['title']),
             esc_html($event['intro']),
-            esc_url($event['link']),
-            $post_id,
-            esc_attr($section_id),
-            esc_html__('Read more', 'acs-agenda-manager')
+            $read_more_html
         );
+    }
+
+    /**
+     * Determine whether Read more should be displayed.
+     */
+    private static function should_show_read_more(int $post_id): bool {
+        if ($post_id <= 0) {
+            return false;
+        }
+
+        $post = get_post($post_id);
+        if (!$post instanceof WP_Post) {
+            return false;
+        }
+
+        $content_text = trim(wp_strip_all_tags(strip_shortcodes((string) $post->post_content)));
+
+        return $content_text !== '';
     }
 
     /**

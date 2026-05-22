@@ -182,6 +182,46 @@ test.describe('Frontend Agenda Display', () => {
     }
   });
 
+  test('should hide Read more when there is no additional content', async ({ page }) => {
+    // Create an event without a link/extra content source
+    await page.goto('/wp-admin/admin.php?page=acsagma-agenda');
+    await page.waitForLoadState('networkidle');
+
+    const eventTitle = `No Details ${Date.now()}`;
+
+    await page.click('#acs-add-event');
+    await page.waitForSelector('.ui-dialog:has(#acs-event-dialog)', { state: 'visible' });
+
+    await page.fill('#event-title', eventTitle);
+    await page.fill('#event-categorie', 'UX Test');
+
+    await page.evaluate(() => {
+      const input = document.getElementById('event-date') as HTMLInputElement;
+      if (input) {
+        input.readOnly = false;
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        const day = String(tomorrow.getDate()).padStart(2, '0');
+        const month = String(tomorrow.getMonth() + 1).padStart(2, '0');
+        const year = String(tomorrow.getFullYear()).slice(-2);
+        input.value = `${day}/${month}/${year}`;
+      }
+    });
+
+    const submitButton = page.locator('#acs-event-dialog').locator('..').locator('.ui-dialog-buttonset button').first();
+    await submitButton.click();
+    await page.waitForLoadState('networkidle');
+    await page.waitForTimeout(1000);
+
+    // Validate frontend rendering for this event
+    const agendaUrl = await getAgendaPageUrl(page);
+    await page.goto(agendaUrl, { waitUntil: 'networkidle' });
+
+    const eventCard = page.locator('.column-center').filter({ hasText: eventTitle }).first();
+    await expect(eventCard).toBeVisible({ timeout: 10000 });
+    await expect(eventCard.locator('.readmore.show')).toHaveCount(0);
+  });
+
   test('should display events in chronological order', async ({ page }) => {
     const agendaUrl = await getAgendaPageUrl(page);
     await page.goto(agendaUrl, { waitUntil: 'networkidle' });
