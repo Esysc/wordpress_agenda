@@ -339,6 +339,9 @@
 
         /**
          * Render pagination buttons.
+         *
+         * Uses a windowed layout (first, current±1, last, with ellipses) so that
+         * the number of DOM nodes stays constant regardless of total page count.
          */
         renderPagination: function (totalPages) {
             const agendaConfig = window.acsagmaAgenda || window.acsAgenda || {};
@@ -357,17 +360,48 @@
                 return;
             }
 
-            const prevDisabled = this.state.page <= 1 ? ' disabled' : '';
-            const nextDisabled = this.state.page >= totalPages ? ' disabled' : '';
+            const currentPage = this.state.page;
+            const prevDisabled = currentPage <= 1 ? ' disabled' : '';
+            const nextDisabled = currentPage >= totalPages ? ' disabled' : '';
 
-            $pagination.append('<button type="button" class="acs-page-link acs-page-prev" data-page="' + (this.state.page - 1) + '"' + prevDisabled + '>' + prevLabel + '</button>');
+            $pagination.append('<button type="button" class="acs-page-link acs-page-prev" data-page="' + (currentPage - 1) + '"' + prevDisabled + '>' + prevLabel + '</button>');
 
-            for (let i = 1; i <= totalPages; i++) {
-                const activeClass = i === this.state.page ? ' is-active' : '';
-                $pagination.append('<button type="button" class="acs-page-link acs-page-number' + activeClass + '" data-page="' + i + '">' + i + '</button>');
+            // Build a windowed page list: always show page 1, page totalPages, and
+            // currentPage±1.  Insert ellipsis spans where there are hidden pages.
+            const delta = 1;
+            const rangeStart = Math.max(2, currentPage - delta);
+            const rangeEnd   = Math.min(totalPages - 1, currentPage + delta);
+            const pages = [1];
+
+            if (rangeStart > 3) {
+                pages.push(null); // ellipsis
+            } else if (rangeStart === 3) {
+                pages.push(2);   // only one page hidden — show it directly
             }
 
-            $pagination.append('<button type="button" class="acs-page-link acs-page-next" data-page="' + (this.state.page + 1) + '"' + nextDisabled + '>' + nextLabel + '</button>');
+            for (let i = rangeStart; i <= rangeEnd; i++) {
+                pages.push(i);
+            }
+
+            if (rangeEnd < totalPages - 2) {
+                pages.push(null); // ellipsis
+            } else if (rangeEnd === totalPages - 2) {
+                pages.push(totalPages - 1); // only one page hidden — show it directly
+            }
+
+            pages.push(totalPages);
+
+            pages.forEach(function (page) {
+                if (page === null) {
+                    $pagination.append($('<span class="acs-page-ellipsis" aria-hidden="true">\u2026</span>'));
+                } else {
+                    const activeClass  = page === currentPage ? ' is-active' : '';
+                    const ariaCurrent  = page === currentPage ? ' aria-current="page"' : '';
+                    $pagination.append('<button type="button" class="acs-page-link acs-page-number' + activeClass + '" data-page="' + page + '"' + ariaCurrent + '>' + page + '</button>');
+                }
+            });
+
+            $pagination.append('<button type="button" class="acs-page-link acs-page-next" data-page="' + (currentPage + 1) + '"' + nextDisabled + '>' + nextLabel + '</button>');
         },
 
         /**

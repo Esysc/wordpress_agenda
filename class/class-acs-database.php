@@ -61,11 +61,13 @@ class ACSAGMA_Database {
             account TINYINT(1) DEFAULT 1,
             candopartial TINYINT(1) DEFAULT 0,
             redirect VARCHAR(255) DEFAULT NULL,
+            last_date_ts INT DEFAULT NULL,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
             PRIMARY KEY (id),
             INDEX idx_date (date),
-            INDEX idx_categorie (categorie)
+            INDEX idx_categorie (categorie),
+            INDEX idx_last_date_ts (last_date_ts)
         ) {$charset_collate};";
 
         require_once ABSPATH . 'wp-admin/includes/upgrade.php';
@@ -78,7 +80,22 @@ class ACSAGMA_Database {
      * Update database schema for plugin updates
      */
     public static function update_schema(): bool {
-        return self::create_table();
+        global $wpdb;
+
+        $result = self::create_table();
+
+        // Backfill last_date_ts for rows added before this column existed.
+        // STR_TO_DATE with '%d/%m/%y' parses dd/mm/yy; SUBSTRING_INDEX gets the
+        // last comma-separated date which represents the event's end date.
+        $table_name = self::get_table_name();
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- One-time migration, no user input.
+        $wpdb->query(
+            "UPDATE {$table_name}
+             SET last_date_ts = UNIX_TIMESTAMP(STR_TO_DATE(TRIM(SUBSTRING_INDEX(TRIM(date), ',', -1)), '%d/%m/%y'))
+             WHERE last_date_ts IS NULL"
+        );
+
+        return $result;
     }
 
     /**
@@ -132,6 +149,13 @@ class ACSAGMA_Database {
                 $params[] = sanitize_text_field($filter_data['t']);
                 $params[] = sanitize_text_field($filter_data['c']);
             }
+        }
+
+        // Optional pre-filter: skip events whose last date ended before the given timestamp.
+        // Rows with last_date_ts = NULL (pre-migration data) are always included as a safe fallback.
+        if (isset($args['min_last_date_ts'])) {
+            $clauses[] = '(last_date_ts IS NULL OR last_date_ts >= %d)';
+            $params[] = (int) $args['min_last_date_ts'];
         }
 
         $params[] = (int) $args['per_page'];
@@ -395,6 +419,33 @@ class ACSAGMA_Database {
             }
         }
 
+        // Compute last_date_ts for efficient DB-level expiry filtering.
+        if (!empty($sanitized['date'])) {
+            $date_parts = explode(',', $sanitized['date']);
+            $last_ts = self::parse_last_date_timestamp(trim(end($date_parts)));
+            if (null !== $last_ts) {
+                $sanitized['last_date_ts'] = $last_ts;
+            }
+        }
+
         return $sanitized;
+    }
+
+    /**
+     * Parse the last date in a dd/mm/yy or dd/mm/yyyy string to a Unix timestamp.
+     *
+     * Returns null when the string cannot be parsed so callers can skip setting
+     * the column (the DB DEFAULT NULL then applies).
+     */
+    private static function parse_last_date_timestamp(string $date_str): ?int {
+        if (!preg_match('/^(\d{1,2})\/(\d{1,2})\/(\d{2,4})$/', $date_str, $m)) {
+            return null;
+        }
+        $year = (int) $m[3];
+        if ($year < 100) {
+            $year += 2000;
+        }
+        $ts = mktime(0, 0, 0, (int) $m[2], (int) $m[1], $year);
+        return $ts !== false ? $ts : null;
     }
 }

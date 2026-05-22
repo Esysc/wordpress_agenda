@@ -28,7 +28,7 @@ class ACSAGMA_Template {
         $output .= '<p id="acs-no-results" class="acs-no-results" hidden>'
             . esc_html__('No events match your filters.', 'acs-agenda-manager')
             . '</p>';
-        $output .= '<div id="acs-pagination" class="acs-pagination" aria-label="'
+        $output .= '<div id="acs-pagination" class="acs-pagination" role="navigation" aria-label="'
             . esc_attr__('Agenda pagination', 'acs-agenda-manager')
             . '"></div>';
         $output .= '<div id="postid"></div>';
@@ -237,8 +237,8 @@ class ACSAGMA_Template {
         $read_more_html = '';
         if (self::should_show_read_more($post_id)) {
             $read_more_html = sprintf(
-                '<button data-href="%s" class="readmore show" data-postid="%d" data-id="%s">
-                    %s <span class="dashicons dashicons-arrow-right-alt2"></span>
+                '<button type="button" data-href="%s" class="readmore show" data-postid="%d" data-id="%s">
+                    %s <span class="dashicons dashicons-arrow-right-alt2" aria-hidden="true" focusable="false"></span>
                 </button>',
                 esc_url($event['link']),
                 $post_id,

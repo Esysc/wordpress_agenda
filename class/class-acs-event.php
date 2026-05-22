@@ -25,13 +25,18 @@ class ACSAGMA_Event {
      * Get upcoming events (not expired)
      */
     public static function get_upcoming_events(): array {
+        $now = time();
+
+        // Pre-filter at the DB level: exclude events whose last date ended more
+        // than 24 hours ago. Rows with last_date_ts = NULL (inserted before the
+        // 3.5.0 schema migration) are always included as a safe fallback and
+        // will be evaluated by process_event() below.
         $all_events = ACSAGMA_Database::get_events([
             'per_page' => 9999,
             'orderby' => 'date',
             'order' => 'ASC',
+            'min_last_date_ts' => $now - DAY_IN_SECONDS,
         ]);
-
-        $now = time();
         $events = [];
 
         foreach ($all_events as $event) {
