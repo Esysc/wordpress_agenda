@@ -10,6 +10,21 @@ echo ""
 echo "[*] Waiting for WordPress to be ready..."
 sleep 10
 
+# Wait for database connectivity from inside wp-cli container.
+echo "[*] Waiting for database connection..."
+DB_ATTEMPTS=0
+DB_MAX_ATTEMPTS=30
+until timeout 8 wp db query "SELECT 1;" --skip-column-names >/dev/null 2>&1; do
+    DB_ATTEMPTS=$((DB_ATTEMPTS + 1))
+    echo "   [${DB_ATTEMPTS}/${DB_MAX_ATTEMPTS}] database not ready yet..."
+    if [ "$DB_ATTEMPTS" -ge "$DB_MAX_ATTEMPTS" ]; then
+        echo "[ERROR] Database did not become ready in time"
+        exit 1
+    fi
+    sleep 2
+done
+echo "[OK] Database connection established"
+
 # Check if WordPress is already installed
 if wp core is-installed 2>/dev/null; then
     echo "[OK] WordPress is already installed"

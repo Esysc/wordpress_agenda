@@ -36,8 +36,8 @@ This directory contains a Docker-based testing environment for the ACS Agenda Ma
 
 ## What Gets Set Up Automatically
 
-1. WordPress 6.9 with PHP 8.3
-2. MySQL 8.4 database
+1. WordPress 7.0 with PHP 8.3
+2. MariaDB 11.4 database
 3. WordPress configured and installed
 4. ACS Agenda Manager plugin activated
 5. Sample test events created

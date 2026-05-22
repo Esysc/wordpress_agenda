@@ -3,7 +3,7 @@ Contributors: masteracs, esysc
 Donate link: https://www.paypal.com/donate?business=KG9SDHM7VUP6Y&currency_code=CHF
 Tags: agenda, events, calendar, schedule, workshop
 Requires at least: 6.2
-Tested up to: 6.9
+Tested up to: 7.0
 Stable tag: 3.4.0
 Requires PHP: 7.4
 License: GPLv2 or later
