@@ -76,9 +76,7 @@ class ACSAGMA_Options {
     }
 
     private function save_settings(): void {
-        if (!check_admin_referer('acsagma_agenda_settings_nonce')) {
-            wp_die(esc_html__('Security check failed', 'acs-agenda-manager'));
-        }
+        // Nonce is verified in render_settings_page() before this method is called.
 
         $old_page_name = get_option('acsagma_page', 'Agenda');
         $new_page_name = sanitize_text_field(wp_unslash($_POST['acsagma_page'] ?? 'Agenda'));
