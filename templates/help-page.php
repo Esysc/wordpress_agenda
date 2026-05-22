@@ -137,7 +137,7 @@ $acsagma_agenda_page = get_option('acsagma_page', 'Agenda');
                 <h2><?php esc_html_e('Managing Events', 'acs-agenda-manager'); ?></h2>
 
                 <h3><?php esc_html_e('Editing Events', 'acs-agenda-manager'); ?></h3>
-                <p><?php esc_html_e('To edit an event, click on any field in the events list. A dialog will open allowing you to modify the event details. Click Update to save your changes.', 'acs-agenda-manager'); ?></p>
+                <p><?php esc_html_e('To edit an event, click the Edit action in the event row. A dialog will open allowing you to modify the event details. Click Update to save your changes.', 'acs-agenda-manager'); ?></p>
 
                 <h3><?php esc_html_e('Deleting Events', 'acs-agenda-manager'); ?></h3>
                 <p><?php esc_html_e('To delete a single event, hover over the event row and click the Delete link. To delete multiple events, select them using the checkboxes and choose "Delete" from the Bulk Actions dropdown.', 'acs-agenda-manager'); ?></p>

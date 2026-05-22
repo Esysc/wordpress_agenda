@@ -661,10 +661,10 @@ msgstr ""
 "選択してください。"
 
 msgid ""
-"To edit an event, click on any field in the events list. A dialog will open "
+"To edit an event, click the Edit action in the event row. A dialog will open "
 "allowing you to modify the event details. Click Update to save your changes."
 msgstr ""
-"イベントを編集するには、イベントリストの任意のフィールドをクリックしてください。イベント詳細を"
+"イベントを編集するには、イベント行の「編集」アクションをクリックしてください。イベント詳細を"
 "変更できるダイアログが開きます。変更を保存するには更新をクリックしてください。"
 
 msgid "Today"
@@ -744,11 +744,11 @@ msgid "Yes - Required"
 msgstr "はい - 必須"
 
 msgid ""
-"You can change the page name below. The old page will be deleted and a new "
-"one created with the shortcode [acsagma_agenda]."
+"You can change the page name below. The plugin will try to rename the "
+"existing agenda page to preserve your content and links."
 msgstr ""
-"以下でページ名を変更できます。古いページは削除され、ショートコード [acsagma_agenda] "
-"を含む新しいページが作成されます。"
+"以下でページ名を変更できます。プラグインは既存のアジェンダページの名前変更を試み、"
+"コンテンツとリンクを保持します。"
 
 msgid ""
 "You can enable Google Places Autocomplete for the Location field to help "
@@ -763,6 +763,9 @@ msgstr "アンインストール時にデータを削除"
 msgid "Remove all plugin data (events, settings, database table) when the plugin is deleted"
 msgstr "プラグイン削除時にすべてのプラグインデータ（イベント、設定、データベーステーブル）を削除する"
 
+msgid "Remove image"
+msgstr "画像を削除"
+
 msgid "Warning: This will permanently delete all your events and settings!"
 msgstr "警告：これによりすべてのイベントと設定が完全に削除されます！"
 
@@ -771,6 +774,9 @@ msgstr "詳細を読み込めませんでした。もう一度お試しくださ
 
 msgid "No events match your filters."
 msgstr "フィルターに一致するイベントはありません。"
+
+msgid "No page link"
+msgstr "ページリンクなし"
 
 #, php-format
 msgid "Showing %1$d-%2$d of %3$d events"

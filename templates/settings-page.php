@@ -31,7 +31,7 @@ defined('ABSPATH') || exit;
             <?php esc_html_e('This plugin creates a simple agenda page where you can display events. The default page is "Agenda" and is created upon activation.', 'acs-agenda-manager'); ?>
         </p>
         <p>
-            <?php esc_html_e('You can change the page name below. The old page will be deleted and a new one created with the shortcode [acsagma_agenda].', 'acs-agenda-manager'); ?>
+            <?php esc_html_e('You can change the page name below. The plugin will try to rename the existing agenda page to preserve your content and links.', 'acs-agenda-manager'); ?>
         </p>
         <p>
             <?php esc_html_e('For consistent styling across themes, this plugin uses its own template. Tested with default themes and others.', 'acs-agenda-manager'); ?>

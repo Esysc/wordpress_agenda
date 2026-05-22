@@ -578,7 +578,7 @@ msgstr ""
 
 #: templates/help-page.php:140
 msgid ""
-"To edit an event, click on any field in the events list. A dialog will open "
+"To edit an event, click the Edit action in the event row. A dialog will open "
 "allowing you to modify the event details. Click Update to save your changes."
 msgstr ""
 
@@ -818,8 +818,8 @@ msgstr ""
 
 #: templates/settings-page.php:34
 msgid ""
-"You can change the page name below. The old page will be deleted and a new "
-"one created with the shortcode [acsagma_agenda]."
+"You can change the page name below. The plugin will try to rename the "
+"existing agenda page to preserve your content and links."
 msgstr ""
 
 #: templates/settings-page.php:37
@@ -1034,6 +1034,10 @@ msgstr ""
 msgid "Select"
 msgstr ""
 
+#: templates/admin-page.php:234
+msgid "Remove image"
+msgstr ""
+
 #: templates/admin-page.php:246
 msgid "Links & Pricing"
 msgstr ""
@@ -1044,6 +1048,10 @@ msgstr ""
 
 #: templates/admin-page.php:255
 msgid "Link to event details page"
+msgstr ""
+
+#: class/class-acs-admin.php:96
+msgid "No page link"
 msgstr ""
 
 #: templates/admin-page.php:262

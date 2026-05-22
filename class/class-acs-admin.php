@@ -107,13 +107,26 @@ class ACSAGMA_Agenda_List_Table extends WP_List_Table {
                 );
 
             case 'link':
+                $page_link = trim((string) ($item[$column_name] ?? ''));
+                $valid_page_link = esc_url_raw($page_link);
+
+                if ($valid_page_link === '') {
+                    return sprintf(
+                        '<span style="max-width:100%%" class="%s" %s>%s</span><span class="acs-no-link">%s</span>',
+                        esc_attr($item_class),
+                        $name_attr,
+                        esc_html($page_link),
+                        esc_html__('No page link', 'acs-agenda-manager')
+                    );
+                }
+
                 return sprintf(
                     '<span style="max-width:100%%" class="%s" %s>%s</span>
-                    <a href="%s" target="_blank" class="button4 info">%s</a>',
+                    <a href="%s" target="_blank" rel="noopener noreferrer" class="button4 info">%s</a>',
                     esc_attr($item_class),
                     $name_attr,
-                    esc_html($item[$column_name]),
-                    esc_url($item[$column_name]),
+                    esc_html($page_link),
+                    esc_url($valid_page_link),
                     esc_html__('Open page', 'acs-agenda-manager')
                 );
 

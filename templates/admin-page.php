@@ -49,13 +49,13 @@ defined('ABSPATH') || exit;
     <div class="tablenav top">
         <div class="alignleft actions">
             <button type="button" class="button button-primary" id="acs-add-event">
-                <span class="dashicons dashicons-plus-alt" style="vertical-align: middle;"></span>
+                <span class="dashicons dashicons-plus-alt" style="vertical-align: middle;" aria-hidden="true"></span>
                 <?php esc_html_e('Add New Event', 'acs-agenda-manager'); ?>
             </button>
         </div>
         <div class="alignright">
             <button type="button" class="button" id="acs-show-help">
-                <span class="dashicons dashicons-editor-help" style="vertical-align: middle;"></span>
+                <span class="dashicons dashicons-editor-help" style="vertical-align: middle;" aria-hidden="true"></span>
                 <?php esc_html_e('Help', 'acs-agenda-manager'); ?>
             </button>
         </div>
@@ -119,7 +119,7 @@ defined('ABSPATH') || exit;
 <!-- Delete Confirmation Dialog -->
 <div id="acs-delete-dialog" style="display: none;" title="<?php esc_attr_e('Confirm Delete', 'acs-agenda-manager'); ?>">
     <p>
-        <span class="dashicons dashicons-warning" style="color: #d63638; font-size: 24px; float: left; margin-right: 10px;"></span>
+        <span class="dashicons dashicons-warning" style="color: #d63638; font-size: 24px; float: left; margin-right: 10px;" aria-hidden="true"></span>
         <?php esc_html_e('Are you sure you want to delete this event?', 'acs-agenda-manager'); ?>
     </p>
     <p><strong id="acs-delete-event-name"></strong></p>
@@ -136,7 +136,7 @@ defined('ABSPATH') || exit;
         <!-- Basic Info Section -->
         <div class="acs-form-section">
             <h3 class="acs-form-section-title">
-                <span class="dashicons dashicons-info-outline"></span>
+                <span class="dashicons dashicons-info-outline" aria-hidden="true"></span>
                 <?php esc_html_e('Basic Information', 'acs-agenda-manager'); ?>
             </h3>
 
@@ -150,7 +150,7 @@ defined('ABSPATH') || exit;
                 </div>
                 <div class="acs-form-field acs-form-field-half">
                     <label for="event-emplacement" class="acs-form-label">
-                        <span class="dashicons dashicons-location"></span>
+                        <span class="dashicons dashicons-location" aria-hidden="true"></span>
                         <?php esc_html_e('Location', 'acs-agenda-manager'); ?>
                     </label>
                     <input type="text" id="event-emplacement" name="emplacement" class="acs-form-input" placeholder="<?php esc_attr_e('e.g., Conference Room A', 'acs-agenda-manager'); ?>" />
@@ -167,7 +167,7 @@ defined('ABSPATH') || exit;
 
             <div class="acs-form-field">
                 <label for="event-intro" class="acs-form-label">
-                    <span class="dashicons dashicons-editor-paragraph"></span>
+                    <span class="dashicons dashicons-editor-paragraph" aria-hidden="true"></span>
                     <?php esc_html_e('Description', 'acs-agenda-manager'); ?>
                 </label>
                 <textarea id="event-intro" name="intro" rows="3" class="acs-form-textarea" placeholder="<?php esc_attr_e('A brief description of the event...', 'acs-agenda-manager'); ?>"></textarea>
@@ -177,7 +177,7 @@ defined('ABSPATH') || exit;
         <!-- Schedule Section -->
         <div class="acs-form-section">
             <h3 class="acs-form-section-title">
-                <span class="dashicons dashicons-calendar-alt"></span>
+                <span class="dashicons dashicons-calendar-alt" aria-hidden="true"></span>
                 <?php esc_html_e('Schedule', 'acs-agenda-manager'); ?>
             </h3>
 
@@ -190,7 +190,7 @@ defined('ABSPATH') || exit;
                     <div id="acs-datepicker-container"></div>
                     <input type="text" id="event-date" name="date" class="acs-form-input" required placeholder="<?php esc_attr_e('Click calendar to select dates', 'acs-agenda-manager'); ?>" />
                     <button type="button" class="button button-secondary acs-open-calendar">
-                        <span class="dashicons dashicons-calendar"></span>
+                        <span class="dashicons dashicons-calendar" aria-hidden="true"></span>
                         <?php esc_html_e('Calendar', 'acs-agenda-manager'); ?>
                     </button>
                 </div>
@@ -212,7 +212,7 @@ defined('ABSPATH') || exit;
         <!-- Media Section -->
         <div class="acs-form-section">
             <h3 class="acs-form-section-title">
-                <span class="dashicons dashicons-format-image"></span>
+                <span class="dashicons dashicons-format-image" aria-hidden="true"></span>
                 <?php esc_html_e('Media', 'acs-agenda-manager'); ?>
             </h3>
 
@@ -222,17 +222,17 @@ defined('ABSPATH') || exit;
                 </label>
                 <div class="acs-image-upload-wrapper">
                     <div class="acs-image-preview" id="event-image-preview">
-                        <span class="dashicons dashicons-format-image"></span>
+                        <span class="dashicons dashicons-format-image" aria-hidden="true"></span>
                         <span class="acs-image-preview-text"><?php esc_html_e('No image selected', 'acs-agenda-manager'); ?></span>
                     </div>
                     <div class="acs-image-input-group">
                         <input type="text" id="event-image" name="image" class="acs-form-input" placeholder="<?php esc_attr_e('Image URL or select from library', 'acs-agenda-manager'); ?>" />
                         <button type="button" class="button button-secondary acs-upload-image">
-                            <span class="dashicons dashicons-upload"></span>
+                            <span class="dashicons dashicons-upload" aria-hidden="true"></span>
                             <?php esc_html_e('Select', 'acs-agenda-manager'); ?>
                         </button>
-                        <button type="button" class="button acs-remove-image" style="display:none;">
-                            <span class="dashicons dashicons-no"></span>
+                        <button type="button" class="button acs-remove-image" style="display:none;" aria-label="<?php esc_attr_e('Remove image', 'acs-agenda-manager'); ?>" title="<?php esc_attr_e('Remove image', 'acs-agenda-manager'); ?>">
+                            <span class="dashicons dashicons-no" aria-hidden="true"></span>
                         </button>
                     </div>
                 </div>
@@ -242,7 +242,7 @@ defined('ABSPATH') || exit;
         <!-- Links & Pricing Section -->
         <div class="acs-form-section">
             <h3 class="acs-form-section-title">
-                <span class="dashicons dashicons-admin-links"></span>
+                <span class="dashicons dashicons-admin-links" aria-hidden="true"></span>
                 <?php esc_html_e('Links & Pricing', 'acs-agenda-manager'); ?>
             </h3>
 
@@ -266,7 +266,7 @@ defined('ABSPATH') || exit;
             <div class="acs-form-row">
                 <div class="acs-form-field acs-form-field-half">
                     <label for="event-price" class="acs-form-label">
-                        <span class="dashicons dashicons-money-alt"></span>
+                        <span class="dashicons dashicons-money-alt" aria-hidden="true"></span>
                         <?php esc_html_e('Price', 'acs-agenda-manager'); ?>
                     </label>
                     <input type="text" id="event-price" name="price" class="acs-form-input" placeholder="<?php esc_attr_e('e.g., CHF 150.-', 'acs-agenda-manager'); ?>" />
