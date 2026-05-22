@@ -1,6 +1,6 @@
 services:
   wordpress:
-    image: wordpress:6.9-php8.3-apache
+    image: wordpress:7.0-php8.3-apache
     container_name: acs_agenda_wordpress
     restart: unless-stopped
     ports:
@@ -23,17 +23,16 @@ services:
       db:
         condition: service_healthy
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost/wp-admin/install.php"]
+      test: ["CMD", "curl", "-f", "http://localhost/"]
       interval: 10s
-      timeout: 5s
-      retries: 5
-      start_period: 30s
+      timeout: 10s
+      retries: 12
+      start_period: 60s
 
   db:
-    image: mysql:9.7
+    image: mariadb:11.4
     container_name: acs_agenda_db
     restart: unless-stopped
-    command: --mysql-native-password=ON --authentication-policy=mysql_native_password
     environment:
       MYSQL_DATABASE: wordpress
       MYSQL_USER: wordpress
@@ -42,7 +41,7 @@ services:
     volumes:
       - db_data:/var/lib/mysql
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-prootpassword"]
+      test: ["CMD", "mariadb-admin", "ping", "-h", "localhost", "-uroot", "-prootpassword"]
       interval: 5s
       timeout: 5s
       retries: 10
