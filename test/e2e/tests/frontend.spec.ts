@@ -1,6 +1,7 @@
+import type { Page } from '@playwright/test';
 import { test, expect, getAgendaPageUrl } from './fixtures';
 
-async function setTomorrowDate(page: any) {
+async function setTomorrowDate(page: Page) {
   await page.evaluate(() => {
     const input = document.getElementById('event-date') as HTMLInputElement;
     if (input) {
@@ -15,7 +16,19 @@ async function setTomorrowDate(page: any) {
   });
 }
 
-async function createEvent(page: any, data: { title: string; category: string; intro?: string; image?: string; link?: string; }) {
+async function submitEventDialog(page: Page) {
+  const dialog = page.locator('.ui-dialog:has(#acs-event-dialog)');
+  const submitButton = dialog.locator('.ui-dialog-buttonset button').first();
+
+  await Promise.all([
+    page.waitForURL(/page=acsagma-agenda.*(?:created|updated)=1/),
+    submitButton.click(),
+  ]);
+
+  await expect(page.locator('.notice.notice-success')).toBeVisible();
+}
+
+async function createEvent(page: Page, data: { title: string; category: string; intro?: string; image?: string; link?: string; }) {
   await page.goto('/wp-admin/admin.php?page=acsagma-agenda');
   await page.waitForLoadState('networkidle');
   await page.click('#acs-add-event');
@@ -34,10 +47,7 @@ async function createEvent(page: any, data: { title: string; category: string; i
 
   await setTomorrowDate(page);
 
-  const submitButton = page.locator('#acs-event-dialog').locator('..').locator('.ui-dialog-buttonset button').first();
-  await submitButton.click();
-  await page.waitForLoadState('networkidle');
-  await page.waitForTimeout(700);
+  await submitEventDialog(page);
 }
 
 test.describe('Frontend Agenda Display', () => {
@@ -69,35 +79,17 @@ test.describe('Frontend Agenda Display', () => {
     // Fill the form using IDs inside the dialog
     await page.fill('#event-title', eventTitle);
     await page.fill('#event-categorie', 'Frontend Test');
-    // Set date via JavaScript since field is readonly - use tomorrow's date
-    await page.evaluate(() => {
-      const input = document.getElementById('event-date') as HTMLInputElement;
-      if (input) {
-        input.readOnly = false;
-        const tomorrow = new Date();
-        tomorrow.setDate(tomorrow.getDate() + 1);
-        const day = String(tomorrow.getDate()).padStart(2, '0');
-        const month = String(tomorrow.getMonth() + 1).padStart(2, '0');
-        const year = String(tomorrow.getFullYear()).slice(-2);
-        input.value = `${day}/${month}/${year}`;
-      }
-    });
+    await setTomorrowDate(page);
     await page.fill('#event-intro', 'Test event for frontend display');
 
-    // Click the submit button in jQuery UI dialog
-    const submitButton = page.locator('#acs-event-dialog').locator('..').locator('.ui-dialog-buttonset button').first();
-    await submitButton.click();
-    // Wait for page reload (the JS does location.reload() on success)
-    await page.waitForLoadState('networkidle');
-    // Give time for any background processes
-    await page.waitForTimeout(1000);
+    await submitEventDialog(page);
 
     // Now check the frontend
     const agendaUrl = await getAgendaPageUrl(page);
     await page.goto(agendaUrl, { waitUntil: 'networkidle' });
 
     // The event should be visible on the frontend
-    const eventElement = page.locator(`text=${eventTitle}`);
+    const eventElement = page.locator('#acs-agenda-list .acsagenda:visible .event-title', { hasText: eventTitle }).first();
     await expect(eventElement).toBeVisible({ timeout: 10000 });
   });
 
@@ -134,30 +126,15 @@ test.describe('Frontend Agenda Display', () => {
     await page.fill('#event-categorie', 'Frontend Test');
     await page.fill('#event-image', localImageUrl);
 
-    await page.evaluate(() => {
-      const input = document.getElementById('event-date') as HTMLInputElement;
-      if (input) {
-        input.readOnly = false;
-        const tomorrow = new Date();
-        tomorrow.setDate(tomorrow.getDate() + 1);
-        const day = String(tomorrow.getDate()).padStart(2, '0');
-        const month = String(tomorrow.getMonth() + 1).padStart(2, '0');
-        const year = String(tomorrow.getFullYear()).slice(-2);
-        input.value = `${day}/${month}/${year}`;
-      }
-    });
-
-    const submitButton = page.locator('#acs-event-dialog').locator('..').locator('.ui-dialog-buttonset button').first();
-    await submitButton.click();
-    await page.waitForLoadState('networkidle');
-    await page.waitForTimeout(1000);
+    await setTomorrowDate(page);
+    await submitEventDialog(page);
 
     // Check frontend
     const agendaUrl = await getAgendaPageUrl(page);
     await page.goto(agendaUrl, { waitUntil: 'networkidle' });
 
     // Event should be visible
-    const eventElement = page.locator(`text=${eventTitle}`);
+    const eventElement = page.locator('#acs-agenda-list .acsagenda:visible .event-title', { hasText: eventTitle }).first();
     await expect(eventElement).toBeVisible({ timeout: 10000 });
   });
 
@@ -177,23 +154,8 @@ test.describe('Frontend Agenda Display', () => {
     await page.fill('#event-categorie', 'Price Test');  // Category is required
     await page.fill('#event-price', price);
 
-    await page.evaluate(() => {
-      const input = document.getElementById('event-date') as HTMLInputElement;
-      if (input) {
-        input.readOnly = false;
-        const tomorrow = new Date();
-        tomorrow.setDate(tomorrow.getDate() + 1);
-        const day = String(tomorrow.getDate()).padStart(2, '0');
-        const month = String(tomorrow.getMonth() + 1).padStart(2, '0');
-        const year = String(tomorrow.getFullYear()).slice(-2);
-        input.value = `${day}/${month}/${year}`;
-      }
-    });
-
-    const submitButton = page.locator('#acs-event-dialog').locator('..').locator('.ui-dialog-buttonset button').first();
-    await submitButton.click();
-    await page.waitForLoadState('networkidle');
-    await page.waitForTimeout(1000);
+    await setTomorrowDate(page);
+    await submitEventDialog(page);
 
     // Check frontend
     const agendaUrl = await getAgendaPageUrl(page);
@@ -223,23 +185,8 @@ test.describe('Frontend Agenda Display', () => {
     await page.fill('#event-categorie', 'UX Test');
     await page.fill('#event-link', detailsLink);
 
-    await page.evaluate(() => {
-      const input = document.getElementById('event-date') as HTMLInputElement;
-      if (input) {
-        input.readOnly = false;
-        const tomorrow = new Date();
-        tomorrow.setDate(tomorrow.getDate() + 1);
-        const day = String(tomorrow.getDate()).padStart(2, '0');
-        const month = String(tomorrow.getMonth() + 1).padStart(2, '0');
-        const year = String(tomorrow.getFullYear()).slice(-2);
-        input.value = `${day}/${month}/${year}`;
-      }
-    });
-
-    const submitButton = page.locator('#acs-event-dialog').locator('..').locator('.ui-dialog-buttonset button').first();
-    await submitButton.click();
-    await page.waitForLoadState('networkidle');
-    await page.waitForTimeout(1000);
+    await setTomorrowDate(page);
+    await submitEventDialog(page);
 
     await page.goto(agendaUrl, { waitUntil: 'networkidle' });
 
@@ -264,23 +211,8 @@ test.describe('Frontend Agenda Display', () => {
     await page.fill('#event-title', eventTitle);
     await page.fill('#event-categorie', 'UX Test');
 
-    await page.evaluate(() => {
-      const input = document.getElementById('event-date') as HTMLInputElement;
-      if (input) {
-        input.readOnly = false;
-        const tomorrow = new Date();
-        tomorrow.setDate(tomorrow.getDate() + 1);
-        const day = String(tomorrow.getDate()).padStart(2, '0');
-        const month = String(tomorrow.getMonth() + 1).padStart(2, '0');
-        const year = String(tomorrow.getFullYear()).slice(-2);
-        input.value = `${day}/${month}/${year}`;
-      }
-    });
-
-    const submitButton = page.locator('#acs-event-dialog').locator('..').locator('.ui-dialog-buttonset button').first();
-    await submitButton.click();
-    await page.waitForLoadState('networkidle');
-    await page.waitForTimeout(1000);
+    await setTomorrowDate(page);
+    await submitEventDialog(page);
 
     // Validate frontend rendering for this event
     const agendaUrl = await getAgendaPageUrl(page);
