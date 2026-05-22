@@ -90,15 +90,17 @@ class ACSAGMA_Options {
         update_option('acsagma_delete_data_on_uninstall', $delete_data);
 
         if ($old_page_name !== $new_page_name) {
-            // Delete old page
+            // Prefer updating the existing page to avoid data loss and broken links.
             $old_page = ACSAGMA_Agenda_Manager::get_page_by_title($old_page_name);
-            if ($old_page) {
-                wp_delete_post($old_page->ID, true);
-            }
-
-            // Create new page
             $existing_page = ACSAGMA_Agenda_Manager::get_page_by_title($new_page_name);
-            if (!$existing_page) {
+
+            if ($old_page && (!$existing_page || (int) $existing_page->ID === (int) $old_page->ID)) {
+                wp_update_post([
+                    'ID' => $old_page->ID,
+                    'post_title' => $new_page_name,
+                    'post_name' => sanitize_title($new_page_name),
+                ]);
+            } elseif (!$existing_page) {
                 wp_insert_post([
                     'post_title' => $new_page_name,
                     'post_name' => sanitize_title($new_page_name),
