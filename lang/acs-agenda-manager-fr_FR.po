@@ -763,3 +763,67 @@ msgstr "Supprimer toutes les données du plugin (événements, paramètres, tabl
 
 msgid "Warning: This will permanently delete all your events and settings!"
 msgstr "Attention : Cela supprimera définitivement tous vos événements et paramètres !"
+
+msgid "Unable to load details. Please try again."
+msgstr "Impossible de charger les details. Veuillez reessayer."
+
+msgid "No events match your filters."
+msgstr "Aucun evenement ne correspond a vos filtres."
+
+#, php-format
+msgid "Showing %1$d-%2$d of %3$d events"
+msgstr "Affichage de %1$d a %2$d sur %3$d evenements"
+
+msgid "Compact mode on"
+msgstr "Mode compact active"
+
+msgid "Compact mode off"
+msgstr "Mode compact desactive"
+
+msgid "Previous"
+msgstr "Precedent"
+
+msgid "Next"
+msgstr "Suivant"
+
+msgid "Agenda filters and sorting"
+msgstr "Filtres et tri de l'agenda"
+
+msgid "Search"
+msgstr "Rechercher"
+
+msgid "Search title or description"
+msgstr "Rechercher dans le titre ou la description"
+
+msgid "All categories"
+msgstr "Toutes les categories"
+
+msgid "Date"
+msgstr "Date"
+
+msgid "All dates"
+msgstr "Toutes les dates"
+
+msgid "This week"
+msgstr "Cette semaine"
+
+msgid "This month"
+msgstr "Ce mois-ci"
+
+msgid "Sort"
+msgstr "Trier"
+
+msgid "Soonest first"
+msgstr "Les plus proches d'abord"
+
+msgid "Latest first"
+msgstr "Les plus recentes d'abord"
+
+msgid "Title A-Z"
+msgstr "Titre A-Z"
+
+msgid "Compact mode"
+msgstr "Mode compact"
+
+msgid "Agenda pagination"
+msgstr "Pagination de l'agenda"

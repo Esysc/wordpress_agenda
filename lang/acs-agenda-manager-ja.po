@@ -765,3 +765,67 @@ msgstr "プラグイン削除時にすべてのプラグインデータ（イベ
 
 msgid "Warning: This will permanently delete all your events and settings!"
 msgstr "警告：これによりすべてのイベントと設定が完全に削除されます！"
+
+msgid "Unable to load details. Please try again."
+msgstr "詳細を読み込めませんでした。もう一度お試しください。"
+
+msgid "No events match your filters."
+msgstr "フィルターに一致するイベントはありません。"
+
+#, php-format
+msgid "Showing %1$d-%2$d of %3$d events"
+msgstr "%3$d 件中 %1$d-%2$d 件を表示"
+
+msgid "Compact mode on"
+msgstr "コンパクトモードをオンにしました"
+
+msgid "Compact mode off"
+msgstr "コンパクトモードをオフにしました"
+
+msgid "Previous"
+msgstr "前へ"
+
+msgid "Next"
+msgstr "次へ"
+
+msgid "Agenda filters and sorting"
+msgstr "アジェンダのフィルターと並び替え"
+
+msgid "Search"
+msgstr "検索"
+
+msgid "Search title or description"
+msgstr "タイトルまたは説明を検索"
+
+msgid "All categories"
+msgstr "すべてのカテゴリ"
+
+msgid "Date"
+msgstr "日付"
+
+msgid "All dates"
+msgstr "すべての日付"
+
+msgid "This week"
+msgstr "今週"
+
+msgid "This month"
+msgstr "今月"
+
+msgid "Sort"
+msgstr "並び替え"
+
+msgid "Soonest first"
+msgstr "近い順"
+
+msgid "Latest first"
+msgstr "新しい順"
+
+msgid "Title A-Z"
+msgstr "タイトル A-Z"
+
+msgid "Compact mode"
+msgstr "コンパクトモード"
+
+msgid "Agenda pagination"
+msgstr "アジェンダのページ送り"
