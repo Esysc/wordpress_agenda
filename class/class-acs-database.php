@@ -18,6 +18,20 @@ class ACSAGMA_Database {
     private const CACHE_GROUP = 'acsagma_agenda_manager';
 
     /**
+     * Allowed sortable columns for admin list table.
+     */
+    private const SORTABLE_COLUMNS = [
+        'id',
+        'categorie',
+        'title',
+        'emplacement',
+        'date',
+        'price',
+        'created_at',
+        'updated_at',
+    ];
+
+    /**
      * Get full table name with prefix
      */
     public static function get_table_name(): string {
@@ -124,6 +138,8 @@ class ACSAGMA_Database {
         $params[] = (int) (($args['page'] - 1) * $args['per_page']);
 
         $clauses_sql = implode(' AND ', $clauses);
+        $orderby = self::sanitize_orderby($args['orderby']);
+        $order = self::sanitize_order($args['order']);
 
         /*
          * Table name is safe - comes from get_table_name() which uses $wpdb->prefix + constant.
@@ -136,7 +152,7 @@ class ACSAGMA_Database {
          */
         $results = $wpdb->get_results(
             $wpdb->prepare(
-                "SELECT * FROM {$table_name} WHERE {$clauses_sql} ORDER BY id DESC LIMIT %d OFFSET %d",
+                "SELECT * FROM {$table_name} WHERE {$clauses_sql} ORDER BY {$orderby} {$order} LIMIT %d OFFSET %d",
                 ...$params
             ),
             ARRAY_A
@@ -206,6 +222,26 @@ class ACSAGMA_Database {
         wp_cache_set($cache_key, $count, self::CACHE_GROUP, HOUR_IN_SECONDS);
 
         return $count;
+    }
+
+    /**
+     * Sanitize order by column against a whitelist.
+     */
+    private static function sanitize_orderby($orderby): string {
+        $orderby = sanitize_key((string) $orderby);
+
+        if (!in_array($orderby, self::SORTABLE_COLUMNS, true)) {
+            return 'id';
+        }
+
+        return $orderby;
+    }
+
+    /**
+     * Sanitize sort direction.
+     */
+    private static function sanitize_order($order): string {
+        return strtoupper((string) $order) === 'ASC' ? 'ASC' : 'DESC';
     }
 
     /**
