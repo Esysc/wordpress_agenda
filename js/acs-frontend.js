@@ -118,7 +118,10 @@
                 if (!Number.isNaN(page) && page > 0) {
                     self.state.page = page;
                     self.applyAgendaView();
-                    window.scrollTo({ top: $('#acs-agenda-list').offset()?.top || 0, behavior: 'smooth' });
+
+                    const offset = $('#acs-agenda-list').offset();
+                    const top = offset && typeof offset.top === 'number' ? offset.top : 0;
+                    window.scrollTo({ top: top, behavior: 'smooth' });
                 }
             });
         },
