@@ -6,6 +6,41 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.5.0] - 2026-05-23
+
+### Added
+
+- **Frontend toolbar**: Search, category filter, date-range filter (today / this week / this month), sort order toggle, and compact/full layout toggle — all applied client-side in real time
+- **Client-side pagination**: Windowed page buttons (current ± 1 with smart ellipses and first/last) so DOM node count stays constant regardless of event count
+- **Read More button**: Expandable additional content per event with animated reveal
+- **`acsagma_max_events` filter hook**: Configurable DB fetch limit (default 500) allowing site owners to adjust via `add_filter` when needed
+
+### Changed
+
+- **Performance — DB-level expiry pre-filter**: New `last_date_ts` INT column stores each event's last-date Unix timestamp; populated on every insert/update and backfilled for existing rows on upgrade; `get_upcoming_events()` passes `min_last_date_ts` to exclude expired events in SQL rather than PHP, dramatically reducing fetch size on sites with a long event history
+- **Event filter encoding**: Changed from fragile hyphen-concatenated string to JSON, fixing silent breakage when titles or categories contain hyphens and fixing the category filter being ignored
+- **Event card date attributes**: `data-date-ts` and `data-month-group` now derived from the first non-expired date in `dates_info` for partial-attendance mode 2 events, so sorting and month grouping reflect when the event is still active
+- **Week / month date-range filters**: Now compare against start-of-today (midnight) instead of the live clock, so today's events are correctly included throughout the day
+- **Read More button**: Added `type="button"` to prevent accidental form submission
+- **Month heading rendering**: Replaced string concatenation with `$('<h2>').text()` to prevent potential HTML injection
+- **Translations**: All new toolbar, pagination, and button strings translated into French, German (DE/CH), Italian, and Japanese
+
+### Fixed
+
+- Settings rename no longer deletes the Agenda page
+- Removed duplicate nonce check in settings save handler
+- Capabilities now correctly enforced for delete admin actions
+- Admin event list count now matches the filtered list query
+- Fixed selected-attribute rendering in the event filter dropdown
+- Removed global locale mutation from plugin runtime
+- `.acs-no-link` label now has left margin to prevent run-on text when an invalid URL precedes it
+
+### Accessibility
+
+- Added `role="navigation"` to the pagination container
+- Added `aria-current="page"` to the active pagination page button
+- Decorative dashicon in Read More button marked `aria-hidden="true" focusable="false"`
+
 ## [3.4.0] - 2026-01-03
 
 ### Added

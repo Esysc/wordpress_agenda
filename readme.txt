@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/donate?business=KG9SDHM7VUP6Y&currency_code=
 Tags: agenda, events, calendar, schedule, workshop
 Requires at least: 6.2
 Tested up to: 7.0
-Stable tag: 3.4.0
+Stable tag: 3.5.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -96,6 +96,23 @@ Yes, you can override the CSS in your theme or copy the template file to your th
 5. Plugin settings and configuration options
 
 == Changelog ==
+
+= 3.5.0 =
+* Added frontend toolbar with search, category filter, date-range filter (today/week/month), sort toggle, and compact/full layout toggle
+* Added windowed client-side pagination (current ± 1 with ellipses)
+* Added Read More button to expand additional event content per card
+* Added `acsagma_max_events` filter hook to make DB fetch limit configurable (default 500)
+* Performance: new `last_date_ts` DB column pre-filters expired events in SQL on every shortcode render; backfilled automatically on upgrade
+* Fixed event filter: encoding changed from hyphen-string to JSON — fixes breakage when titles/categories contain hyphens and fixes category filter being silently ignored
+* Fixed week/month date-range filters incorrectly excluding today's events mid-day
+* Fixed event sort/group order for partial-attendance mode 2 events with leading expired dates
+* Fixed Settings rename deleting the Agenda page
+* Fixed capabilities check for admin delete actions
+* Fixed event list count not matching the filtered query
+* Fixed `type="button"` missing on Read More button
+* Prevented HTML injection in month heading rendering
+* Accessibility: `role="navigation"` on pagination, `aria-current="page"` on active page button, `aria-hidden` on decorative dashicon
+* Translated all new strings into French, German (DE/CH), Italian, and Japanese
 
 = 3.4.0 =
 * Added "Delete Data on Uninstall" option in Settings to optionally remove all plugin data when uninstalling
