@@ -269,7 +269,7 @@ class ACSAGMA_Agenda_List_Table extends WP_List_Table {
         foreach ($filters as $filter) {
             $value = $filter['title'] . '-' . $filter['categorie'];
             $selected_attr = selected($current_filter, $value, false);
-            echo '<option value="' . esc_attr($value) . '"' . esc_attr($selected_attr) . '>' . esc_html($filter['title']) . ' - ' . esc_html($filter['categorie']) . '</option>';
+            echo '<option value="' . esc_attr($value) . '"' . $selected_attr . '>' . esc_html($filter['title']) . ' - ' . esc_html($filter['categorie']) . '</option>';
         }
 
         echo '</select>';
