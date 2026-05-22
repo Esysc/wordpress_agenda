@@ -324,6 +324,10 @@ class ACSAGMA_Admin {
 
         // Handle single delete action
         if (isset($_GET['action']) && $_GET['action'] === 'delete') {
+            if (!current_user_can('manage_options')) {
+                wp_die(esc_html__('Permission denied', 'acs-agenda-manager'));
+            }
+
             $nonce = isset($_REQUEST['_wpnonce']) ? sanitize_text_field(wp_unslash($_REQUEST['_wpnonce'])) : '';
 
             if (!wp_verify_nonce($nonce, 'acsagma_delete_event')) {
@@ -341,6 +345,10 @@ class ACSAGMA_Admin {
         // Handle bulk delete action
         if ((isset($_POST['action']) && $_POST['action'] === 'bulk-delete') ||
             (isset($_POST['action2']) && $_POST['action2'] === 'bulk-delete')) {
+
+            if (!current_user_can('manage_options')) {
+                wp_die(esc_html__('Permission denied', 'acs-agenda-manager'));
+            }
 
             if (!check_admin_referer('acsagma_agenda_admin_form', 'acsagma_agenda_admin_form_nonce')) {
                 wp_die(esc_html__('Security check failed', 'acs-agenda-manager'));
