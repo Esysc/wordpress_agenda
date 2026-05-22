@@ -84,13 +84,15 @@ test.describe('Frontend Agenda Display', () => {
 
     const timestamp = Date.now();
     const eventTitle = `Image Event ${timestamp}`;
+    const siteOrigin = new URL(page.url()).origin;
+    const localImageUrl = `${siteOrigin}/wp-includes/images/w-logo-blue.png`;
 
     await page.click('#acs-add-event');
     await page.waitForSelector('.ui-dialog:has(#acs-event-dialog)', { state: 'visible' });
 
     await page.fill('#event-title', eventTitle);
     await page.fill('#event-categorie', 'Frontend Test');
-    await page.fill('#event-image', 'https://via.placeholder.com/300x200.png');
+    await page.fill('#event-image', localImageUrl);
 
     await page.evaluate(() => {
       const input = document.getElementById('event-date') as HTMLInputElement;

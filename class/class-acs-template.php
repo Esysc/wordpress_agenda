@@ -257,15 +257,18 @@ class ACSAGMA_Template {
     public static function render_read_more_dialog(WP_Post $post, string $href): string {
         return sprintf(
             '<div id="postdata">
-                <div id="dialog">
-                    <button id="close" onclick="closeDialog()">&times;</button>
-                    <h2 style="text-align: center;">%s</h2>
-                    <p style="text-align: center;">
-                        <a href="%s" target="_blank">%s</a>
-                    </p>
-                    %s
+                <div id="dialog" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="acs-readmore-title">
+                    <div class="acs-dialog-panel">
+                        <button id="close" type="button" onclick="closeDialog()" aria-label="%s">&times;</button>
+                        <h2 id="acs-readmore-title">%s</h2>
+                        <p class="acs-dialog-link">
+                            <a href="%s" target="_blank" rel="noopener noreferrer">%s</a>
+                        </p>
+                        %s
+                    </div>
                 </div>
             </div>',
+            esc_attr__('Close dialog', 'acs-agenda-manager'),
             esc_html(get_the_title($post)),
             esc_url($href),
             esc_html__('Go to page', 'acs-agenda-manager'),

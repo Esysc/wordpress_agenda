@@ -8,6 +8,8 @@
     'use strict';
 
     const ACSAgendaFrontend = {
+        lastFocusedElement: null,
+
         /**
          * Initialize the frontend functionality
          */
@@ -23,6 +25,19 @@
 
             $(document).on('click', '.readmore', this.handleReadMore.bind(this));
             $(window).on('scroll', this.trackScroll);
+
+            // Read more dialog close handlers
+            $(document).on('click', '#dialog', function (e) {
+                if (e.target === e.currentTarget) {
+                    window.closeDialog();
+                }
+            });
+
+            $(document).on('keydown', function (e) {
+                if ($('#dialog').hasClass('shown') && e.key === 'Escape') {
+                    window.closeDialog();
+                }
+            });
 
             // Image lightbox - use delegation on document
             $(document).on('click', '.image-agenda', function(e) {
@@ -116,6 +131,8 @@
                 return;
             }
 
+            $button.prop('disabled', true).addClass('is-loading').attr('aria-busy', 'true');
+
             $.ajax({
                 url: agendaConfig.ajaxUrl,
                 type: 'POST',
@@ -126,13 +143,39 @@
                     nonce: agendaConfig.nonce,
                 },
                 success: function (response) {
+                    if (response && typeof response === 'object' && response.success === false) {
+                        ACSAgendaFrontend.showReadMoreError();
+                        return;
+                    }
+
                     $('#postid').html(response);
                     ACSAgendaFrontend.showDialog(sectionId);
                 },
                 error: function () {
-                    console.error('Failed to load content');
+                    ACSAgendaFrontend.showReadMoreError();
                 },
+                complete: function () {
+                    $button.prop('disabled', false).removeClass('is-loading').removeAttr('aria-busy');
+                }
             });
+        },
+
+        /**
+         * Show a non-blocking error if details cannot be loaded.
+         */
+        showReadMoreError: function () {
+            if ($('#acs-readmore-error').length) {
+                return;
+            }
+
+            const $message = $('<div id="acs-readmore-error" role="status" aria-live="polite">Unable to load details. Please try again.</div>');
+            $('body').append($message);
+
+            setTimeout(function () {
+                $message.fadeOut(200, function () {
+                    $(this).remove();
+                });
+            }, 3000);
         },
 
         /**
@@ -145,7 +188,9 @@
                 return;
             }
 
+            this.lastFocusedElement = document.activeElement;
             $dialog.addClass('shown');
+            $dialog.attr('aria-hidden', 'false');
 
             // Store scroll position
             const scrollY = window.scrollY;
@@ -160,6 +205,11 @@
 
             // Store section ID for scroll-back
             $dialog.data('section-id', sectionId);
+
+            const $closeButton = $dialog.find('#close').first();
+            if ($closeButton.length) {
+                $closeButton.trigger('focus');
+            }
         },
 
         /**
@@ -191,6 +241,12 @@
 
         // Hide dialog
         $dialog.removeClass('shown');
+        $dialog.attr('aria-hidden', 'true');
+
+        if (ACSAgendaFrontend.lastFocusedElement && typeof ACSAgendaFrontend.lastFocusedElement.focus === 'function') {
+            ACSAgendaFrontend.lastFocusedElement.focus();
+        }
+        ACSAgendaFrontend.lastFocusedElement = null;
 
         // Scroll to original section
         if (sectionId) {

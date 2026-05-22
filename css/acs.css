@@ -442,6 +442,16 @@ body.acs-lightbox-open {
     margin-top: auto;
 }
 
+.readmore.show:focus-visible {
+    outline: 3px solid var(--acs-accent-color);
+    outline-offset: 2px;
+}
+
+.readmore.show.is-loading {
+    opacity: 0.7;
+    cursor: wait;
+}
+
 .readmore.show:hover {
     background: var(--acs-accent-color);
     color: #fff;
@@ -470,32 +480,51 @@ body.acs-lightbox-open {
     left: 0;
     width: 100%;
     height: 100%;
-    border: 1px solid #eee;
-    border-radius: 4px;
-    padding: 10px;
-    background-color: #fff;
-    z-index: 1;
+    padding: 1rem;
+    background: rgba(15, 23, 42, 0.65);
+    z-index: 999999;
     overflow-y: auto;
+    align-items: flex-start;
+    justify-content: center;
 }
 
 #dialog.shown {
     display: flex;
-    flex-direction: column;
-    z-index: 999999;
+}
+
+.acs-dialog-panel {
+    width: min(860px, calc(100% - 2rem));
+    margin: 2.5rem auto;
+    background: #fff;
+    border: 1px solid var(--acs-border-color);
+    border-radius: var(--acs-border-radius);
+    box-shadow: var(--acs-shadow-lg);
+    padding: 1.25rem 1.25rem 2rem;
+}
+
+#acs-readmore-title {
+    margin: 0 3rem 1rem 0;
+    text-align: center;
+}
+
+.acs-dialog-link {
+    text-align: center;
+    margin-bottom: 1rem;
 }
 
 #close {
     position: sticky;
-    top: 5px;
-    left: 90%;
-    height: 50px;
-    width: 50px;
-    z-index: 9999999999;
+    top: 0.25rem;
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 44px;
+    width: 44px;
     background: #223445;
     color: #fff;
-    display: block;
     font-size: 1.5em;
-    padding: 0.5em;
+    padding: 0;
     border: 1px solid #223445 !important;
     border-radius: 18px !important;
     cursor: pointer;
@@ -504,6 +533,25 @@ body.acs-lightbox-open {
 
 #close:hover {
     background: #000;
+}
+
+#close:focus-visible {
+    outline: 3px solid var(--acs-accent-color);
+    outline-offset: 2px;
+}
+
+#acs-readmore-error {
+    position: fixed;
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #7f1d1d;
+    color: #fff;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    box-shadow: var(--acs-shadow-lg);
+    z-index: 1000000;
+    font-size: 0.9rem;
 }
 
 /* ==========================================================================
