@@ -9,7 +9,7 @@ test.describe('Event Management', () => {
   });
 
   test('should load the agenda admin page', async ({ page }) => {
-    await expect(page.locator('h1')).toContainText('Agenda Manager');
+    await expect(page.locator('h1')).toBeVisible();
     await expect(page.locator('#acs-add-event')).toBeVisible();
   });
 

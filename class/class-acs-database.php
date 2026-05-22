@@ -126,11 +126,11 @@ class ACSAGMA_Database {
         }
 
         if (!empty($args['filter'])) {
-            $filter_parts = explode('-', sanitize_text_field($args['filter']));
-            if (!empty($filter_parts[0])) {
-                $filter_like = '%' . $wpdb->esc_like($filter_parts[0]) . '%';
-                $clauses[] = 'title LIKE %s';
-                $params[] = $filter_like;
+            $filter_data = json_decode($args['filter'], true);
+            if (is_array($filter_data) && isset($filter_data['t'], $filter_data['c'])) {
+                $clauses[] = 'title = %s AND categorie = %s';
+                $params[] = sanitize_text_field($filter_data['t']);
+                $params[] = sanitize_text_field($filter_data['c']);
             }
         }
 
@@ -189,11 +189,11 @@ class ACSAGMA_Database {
         }
 
         if (!empty($args['filter'])) {
-            $filter_parts = explode('-', sanitize_text_field($args['filter']));
-            if (!empty($filter_parts[0])) {
-                $filter_like = '%' . $wpdb->esc_like($filter_parts[0]) . '%';
-                $clauses[] = 'title LIKE %s';
-                $params[] = $filter_like;
+            $filter_data = json_decode($args['filter'], true);
+            if (is_array($filter_data) && isset($filter_data['t'], $filter_data['c'])) {
+                $clauses[] = 'title = %s AND categorie = %s';
+                $params[] = sanitize_text_field($filter_data['t']);
+                $params[] = sanitize_text_field($filter_data['c']);
             }
         }
 

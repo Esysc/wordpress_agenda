@@ -330,7 +330,8 @@
                 const monthGroup = ($card.data('month-group') || '').toString();
 
                 if (monthGroup && monthGroup !== lastGroup) {
-                    $card.before('<h2 class="acs-month-heading">' + monthGroup + '</h2>');
+                    const $heading = $('<h2 class="acs-month-heading"></h2>').text(monthGroup);
+                    $card.before($heading);
                     lastGroup = monthGroup;
                 }
             });

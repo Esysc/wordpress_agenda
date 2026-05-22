@@ -88,8 +88,11 @@ test.describe('Frontend Agenda Display', () => {
     const agendaUrl = await getAgendaPageUrl(page);
     await page.goto(agendaUrl, { waitUntil: 'networkidle' });
 
+    // Filter to the specific event to ensure it is on page 1
+    await page.fill('#acs-filter-search', eventTitle);
+
     // The event should be visible on the frontend
-    const eventElement = page.locator('#acs-agenda-list .acsagenda:visible .event-title', { hasText: eventTitle }).first();
+    const eventElement = page.locator('#acs-agenda-list .acsagenda .event-title', { hasText: eventTitle }).first();
     await expect(eventElement).toBeVisible({ timeout: 10000 });
   });
 
@@ -133,8 +136,11 @@ test.describe('Frontend Agenda Display', () => {
     const agendaUrl = await getAgendaPageUrl(page);
     await page.goto(agendaUrl, { waitUntil: 'networkidle' });
 
+    // Filter to the specific event to ensure it is on page 1
+    await page.fill('#acs-filter-search', eventTitle);
+
     // Event should be visible
-    const eventElement = page.locator('#acs-agenda-list .acsagenda:visible .event-title', { hasText: eventTitle }).first();
+    const eventElement = page.locator('#acs-agenda-list .acsagenda .event-title', { hasText: eventTitle }).first();
     await expect(eventElement).toBeVisible({ timeout: 10000 });
   });
 
@@ -161,8 +167,11 @@ test.describe('Frontend Agenda Display', () => {
     const agendaUrl = await getAgendaPageUrl(page);
     await page.goto(agendaUrl, { waitUntil: 'networkidle' });
 
+    // Filter to the specific event to ensure it is on page 1
+    await page.fill('#acs-filter-search', eventTitle);
+
     // Event with price should be visible
-    const eventCard = page.locator('text=' + eventTitle).locator('..');
+    const eventCard = page.locator('#acs-agenda-list .acsagenda .event-title', { hasText: eventTitle }).first();
     await expect(eventCard).toBeVisible({ timeout: 10000 });
   });
 
@@ -189,6 +198,9 @@ test.describe('Frontend Agenda Display', () => {
     await submitEventDialog(page);
 
     await page.goto(agendaUrl, { waitUntil: 'networkidle' });
+
+    // Filter to the specific event to ensure it is on page 1
+    await page.fill('#acs-filter-search', eventTitle);
 
     const eventCard = page.locator('.column-center').filter({ hasText: eventTitle }).first();
     await expect(eventCard).toBeVisible({ timeout: 10000 });
@@ -217,6 +229,9 @@ test.describe('Frontend Agenda Display', () => {
     // Validate frontend rendering for this event
     const agendaUrl = await getAgendaPageUrl(page);
     await page.goto(agendaUrl, { waitUntil: 'networkidle' });
+
+    // Filter to the specific event to ensure it is on page 1
+    await page.fill('#acs-filter-search', eventTitle);
 
     const eventCard = page.locator('.column-center').filter({ hasText: eventTitle }).first();
     await expect(eventCard).toBeVisible({ timeout: 10000 });

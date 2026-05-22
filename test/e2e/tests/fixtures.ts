@@ -65,10 +65,13 @@ export class AgendaPage {
   }
 
   async submitForm() {
-    // Click the jQuery UI dialog button (Add or Update)
-    // Target the event dialog's parent .ui-dialog and find its buttonset
+    // Click the jQuery UI dialog button (Add or Update) and wait for the
+    // resulting redirect to ?created=1 / ?updated=1 before returning.
     const eventDialogButtonset = this.page.locator('#acs-event-dialog').locator('..').locator('.ui-dialog-buttonset button').first();
-    await eventDialogButtonset.click();
+    await Promise.all([
+      this.page.waitForURL(/page=acsagma-agenda.*(?:created|updated)=1/),
+      eventDialogButtonset.click(),
+    ]);
   }
 
   async waitForSuccess() {

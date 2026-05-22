@@ -26,7 +26,7 @@ class ACSAGMA_Event {
      */
     public static function get_upcoming_events(): array {
         $all_events = ACSAGMA_Database::get_events([
-            'per_page' => 100,
+            'per_page' => 9999,
             'orderby' => 'date',
             'order' => 'ASC',
         ]);

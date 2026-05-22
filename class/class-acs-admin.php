@@ -280,7 +280,7 @@ class ACSAGMA_Agenda_List_Table extends WP_List_Table {
         echo '<option value="">' . esc_html__('All Events', 'acs-agenda-manager') . '</option>';
 
         foreach ($filters as $filter) {
-            $value = $filter['title'] . '-' . $filter['categorie'];
+            $value = wp_json_encode(['t' => $filter['title'], 'c' => $filter['categorie']]);
             $selected_attr = selected($current_filter, $value, false);
             echo '<option value="' . esc_attr($value) . '"' . $selected_attr . '>' . esc_html($filter['title']) . ' - ' . esc_html($filter['categorie']) . '</option>';
         }
