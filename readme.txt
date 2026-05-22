@@ -1,5 +1,5 @@
 === ACS Agenda Manager ===
-Contributors: masteracs, esysc
+Contributors: masteracs
 Donate link: https://www.paypal.com/donate?business=KG9SDHM7VUP6Y&currency_code=CHF
 Tags: agenda, events, calendar, schedule, workshop
 Requires at least: 6.2
