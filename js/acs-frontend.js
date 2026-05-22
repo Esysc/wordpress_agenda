@@ -213,8 +213,14 @@
             const $list = $('#acs-agenda-list');
             const $noResults = $('#acs-no-results');
             const now = Date.now();
-            const weekEnd = now + (7 * 24 * 60 * 60 * 1000);
-            const monthEndDate = new Date();
+            // data-date-ts is PHP mktime(0,0,0,...) — midnight of the event day.
+            // Use start-of-today for lower-bound comparisons so today's events
+            // are not excluded from week/month views mid-day.
+            const todayStart = new Date(now);
+            todayStart.setHours(0, 0, 0, 0);
+            const todayStartMs = todayStart.getTime();
+            const weekEnd = todayStartMs + (7 * 24 * 60 * 60 * 1000);
+            const monthEndDate = new Date(todayStart);
             monthEndDate.setMonth(monthEndDate.getMonth() + 1);
             const monthEnd = monthEndDate.getTime();
 
@@ -249,11 +255,11 @@
                     }
                 }
 
-                if (self.state.dateRange === 'week' && (dateTs < now || dateTs > weekEnd)) {
+                if (self.state.dateRange === 'week' && (dateTs < todayStartMs || dateTs > weekEnd)) {
                     return false;
                 }
 
-                if (self.state.dateRange === 'month' && (dateTs < now || dateTs > monthEnd)) {
+                if (self.state.dateRange === 'month' && (dateTs < todayStartMs || dateTs > monthEnd)) {
                     return false;
                 }
 
