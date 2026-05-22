@@ -168,8 +168,17 @@ class ACSAGMA_Database {
 
         if (!empty($args['search'])) {
             $search = '%' . $wpdb->esc_like(sanitize_text_field($args['search'])) . '%';
-            $clauses[] = '(categorie LIKE %s OR title LIKE %s OR intro LIKE %s)';
-            $params = [$search, $search, $search];
+            $clauses[] = '(categorie LIKE %s OR title LIKE %s OR intro LIKE %s OR date LIKE %s)';
+            $params = [$search, $search, $search, $search];
+        }
+
+        if (!empty($args['filter'])) {
+            $filter_parts = explode('-', sanitize_text_field($args['filter']));
+            if (!empty($filter_parts[0])) {
+                $filter_like = '%' . $wpdb->esc_like($filter_parts[0]) . '%';
+                $clauses[] = 'title LIKE %s';
+                $params[] = $filter_like;
+            }
         }
 
         $where_sql = implode(' AND ', $clauses);
