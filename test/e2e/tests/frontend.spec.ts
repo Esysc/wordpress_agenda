@@ -162,24 +162,51 @@ test.describe('Frontend Agenda Display', () => {
     await expect(eventCard).toBeVisible({ timeout: 10000 });
   });
 
-  test('should show Read More dialog', async ({ page }) => {
-    // This test assumes there's an event with intro text
+  test('should show Read more when additional content exists', async ({ page }) => {
+    // Get agenda URL for frontend checks.
     const agendaUrl = await getAgendaPageUrl(page);
+    const siteOrigin = new URL(page.url()).origin;
+    // Default WordPress install ships with post ID 1 containing plain text content.
+    const detailsLink = `${siteOrigin}/?p=1`;
+
+    await page.goto('/wp-admin/admin.php?page=acsagma-agenda');
+    await page.waitForLoadState('networkidle');
+
+    const eventTitle = `Has Details ${Date.now()}`;
+
+    await page.click('#acs-add-event');
+    await page.waitForSelector('.ui-dialog:has(#acs-event-dialog)', { state: 'visible' });
+
+    await page.fill('#event-title', eventTitle);
+    await page.fill('#event-categorie', 'UX Test');
+    await page.fill('#event-link', detailsLink);
+
+    await page.evaluate(() => {
+      const input = document.getElementById('event-date') as HTMLInputElement;
+      if (input) {
+        input.readOnly = false;
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        const day = String(tomorrow.getDate()).padStart(2, '0');
+        const month = String(tomorrow.getMonth() + 1).padStart(2, '0');
+        const year = String(tomorrow.getFullYear()).slice(-2);
+        input.value = `${day}/${month}/${year}`;
+      }
+    });
+
+    const submitButton = page.locator('#acs-event-dialog').locator('..').locator('.ui-dialog-buttonset button').first();
+    await submitButton.click();
+    await page.waitForLoadState('networkidle');
+    await page.waitForTimeout(1000);
+
     await page.goto(agendaUrl, { waitUntil: 'networkidle' });
 
-    // Look for "Read more" link
-    const readMoreLink = page.locator('.read_more, a:has-text("Read more")').first();
+    const eventCard = page.locator('.column-center').filter({ hasText: eventTitle }).first();
+    await expect(eventCard).toBeVisible({ timeout: 10000 });
+    await expect(eventCard.locator('.readmore.show')).toHaveCount(1);
 
-    if (await readMoreLink.isVisible()) {
-      await readMoreLink.click();
-      await page.waitForTimeout(500);
-
-      // Dialog should appear
-      const dialog = page.locator('.ui-dialog, [role="dialog"]');
-      const isVisible = await dialog.isVisible().catch(() => false);
-
-      expect(isVisible).toBeTruthy();
-    }
+    await eventCard.locator('.readmore.show').first().click();
+    await expect(page.locator('#dialog.shown')).toBeVisible({ timeout: 10000 });
   });
 
   test('should hide Read more when there is no additional content', async ({ page }) => {

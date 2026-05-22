@@ -19,12 +19,22 @@ async function globalSetup(config: FullConfig) {
     await page.fill('#user_pass', 'admin');
     await page.click('#wp-submit');
 
-    // Wait for admin redirect by observing current URL instead of navigation events,
-    // which can be flaky with some local WordPress/docker setups.
-    await page.waitForFunction(
-      () => window.location.pathname.startsWith('/wp-admin/'),
-      { timeout: 30000 }
-    );
+    // Wait for admin redirect using URL matcher first, then fall back to admin marker.
+    const loginReachedAdmin = await page
+      .waitForURL('**/wp-admin/**', { timeout: 45000 })
+      .then(() => true)
+      .catch(() => false);
+
+    if (!loginReachedAdmin) {
+      const loginError = await page.locator('#login_error').first().textContent().catch(() => null);
+      if (loginError) {
+        throw new Error(`WordPress login failed: ${loginError.trim()}`);
+      }
+
+      // Some local setups take longer before the toolbar appears even after auth succeeds.
+      await page.waitForSelector('#wpadminbar', { timeout: 45000 });
+    }
+
     await page.waitForSelector('#wpadminbar', { timeout: 30000 });
 
     console.log('✅ Login successful');

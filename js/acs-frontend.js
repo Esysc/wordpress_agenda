@@ -106,22 +106,24 @@
         handleReadMore: function (e) {
             e.preventDefault();
 
+            const agendaConfig = window.acsagmaAgenda || window.acsAgenda;
             const $button = $(e.currentTarget);
             const postId = $button.data('postid');
             const sectionId = $button.data('id');
             const href = $button.data('href');
 
-            if (!postId) {
+            if (!postId || !agendaConfig || !agendaConfig.ajaxUrl) {
                 return;
             }
 
             $.ajax({
-                url: acsAgenda.ajaxUrl,
+                url: agendaConfig.ajaxUrl,
                 type: 'POST',
                 data: {
-                    action: 'read_more',
+                    action: 'acsagma_read_more',
                     postid: postId,
                     href: href,
+                    nonce: agendaConfig.nonce,
                 },
                 success: function (response) {
                     $('#postid').html(response);
