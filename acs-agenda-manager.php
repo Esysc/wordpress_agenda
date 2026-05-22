@@ -83,31 +83,6 @@ final class ACSAGMA_Agenda_Manager {
 
         // Shortcode
         add_shortcode('acsagma_agenda', [$this, 'render_agenda_shortcode']);
-
-        // Locale filter
-        add_filter('locale', [$this, 'set_locale_from_browser']);
-    }
-
-    /**
-     * Set locale based on browser language
-     */
-    public function set_locale_from_browser(string $locale): string {
-        if (!isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
-            return $locale;
-        }
-
-        $browser_lang = substr(sanitize_text_field(wp_unslash($_SERVER['HTTP_ACCEPT_LANGUAGE'])), 0, 2);
-
-        $locale_map = [
-            'fr' => 'fr_FR.UTF-8',
-            'en' => 'en_US.UTF-8',
-        ];
-
-        if (isset($locale_map[$browser_lang])) {
-            setlocale(LC_TIME, $locale_map[$browser_lang]);
-        }
-
-        return $locale;
     }
 
     /**
