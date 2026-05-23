@@ -81,7 +81,7 @@ Yes, events can have multiple dates. Use the calendar in the event editor to sel
 
 = What happens when an event expires? =
 
-By default, events are hidden after their last date passes. You can control this behavior with the "Partial Attendance" setting.
+By default, events are hidden after their last date passes. You can control this behavior with the "Partial Attendance" setting under "Advanced settings" in the event editor.
 
 = Can I customize the appearance? =
 

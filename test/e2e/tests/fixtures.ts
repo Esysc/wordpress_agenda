@@ -21,6 +21,19 @@ export class AgendaPage {
     await this.page.click('#acs-add-event');
     // Wait for jQuery UI dialog to open
     await this.page.waitForSelector('.ui-dialog:has(#acs-event-dialog)', { state: 'visible' });
+    await this.ensureAdvancedSettingsOpen();
+  }
+
+  async ensureAdvancedSettingsOpen() {
+    const advanced = this.page.locator('#acs-advanced-settings');
+    if (!(await advanced.count())) {
+      return;
+    }
+
+    const isOpen = await advanced.evaluate((el) => el.hasAttribute('open'));
+    if (!isOpen) {
+      await this.page.click('#acs-advanced-settings > summary');
+    }
   }
 
   async fillEventForm(data: {
@@ -165,6 +178,7 @@ export class AgendaPage {
     await editLink.waitFor({ state: 'visible' });
     await editLink.click();
     await this.page.waitForSelector('.ui-dialog:has(#acs-event-dialog)', { state: 'visible' });
+    await this.ensureAdvancedSettingsOpen();
   }
 
   async closeModal() {

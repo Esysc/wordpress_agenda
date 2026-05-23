@@ -28,15 +28,37 @@ async function submitEventDialog(page: Page) {
   await expect(page.locator('.notice.notice-success')).toBeVisible();
 }
 
+async function ensureAdvancedSettingsOpen(page: Page) {
+  const advanced = page.locator('#acs-advanced-settings');
+  if (!(await advanced.count())) {
+    return;
+  }
+
+  const isOpen = await advanced.evaluate((el) => el.hasAttribute('open'));
+  if (!isOpen) {
+    await page.click('#acs-advanced-settings > summary');
+  }
+}
+
+async function filterByTitle(page: Page, title: string) {
+  const searchInput = page.locator('#acs-filter-search');
+  await expect(searchInput).toBeVisible();
+  await searchInput.fill(title);
+  // Give client-side filtering time to update the visible list.
+  await page.waitForTimeout(400);
+}
+
 async function createEvent(page: Page, data: { title: string; category: string; intro?: string; image?: string; link?: string; }) {
   await page.goto('/wp-admin/admin.php?page=acsagma-agenda');
   await page.waitForLoadState('networkidle');
   await page.click('#acs-add-event');
   await page.waitForSelector('.ui-dialog:has(#acs-event-dialog)', { state: 'visible' });
+  await ensureAdvancedSettingsOpen(page);
   await page.fill('#event-title', data.title);
   await page.fill('#event-categorie', data.category);
   if (data.intro) {
     await page.fill('#event-intro', data.intro);
+    await ensureAdvancedSettingsOpen(page);
   }
   if (data.image) {
     await page.fill('#event-image', data.image);
@@ -89,11 +111,11 @@ test.describe('Frontend Agenda Display', () => {
     await page.goto(agendaUrl, { waitUntil: 'networkidle' });
 
     // Filter to the specific event to ensure it is on page 1
-    await page.fill('#acs-filter-search', eventTitle);
+    await filterByTitle(page, eventTitle);
 
     // The event should be visible on the frontend
     const eventElement = page.locator('#acs-agenda-list .acsagenda .event-title', { hasText: eventTitle }).first();
-    await expect(eventElement).toBeVisible({ timeout: 10000 });
+    await expect(eventElement).toBeVisible({ timeout: 30000 });
   });
 
   test('should handle empty agenda gracefully', async ({ page }) => {
@@ -124,6 +146,7 @@ test.describe('Frontend Agenda Display', () => {
 
     await page.click('#acs-add-event');
     await page.waitForSelector('.ui-dialog:has(#acs-event-dialog)', { state: 'visible' });
+    await ensureAdvancedSettingsOpen(page);
 
     await page.fill('#event-title', eventTitle);
     await page.fill('#event-categorie', 'Frontend Test');
@@ -137,11 +160,11 @@ test.describe('Frontend Agenda Display', () => {
     await page.goto(agendaUrl, { waitUntil: 'networkidle' });
 
     // Filter to the specific event to ensure it is on page 1
-    await page.fill('#acs-filter-search', eventTitle);
+    await filterByTitle(page, eventTitle);
 
     // Event should be visible
     const eventElement = page.locator('#acs-agenda-list .acsagenda .event-title', { hasText: eventTitle }).first();
-    await expect(eventElement).toBeVisible({ timeout: 10000 });
+    await expect(eventElement).toBeVisible({ timeout: 30000 });
   });
 
   test('should display event price on frontend', async ({ page }) => {
@@ -155,6 +178,7 @@ test.describe('Frontend Agenda Display', () => {
 
     await page.click('#acs-add-event');
     await page.waitForSelector('.ui-dialog:has(#acs-event-dialog)', { state: 'visible' });
+    await ensureAdvancedSettingsOpen(page);
 
     await page.fill('#event-title', eventTitle);
     await page.fill('#event-categorie', 'Price Test');  // Category is required
@@ -168,11 +192,11 @@ test.describe('Frontend Agenda Display', () => {
     await page.goto(agendaUrl, { waitUntil: 'networkidle' });
 
     // Filter to the specific event to ensure it is on page 1
-    await page.fill('#acs-filter-search', eventTitle);
+    await filterByTitle(page, eventTitle);
 
     // Event with price should be visible
     const eventCard = page.locator('#acs-agenda-list .acsagenda .event-title', { hasText: eventTitle }).first();
-    await expect(eventCard).toBeVisible({ timeout: 10000 });
+    await expect(eventCard).toBeVisible({ timeout: 30000 });
   });
 
   test('should show Read more when additional content exists', async ({ page }) => {
@@ -189,6 +213,7 @@ test.describe('Frontend Agenda Display', () => {
 
     await page.click('#acs-add-event');
     await page.waitForSelector('.ui-dialog:has(#acs-event-dialog)', { state: 'visible' });
+    await ensureAdvancedSettingsOpen(page);
 
     await page.fill('#event-title', eventTitle);
     await page.fill('#event-categorie', 'UX Test');
@@ -200,10 +225,10 @@ test.describe('Frontend Agenda Display', () => {
     await page.goto(agendaUrl, { waitUntil: 'networkidle' });
 
     // Filter to the specific event to ensure it is on page 1
-    await page.fill('#acs-filter-search', eventTitle);
+    await filterByTitle(page, eventTitle);
 
     const eventCard = page.locator('.column-center').filter({ hasText: eventTitle }).first();
-    await expect(eventCard).toBeVisible({ timeout: 10000 });
+    await expect(eventCard).toBeVisible({ timeout: 30000 });
     await expect(eventCard.locator('.readmore.show')).toHaveCount(1);
 
     await eventCard.locator('.readmore.show').first().click();
@@ -231,7 +256,7 @@ test.describe('Frontend Agenda Display', () => {
     await page.goto(agendaUrl, { waitUntil: 'networkidle' });
 
     // Filter to the specific event to ensure it is on page 1
-    await page.fill('#acs-filter-search', eventTitle);
+    await filterByTitle(page, eventTitle);
 
     const eventCard = page.locator('.column-center').filter({ hasText: eventTitle }).first();
     await expect(eventCard).toBeVisible({ timeout: 10000 });

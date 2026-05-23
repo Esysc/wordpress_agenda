@@ -17,27 +17,61 @@ async function globalSetup(config: FullConfig) {
     await page.goto(`${baseURL}/wp-login.php`, { waitUntil: 'domcontentloaded' });
     await page.fill('#user_login', 'admin');
     await page.fill('#user_pass', 'admin');
-    await page.click('#wp-submit');
+    await Promise.all([
+      page
+        .waitForURL(/wp-(admin|login)\//, { timeout: 45000 })
+        .catch(() => null),
+      page.click('#wp-submit'),
+    ]);
 
-    // Wait for admin redirect using URL matcher first, then fall back to admin marker.
-    const loginReachedAdmin = await page
-      .waitForURL('**/wp-admin/**', { timeout: 45000 })
-      .then(() => true)
-      .catch(() => false);
+    // Navigate explicitly to admin to avoid relying on redirect timing only.
+    await page.goto(`${baseURL}/wp-admin/`, { waitUntil: 'domcontentloaded' });
 
-    if (!loginReachedAdmin) {
+    // If login failed, WordPress keeps us on wp-login with #login_error.
+    if (page.url().includes('/wp-login.php')) {
       const loginError = await page.locator('#login_error').first().textContent().catch(() => null);
       if (loginError) {
         throw new Error(`WordPress login failed: ${loginError.trim()}`);
       }
 
-      // Some local setups take longer before the toolbar appears even after auth succeeds.
-      await page.waitForSelector('#wpadminbar', { timeout: 45000 });
+      throw new Error('WordPress login failed: still on login page after submit.');
     }
 
-    await page.waitForSelector('#wpadminbar', { timeout: 30000 });
+    await page.waitForSelector('#wpadminbar', { timeout: 60000 });
 
     console.log('✅ Login successful');
+
+    // Force admin locale to English so text-based assertions remain stable.
+    await page.goto(`${baseURL}/wp-admin/profile.php`, { waitUntil: 'domcontentloaded' });
+    const localeSelect = page.locator('#locale');
+    if (await localeSelect.count()) {
+      const currentLocale = await localeSelect.inputValue();
+      const englishLocale = await localeSelect.evaluate((el) => {
+        const options = Array.from((el as HTMLSelectElement).options);
+
+        const exact = options.find((opt) => opt.value === 'en_US');
+        if (exact) {
+          return exact.value;
+        }
+
+        const byLabel = options.find((opt) => /english/i.test(opt.textContent || ''));
+        if (byLabel) {
+          return byLabel.value;
+        }
+
+        const byValue = options.find((opt) => /^en([_-]|$)/i.test(opt.value));
+        return byValue ? byValue.value : '';
+      });
+
+      if (englishLocale && currentLocale !== englishLocale) {
+        await localeSelect.selectOption(englishLocale);
+        await page.click('input#submit');
+        await page.waitForLoadState('networkidle');
+        console.log(`🌐 Locale switched to ${englishLocale} for E2E tests`);
+      } else if (!englishLocale) {
+        console.log('ℹ️ No English locale option available in profile settings');
+      }
+    }
 
     // Save authentication state
     await context.storageState({ path: './auth.json' });

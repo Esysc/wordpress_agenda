@@ -65,13 +65,14 @@ The plugin automatically creates an "Agenda" page upon activation with the short
    - **Category**: Group your events (e.g., "Workshop", "Conference")
    - **Title**: Event name
    - **Location**: Where the event takes place
-   - **Image**: Upload or select an event image
    - **Description**: Brief event description
-   - **Page Link**: Link to a detailed event page
    - **Schedule**: Select event date(s) using the calendar
-   - **Price**: Event cost (optional)
-   - **Advance Payment**: Whether advance payment is accepted
-   - **Partial Attendance**: How to handle multi-day events
+    - **Advanced settings**: Expand to configure behavior and optional fields
+      - **Partial Attendance**: How to handle multi-day events
+      - **Image**: Upload or select an event image
+      - **Page Link**: Link to a detailed event page
+      - **Price**: Event cost (optional)
+      - **Advance Payment**: Whether advance payment is accepted
 4. Click **Add** to save
 
 ### Partial Attendance Options
