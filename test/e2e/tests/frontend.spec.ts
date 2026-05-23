@@ -44,8 +44,24 @@ async function filterByTitle(page: Page, title: string) {
   const searchInput = page.locator('#acs-filter-search');
   await expect(searchInput).toBeVisible();
   await searchInput.fill(title);
-  // Give client-side filtering time to update the visible list.
-  await page.waitForTimeout(400);
+  await expect(searchInput).toHaveValue(title);
+
+  await page.waitForFunction((needle) => {
+    const noResults = document.getElementById('acs-no-results');
+    if (noResults && !noResults.hasAttribute('hidden')) {
+      return true;
+    }
+
+    const cards = Array.from(document.querySelectorAll('#acs-agenda-list .acsagenda'));
+    return cards.some((card) => {
+      const el = card as HTMLElement;
+      if (el.offsetParent === null) {
+        return false;
+      }
+
+      return (el.textContent || '').toLowerCase().includes(needle.toLowerCase());
+    });
+  }, title);
 }
 
 async function createEvent(page: Page, data: { title: string; category: string; intro?: string; image?: string; link?: string; }) {

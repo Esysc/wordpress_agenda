@@ -420,7 +420,7 @@
 
             const preview = document.getElementById('event-image-preview');
             if (preview && typeof MutationObserver !== 'undefined') {
-                const desiredText = acsagmaAgendaAdmin.i18n.noImageSelected || '';
+                const desiredText = acsagmaAgendaAdmin.i18n.noImageSelected || 'No image selected';
                 const observer = new MutationObserver(() => {
                     const previewText = preview.querySelector('.acs-image-preview-text');
                     if (previewText && previewText.textContent !== desiredText) {
@@ -727,7 +727,27 @@
             const imageUrl = $input.val().trim();
 
             if (imageUrl) {
-                $preview.addClass('has-image').html('<img src="' + imageUrl + '" alt="Preview" />');
+                let safeImageUrl = null;
+
+                try {
+                    const parsedUrl = new URL(imageUrl, window.location.origin);
+                    if (parsedUrl.protocol === 'http:' || parsedUrl.protocol === 'https:') {
+                        safeImageUrl = parsedUrl.href;
+                    }
+                } catch (error) {
+                    safeImageUrl = null;
+                }
+
+                if (!safeImageUrl) {
+                    this.clearImagePreview();
+                    return;
+                }
+
+                const $img = $('<img>', {
+                    alt: 'Preview',
+                }).attr('src', safeImageUrl);
+
+                $preview.addClass('has-image').empty().append($img);
                 $removeBtn.show();
             } else {
                 this.clearImagePreview();
@@ -757,7 +777,7 @@
                 return;
             }
 
-            $text.text(acsagmaAgendaAdmin.i18n.noImageSelected || '');
+            $text.text(acsagmaAgendaAdmin.i18n.noImageSelected || 'No image selected');
         },
 
         /**

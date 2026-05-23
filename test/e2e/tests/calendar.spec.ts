@@ -8,11 +8,13 @@ async function setDateInputValue(page: Page, value: string) {
       return;
     }
 
+    const previousReadOnly = input.readOnly;
     input.readOnly = false;
     input.value = dateValue;
     input.dispatchEvent(new Event('input', { bubbles: true }));
     input.dispatchEvent(new Event('change', { bubbles: true }));
     input.dispatchEvent(new FocusEvent('blur', { bubbles: true }));
+    input.readOnly = previousReadOnly;
   }, value);
 }
 

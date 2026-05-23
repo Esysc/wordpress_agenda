@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/donate?business=KG9SDHM7VUP6Y&currency_code=
 Tags: agenda, events, calendar, schedule, workshop
 Requires at least: 6.2
 Tested up to: 7.0
-Stable tag: 3.5.0
+Stable tag: 3.5.1
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -97,6 +97,13 @@ Yes, you can override the CSS in your theme or copy the template file to your th
 
 == Changelog ==
 
+= 3.5.1 =
+* Fixed intermittent E2E/global-setup login reliability in CI after fresh environment restarts
+* Improved admin image preview hardening by validating URLs and rendering preview nodes via safe DOM APIs
+* Improved date-chip accessibility with visible keyboard focus styling in the admin calendar UI
+* Updated help/README wording for Advanced settings and Partial Attendance to keep instructions aligned
+* Refined translation entries and rebuilt locale assets for updated help/instruction strings
+
 = 3.5.0 =
 * Added frontend toolbar with search, category filter, date-range filter (today/week/month), sort toggle, and compact/full layout toggle
 * Added windowed client-side pagination (current ± 1 with ellipses)
@@ -183,6 +190,9 @@ Yes, you can override the CSS in your theme or copy the template file to your th
 * Initial public release
 
 == Upgrade Notice ==
+
+= 3.5.1 =
+Maintenance update focused on reliability, admin UI hardening, aligned help instructions, and refreshed translations.
 
 = 3.3.4 =
 Improved WordPress.org compliance with proper shortcode naming and complete Japanese translation.
