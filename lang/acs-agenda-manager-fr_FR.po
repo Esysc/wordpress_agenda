@@ -500,9 +500,13 @@ msgstr "Aller a la page"
 msgid "ACS Agenda Manager - User Guide"
 msgstr "ACS Gestionnaire d'Agenda"
 
-#: templates/help-page.php:21
-msgid "Contents"
-msgstr "Sommaire"
+#: templates/admin-page.php:180
+msgid "Advanced settings"
+msgstr "Parametres avances"
+
+#: templates/help-page.php:41
+msgid "Fill in the event details. Optional fields are grouped under Advanced settings."
+msgstr "Remplissez les détails de l'événement. Les options facultatives sont regroupées dans les paramètres avancés."
 
 #: templates/help-page.php:35
 msgid ""
@@ -820,9 +824,8 @@ msgstr ""
 "page:"
 
 #: templates/help-page.php:266
-#, fuzzy
-msgid "Check the Partial Attendance setting"
-msgstr "Participation partielle"
+msgid "Check the Partial Attendance setting in Advanced settings."
+msgstr "Vérifiez le paramètre de participation partielle dans les paramètres avancés."
 
 #: templates/help-page.php:269
 msgid "Calendar not working"
@@ -1089,14 +1092,12 @@ msgid "Enter event title..."
 msgstr "Saisir le titre de l'evenement..."
 
 #: templates/admin-page.php:173
-#, fuzzy
 msgid "A brief description of the event..."
-msgstr "Une breve introduction a l'evenement."
+msgstr "Une brève description de l'événement."
 
 #: templates/admin-page.php:186
-#, fuzzy
 msgid "Event Dates"
-msgstr "Evenements"
+msgstr "Dates de l'événement"
 
 #: templates/admin-page.php:191
 msgid "Click calendar to select dates"
@@ -1118,18 +1119,16 @@ msgid "Yes - Hide past dates only"
 msgstr "Oui - Masquer uniquement les dates passees"
 
 #: templates/admin-page.php:207
-#, fuzzy
 msgid "Keep until end - Show all dates"
-msgstr "Garder jusqu'a la fin"
+msgstr "Conserver jusqu'à la fin - Afficher toutes les dates"
 
 #: templates/admin-page.php:216
 msgid "Media"
 msgstr "Medias"
 
 #: templates/admin-page.php:221
-#, fuzzy
 msgid "Event Image"
-msgstr "Selectionner une image"
+msgstr "Image de l'événement"
 
 #: templates/admin-page.php:226
 msgid "No image selected"
@@ -1140,9 +1139,8 @@ msgid "Image URL or select from library"
 msgstr "URL de l'image ou selection depuis la bibliotheque"
 
 #: templates/admin-page.php:232
-#, fuzzy
 msgid "Select"
-msgstr "Selectionner une image"
+msgstr "Sélectionner"
 
 #: templates/admin-page.php:234
 msgid "Remove image"
@@ -1173,9 +1171,8 @@ msgid "e.g., CHF 150.-"
 msgstr "ex. : CHF 150.-"
 
 #: templates/admin-page.php:280
-#, fuzzy
 msgid "Yes - Required"
-msgstr "Requis"
+msgstr "Oui - Obligatoire"
 
 #~ msgid "Open Calendar"
 #~ msgstr "Ouvrir le calendrier"

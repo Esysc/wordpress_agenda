@@ -496,6 +496,10 @@ msgstr ""
 msgid "ACS Agenda Manager - User Guide"
 msgstr ""
 
+#: templates/admin-page.php:180
+msgid "Advanced settings"
+msgstr ""
+
 #: templates/help-page.php:21
 msgid "Contents"
 msgstr ""
@@ -520,7 +524,7 @@ msgid "Click \"Add New Event\" to create your first event"
 msgstr ""
 
 #: templates/help-page.php:41
-msgid "Fill in the event details and click Add"
+msgid "Fill in the event details. Optional fields are grouped under Advanced settings."
 msgstr ""
 
 #: templates/help-page.php:52
@@ -758,7 +762,7 @@ msgid "Verify the shortcode [acsagma_agenda] is on the page"
 msgstr ""
 
 #: templates/help-page.php:266
-msgid "Check the Partial Attendance setting"
+msgid "Check the Partial Attendance setting in Advanced settings."
 msgstr ""
 
 #: templates/help-page.php:269

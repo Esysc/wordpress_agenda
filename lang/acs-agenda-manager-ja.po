@@ -497,9 +497,13 @@ msgstr "ページに移動"
 msgid "ACS Agenda Manager - User Guide"
 msgstr "ACS アジェンダマネージャー - ユーザーガイド"
 
-#: templates/help-page.php:21
-msgid "Contents"
-msgstr "目次"
+#: templates/admin-page.php:180
+msgid "Advanced settings"
+msgstr "詳細設定"
+
+#: templates/help-page.php:41
+msgid "Fill in the event details. Optional fields are grouped under Advanced settings."
+msgstr "イベントの詳細を入力します。オプション項目は「詳細設定」にまとめられています。"
 
 #: templates/help-page.php:35
 msgid ""
@@ -701,13 +705,9 @@ msgstr ""
 "過去の日付は非表示になりますが、将来の日付は表示されたままです。参加者が残り"
 "のセッションに参加できるイベントに使用してください。"
 
-#: templates/help-page.php:206
-msgid ""
-"All dates remain visible until the last date passes. Use this for multi-day "
-"events where you want to show the complete schedule."
-msgstr ""
-"最終日が過ぎるまで全ての日付が表示されます。完全なスケジュールを表示したい複"
-"数日イベントに使用してください。"
+#: templates/help-page.php:266
+msgid "Check the Partial Attendance setting in Advanced settings."
+msgstr "「詳細設定」で部分参加の設定を確認してください。"
 
 #: templates/help-page.php:216
 msgid "Google Maps Location Autocomplete"

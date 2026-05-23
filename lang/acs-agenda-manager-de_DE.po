@@ -500,9 +500,13 @@ msgstr "Zur Seite"
 msgid "ACS Agenda Manager - User Guide"
 msgstr "ACS Agenda-Verwaltung"
 
-#: templates/help-page.php:21
-msgid "Contents"
-msgstr "Inhalt"
+#: templates/admin-page.php:180
+msgid "Advanced settings"
+msgstr "Erweiterte Einstellungen"
+
+#: templates/help-page.php:41
+msgid "Fill in the event details. Optional fields are grouped under Advanced settings."
+msgstr "Füllen Sie die Veranstaltungsdetails aus. Optionale Felder sind in den erweiterten Einstellungen gruppiert."
 
 #: templates/help-page.php:35
 msgid ""
@@ -725,14 +729,9 @@ msgstr ""
 "sichtbar. Verwenden Sie dies fuer Veranstaltungen, bei denen Teilnehmer fuer "
 "verbleibende Sitzungen einsteigen koennen."
 
-#: templates/help-page.php:206
-msgid ""
-"All dates remain visible until the last date passes. Use this for multi-day "
-"events where you want to show the complete schedule."
-msgstr ""
-"Alle Termine bleiben sichtbar, bis der letzte Termin vorbei ist. Verwenden "
-"Sie dies fuer mehrtaegige Veranstaltungen, bei denen der komplette Zeitplan "
-"angezeigt werden soll."
+#: templates/help-page.php:266
+msgid "Check the Partial Attendance setting in Advanced settings."
+msgstr "Überprüfen Sie die Einstellung zur teilweisen Teilnahme in den erweiterten Einstellungen."
 
 #: templates/help-page.php:216
 msgid "Google Maps Location Autocomplete"
@@ -1098,14 +1097,12 @@ msgid "Enter event title..."
 msgstr "Veranstaltungstitel eingeben..."
 
 #: templates/admin-page.php:173
-#, fuzzy
 msgid "A brief description of the event..."
-msgstr "Eine kurze Einfuehrung zur Veranstaltung."
+msgstr "Eine kurze Beschreibung der Veranstaltung."
 
 #: templates/admin-page.php:186
-#, fuzzy
 msgid "Event Dates"
-msgstr "Veranstaltungen"
+msgstr "Termine"
 
 #: templates/admin-page.php:191
 msgid "Click calendar to select dates"
@@ -1127,18 +1124,16 @@ msgid "Yes - Hide past dates only"
 msgstr "Ja - Nur vergangene Termine ausblenden"
 
 #: templates/admin-page.php:207
-#, fuzzy
 msgid "Keep until end - Show all dates"
-msgstr "Bis zum Ende behalten"
+msgstr "Bis zum Ende behalten - Alle Termine anzeigen"
 
 #: templates/admin-page.php:216
 msgid "Media"
 msgstr "Medien"
 
 #: templates/admin-page.php:221
-#, fuzzy
 msgid "Event Image"
-msgstr "Bild auswaehlen"
+msgstr "Veranstaltungsbild"
 
 #: templates/admin-page.php:226
 msgid "No image selected"
@@ -1149,9 +1144,8 @@ msgid "Image URL or select from library"
 msgstr "Bild-URL oder aus der Mediathek auswaehlen"
 
 #: templates/admin-page.php:232
-#, fuzzy
 msgid "Select"
-msgstr "Bild auswaehlen"
+msgstr "Auswaehlen"
 
 #: templates/admin-page.php:234
 msgid "Remove image"
@@ -1182,9 +1176,8 @@ msgid "e.g., CHF 150.-"
 msgstr "z. B. CHF 150.-"
 
 #: templates/admin-page.php:280
-#, fuzzy
 msgid "Yes - Required"
-msgstr "Erforderlich"
+msgstr "Ja - Erforderlich"
 
 #~ msgid "Open Calendar"
 #~ msgstr "Kalender oeffnen"

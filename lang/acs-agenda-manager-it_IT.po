@@ -500,6 +500,10 @@ msgstr "Vai alla pagina"
 msgid "ACS Agenda Manager - User Guide"
 msgstr "ACS Gestore Agenda"
 
+#: templates/admin-page.php:180
+msgid "Advanced settings"
+msgstr "Impostazioni avanzate"
+
 #: templates/help-page.php:21
 msgid "Contents"
 msgstr "Contenuti"
@@ -527,8 +531,8 @@ msgid "Click \"Add New Event\" to create your first event"
 msgstr "Fai clic su \"Aggiungi nuovo evento\" per creare il tuo primo evento"
 
 #: templates/help-page.php:41
-msgid "Fill in the event details and click Add"
-msgstr "Compila i dettagli dell'evento e fai clic su Aggiungi"
+msgid "Fill in the event details. Optional fields are grouped under Advanced settings."
+msgstr "Compila i dettagli dell'evento. Le opzioni facoltative sono raggruppate in Impostazioni avanzate."
 
 #: templates/help-page.php:52
 #, php-format
@@ -813,9 +817,8 @@ msgstr ""
 "Usa lo shortcode qui sotto per visualizzare l'agenda su qualsiasi pagina:"
 
 #: templates/help-page.php:266
-#, fuzzy
-msgid "Check the Partial Attendance setting"
-msgstr "Partecipazione parziale"
+msgid "Check the Partial Attendance setting in Advanced settings."
+msgstr "Controlla l'impostazione di partecipazione parziale in Impostazioni avanzate."
 
 #: templates/help-page.php:269
 msgid "Calendar not working"
@@ -1080,14 +1083,12 @@ msgid "Enter event title..."
 msgstr "Inserisci il titolo dell'evento..."
 
 #: templates/admin-page.php:173
-#, fuzzy
 msgid "A brief description of the event..."
-msgstr "Una breve introduzione all'evento."
+msgstr "Una breve descrizione dell'evento."
 
 #: templates/admin-page.php:186
-#, fuzzy
 msgid "Event Dates"
-msgstr "Eventi"
+msgstr "Date dell'evento"
 
 #: templates/admin-page.php:191
 msgid "Click calendar to select dates"
@@ -1109,18 +1110,16 @@ msgid "Yes - Hide past dates only"
 msgstr "Si - Nascondi solo le date passate"
 
 #: templates/admin-page.php:207
-#, fuzzy
 msgid "Keep until end - Show all dates"
-msgstr "Mantieni fino alla fine"
+msgstr "Mantieni fino alla fine - Mostra tutte le date"
 
 #: templates/admin-page.php:216
 msgid "Media"
 msgstr "Media"
 
 #: templates/admin-page.php:221
-#, fuzzy
 msgid "Event Image"
-msgstr "Seleziona immagine"
+msgstr "Immagine evento"
 
 #: templates/admin-page.php:226
 msgid "No image selected"
@@ -1131,9 +1130,8 @@ msgid "Image URL or select from library"
 msgstr "URL immagine o seleziona dalla libreria"
 
 #: templates/admin-page.php:232
-#, fuzzy
 msgid "Select"
-msgstr "Seleziona immagine"
+msgstr "Seleziona"
 
 #: templates/admin-page.php:234
 msgid "Remove image"
@@ -1164,9 +1162,8 @@ msgid "e.g., CHF 150.-"
 msgstr "es. CHF 150.-"
 
 #: templates/admin-page.php:280
-#, fuzzy
 msgid "Yes - Required"
-msgstr "Obbligatorio"
+msgstr "Si - Obbligatorio"
 
 #~ msgid "Open Calendar"
 #~ msgstr "Apri calendario"
