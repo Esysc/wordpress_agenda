@@ -165,5 +165,5 @@ This project is licensed under the GPL-2.0-or-later License - see the [LICENSE](
 
 ## Credits
 
-- **jQuery UI Multi Dates Picker**: Loaded from [jsDelivr CDN](https://www.jsdelivr.com/package/npm/jquery-ui-multidatespicker)
+- **jQuery UI Datepicker**: Bundled with WordPress core
 - **Icons**: WordPress Dashicons

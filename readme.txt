@@ -195,8 +195,5 @@ Major update with complete code rewrite. Backup your database before upgrading.
 
 == Credits ==
 
-* jQuery UI Multi Dates Picker v1.6.6: https://github.com/dubrox/Multiple-Dates-Picker-for-jQuery-UI
-  - Loaded as minified version (js/jquery-ui-multidatespicker.min.js)
-  - Source code available at: https://github.com/dubrox/Multiple-Dates-Picker-for-jQuery-UI
-  - Licensed under MIT License
+* jQuery UI Datepicker: bundled with WordPress core
 * Icons: WordPress Dashicons

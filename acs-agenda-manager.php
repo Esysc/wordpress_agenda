@@ -115,14 +115,6 @@ final class ACSAGMA_Agenda_Manager {
         wp_enqueue_script('jquery-ui-datepicker');
 
         wp_enqueue_script(
-            'acs-multidatespicker',
-            ACSAGMA_AGENDA_PLUGIN_URL . 'js/jquery-ui-multidatespicker.min.js',
-            ['jquery-ui-datepicker'],
-            '1.6.6',
-            true
-        );
-
-        wp_enqueue_script(
             'acs-agenda-frontend',
             ACSAGMA_AGENDA_PLUGIN_URL . 'js/acs-frontend.js',
             ['jquery', 'jquery-ui-dialog'],
@@ -178,15 +170,6 @@ final class ACSAGMA_Agenda_Manager {
         wp_enqueue_script('jquery-ui-dialog');
         wp_enqueue_script('jquery-ui-datepicker');
 
-        // Multi-date picker
-        wp_enqueue_script(
-            'acs-multidatespicker',
-            ACSAGMA_AGENDA_PLUGIN_URL . 'js/jquery-ui-multidatespicker.min.js',
-            ['jquery-ui-datepicker'],
-            '1.6.6',
-            true
-        );
-
         wp_enqueue_media();
         wp_enqueue_style('thickbox');
         wp_enqueue_script('thickbox');
@@ -217,7 +200,7 @@ final class ACSAGMA_Agenda_Manager {
         wp_enqueue_script(
             'acs-agenda-admin',
             ACSAGMA_AGENDA_PLUGIN_URL . 'js/acs-admin.js',
-            ['jquery', 'jquery-ui-dialog', 'acs-multidatespicker'],
+            ['jquery', 'jquery-ui-dialog', 'jquery-ui-datepicker'],
             ACSAGMA_AGENDA_VERSION,
             [
                 'in_footer' => true,
@@ -272,6 +255,10 @@ final class ACSAGMA_Agenda_Manager {
             'copied' => __('Copied', 'acs-agenda-manager'),
             'fieldEmpty' => __('The field is empty', 'acs-agenda-manager'),
             'invalidDate' => __('Invalid date format. Use dd/mm/yy', 'acs-agenda-manager'),
+            'pastDateUnavailable' => __('Past date unavailable', 'acs-agenda-manager'),
+            'noDatesSelected' => __('No dates selected yet', 'acs-agenda-manager'),
+            'removeDate' => __('Remove date', 'acs-agenda-manager'),
+            'requestFailed' => __('Request failed', 'acs-agenda-manager'),
             'selectImage' => __('Select or upload an image', 'acs-agenda-manager'),
             'filteredEvents' => __('Filtered events', 'acs-agenda-manager'),
             'confirmDelete' => __('Do you really want to delete this event?', 'acs-agenda-manager'),

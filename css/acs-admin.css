@@ -190,6 +190,13 @@ textarea.col-editagenda {
     color: #6b7280;
 }
 
+.acs-field-error {
+    margin: 0.4rem 0 0;
+    color: #b32d2e;
+    font-size: 12px;
+    font-weight: 500;
+}
+
 /* ==========================================================================
    Date Input Wrapper
    ========================================================================== */
@@ -215,6 +222,51 @@ textarea.col-editagenda {
     font-size: 16px;
     width: 16px;
     height: 16px;
+}
+
+.acs-selected-dates {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 0.5rem;
+}
+
+.acs-selected-dates-empty {
+    font-size: 12px;
+    color: #6b7280;
+    font-style: italic;
+}
+
+.acs-date-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.2rem 0.55rem;
+    border-radius: 999px;
+    border: 1px solid #cbd5e1;
+    background: #f8fafc;
+    color: #1e293b;
+}
+
+.acs-date-chip-label {
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.acs-date-chip-remove {
+    border: none;
+    background: transparent;
+    color: #475569;
+    cursor: pointer;
+    font-size: 15px;
+    line-height: 1;
+    padding: 0;
+}
+
+.acs-date-chip-remove:hover,
+.acs-date-chip-remove:focus {
+    color: #b32d2e;
+    outline: none;
 }
 
 /* ==========================================================================
@@ -410,7 +462,6 @@ select.error {
 #acs-datepicker-container.active {
     display: block;
     position: absolute;
-    bottom: 100%;
     left: 0;
     margin-bottom: 5px;
     padding: 10px;
@@ -419,6 +470,16 @@ select.error {
     border-radius: 4px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     z-index: 10000;
+}
+
+#acs-datepicker-container.active.is-above {
+    bottom: 100%;
+    top: auto;
+}
+
+#acs-datepicker-container.active.is-below {
+    top: calc(100% + 5px);
+    bottom: auto;
 }
 
 /* Datepicker close button */
@@ -481,4 +542,24 @@ table.ui-datepicker-calendar {
 .ui-datepicker td.acs-past-date span {
     color: #999;
     text-decoration: line-through;
+}
+
+@media (max-width: 782px) {
+    .acs-date-input-wrapper {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    #acs-datepicker-container.active,
+    #acs-datepicker-container.active.is-above,
+    #acs-datepicker-container.active.is-below {
+        position: static;
+        margin-top: 0.6rem;
+        margin-bottom: 0;
+        width: 100%;
+    }
+
+    .ui-datepicker {
+        width: 100%;
+    }
 }

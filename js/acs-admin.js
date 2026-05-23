@@ -7,6 +7,174 @@
 (function ($) {
     'use strict';
 
+    /**
+     * Fallback synchronizer for date UI state in case stale handlers are still bound.
+     */
+    const setupDateFallbackSync = function () {
+        const $doc = $(document);
+
+        const parseDateToken = function (token) {
+            const match = token.match(/^(\d{1,2})\/(\d{1,2})\/(\d{2,4})$/);
+            if (!match) {
+                return null;
+            }
+
+            const day = parseInt(match[1], 10);
+            const month = parseInt(match[2], 10);
+            let year = parseInt(match[3], 10);
+
+            if (month < 1 || month > 12 || day < 1 || day > 31) {
+                return null;
+            }
+
+            if (year < 100) {
+                year += 2000;
+            }
+
+            const date = new Date(year, month - 1, day);
+            if (date.getFullYear() !== year || date.getMonth() !== month - 1 || date.getDate() !== day) {
+                return null;
+            }
+
+            return {
+                canonical:
+                    ('0' + day).slice(-2) + '/' + ('0' + month).slice(-2) + '/' + ('0' + (year % 100)).slice(-2),
+                timestamp: date.getTime(),
+            };
+        };
+
+        const normalizeDateList = function (rawValue) {
+            const tokens = rawValue
+                .split(',')
+                .map(function (d) {
+                    return d.trim();
+                })
+                .filter(function (d) {
+                    return d;
+                });
+
+            const parsed = [];
+            for (let i = 0; i < tokens.length; i++) {
+                const dateInfo = parseDateToken(tokens[i]);
+                if (!dateInfo) {
+                    return { valid: false, dates: [] };
+                }
+                parsed.push(dateInfo);
+            }
+
+            parsed.sort(function (a, b) {
+                return a.timestamp - b.timestamp;
+            });
+
+            const seen = {};
+            const unique = [];
+            parsed.forEach(function (item) {
+                if (!seen[item.canonical]) {
+                    seen[item.canonical] = true;
+                    unique.push(item.canonical);
+                }
+            });
+
+            return {
+                valid: true,
+                dates: unique,
+            };
+        };
+
+        const renderChips = function (dates) {
+            const $selectedDates = $('#acs-selected-dates');
+            if (!$selectedDates.length) {
+                return;
+            }
+
+            if (!dates.length) {
+                $selectedDates.html(
+                    '<span class="acs-selected-dates-empty">' +
+                        (acsagmaAgendaAdmin.i18n.noDatesSelected || 'No dates selected yet') +
+                        '</span>'
+                );
+                return;
+            }
+
+            const chips = dates
+                .map(function (dateValue) {
+                    return (
+                        '<span class="acs-date-chip" data-date="' +
+                        dateValue +
+                        '">' +
+                        '<span class="acs-date-chip-label">' +
+                        dateValue +
+                        '</span>' +
+                        '<button type="button" class="acs-date-chip-remove" aria-label="' +
+                        (acsagmaAgendaAdmin.i18n.removeDate || 'Remove date') +
+                        ': ' +
+                        dateValue +
+                        '">&times;</button>' +
+                        '</span>'
+                    );
+                })
+                .join('');
+
+            $selectedDates.html(chips);
+        };
+
+        const syncDateUI = function () {
+            const $dateInput = $('#event-date');
+            const $dateContainer = $('#acs-datepicker-container');
+            const $calendarButton = $('.acs-open-calendar');
+
+            if ($calendarButton.length) {
+                $calendarButton.attr('aria-expanded', $dateContainer.hasClass('active') ? 'true' : 'false');
+            }
+
+            if (!$dateInput.length) {
+                return;
+            }
+
+            const rawValue = $dateInput.val().trim();
+            if (!rawValue) {
+                renderChips([]);
+                return;
+            }
+
+            const normalized = normalizeDateList(rawValue);
+            if (!normalized.valid) {
+                renderChips([]);
+                return;
+            }
+
+            const canonicalValue = normalized.dates.join(', ');
+            if (rawValue !== canonicalValue) {
+                $dateInput.val(canonicalValue);
+            }
+
+            renderChips(normalized.dates);
+        };
+
+        const scheduleSync = function () {
+            setTimeout(function () {
+                syncDateUI();
+            }, 0);
+        };
+
+        $doc.on(
+            'input change blur click',
+            '#event-date, .acs-open-calendar, .acs-datepicker-close, .ui-datepicker-calendar td a',
+            scheduleSync
+        );
+
+        $doc.on('keydown', function (e) {
+            const $dateContainer = $('#acs-datepicker-container');
+            if (e.key === 'Escape' && $dateContainer.hasClass('active')) {
+                e.preventDefault();
+                $('.acs-open-calendar').trigger('click');
+                scheduleSync();
+            }
+        });
+
+        syncDateUI();
+    };
+
     const ACSAgendaAdmin = {
         /**
          * Initialize admin functionality
@@ -16,6 +184,8 @@
             this.bindEvents();
             this.initDialogs();
             this.initPlacesAutocomplete();
+            this.updateSelectedDatesUI();
+            this.syncDateUIState();
         },
 
         /**
@@ -28,12 +198,24 @@
             this.$deleteDialog = $('#acs-delete-dialog');
             this.$helpDialog = $('#acs-help-dialog');
             this.$notices = $('#acs-admin-notices');
+            this.$dateInput = $('#event-date');
+            this.$dateContainer = $('#acs-datepicker-container');
+            this.$calendarButton = $('.acs-open-calendar');
+            this.$selectedDates = $('#acs-selected-dates');
+            this.$dateError = $('#event-date-error');
         },
 
         /**
          * Bind event handlers
          */
         bindEvents: function () {
+            const self = this;
+            const scheduleDateUISync = function () {
+                setTimeout(function () {
+                    self.syncDateUIState();
+                }, 0);
+            };
+
             // Add event button
             $('#acs-add-event').on('click', this.openAddDialog.bind(this));
 
@@ -58,6 +240,9 @@
             // Calendar button
             $(document).on('click', '.acs-open-calendar', this.openCalendar.bind(this));
 
+            // Remove selected date chip
+            $(document).on('click', '.acs-date-chip-remove', this.removeSelectedDate.bind(this));
+
             // Read more / hide buttons
             $(document).on('click', '.read_more, .hide_more', this.toggleDescription.bind(this));
 
@@ -66,6 +251,181 @@
 
             // Date field validation on blur
             $(document).on('blur', '#event-date', this.validateDateField.bind(this));
+
+            // Defensive synchronization for stale browser callback paths
+            $(document).on('input change blur', '#event-date', scheduleDateUISync);
+            $(document).on('click', '.acs-open-calendar, .acs-datepicker-close, .ui-datepicker-calendar td a', scheduleDateUISync);
+
+            // Close datepicker on escape and outside click
+            $(document).on('keydown', this.handleGlobalKeydown.bind(this));
+            $(document).on('mousedown', this.handleOutsideClick.bind(this));
+        },
+
+        /**
+         * Handle global keyboard shortcuts
+         */
+        handleGlobalKeydown: function (e) {
+            if (e.key === 'Escape' && this.$dateContainer.hasClass('active')) {
+                e.preventDefault();
+                this.destroyDatepicker(true);
+            }
+        },
+
+        /**
+         * Close datepicker when clicking outside its controls
+         */
+        handleOutsideClick: function (e) {
+            if (!this.$dateContainer.hasClass('active')) {
+                return;
+            }
+
+            const $target = $(e.target);
+            const isInsideDatepicker = $target.closest('#acs-datepicker-container').length > 0;
+            const isCalendarButton = $target.closest('.acs-open-calendar').length > 0;
+
+            if (!isInsideDatepicker && !isCalendarButton) {
+                this.destroyDatepicker(false);
+            }
+        },
+
+        /**
+         * Parse a date token and return canonical and timestamp values
+         */
+        parseDateToken: function (token) {
+            const match = token.match(/^(\d{1,2})\/(\d{1,2})\/(\d{2,4})$/);
+            if (!match) {
+                return null;
+            }
+
+            const day = parseInt(match[1], 10);
+            const month = parseInt(match[2], 10);
+            let year = parseInt(match[3], 10);
+
+            if (month < 1 || month > 12 || day < 1 || day > 31) {
+                return null;
+            }
+
+            if (year < 100) {
+                year += 2000;
+            }
+
+            const date = new Date(year, month - 1, day);
+            if (date.getFullYear() !== year || date.getMonth() !== month - 1 || date.getDate() !== day) {
+                return null;
+            }
+
+            const canonical =
+                ('0' + day).slice(-2) +
+                '/' +
+                ('0' + month).slice(-2) +
+                '/' +
+                ('0' + (year % 100)).slice(-2);
+
+            return {
+                canonical: canonical,
+                timestamp: date.getTime(),
+            };
+        },
+
+        /**
+         * Validate and normalize comma-separated date list
+         */
+        normalizeDateList: function (rawValue) {
+            const tokens = rawValue
+                .split(',')
+                .map(function (d) {
+                    return d.trim();
+                })
+                .filter(function (d) {
+                    return d;
+                });
+
+            const parsed = [];
+            for (let i = 0; i < tokens.length; i++) {
+                const dateInfo = this.parseDateToken(tokens[i]);
+                if (!dateInfo) {
+                    return { valid: false, dates: [] };
+                }
+                parsed.push(dateInfo);
+            }
+
+            parsed.sort(function (a, b) {
+                return a.timestamp - b.timestamp;
+            });
+
+            const seen = {};
+            const unique = [];
+            parsed.forEach(function (item) {
+                if (!seen[item.canonical]) {
+                    seen[item.canonical] = true;
+                    unique.push(item.canonical);
+                }
+            });
+
+            return {
+                valid: true,
+                dates: unique,
+            };
+        },
+
+        /**
+         * Read current date input as normalized list
+         */
+        getCurrentDates: function () {
+            const value = this.$dateInput.val().trim();
+            if (!value) {
+                return [];
+            }
+
+            const normalized = this.normalizeDateList(value);
+            return normalized.valid ? normalized.dates : [];
+        },
+
+        /**
+         * Persist date list to input and chip UI
+         */
+        setDateValue: function (dates) {
+            this.$dateInput.val(dates.join(', '));
+            this.updateSelectedDatesUI(dates);
+        },
+
+        /**
+         * Keep date chips and aria-expanded in sync with current DOM state
+         */
+        syncDateUIState: function () {
+            const isCalendarOpen = this.$dateContainer.hasClass('active');
+            this.$calendarButton.attr('aria-expanded', isCalendarOpen ? 'true' : 'false');
+
+            const rawValue = this.$dateInput.val().trim();
+            if (!rawValue) {
+                this.updateSelectedDatesUI([]);
+                return;
+            }
+
+            const normalized = this.normalizeDateList(rawValue);
+            if (!normalized.valid) {
+                this.updateSelectedDatesUI([]);
+                return;
+            }
+
+            const canonicalValue = normalized.dates.join(', ');
+            if (rawValue !== canonicalValue) {
+                this.$dateInput.val(canonicalValue);
+            }
+
+            this.updateSelectedDatesUI(normalized.dates);
+        },
+
+        /**
+         * Show inline date field error message
+         */
+        showDateError: function (message) {
+            if (!message) {
+                this.$dateError.text('').attr('hidden', true);
+                return;
+            }
+
+            this.$dateError.text(message).removeAttr('hidden');
         },
 
         /**
@@ -77,49 +437,80 @@
 
             if (!value) {
                 $input.removeClass('error');
+                this.showDateError('');
+                this.updateSelectedDatesUI([]);
                 return true;
             }
 
-            // Split by comma and validate each date
-            const dates = value.split(',').map(function(d) {
-                return d.trim();
-            }).filter(function(d) {
-                return d;
-            });
-            const validDates = [];
-            const dateRegex = /^(\d{1,2})\/(\d{1,2})\/(\d{2,4})$/;
-
-            for (let i = 0; i < dates.length; i++) {
-                const match = dates[i].match(dateRegex);
-                if (!match) {
-                    $input.addClass('error');
-                    return false;
-                }
-
-                const day = parseInt(match[1], 10);
-                const month = parseInt(match[2], 10);
-                let year = parseInt(match[3], 10);
-
-                // Validate ranges
-                if (month < 1 || month > 12 || day < 1 || day > 31) {
-                    $input.addClass('error');
-                    return false;
-                }
-
-                // Normalize year to 2-digit
-                if (year >= 2000) {
-                    year = year - 2000;
-                }
-
-                // Format consistently
-                const formatted = ('0' + day).slice(-2) + '/' + ('0' + month).slice(-2) + '/' + ('0' + year).slice(-2);
-                validDates.push(formatted);
+            const normalized = this.normalizeDateList(value);
+            if (!normalized.valid) {
+                $input.addClass('error');
+                this.showDateError(acsagmaAgendaAdmin.i18n.invalidDate || 'Invalid date format. Use dd/mm/yy');
+                return false;
             }
 
-            // Update with cleaned values
-            $input.val(validDates.join(', '));
             $input.removeClass('error');
+            this.showDateError('');
+            this.setDateValue(normalized.dates);
             return true;
+        },
+
+        /**
+         * Render selected date chips below the input
+         */
+        updateSelectedDatesUI: function (dates) {
+            const values = Array.isArray(dates) ? dates : this.getCurrentDates();
+
+            if (!values.length) {
+                this.$selectedDates.html(
+                    '<span class="acs-selected-dates-empty">' +
+                        (acsagmaAgendaAdmin.i18n.noDatesSelected || 'No dates selected yet') +
+                        '</span>'
+                );
+                return;
+            }
+
+            const chips = values
+                .map(function (dateValue) {
+                    return (
+                        '<span class="acs-date-chip" data-date="' +
+                        dateValue +
+                        '">' +
+                        '<span class="acs-date-chip-label">' +
+                        dateValue +
+                        '</span>' +
+                        '<button type="button" class="acs-date-chip-remove" aria-label="' +
+                        (acsagmaAgendaAdmin.i18n.removeDate || 'Remove date') +
+                        ': ' +
+                        dateValue +
+                        '">&times;</button>' +
+                        '</span>'
+                    );
+                })
+                .join('');
+
+            this.$selectedDates.html(chips);
+        },
+
+        /**
+         * Remove a selected date using the chip action
+         */
+        removeSelectedDate: function (e) {
+            e.preventDefault();
+
+            const targetDate = $(e.currentTarget).closest('.acs-date-chip').data('date');
+            const currentDates = this.getCurrentDates().filter(function (item) {
+                return item !== targetDate;
+            });
+
+            this.setDateValue(currentDates);
+            this.$dateInput.removeClass('error');
+            this.showDateError('');
+            this.syncDateUIState();
+
+            if (this.$dateContainer.hasClass('active')) {
+                this.$dateContainer.datepicker('refresh');
+            }
         },
 
         /**
@@ -139,7 +530,6 @@
 
             // Wait for Google Maps API to load
             if (typeof google.maps === 'undefined' || typeof google.maps.places === 'undefined') {
-                // Retry after a short delay
                 setTimeout(function () {
                     self.initPlacesAutocomplete();
                 }, 500);
@@ -160,8 +550,8 @@
                         input.value = place.formatted_address;
                     }
                 });
-            } catch (e) {
-                console.warn('Google Places Autocomplete initialization failed:', e);
+            } catch (error) {
+                console.warn('Google Places Autocomplete initialization failed:', error);
             }
         },
 
@@ -169,16 +559,15 @@
          * Initialize jQuery UI dialogs
          */
         initDialogs: function () {
-            // Event dialog
             this.$eventDialog.dialog({
                 autoOpen: false,
                 modal: true,
                 width: 600,
                 maxHeight: $(window).height() - 100,
                 buttons: {},
+                open: this.updateCalendarPosition.bind(this),
             });
 
-            // Delete confirmation dialog
             this.$deleteDialog.dialog({
                 autoOpen: false,
                 modal: true,
@@ -186,7 +575,6 @@
                 buttons: {},
             });
 
-            // Help dialog
             this.$helpDialog.dialog({
                 autoOpen: false,
                 modal: true,
@@ -261,7 +649,6 @@
                     const $input = $('#event-' + name);
 
                     if ($input.is('select')) {
-                        // Find matching option by text
                         $input.find('option').each(function () {
                             if ($(this).text().trim().toLowerCase() === value.toLowerCase()) {
                                 $(this).prop('selected', true);
@@ -273,8 +660,8 @@
                 }
             });
 
-            // Update image preview after populating form
             self.updateImagePreview();
+            self.validateDateField({ currentTarget: self.$dateInput[0] });
         },
 
         /**
@@ -283,8 +670,13 @@
         resetForm: function () {
             this.$eventForm[0].reset();
             $('#event-id').val('');
-            this.destroyDatepicker();
+            this.destroyDatepicker(false);
             this.clearImagePreview();
+            this.showDateError('');
+            this.$dateInput.removeClass('error');
+            this.updateSelectedDatesUI([]);
+            this.$eventForm.find('.error').removeClass('error');
+            $('#acs-dialog-notices').empty();
         },
 
         /**
@@ -293,7 +685,6 @@
         submitEvent: function () {
             const self = this;
 
-            // Validate required fields
             if (!this.validateForm()) {
                 return;
             }
@@ -311,7 +702,6 @@
 
                     if (response.success) {
                         self.$eventDialog.dialog('close');
-                        // Reload with success parameter to show notice
                         const isUpdate = self.$eventForm.find('input[name="id"]').val();
                         const url = new URL(window.location.href);
                         url.searchParams.delete('deleted');
@@ -325,7 +715,7 @@
                 },
                 error: function () {
                     self.$spinner.hide();
-                    self.showNotice('Request failed', 'error', true);
+                    self.showNotice(acsagmaAgendaAdmin.i18n.requestFailed || 'Request failed', 'error', true);
                 },
             });
         },
@@ -347,38 +737,8 @@
                 }
             });
 
-            // Validate date field format
-            const $dateField = $('#event-date');
-            const dateValue = $dateField.val().trim();
-            if (dateValue) {
-                const dateRegex = /^(\d{1,2})\/(\d{1,2})\/(\d{2,4})$/;
-                const dates = dateValue.split(',').map(function(d) {
-                    return d.trim();
-                }).filter(function(d) {
-                    return d;
-                });
-
-                let hasInvalidDate = false;
-                for (let i = 0; i < dates.length; i++) {
-                    const match = dates[i].match(dateRegex);
-                    if (!match) {
-                        hasInvalidDate = true;
-                        break;
-                    }
-                    const day = parseInt(match[1], 10);
-                    const month = parseInt(match[2], 10);
-                    if (month < 1 || month > 12 || day < 1 || day > 31) {
-                        hasInvalidDate = true;
-                        break;
-                    }
-                }
-
-                if (hasInvalidDate) {
-                    $dateField.addClass('error');
-                    isValid = false;
-                    this.showNotice(acsagmaAgendaAdmin.i18n.invalidDate || 'Invalid date format. Use dd/mm/yy', 'error', true);
-                    return false;
-                }
+            if (!this.validateDateField({ currentTarget: this.$dateInput[0] })) {
+                isValid = false;
             }
 
             if (!isValid) {
@@ -456,9 +816,7 @@
             const imageUrl = $input.val().trim();
 
             if (imageUrl) {
-                $preview
-                    .addClass('has-image')
-                    .html('<img src="' + imageUrl + '" alt="Preview" />');
+                $preview.addClass('has-image').html('<img src="' + imageUrl + '" alt="Preview" />');
                 $removeBtn.show();
             } else {
                 this.clearImagePreview();
@@ -476,7 +834,7 @@
                 .removeClass('has-image')
                 .html(
                     '<span class="dashicons dashicons-format-image"></span>' +
-                    '<span class="acs-image-preview-text">No image selected</span>'
+                        '<span class="acs-image-preview-text">No image selected</span>'
                 );
             $removeBtn.hide();
         },
@@ -496,142 +854,128 @@
         openCalendar: function (e) {
             e.preventDefault();
 
-            const $container = $('#acs-datepicker-container');
-            const $input = $('#event-date');
-
-            if ($container.hasClass('active')) {
-                this.destroyDatepicker();
+            if (this.$dateContainer.hasClass('active')) {
+                this.destroyDatepicker(true);
                 return;
             }
 
-            // Get today at midnight for minDate check
+            const currentDates = this.getCurrentDates();
             const today = new Date();
             today.setHours(0, 0, 0, 0);
 
-            // Helper function to get current dates from input (only valid dates)
-            function getCurrentDates() {
-                const val = $input.val();
-                if (!val) {
-                    return [];
-                }
-                const dateRegex = /^(\d{1,2})\/(\d{1,2})\/(\d{2,4})$/;
-                return val.split(',').map(function(d) {
-                    return d.trim();
-                }).filter(function(d) {
-                    // Only keep strings that match date format
-                    if (!d) {
-                        return false;
-                    }
-                    const match = d.match(dateRegex);
-                    if (!match) {
-                        return false;
-                    }
-                    const day = parseInt(match[1], 10);
-                    const month = parseInt(match[2], 10);
-                    // Validate basic ranges
-                    return month >= 1 && month <= 12 && day >= 1 && day <= 31;
-                });
-            }
-
-            // Check if we're editing an event with past dates (allow past dates if editing)
-            const initialDates = getCurrentDates();
             let hasPastDates = false;
-            initialDates.forEach(function(dateStr) {
+            currentDates.forEach(function (dateStr) {
                 const parts = dateStr.split('/');
-                if (parts.length === 3) {
-                    let year = parseInt(parts[2], 10);
-                    if (year < 100) {
-                        year += 2000;
-                    }
-                    const date = new Date(year, parseInt(parts[1], 10) - 1, parseInt(parts[0], 10));
-                    if (date < today) {
-                        hasPastDates = true;
-                    }
+                const year = 2000 + parseInt(parts[2], 10);
+                const date = new Date(year, parseInt(parts[1], 10) - 1, parseInt(parts[0], 10));
+                if (date < today) {
+                    hasPastDates = true;
                 }
             });
 
+            const self = this;
             const options = {
                 dateFormat: 'dd/mm/yy',
                 changeMonth: true,
                 changeYear: true,
                 yearRange: 'c-10:c+10',
                 minDate: hasPastDates ? null : new Date(),
-                beforeShowDay: function(date) {
-                    // Format date to compare
+                beforeShowDay: function (date) {
                     const d = ('0' + date.getDate()).slice(-2);
                     const m = ('0' + (date.getMonth() + 1)).slice(-2);
                     const y = date.getFullYear().toString().slice(-2);
                     const dateStr = d + '/' + m + '/' + y;
 
-                    // Read current dates from input each time
-                    const currentDates = getCurrentDates();
-                    const isSelected = currentDates.indexOf(dateStr) !== -1;
+                    const selected = self.getCurrentDates().indexOf(dateStr) !== -1;
 
-                    // Disable past dates for new events
                     if (!hasPastDates) {
                         const dateAtMidnight = new Date(date.getFullYear(), date.getMonth(), date.getDate());
                         if (dateAtMidnight < today) {
-                            return [false, 'ui-datepicker-unselectable ui-state-disabled acs-past-date', 'Date passée'];
+                            return [
+                                false,
+                                'ui-datepicker-unselectable ui-state-disabled acs-past-date',
+                                acsagmaAgendaAdmin.i18n.pastDateUnavailable || 'Past date unavailable',
+                            ];
                         }
                     }
 
-                    return [true, isSelected ? 'ui-state-highlight' : '', ''];
+                    return [true, selected ? 'ui-state-highlight' : '', ''];
                 },
-                onSelect: function(dateText) {
-                    // Read current dates from input (not from cached array)
-                    const currentDates = getCurrentDates();
+                onSelect: function (dateText) {
+                    const selectedDate = self.parseDateToken(dateText);
+                    const canonicalDate = selectedDate ? selectedDate.canonical : dateText;
+                    const dates = self.getCurrentDates();
+                    const index = dates.indexOf(canonicalDate);
 
-                    const idx = currentDates.indexOf(dateText);
-                    if (idx === -1) {
-                        // Add date
-                        currentDates.push(dateText);
+                    if (index === -1) {
+                        dates.push(canonicalDate);
                     } else {
-                        // Remove date
-                        currentDates.splice(idx, 1);
+                        dates.splice(index, 1);
                     }
 
-                    // Sort dates chronologically
-                    currentDates.sort(function(a, b) {
-                        const pa = a.split('/');
-                        const pb = b.split('/');
-                        const da = new Date(2000 + parseInt(pa[2], 10), parseInt(pa[1], 10) - 1, parseInt(pa[0], 10));
-                        const db = new Date(2000 + parseInt(pb[2], 10), parseInt(pb[1], 10) - 1, parseInt(pb[0], 10));
-                        return da - db;
-                    });
-
-                    // Update input
-                    $input.val(currentDates.join(', '));
-
-                    // Refresh datepicker to update highlighting
-                    $container.datepicker('refresh');
+                    const normalized = self.normalizeDateList(dates.join(', '));
+                    self.setDateValue(normalized.valid ? normalized.dates : dates);
+                    self.showDateError('');
+                    self.$dateInput.removeClass('error');
+                    self.$dateContainer.datepicker('refresh');
                 },
             };
 
-            $container.addClass('active').datepicker(options);
+            this.$dateContainer.addClass('active').datepicker(options);
+            this.updateCalendarPosition();
+            this.syncDateUIState();
 
-            // Add close button after datepicker is created
-            const self = this;
-            setTimeout(function() {
-                if ($container.find('.acs-datepicker-close').length === 0) {
-                    const closeBtn = $('<button type="button" class="acs-datepicker-close">✕ ' + (acsagmaAgendaAdmin.i18n.close || 'Close') + '</button>');
-                    $container.append(closeBtn);
-                    closeBtn.on('click', function(e) {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        self.destroyDatepicker();
-                    });
-                }
-            }, 50);
+            if (this.$dateContainer.find('.acs-datepicker-close').length === 0) {
+                const closeBtn =
+                    '<button type="button" class="acs-datepicker-close">' +
+                    (acsagmaAgendaAdmin.i18n.close || 'Close') +
+                    '</button>';
+                this.$dateContainer.append(closeBtn);
+                this.$dateContainer.find('.acs-datepicker-close').on('click', function (event) {
+                    event.preventDefault();
+                    self.destroyDatepicker(true);
+                });
+            }
+        },
+
+        /**
+         * Position datepicker above or below input based on available space
+         */
+        updateCalendarPosition: function () {
+            if (!this.$dateContainer.hasClass('active')) {
+                return;
+            }
+
+            this.$dateContainer.removeClass('is-below is-above');
+
+            if (window.innerWidth <= 782) {
+                this.$dateContainer.addClass('is-below');
+                return;
+            }
+
+            const inputRect = this.$dateInput[0].getBoundingClientRect();
+            const estimatedHeight = Math.max(this.$dateContainer.outerHeight(), 320);
+            const availableTop = inputRect.top;
+            const availableBottom = window.innerHeight - inputRect.bottom;
+
+            if (availableTop >= estimatedHeight || availableTop > availableBottom) {
+                this.$dateContainer.addClass('is-above');
+            } else {
+                this.$dateContainer.addClass('is-below');
+            }
         },
 
         /**
          * Destroy datepicker
          */
-        destroyDatepicker: function () {
-            const $container = $('#acs-datepicker-container');
+        destroyDatepicker: function (focusButton) {
+            if (this.$dateContainer.hasClass('active')) {
+                this.$dateContainer.removeClass('active is-below is-above').datepicker('destroy').empty();
+            }
 
-            if ($container.hasClass('active')) {
-                $container.removeClass('active').datepicker('destroy').empty();
+            this.syncDateUIState();
+            if (focusButton) {
+                this.$calendarButton.trigger('focus');
             }
         },
 
@@ -689,7 +1033,6 @@
                     '</div>'
             );
 
-            // Show in dialog or main page based on context
             const $container = inDialog ? $('#acs-dialog-notices') : this.$notices;
             $container.html($notice);
 
@@ -714,8 +1057,8 @@
         $('#MSGWrapper' + textareaId).show();
     };
 
-    // Initialize on document ready
     $(document).ready(function () {
         ACSAgendaAdmin.init();
+        setupDateFallbackSync();
     });
 })(jQuery);

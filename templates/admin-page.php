@@ -188,13 +188,31 @@ defined('ABSPATH') || exit;
                 </label>
                 <div class="acs-date-input-wrapper">
                     <div id="acs-datepicker-container"></div>
-                    <input type="text" id="event-date" name="date" class="acs-form-input" required placeholder="<?php esc_attr_e('Click calendar to select dates', 'acs-agenda-manager'); ?>" />
-                    <button type="button" class="button button-secondary acs-open-calendar">
+                    <input
+                        type="text"
+                        id="event-date"
+                        name="date"
+                        class="acs-form-input"
+                        required
+                        readonly
+                        aria-readonly="true"
+                        aria-describedby="event-date-help event-date-error"
+                        placeholder="<?php esc_attr_e('Click calendar to select dates', 'acs-agenda-manager'); ?>"
+                    />
+                    <button
+                        type="button"
+                        class="button button-secondary acs-open-calendar"
+                        aria-controls="acs-datepicker-container"
+                        aria-expanded="false"
+                        aria-haspopup="dialog"
+                    >
                         <span class="dashicons dashicons-calendar" aria-hidden="true"></span>
                         <?php esc_html_e('Calendar', 'acs-agenda-manager'); ?>
                     </button>
                 </div>
-                <p class="acs-form-hint"><?php esc_html_e('Select one or more dates. Use the calendar for easy multi-date selection.', 'acs-agenda-manager'); ?></p>
+                <div id="acs-selected-dates" class="acs-selected-dates" aria-live="polite"></div>
+                <p id="event-date-help" class="acs-form-hint"><?php esc_html_e('Select one or more dates. Use the calendar for easy multi-date selection.', 'acs-agenda-manager'); ?></p>
+                <p id="event-date-error" class="acs-field-error" role="alert" hidden></p>
             </div>
 
             <div class="acs-form-field">
