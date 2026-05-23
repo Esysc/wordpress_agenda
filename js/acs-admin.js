@@ -298,29 +298,38 @@
          */
         updateSelectedDatesUI: function (dates) {
             const values = Array.isArray(dates) ? dates : this.getCurrentDates();
+            const emptyText = acsagmaAgendaAdmin.i18n.noDatesSelected || 'No dates selected yet';
+            const removeLabel = acsagmaAgendaAdmin.i18n.removeDate || 'Remove date';
+            const escapeHtml = function (value) {
+                return String(value)
+                    .replace(/&/g, '&amp;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;')
+                    .replace(/"/g, '&quot;')
+                    .replace(/'/g, '&#39;');
+            };
 
             if (!values.length) {
                 this.$selectedDates.html(
-                    '<span class="acs-selected-dates-empty">' +
-                        (acsagmaAgendaAdmin.i18n.noDatesSelected || 'No dates selected yet') +
-                        '</span>'
+                    '<span class="acs-selected-dates-empty">' + escapeHtml(emptyText) + '</span>'
                 );
                 return;
             }
 
             const chips = values
                 .map(function (dateValue) {
+                    const safeDate = escapeHtml(dateValue);
+                    const safeAria = escapeHtml(removeLabel + ': ' + dateValue);
+
                     return (
                         '<span class="acs-date-chip" data-date="' +
-                        dateValue +
+                        safeDate +
                         '">' +
                         '<span class="acs-date-chip-label">' +
-                        dateValue +
+                        safeDate +
                         '</span>' +
                         '<button type="button" class="acs-date-chip-remove" aria-label="' +
-                        (acsagmaAgendaAdmin.i18n.removeDate || 'Remove date') +
-                        ': ' +
-                        dateValue +
+                        safeAria +
                         '">&times;</button>' +
                         '</span>'
                     );
@@ -838,12 +847,14 @@
             this.syncDateUIState();
 
             if (this.$dateContainer.find('.acs-datepicker-close').length === 0) {
-                const closeBtn =
-                    '<button type="button" class="acs-datepicker-close">' +
-                    (acsagmaAgendaAdmin.i18n.close || 'Close') +
-                    '</button>';
-                this.$dateContainer.append(closeBtn);
-                this.$dateContainer.find('.acs-datepicker-close').on('click', function (event) {
+                const $closeBtn = $('<button>', {
+                    type: 'button',
+                    class: 'acs-datepicker-close',
+                    text: acsagmaAgendaAdmin.i18n.close || 'Close',
+                });
+
+                this.$dateContainer.append($closeBtn);
+                $closeBtn.on('click', function (event) {
                     event.preventDefault();
                     self.destroyDatepicker(true);
                 });

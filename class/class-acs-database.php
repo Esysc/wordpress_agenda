@@ -137,9 +137,11 @@ class ACSAGMA_Database {
         }
 
         // Optional pre-filter: skip events whose last date ended before the given timestamp.
-        // Rows with last_date_ts = NULL (pre-migration data) are always included as a safe fallback.
+        // For legacy rows where last_date_ts is NULL, compute a fallback timestamp from
+        // the last comma-separated date token (dd/mm/yy) at query time.
         if (isset($args['min_last_date_ts'])) {
-            $clauses[] = '(last_date_ts IS NULL OR last_date_ts >= %d)';
+            $clauses[] = "(last_date_ts >= %d OR (last_date_ts IS NULL AND UNIX_TIMESTAMP(STR_TO_DATE(TRIM(SUBSTRING_INDEX(TRIM(date), ',', -1)), '%%d/%%m/%%y')) >= %d))";
+            $params[] = (int) $args['min_last_date_ts'];
             $params[] = (int) $args['min_last_date_ts'];
         }
 
