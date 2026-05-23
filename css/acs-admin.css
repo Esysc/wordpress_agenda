@@ -304,10 +304,15 @@ textarea.col-editagenda {
     padding: 0;
 }
 
-.acs-date-chip-remove:hover,
-.acs-date-chip-remove:focus {
+.acs-date-chip-remove:hover {
     color: #b32d2e;
-    outline: none;
+}
+
+.acs-date-chip-remove:focus,
+.acs-date-chip-remove:focus-visible {
+    color: #b32d2e;
+    outline: 2px solid #1d4ed8;
+    outline-offset: 2px;
 }
 
 /* ==========================================================================

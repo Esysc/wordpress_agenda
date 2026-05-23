@@ -811,10 +811,8 @@ msgid "Check that the event has dates in the future"
 msgstr "Controlla che l'evento abbia date future"
 
 #: templates/help-page.php:265
-#, fuzzy
 msgid "Verify the shortcode [acsagma_agenda] is on the page"
-msgstr ""
-"Usa lo shortcode qui sotto per visualizzare l'agenda su qualsiasi pagina:"
+msgstr "Verifica che lo shortcode [acsagma_agenda] sia presente nella pagina"
 
 #: templates/help-page.php:266
 msgid "Check the Partial Attendance setting in Advanced settings."
