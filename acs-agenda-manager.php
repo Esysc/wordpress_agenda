@@ -3,7 +3,7 @@
  * Plugin Name: ACS Agenda Manager
  * Plugin URI: https://github.com/Esysc/wordpress_agenda
  * Description: A WordPress plugin for managing and displaying event agendas. Perfect for workshops, courses, and event organizers.
- * Version: 3.5.0
+ * Version: 3.5.1
  * Requires at least: 6.2
  * Requires PHP: 7.4
  * Author: Andrea Cristalli
@@ -19,7 +19,7 @@
 defined('ABSPATH') || exit;
 
 // Plugin constants
-define('ACSAGMA_AGENDA_VERSION', '3.5.0');
+define('ACSAGMA_AGENDA_VERSION', '3.5.1');
 define('ACSAGMA_AGENDA_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('ACSAGMA_AGENDA_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('ACSAGMA_AGENDA_TABLE_NAME', 'acs_agenda_manager');
@@ -115,14 +115,6 @@ final class ACSAGMA_Agenda_Manager {
         wp_enqueue_script('jquery-ui-datepicker');
 
         wp_enqueue_script(
-            'acs-multidatespicker',
-            ACSAGMA_AGENDA_PLUGIN_URL . 'js/jquery-ui-multidatespicker.min.js',
-            ['jquery-ui-datepicker'],
-            '1.6.6',
-            true
-        );
-
-        wp_enqueue_script(
             'acs-agenda-frontend',
             ACSAGMA_AGENDA_PLUGIN_URL . 'js/acs-frontend.js',
             ['jquery', 'jquery-ui-dialog'],
@@ -140,6 +132,7 @@ final class ACSAGMA_Agenda_Manager {
             'i18n' => [
                 'readMoreError' => __('Unable to load details. Please try again.', 'acs-agenda-manager'),
                 'noResults' => __('No events match your filters.', 'acs-agenda-manager'),
+                /* translators: %1$d is the first item number, %2$d the last item number, %3$d the total number of events. */
                 'resultsLabel' => __('Showing %1$d-%2$d of %3$d events', 'acs-agenda-manager'),
                 'compactOn' => __('Compact mode on', 'acs-agenda-manager'),
                 'compactOff' => __('Compact mode off', 'acs-agenda-manager'),
@@ -178,15 +171,6 @@ final class ACSAGMA_Agenda_Manager {
         wp_enqueue_script('jquery-ui-dialog');
         wp_enqueue_script('jquery-ui-datepicker');
 
-        // Multi-date picker
-        wp_enqueue_script(
-            'acs-multidatespicker',
-            ACSAGMA_AGENDA_PLUGIN_URL . 'js/jquery-ui-multidatespicker.min.js',
-            ['jquery-ui-datepicker'],
-            '1.6.6',
-            true
-        );
-
         wp_enqueue_media();
         wp_enqueue_style('thickbox');
         wp_enqueue_script('thickbox');
@@ -217,7 +201,7 @@ final class ACSAGMA_Agenda_Manager {
         wp_enqueue_script(
             'acs-agenda-admin',
             ACSAGMA_AGENDA_PLUGIN_URL . 'js/acs-admin.js',
-            ['jquery', 'jquery-ui-dialog', 'acs-multidatespicker'],
+            ['jquery', 'jquery-ui-dialog', 'jquery-ui-datepicker'],
             ACSAGMA_AGENDA_VERSION,
             [
                 'in_footer' => true,
@@ -272,6 +256,12 @@ final class ACSAGMA_Agenda_Manager {
             'copied' => __('Copied', 'acs-agenda-manager'),
             'fieldEmpty' => __('The field is empty', 'acs-agenda-manager'),
             'invalidDate' => __('Invalid date format. Use dd/mm/yy', 'acs-agenda-manager'),
+            'pastDateUnavailable' => __('Past date unavailable', 'acs-agenda-manager'),
+            'noDatesSelected' => __('No dates selected yet', 'acs-agenda-manager'),
+            'removeDate' => __('Remove date', 'acs-agenda-manager'),
+            'requestFailed' => __('Request failed', 'acs-agenda-manager'),
+            'select' => __('Select', 'acs-agenda-manager'),
+            'noImageSelected' => __('No image selected', 'acs-agenda-manager'),
             'selectImage' => __('Select or upload an image', 'acs-agenda-manager'),
             'filteredEvents' => __('Filtered events', 'acs-agenda-manager'),
             'confirmDelete' => __('Do you really want to delete this event?', 'acs-agenda-manager'),

@@ -6,6 +6,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.5.1] - 2026-05-23
+
+### Fixed
+
+- **E2E reliability**: Improved global setup login stability after fresh test-stack restarts, reducing intermittent CI bootstrap failures
+- **Admin image preview hardening**: Preview rendering now validates URL protocols and uses DOM APIs for safer node creation
+- **Date chip accessibility**: Restored visible keyboard focus styles for date-chip remove controls in the admin calendar UI
+- **Documentation alignment**: Help content and README guidance for Advanced settings and Partial Attendance were aligned for consistency
+- **Translations**: Updated locale entries tied to help/instruction wording and regenerated translation assets
+
 ## [3.5.0] - 2026-05-23
 
 ### Added

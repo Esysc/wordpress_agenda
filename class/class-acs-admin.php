@@ -281,8 +281,11 @@ class ACSAGMA_Agenda_List_Table extends WP_List_Table {
 
         foreach ($filters as $filter) {
             $value = wp_json_encode(['t' => $filter['title'], 'c' => $filter['categorie']]);
-            $selected_attr = selected($current_filter, $value, false);
-            echo '<option value="' . esc_attr($value) . '"' . $selected_attr . '>' . esc_html($filter['title']) . ' - ' . esc_html($filter['categorie']) . '</option>';
+            if ($current_filter === $value) {
+                echo '<option value="' . esc_attr($value) . '" selected="selected">' . esc_html($filter['title']) . ' - ' . esc_html($filter['categorie']) . '</option>';
+            } else {
+                echo '<option value="' . esc_attr($value) . '">' . esc_html($filter['title']) . ' - ' . esc_html($filter['categorie']) . '</option>';
+            }
         }
 
         echo '</select>';

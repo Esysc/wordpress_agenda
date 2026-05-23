@@ -76,7 +76,7 @@ class ACSAGMA_Options {
     }
 
     private function save_settings(): void {
-        // Nonce is verified in render_settings_page() before this method is called.
+        check_admin_referer('acsagma_agenda_settings_nonce');
 
         $old_page_name = get_option('acsagma_page', 'Agenda');
         $new_page_name = sanitize_text_field(wp_unslash($_POST['acsagma_page'] ?? 'Agenda'));

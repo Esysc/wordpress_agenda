@@ -38,7 +38,7 @@ $acsagma_agenda_page = get_option('acsagma_page', 'Agenda');
                 <ol>
                     <li><?php esc_html_e('Go to Agenda in the admin menu to view your events list', 'acs-agenda-manager'); ?></li>
                     <li><?php esc_html_e('Click "Add New Event" to create your first event', 'acs-agenda-manager'); ?></li>
-                    <li><?php esc_html_e('Fill in the event details and click Add', 'acs-agenda-manager'); ?></li>
+                    <li><?php esc_html_e('Fill in the event details. Optional fields are grouped under Advanced settings.', 'acs-agenda-manager'); ?></li>
                     <?php
                     /* translators: %s: agenda page name. */
                     $acsagma_page_label = sprintf('<strong>%s</strong>', esc_html($acsagma_agenda_page));
@@ -263,7 +263,7 @@ $acsagma_agenda_page = get_option('acsagma_page', 'Agenda');
                 <ul>
                     <li><?php esc_html_e('Check that the event has dates in the future', 'acs-agenda-manager'); ?></li>
                     <li><?php esc_html_e('Verify the shortcode [acsagma_agenda] is on the page', 'acs-agenda-manager'); ?></li>
-                    <li><?php esc_html_e('Check the Partial Attendance setting', 'acs-agenda-manager'); ?></li>
+                    <li><?php esc_html_e('Check the Partial Attendance setting in Advanced settings.', 'acs-agenda-manager'); ?></li>
                 </ul>
 
                 <h3><?php esc_html_e('Calendar not working', 'acs-agenda-manager'); ?></h3>

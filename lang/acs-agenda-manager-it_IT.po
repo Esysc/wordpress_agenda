@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ACS Agenda Manager 3.0.0\n"
 "Report-Msgid-Bugs-To: https://github.com/Esysc/wordpress_agenda/issues\n"
-"POT-Creation-Date: 2025-12-25 00:00+0000\n"
+"POT-Creation-Date: 2026-05-22 20:22+0200\n"
 "PO-Revision-Date: 2025-12-24 00:00+0100\n"
 "Last-Translator: Andrea Cristalli <andrea.cristalli@hispeed.ch>\n"
 "Language-Team: Italian\n"
@@ -17,20 +17,498 @@ msgstr ""
 "X-Generator: Poedit 3.0\n"
 "X-Domain: acs-agenda-manager\n"
 
+#: acs-agenda-manager.php:141
+msgid "Unable to load details. Please try again."
+msgstr "Impossibile caricare i dettagli. Riprova."
+
+#: acs-agenda-manager.php:142 class/class-acs-template.php:29
+msgid "No events match your filters."
+msgstr "Nessun evento corrisponde ai filtri."
+
+#: acs-agenda-manager.php:143
+#, php-format
+msgid "Showing %1$d-%2$d of %3$d events"
+msgstr "Visualizzazione %1$d-%2$d di %3$d eventi"
+
+#: acs-agenda-manager.php:144
+msgid "Compact mode on"
+msgstr "Modalita compatta attivata"
+
+#: acs-agenda-manager.php:145
+msgid "Compact mode off"
+msgstr "Modalita compatta disattivata"
+
+#: acs-agenda-manager.php:146
+msgid "Previous"
+msgstr "Precedente"
+
+#: acs-agenda-manager.php:147
+msgid "Next"
+msgstr "Successivo"
+
+#: acs-agenda-manager.php:266
+msgid "Confirm"
+msgstr "Conferma"
+
+#: acs-agenda-manager.php:267
+msgid "Cancel"
+msgstr "Annulla"
+
+#: acs-agenda-manager.php:268
+msgid "Update"
+msgstr "Aggiorna"
+
+#: acs-agenda-manager.php:269
+msgid "Add"
+msgstr "Aggiungi"
+
+#: acs-agenda-manager.php:270
+msgid "Close"
+msgstr "Chiudi"
+
+#: acs-agenda-manager.php:271 templates/admin-page.php:194
+msgid "Calendar"
+msgstr "Calendario"
+
+#: acs-agenda-manager.php:272
+msgid "Copied"
+msgstr "Copiato"
+
+#: acs-agenda-manager.php:273
+msgid "The field is empty"
+msgstr "Il campo e vuoto"
+
+#: acs-agenda-manager.php:274
+msgid "Invalid date format. Use dd/mm/yy"
+msgstr "Formato data non valido. Usa gg/mm/aa"
+
+#: acs-agenda-manager.php:275
+msgid "Past date unavailable"
+msgstr "Data passata non disponibile"
+
+#: acs-agenda-manager.php:276
+msgid "No dates selected yet"
+msgstr "Nessuna data selezionata al momento"
+
+#: acs-agenda-manager.php:277
+msgid "Remove date"
+msgstr "Rimuovi data"
+
+#: acs-agenda-manager.php:278
+msgid "Request failed"
+msgstr "Richiesta non riuscita"
+
+#: acs-agenda-manager.php:279
+msgid "Select or upload an image"
+msgstr "Seleziona o carica un'immagine"
+
+#: acs-agenda-manager.php:280
+msgid "Filtered events"
+msgstr "Eventi filtrati"
+
+#: acs-agenda-manager.php:281
+msgid "Do you really want to delete this event?"
+msgstr "Vuoi davvero eliminare questo evento?"
+
+#: acs-agenda-manager.php:282
+msgid "Editor"
+msgstr "Editor"
+
+#: acs-agenda-manager.php:283
+msgid "Add an event"
+msgstr "Aggiungi un evento"
+
+#: acs-agenda-manager.php:302
+msgid "No upcoming events."
+msgstr "Nessun evento in programma."
+
+#: acs-agenda-manager.php:318
+msgid "Invalid post ID"
+msgstr "ID post non valido"
+
+#: acs-agenda-manager.php:324
+msgid "Post not found"
+msgstr "Post non trovato"
+
+#: class/class-acs-event.php:187
+msgid "Sunday"
+msgstr "Domenica"
+
+#: class/class-acs-event.php:188
+msgid "Monday"
+msgstr "Lunedi"
+
+#: class/class-acs-event.php:189
+msgid "Tuesday"
+msgstr "Martedi"
+
+#: class/class-acs-event.php:190
+msgid "Wednesday"
+msgstr "Mercoledi"
+
+#: class/class-acs-event.php:191
+msgid "Thursday"
+msgstr "Giovedi"
+
+#: class/class-acs-event.php:192
+msgid "Friday"
+msgstr "Venerdi"
+
+#: class/class-acs-event.php:193
+msgid "Saturday"
+msgstr "Sabato"
+
+#: class/class-acs-event.php:204
+msgid "January"
+msgstr "Gennaio"
+
+#: class/class-acs-event.php:205
+msgid "February"
+msgstr "Febbraio"
+
+#: class/class-acs-event.php:206
+msgid "March"
+msgstr "Marzo"
+
+#: class/class-acs-event.php:207
+msgid "April"
+msgstr "Aprile"
+
+#: class/class-acs-event.php:208
+msgid "May"
+msgstr "Maggio"
+
+#: class/class-acs-event.php:209
+msgid "June"
+msgstr "Giugno"
+
+#: class/class-acs-event.php:210
+msgid "July"
+msgstr "Luglio"
+
+#: class/class-acs-event.php:211
+msgid "August"
+msgstr "Agosto"
+
+#: class/class-acs-event.php:212
+msgid "September"
+msgstr "Settembre"
+
+#: class/class-acs-event.php:213
+msgid "October"
+msgstr "Ottobre"
+
+#: class/class-acs-event.php:214
+msgid "November"
+msgstr "Novembre"
+
+#: class/class-acs-event.php:215
+msgid "December"
+msgstr "Dicembre"
+
+#: class/class-acs-help.php:74 class/class-acs-help.php:75
+msgid "User Guide"
+msgstr "Guida utente"
+
+#: class/class-acs-help.php:89 class/class-acs-options.php:63
+#: class/class-acs-admin.php:328 class/class-acs-admin.php:350
+#: class/class-acs-admin.php:409 class/class-acs-admin.php:440
+msgid "Permission denied"
+msgstr "Permesso negato"
+
+#: class/class-acs-help.php:102 templates/help-page.php:34
+msgid "Getting Started"
+msgstr "Per iniziare"
+
+#: class/class-acs-help.php:103 templates/help-page.php:64
+msgid "Adding Events"
+msgstr "Aggiungere eventi"
+
+#: class/class-acs-help.php:104 templates/help-page.php:137
+msgid "Managing Events"
+msgstr "Gestire gli eventi"
+
+#: class/class-acs-help.php:105 templates/help-page.php:154
+msgid "Using the Shortcode"
+msgstr "Usare lo shortcode"
+
+#: class/class-acs-help.php:106 class/class-acs-admin.php:39
+#: templates/help-page.php:122 templates/help-page.php:185
+#: templates/admin-page.php:112 templates/admin-page.php:202
+msgid "Partial Attendance"
+msgstr "Partecipazione parziale"
+
+#: class/class-acs-help.php:107 templates/help-page.php:214
+msgid "Customization"
+msgstr "Personalizzazione"
+
+#: class/class-acs-help.php:108 templates/help-page.php:260
+msgid "Troubleshooting"
+msgstr "Risoluzione problemi"
+
+#: class/class-acs-options.php:33 class/class-acs-options.php:34
+msgid "Settings"
+msgstr "Impostazioni"
+
+#: class/class-acs-options.php:121
+msgid "Settings saved successfully."
+msgstr "Impostazioni salvate con successo."
+
+#: class/class-acs-admin.php:21 templates/admin-page.php:129
+msgid "Event"
+msgstr "Evento"
+
+#: class/class-acs-admin.php:22
+msgid "Events"
+msgstr "Eventi"
+
+#: class/class-acs-admin.php:30 class/class-acs-template.php:80
+#: templates/help-page.php:77 templates/admin-page.php:84
+#: templates/admin-page.php:146
+msgid "Category"
+msgstr "Categoria"
+
+#: class/class-acs-admin.php:31 templates/help-page.php:82
+#: templates/admin-page.php:88 templates/admin-page.php:162
+msgid "Title"
+msgstr "Titolo"
+
+#: class/class-acs-admin.php:32 templates/help-page.php:87
+#: templates/admin-page.php:92 templates/admin-page.php:154
+msgid "Location"
+msgstr "Luogo"
+
+#: class/class-acs-admin.php:33 templates/help-page.php:92
+#: templates/admin-page.php:96
+msgid "Image"
+msgstr "Immagine"
+
+#: class/class-acs-admin.php:34 templates/help-page.php:71
+#: templates/help-page.php:97 templates/admin-page.php:100
+#: templates/admin-page.php:171
+msgid "Description"
+msgstr "Descrizione"
+
+#: class/class-acs-admin.php:35 templates/help-page.php:102
+#: templates/admin-page.php:104 templates/admin-page.php:252
+msgid "Page Link"
+msgstr "Link alla pagina"
+
+#: class/class-acs-admin.php:36 templates/help-page.php:107
+#: templates/admin-page.php:108 templates/admin-page.php:181
+msgid "Schedule"
+msgstr "Date"
+
+#: class/class-acs-admin.php:37 templates/help-page.php:112
+#: templates/admin-page.php:270
+msgid "Price"
+msgstr "Prezzo"
+
+#: class/class-acs-admin.php:38 templates/help-page.php:117
+#: templates/admin-page.php:276
+msgid "Advance Payment"
+msgstr "Acconto"
+
+#: class/class-acs-admin.php:40 templates/help-page.php:127
+#: templates/admin-page.php:259
+msgid "External URL"
+msgstr "URL esterno"
+
+#: class/class-acs-admin.php:41
+msgid "Created"
+msgstr "Creato"
+
+#: class/class-acs-admin.php:56 class/class-acs-admin.php:162
+msgid "Delete"
+msgstr "Elimina"
+
+#: class/class-acs-admin.php:65 class/class-acs-admin.php:71
+#: templates/help-page.php:89 templates/help-page.php:94
+#: templates/help-page.php:99 templates/help-page.php:104
+#: templates/help-page.php:114 templates/help-page.php:119
+#: templates/help-page.php:124 templates/help-page.php:129
+#: templates/help-page.php:197 templates/admin-page.php:279
+msgid "No"
+msgstr "No"
+
+#: class/class-acs-admin.php:66 class/class-acs-admin.php:72
+#: templates/help-page.php:79 templates/help-page.php:84
+#: templates/help-page.php:109 templates/help-page.php:201
+msgid "Yes"
+msgstr "Si"
+
+#: class/class-acs-admin.php:67 templates/help-page.php:205
+msgid "Keep until end"
+msgstr "Mantieni fino alla fine"
+
+#: class/class-acs-admin.php:92 class/class-acs-template.php:246
+msgid "Read more"
+msgstr "Leggi di piu"
+
+#: class/class-acs-admin.php:93
+msgid "Hide"
+msgstr "Nascondi"
+
+#: class/class-acs-admin.php:117
+msgid "Open page"
+msgstr "Apri pagina"
+
+#: class/class-acs-admin.php:157
+msgid "Edit"
+msgstr "Modifica"
+
+#: class/class-acs-admin.php:198
+msgid "Contact Form Shortcode"
+msgstr "Shortcode modulo contatto"
+
+#: class/class-acs-admin.php:204
+msgid "Copy!"
+msgstr "Copia!"
+
+#: class/class-acs-admin.php:210
+msgid "Form shortcode"
+msgstr "Shortcode modulo"
+
+#: class/class-acs-admin.php:248
+msgid "No events found."
+msgstr "Nessun evento trovato."
+
+#: class/class-acs-admin.php:267
+msgid "All Events"
+msgstr "Tutti gli eventi"
+
+#: class/class-acs-admin.php:276
+msgid "Filter"
+msgstr "Filtra"
+
+#: class/class-acs-admin.php:334 class/class-acs-admin.php:354
+#: class/class-acs-admin.php:405 class/class-acs-admin.php:436
+msgid "Security check failed"
+msgstr "Controllo di sicurezza fallito"
+
+#: class/class-acs-admin.php:370 class/class-acs-admin.php:371
 #, fuzzy
-msgid "A brief description of the event..."
-msgstr "Una breve introduzione all'evento."
+msgid "ACS Agenda"
+msgstr "Agenda"
 
-msgid "A short introduction to the event."
-msgstr "Una breve introduzione all'evento."
+#: class/class-acs-admin.php:383
+msgid "Events per page"
+msgstr "Eventi per pagina"
 
-msgid "About This Plugin"
-msgstr "Informazioni su questo plugin"
+#: class/class-acs-admin.php:415
+msgid "Invalid event ID"
+msgstr "ID evento non valido"
 
+#: class/class-acs-admin.php:427
+msgid "Event updated successfully"
+msgstr "Evento aggiornato con successo"
+
+#: class/class-acs-admin.php:429
+msgid "Failed to update event"
+msgstr "Aggiornamento evento fallito"
+
+#: class/class-acs-admin.php:452
+msgid "Event added successfully"
+msgstr "Evento aggiunto con successo"
+
+#: class/class-acs-admin.php:454
+msgid "Failed to add event"
+msgstr "Aggiunta evento fallita"
+
+#: class/class-acs-admin.php:467
+msgid "Title is required"
+msgstr "Il titolo e obbligatorio"
+
+#: class/class-acs-template.php:32
+msgid "Agenda pagination"
+msgstr "Paginazione agenda"
+
+#: class/class-acs-template.php:77
+msgid "Agenda filters and sorting"
+msgstr "Filtri e ordinamento agenda"
+
+#: class/class-acs-template.php:78
+msgid "Search"
+msgstr "Cerca"
+
+#: class/class-acs-template.php:79
+msgid "Search title or description"
+msgstr "Cerca nel titolo o nella descrizione"
+
+#: class/class-acs-template.php:81
+msgid "All categories"
+msgstr "Tutte le categorie"
+
+#: class/class-acs-template.php:82
+msgid "Date"
+msgstr "Data"
+
+#: class/class-acs-template.php:83
+msgid "All dates"
+msgstr "Tutte le date"
+
+#: class/class-acs-template.php:84 class/class-acs-template.php:223
+msgid "Today"
+msgstr "Oggi"
+
+#: class/class-acs-template.php:85
+msgid "This week"
+msgstr "Questa settimana"
+
+#: class/class-acs-template.php:86
+msgid "This month"
+msgstr "Questo mese"
+
+#: class/class-acs-template.php:87
+msgid "Sort"
+msgstr "Ordina"
+
+#: class/class-acs-template.php:88
+msgid "Soonest first"
+msgstr "Prima i piu vicini"
+
+#: class/class-acs-template.php:89
+msgid "Latest first"
+msgstr "Prima i piu recenti"
+
+#: class/class-acs-template.php:90
+msgid "Title A-Z"
+msgstr "Titolo A-Z"
+
+#: class/class-acs-template.php:91
+msgid "Compact mode"
+msgstr "Modalita compatta"
+
+#: class/class-acs-template.php:108
+msgid "Agenda Administration"
+msgstr "Amministrazione agenda"
+
+#: class/class-acs-template.php:225
+msgid "Running"
+msgstr "In corso"
+
+#: class/class-acs-template.php:348
+msgid "Close dialog"
+msgstr "Chiudi finestra di dialogo"
+
+#: class/class-acs-template.php:351
+msgid "Go to page"
+msgstr "Vai alla pagina"
+
+#: templates/help-page.php:16
 #, fuzzy
 msgid "ACS Agenda Manager - User Guide"
 msgstr "ACS Gestore Agenda"
 
+#: templates/admin-page.php:180
+msgid "Advanced settings"
+msgstr "Impostazioni avanzate"
+
+#: templates/help-page.php:21
+msgid "Contents"
+msgstr "Contenuti"
+
+#: templates/help-page.php:35
 msgid ""
 "ACS Agenda Manager allows you to create and manage an event agenda on your "
 "WordPress site. When activated, the plugin automatically creates an Agenda "
@@ -40,579 +518,191 @@ msgstr ""
 "sito WordPress. Quando viene attivato, il plugin crea automaticamente una "
 "pagina Agenda con lo shortcode incluso."
 
-msgid "Add"
-msgstr "Aggiungi"
+#: templates/help-page.php:37
+msgid "Quick Start"
+msgstr "Avvio rapido"
 
-msgid "Add an event"
-msgstr "Aggiungi un evento"
+#: templates/help-page.php:39
+msgid "Go to Agenda in the admin menu to view your events list"
+msgstr "Vai su Agenda nel menu admin per vedere la lista degli eventi"
 
-msgid "Add New Event"
-msgstr "Aggiungi nuovo evento"
-
-msgid "Adding Events"
-msgstr "Aggiungere eventi"
-
-msgid "Advance Payment"
-msgstr "Acconto"
-
-msgid "Agenda"
-msgstr "Agenda"
-
-msgid "Agenda Administration"
-msgstr "Amministrazione agenda"
-
-msgid "Agenda Manager"
-msgstr "Gestore Agenda"
-
-msgid "Agenda Page Name"
-msgstr "Nome pagina agenda"
-
-msgid "Agenda Settings"
-msgstr "Impostazioni agenda"
-
-msgid ""
-"All dates remain visible until the last date passes. Use this for multi-day "
-"events where you want to show the complete schedule."
-msgstr ""
-"Tutte le date restano visibili fino al termine dell'ultima data. Usa questa "
-"opzione per eventi di piu giorni in cui vuoi mostrare il programma completo."
-
-msgid "All Events"
-msgstr "Tutti gli eventi"
-
-msgid "An image associated with the event. Shown in the right column."
-msgstr "Un'immagine associata all'evento. Mostrata nella colonna destra."
-
-msgid "April"
-msgstr "Aprile"
-
-msgid "Are you sure you want to delete this event?"
-msgstr "Sei sicuro di voler eliminare questo evento?"
-
-msgid "August"
-msgstr "Agosto"
-
-msgid "Basic Information"
-msgstr "Informazioni di base"
-
-msgid "Behavior"
-msgstr "Comportamento"
-
-msgid "Brief description shown in the \"Read More\" dialog"
-msgstr "Breve descrizione mostrata nella finestra \"Leggi di piu\""
-
-msgid "Calendar"
-msgstr "Calendario"
-
-msgid "Calendar not working"
-msgstr "Il calendario non funziona"
-
-msgid "Cancel"
-msgstr "Annulla"
-
-msgid "Category"
-msgstr "Categoria"
-
-msgid "Check if your theme or a caching plugin is minifying CSS incorrectly"
-msgstr "Controlla se il tuo tema o un plugin di cache sta minimizzando il CSS in modo errato"
-
-msgid "Check that the event has dates in the future"
-msgstr "Controlla che l'evento abbia date future"
-
-msgid "Check the browser console for JavaScript errors"
-msgstr "Controlla la console del browser per errori JavaScript"
-
-#, fuzzy
-msgid "Check the Partial Attendance setting"
-msgstr "Partecipazione parziale"
-
-msgid "Clear your browser cache"
-msgstr "Svuota la cache del browser"
-
+#: templates/help-page.php:40
 msgid "Click \"Add New Event\" to create your first event"
 msgstr "Fai clic su \"Aggiungi nuovo evento\" per creare il tuo primo evento"
 
-msgid "Click calendar to select dates"
-msgstr "Fai clic sul calendario per selezionare le date"
+#: templates/help-page.php:41
+msgid "Fill in the event details. Optional fields are grouped under Advanced settings."
+msgstr "Compila i dettagli dell'evento. Le opzioni facoltative sono raggruppate in Impostazioni avanzate."
 
-msgid "Close"
-msgstr "Chiudi"
+#: templates/help-page.php:52
+#, php-format
+msgid "Visit your %s page to see your events"
+msgstr "Visita la tua pagina %s per vedere i tuoi eventi"
 
-msgid "Confirm"
-msgstr "Conferma"
+#: templates/help-page.php:65
+msgid ""
+"To add a new event, click the \"Add New Event\" button on the Agenda admin "
+"page. A dialog will appear with the following fields:"
+msgstr ""
+"Per aggiungere un nuovo evento, fai clic sul pulsante \"Aggiungi nuovo "
+"evento\" nella pagina amministrativa Agenda. Apparira una finestra con i "
+"seguenti campi:"
 
-msgid "Confirm Delete"
-msgstr "Conferma eliminazione"
+#: templates/help-page.php:70
+msgid "Field"
+msgstr "Campo"
 
-msgid "Contact Form Shortcode"
-msgstr "Shortcode modulo contatto"
+#: templates/help-page.php:72
+msgid "Required"
+msgstr "Obbligatorio"
 
-msgid "Contents"
-msgstr "Contenuti"
+#: templates/help-page.php:78
+msgid "Group your events (e.g., Workshop, Conference, Course)"
+msgstr "Raggruppa i tuoi eventi (es. Workshop, Conferenza, Corso)"
 
+#: templates/help-page.php:83
+msgid "The name of your event"
+msgstr "Il nome del tuo evento"
+
+#: templates/help-page.php:88
+msgid "Where the event takes place"
+msgstr "Dove si svolge l'evento"
+
+#: templates/help-page.php:93
+msgid "Upload or select an image from the Media Library"
+msgstr "Carica o seleziona un'immagine dalla Libreria Media"
+
+#: templates/help-page.php:98
+msgid "Brief description shown in the \"Read More\" dialog"
+msgstr "Breve descrizione mostrata nella finestra \"Leggi di piu\""
+
+#: templates/help-page.php:103
+msgid "Link to a detailed event page on your site"
+msgstr "Link a una pagina evento dettagliata sul tuo sito"
+
+#: templates/help-page.php:108
+msgid "Select one or more dates using the calendar picker"
+msgstr "Seleziona una o piu date usando il selettore calendario"
+
+#: templates/help-page.php:113
+msgid "Event cost (e.g., CHF 150, Free, On request)"
+msgstr "Costo evento (es. CHF 150, Gratis, Su richiesta)"
+
+#: templates/help-page.php:118
+msgid "Whether advance payment is accepted for this event"
+msgstr "Se per questo evento e accettato un pagamento anticipato"
+
+#: templates/help-page.php:123
 msgid "Controls how multi-day events behave when dates pass"
-msgstr "Controlla come si comportano gli eventi su piu giorni quando alcune date sono passate"
+msgstr ""
+"Controlla come si comportano gli eventi su piu giorni quando alcune date "
+"sono passate"
 
-msgid "Copied"
-msgstr "Copiato"
+#: templates/help-page.php:128
+msgid "Optional external link (e.g., registration on another site)"
+msgstr "Link esterno opzionale (es. registrazione su un altro sito)"
 
-msgid "Copy: wp-content/plugins/acs-agenda-manager/themefiles/page-agenda.php"
-msgstr "Copia: wp-content/plugins/acs-agenda-manager/themefiles/page-agenda.php"
-
-msgid "Copy!"
-msgstr "Copia!"
-
-msgid "Create an API key and restrict it to your domain"
-msgstr "Crea una chiave API e limitane l'uso al tuo dominio"
-
-msgid "Created"
-msgstr "Creato"
-
-msgid "CSS Styling"
-msgstr "Stile CSS"
-
-msgid "Customization"
-msgstr "Personalizzazione"
-
-msgid "Customize the template as needed"
-msgstr "Personalizza il template secondo le tue esigenze"
-
-msgid "December"
-msgstr "Dicembre"
-
-#, fuzzy
-msgid "Default Agenda Page"
-msgstr "Nome pagina agenda"
-
-msgid "Delete"
-msgstr "Elimina"
-
-#, fuzzy
-msgid "Deleting Events"
-msgstr "Aggiungere eventi"
-
-msgid "Description"
-msgstr "Descrizione"
-
-msgid "Display your agenda on any page or post using the shortcode:"
-msgstr "Mostra la tua agenda su qualsiasi pagina o articolo usando lo shortcode:"
-
-msgid "Do you really want to delete this event?"
-msgstr "Vuoi davvero eliminare questo evento?"
-
-msgid "Donate via PayPal"
-msgstr "Dona via PayPal"
-
-msgid "e.g., CHF 150.-"
-msgstr "es. CHF 150.-"
-
-msgid "e.g., Conference Room A"
-msgstr "es. Sala conferenze A"
-
-msgid "e.g., Workshop, Course, Seminar"
-msgstr "es. Workshop, Corso, Seminario"
-
-msgid "Edit"
-msgstr "Modifica"
-
+#: templates/help-page.php:139
 #, fuzzy
 msgid "Editing Events"
 msgstr "Aggiungere eventi"
 
-msgid "Editor"
-msgstr "Editor"
-
-#, fuzzy
-msgid "Enable the \"Maps JavaScript API\" and \"Places API\""
-msgstr "API richieste: Maps JavaScript API, Places API"
-
-msgid "Ensure jQuery UI is not being blocked by another plugin"
-msgstr "Assicurati che jQuery UI non sia bloccato da un altro plugin"
-
-msgid "Enter event title..."
-msgstr "Inserisci il titolo dell'evento..."
-
-msgid "Event"
-msgstr "Evento"
-
-msgid "Event added successfully"
-msgstr "Evento aggiunto con successo"
-
-msgid "Event cost (e.g., CHF 150, Free, On request)"
-msgstr "Costo evento (es. CHF 150, Gratis, Su richiesta)"
-
-#, fuzzy
-msgid "Event created successfully."
-msgstr "Evento aggiornato con successo"
-
-#, fuzzy
-msgid "Event Dates"
-msgstr "Eventi"
-
-msgid "Event dates. Can be a single day, a range, or multiple dates."
+#: templates/help-page.php:140
+msgid ""
+"To edit an event, click the Edit action in the event row. A dialog will open "
+"allowing you to modify the event details. Click Update to save your changes."
 msgstr ""
-"Date dell'evento. Puo essere un singolo giorno, un intervallo o piu date."
+"Per modificare un evento, fai clic sull'azione Modifica nella riga "
+"dell'evento. Si aprira una finestra che ti consentira di modificare i "
+"dettagli dell'evento. Fai clic su Aggiorna per salvare le modifiche."
 
+#: templates/help-page.php:142
 #, fuzzy
-msgid "Event Image"
-msgstr "Seleziona immagine"
+msgid "Deleting Events"
+msgstr "Aggiungere eventi"
 
-msgid "Event updated successfully"
-msgstr "Evento aggiornato con successo"
+#: templates/help-page.php:143
+msgid ""
+"To delete a single event, hover over the event row and click the Delete "
+"link. To delete multiple events, select them using the checkboxes and choose "
+"\"Delete\" from the Bulk Actions dropdown."
+msgstr ""
+"Per eliminare un singolo evento, passa con il mouse sulla riga e fai clic "
+"sul link Elimina. Per eliminare piu eventi, selezionali con le caselle di "
+"spunta e scegli \"Elimina\" dal menu Azioni di massa."
 
-#, fuzzy
-msgid "Event updated successfully."
-msgstr "Evento aggiornato con successo"
-
-msgid "Event(s) deleted successfully."
-msgstr "Evento/i eliminato/i con successo."
-
-msgid "Events"
-msgstr "Eventi"
-
-msgid "Events not showing"
-msgstr "Eventi non visualizzati"
-
-msgid "Events per page"
-msgstr "Eventi per pagina"
-
-msgid "External registration link"
-msgstr "Link esterno di registrazione"
-
-msgid "External URL"
-msgstr "URL esterno"
-
-msgid "Failed to add event"
-msgstr "Aggiunta evento fallita"
-
-msgid "Failed to update event"
-msgstr "Aggiornamento evento fallito"
-
-msgid "February"
-msgstr "Febbraio"
-
-msgid "Field"
-msgstr "Campo"
-
-msgid "Field Descriptions"
-msgstr "Descrizione campi"
-
-msgid "Fill in the event details and click Add"
-msgstr "Compila i dettagli dell'evento e fai clic su Aggiungi"
-
-msgid "Filter"
-msgstr "Filtra"
-
-msgid "Filtered events"
-msgstr "Eventi filtrati"
-
+#: templates/help-page.php:145
 #, fuzzy
 msgid "Filtering Events"
 msgstr "Eventi filtrati"
 
+#: templates/help-page.php:146
 msgid ""
-"For complete control over the agenda display, copy the template file from "
-"the plugin to your theme:"
+"Use the filter dropdown above the events list to show only events matching a "
+"specific title and category combination."
 msgstr ""
-"Per avere il controllo completo della visualizzazione dell'agenda, copia il "
-"file template dal plugin al tuo tema:"
+"Usa il menu a discesa dei filtri sopra la lista eventi per mostrare solo gli "
+"eventi che corrispondono a una specifica combinazione di titolo e categoria."
 
-msgid ""
-"For consistent styling across themes, this plugin uses its own template. "
-"Tested with default themes and others."
-msgstr ""
-"Per uno stile coerente tra i temi, questo plugin usa il proprio template. "
-"Testato con i temi predefiniti e altri."
-
-msgid "Form shortcode"
-msgstr "Shortcode modulo"
-
-msgid "Friday"
-msgstr "Venerdi"
-
-msgid "Get an API key"
-msgstr "Ottieni una chiave API"
-
-msgid "Getting Started"
-msgstr "Per iniziare"
-
-msgid "GitHub Issues page"
-msgstr "Pagina Issues di GitHub"
-
-msgid "Go to Agenda > Settings and enter your API key"
-msgstr "Vai su Agenda > Impostazioni e inserisci la tua chiave API"
-
-msgid "Go to Agenda in the admin menu to view your events list"
-msgstr "Vai su Agenda nel menu admin per vedere la lista degli eventi"
-
-msgid "Go to page"
-msgstr "Vai alla pagina"
-
-msgid "Go to the Google Cloud Console and create a project"
-msgstr "Vai alla Google Cloud Console e crea un progetto"
-
-msgid "Google Maps API Key"
-msgstr "Chiave API Google Maps"
-
-msgid "Google Maps Location Autocomplete"
-msgstr "Completamento automatico posizione Google Maps"
-
-msgid "Group your events (e.g., Workshop, Conference, Course)"
-msgstr "Raggruppa i tuoi eventi (es. Workshop, Conferenza, Corso)"
-
-msgid "Help"
-msgstr "Aiuto"
-
-msgid "Hide"
-msgstr "Nascondi"
-
-msgid "How you want to categorize your event. Displayed in the widget title."
-msgstr ""
-"Come vuoi categorizzare il tuo evento. Visualizzato nel titolo del widget."
-
-msgid "https://..."
-msgstr "https://..."
-
-msgid ""
-"If you find this plugin useful, please consider making a donation to support "
-"development."
-msgstr ""
-"Se trovi utile questo plugin, considera di fare una donazione per supportare "
-"lo sviluppo."
-
-msgid "Image"
-msgstr "Immagine"
-
-msgid "Image URL or select from library"
-msgstr "URL immagine o seleziona dalla libreria"
-
-msgid "Internal or external link to the full event page."
-msgstr "Link interno o esterno alla pagina completa dell'evento."
-
-msgid "Invalid date format. Use dd/mm/yy"
-msgstr "Formato data non valido. Usa gg/mm/aa"
-
-msgid "Invalid event ID"
-msgstr "ID evento non valido"
-
-msgid "Invalid post ID"
-msgstr "ID post non valido"
-
-msgid "January"
-msgstr "Gennaio"
-
-msgid "July"
-msgstr "Luglio"
-
-msgid "June"
-msgstr "Giugno"
-
-msgid "Keep until end"
-msgstr "Mantieni fino alla fine"
-
-#, fuzzy
-msgid "Keep until end - Show all dates"
-msgstr "Mantieni fino alla fine"
-
-msgid "Link to a detailed event page on your site"
-msgstr "Link a una pagina evento dettagliata sul tuo sito"
-
-msgid "Link to event details page"
-msgstr "Link alla pagina dei dettagli evento"
-
-msgid "Links & Pricing"
-msgstr "Link e prezzi"
-
-msgid "Location"
-msgstr "Luogo"
-
-msgid "Managing Events"
-msgstr "Gestire gli eventi"
-
-msgid "March"
-msgstr "Marzo"
-
-msgid "May"
-msgstr "Maggio"
-
-msgid "Media"
-msgstr "Media"
-
-msgid "Monday"
-msgstr "Lunedi"
-
-msgid "Need more help?"
-msgstr "Hai bisogno di ulteriore aiuto?"
-
-msgid "No"
-msgstr "No"
-
-msgid "No - Hide after first date"
-msgstr "No - Nascondi dopo la prima data"
-
-msgid "No events found."
-msgstr "Nessun evento trovato."
-
-msgid "No image selected"
-msgstr "Nessuna immagine selezionata"
-
-msgid "No upcoming events."
-msgstr "Nessun evento in programma."
-
-msgid ""
-"No: Event disappears after start. Yes: Past days are hidden. Keep until end: "
-"All days shown until expiration."
-msgstr ""
-"No: L'evento scompare dopo l'inizio. Si: I giorni passati sono nascosti. "
-"Mantieni fino alla fine: Tutti i giorni mostrati fino alla scadenza."
-
-msgid "November"
-msgstr "Novembre"
-
-msgid "October"
-msgstr "Ottobre"
-
-msgid ""
-"Once configured, the Location field will show address suggestions as you "
-"type."
-msgstr ""
-"Una volta configurato, il campo Posizione mostrerà suggerimenti di indirizzo "
-"durante la digitazione."
-
-msgid "Open Calendar"
-msgstr "Apri calendario"
-
-msgid "Open page"
-msgstr "Apri pagina"
-
-msgid "Option"
-msgstr "Opzione"
-
-msgid "Optional external link (e.g., registration on another site)"
-msgstr "Link esterno opzionale (es. registrazione su un altro sito)"
-
-msgid ""
-"Optional. Enter your Google Maps API key to enable location autocomplete."
-msgstr ""
-"Opzionale. Inserisci la tua chiave API Google Maps per abilitare "
-"l'autocompletamento della posizione."
-
-msgid "or contact"
-msgstr "o contatta"
-
-msgid ""
-"Override the default styles by adding custom CSS to your theme. The plugin "
-"uses CSS variables for easy customization:"
-msgstr ""
-"Sovrascrivi gli stili predefiniti aggiungendo CSS personalizzato al tuo tema. "
-"Il plugin usa variabili CSS per una personalizzazione semplice:"
-
-msgid "Page Link"
-msgstr "Link alla pagina"
-
-msgid "Partial Attendance"
-msgstr "Partecipazione parziale"
-
-msgid ""
-"Past dates are hidden, but future dates remain visible. Use this for events "
-"where participants can join for remaining sessions."
-msgstr ""
-"Le date passate vengono nascoste, ma le date future restano visibili. Usa "
-"questa opzione per eventi in cui i partecipanti possono unirsi alle sessioni "
-"rimanenti."
-
-msgid "Paste to: wp-content/themes/your-theme/page-agenda.php"
-msgstr "Incolla in: wp-content/themes/your-theme/page-agenda.php"
-
-msgid "Permission denied"
-msgstr "Permesso negato"
-
-msgid "Post not found"
-msgstr "Post non trovato"
-
-msgid "Price"
-msgstr "Prezzo"
-
-msgid "Questions or issues?"
-msgstr "Domande o problemi?"
-
-msgid "Quick Start"
-msgstr "Avvio rapido"
-
-msgid "Read more"
-msgstr "Leggi di piu"
-
-msgid "Report on GitHub"
-msgstr "Segnala su GitHub"
-
-msgid "Required"
-msgstr "Obbligatorio"
-
-msgid "Required APIs: Maps JavaScript API, Places API"
-msgstr "API richieste: Maps JavaScript API, Places API"
-
-msgid "Running"
-msgstr "In corso"
-
-msgid "Saturday"
-msgstr "Sabato"
-
-msgid "Save Settings"
-msgstr "Salva impostazioni"
-
-msgid "Schedule"
-msgstr "Date"
-
-msgid "Search Events"
-msgstr "Cerca eventi"
-
+#: templates/help-page.php:148
 #, fuzzy
 msgid "Searching Events"
 msgstr "Cerca eventi"
 
-msgid "Security check failed"
-msgstr "Controllo di sicurezza fallito"
-
-#, fuzzy
-msgid "Select"
-msgstr "Seleziona immagine"
-
-msgid "Select Image"
-msgstr "Seleziona immagine"
-
-msgid "Select one or more dates using the calendar picker"
-msgstr "Seleziona una o piu date usando il selettore calendario"
-
+#: templates/help-page.php:149
 msgid ""
-"Select one or more dates. Use the calendar for easy multi-date selection."
+"Use the search box to find events by title, category, location, or "
+"description."
 msgstr ""
-"Seleziona una o piu date. Usa il calendario per una facile selezione "
-"multi-data."
+"Usa la casella di ricerca per trovare eventi per titolo, categoria, "
+"posizione o descrizione."
 
-msgid "Select or upload an image"
-msgstr "Seleziona o carica un'immagine"
+#: templates/help-page.php:155
+msgid "Display your agenda on any page or post using the shortcode:"
+msgstr ""
+"Mostra la tua agenda su qualsiasi pagina o articolo usando lo shortcode:"
 
-msgid "September"
-msgstr "Settembre"
+#: templates/help-page.php:161
+msgid ""
+"The shortcode will display all upcoming events in a responsive card layout. "
+"Past events are automatically hidden based on their Partial Attendance "
+"setting."
+msgstr ""
+"Lo shortcode mostrera tutti gli eventi futuri in un layout a schede "
+"responsive. Gli eventi passati vengono nascosti automaticamente in base "
+"all'impostazione di Partecipazione parziale."
 
-msgid "Settings"
-msgstr "Impostazioni"
+#: templates/help-page.php:163
+#, fuzzy
+msgid "Default Agenda Page"
+msgstr "Nome pagina agenda"
 
-msgid "Settings saved successfully."
-msgstr "Impostazioni salvate con successo."
+#: templates/help-page.php:174
+#, php-format
+msgid ""
+"The plugin creates a page called \"%s\" upon activation. You can change this "
+"name in Settings."
+msgstr ""
+"Il plugin crea una pagina chiamata \"%s\" all'attivazione. Puoi cambiare "
+"questo nome nelle Impostazioni."
 
-msgid "Styles not loading"
-msgstr "Gli stili non vengono caricati"
+#: templates/help-page.php:186
+msgid ""
+"The Partial Attendance setting controls how events with multiple dates "
+"behave when some dates have passed:"
+msgstr ""
+"L'impostazione Partecipazione parziale controlla come si comportano gli "
+"eventi con date multiple quando alcune date sono gia trascorse:"
 
-msgid "Sunday"
-msgstr "Domenica"
+#: templates/help-page.php:191
+msgid "Option"
+msgstr "Opzione"
 
-msgid "Support this plugin!"
-msgstr "Supporta questo plugin!"
+#: templates/help-page.php:192
+msgid "Behavior"
+msgstr "Comportamento"
 
-msgid "Template Override"
-msgstr "Sovrascrittura template"
-
+#: templates/help-page.php:198
 msgid ""
 "The entire event disappears after the first date passes. Use this for single-"
 "session events where late registration is not possible."
@@ -621,41 +711,181 @@ msgstr ""
 "opzione per eventi a sessione singola in cui l'iscrizione tardiva non e "
 "possibile."
 
-msgid "The event title shown in the middle column."
-msgstr "Il titolo dell'evento mostrato nella colonna centrale."
-
-msgid "The field is empty"
-msgstr "Il campo e vuoto"
-
-msgid "The name of the page where the agenda will be displayed."
-msgstr "Il nome della pagina dove verra visualizzata l'agenda."
-
-msgid "The name of your event"
-msgstr "Il nome del tuo evento"
-
+#: templates/help-page.php:202
 msgid ""
-"The Partial Attendance setting controls how events with multiple dates "
-"behave when some dates have passed:"
+"Past dates are hidden, but future dates remain visible. Use this for events "
+"where participants can join for remaining sessions."
 msgstr ""
-"L'impostazione Partecipazione parziale controlla come si comportano gli eventi "
-"con date multiple quando alcune date sono gia trascorse:"
+"Le date passate vengono nascoste, ma le date future restano visibili. Usa "
+"questa opzione per eventi in cui i partecipanti possono unirsi alle sessioni "
+"rimanenti."
 
+#: templates/help-page.php:206
 msgid ""
-"The plugin creates a page called \"%s\" upon activation. You can change this "
-"name in Settings."
+"All dates remain visible until the last date passes. Use this for multi-day "
+"events where you want to show the complete schedule."
 msgstr ""
-"Il plugin crea una pagina chiamata \"%s\" all'attivazione. Puoi cambiare questo "
-"nome nelle Impostazioni."
+"Tutte le date restano visibili fino al termine dell'ultima data. Usa questa "
+"opzione per eventi di piu giorni in cui vuoi mostrare il programma completo."
 
+#: templates/help-page.php:216
+msgid "Google Maps Location Autocomplete"
+msgstr "Completamento automatico posizione Google Maps"
+
+#: templates/help-page.php:217
 msgid ""
-"The shortcode will display all upcoming events in a responsive card layout. "
-"Past events are automatically hidden based on their Partial Attendance "
-"setting."
+"You can enable Google Places Autocomplete for the Location field to help "
+"users find addresses easily."
 msgstr ""
-"Lo shortcode mostrera tutti gli eventi futuri in un layout a schede responsive. "
-"Gli eventi passati vengono nascosti automaticamente in base all'impostazione "
-"di Partecipazione parziale."
+"Puoi attivare il completamento automatico Google Places per il campo "
+"Posizione per aiutare gli utenti a trovare facilmente gli indirizzi."
 
+#: templates/help-page.php:219
+msgid "Go to the Google Cloud Console and create a project"
+msgstr "Vai alla Google Cloud Console e crea un progetto"
+
+#: templates/help-page.php:220
+#, fuzzy
+msgid "Enable the \"Maps JavaScript API\" and \"Places API\""
+msgstr "API richieste: Maps JavaScript API, Places API"
+
+#: templates/help-page.php:221
+msgid "Create an API key and restrict it to your domain"
+msgstr "Crea una chiave API e limitane l'uso al tuo dominio"
+
+#: templates/help-page.php:222
+msgid "Go to Agenda > Settings and enter your API key"
+msgstr "Vai su Agenda > Impostazioni e inserisci la tua chiave API"
+
+#: templates/help-page.php:224
+msgid ""
+"Once configured, the Location field will show address suggestions as you "
+"type."
+msgstr ""
+"Una volta configurato, il campo Posizione mostrerà suggerimenti di indirizzo "
+"durante la digitazione."
+
+#: templates/help-page.php:226
+msgid "CSS Styling"
+msgstr "Stile CSS"
+
+#: templates/help-page.php:227
+msgid ""
+"Override the default styles by adding custom CSS to your theme. The plugin "
+"uses CSS variables for easy customization:"
+msgstr ""
+"Sovrascrivi gli stili predefiniti aggiungendo CSS personalizzato al tuo "
+"tema. Il plugin usa variabili CSS per una personalizzazione semplice:"
+
+#: templates/help-page.php:249
+msgid "Template Override"
+msgstr "Sovrascrittura template"
+
+#: templates/help-page.php:250
+msgid ""
+"For complete control over the agenda display, copy the template file from "
+"the plugin to your theme:"
+msgstr ""
+"Per avere il controllo completo della visualizzazione dell'agenda, copia il "
+"file template dal plugin al tuo tema:"
+
+#: templates/help-page.php:252
+msgid "Copy: wp-content/plugins/acs-agenda-manager/themefiles/page-agenda.php"
+msgstr ""
+"Copia: wp-content/plugins/acs-agenda-manager/themefiles/page-agenda.php"
+
+#: templates/help-page.php:253
+msgid "Paste to: wp-content/themes/your-theme/page-agenda.php"
+msgstr "Incolla in: wp-content/themes/your-theme/page-agenda.php"
+
+#: templates/help-page.php:254
+msgid "Customize the template as needed"
+msgstr "Personalizza il template secondo le tue esigenze"
+
+#: templates/help-page.php:262
+msgid "Events not showing"
+msgstr "Eventi non visualizzati"
+
+#: templates/help-page.php:264
+msgid "Check that the event has dates in the future"
+msgstr "Controlla che l'evento abbia date future"
+
+#: templates/help-page.php:265
+msgid "Verify the shortcode [acsagma_agenda] is on the page"
+msgstr "Verifica che lo shortcode [acsagma_agenda] sia presente nella pagina"
+
+#: templates/help-page.php:266
+msgid "Check the Partial Attendance setting in Advanced settings."
+msgstr "Controlla l'impostazione di partecipazione parziale in Impostazioni avanzate."
+
+#: templates/help-page.php:269
+msgid "Calendar not working"
+msgstr "Il calendario non funziona"
+
+#: templates/help-page.php:271
+msgid "Ensure jQuery UI is not being blocked by another plugin"
+msgstr "Assicurati che jQuery UI non sia bloccato da un altro plugin"
+
+#: templates/help-page.php:272
+msgid "Check the browser console for JavaScript errors"
+msgstr "Controlla la console del browser per errori JavaScript"
+
+#: templates/help-page.php:273
+msgid "Try deactivating other plugins to check for conflicts"
+msgstr "Prova a disattivare altri plugin per verificare eventuali conflitti"
+
+#: templates/help-page.php:276
+msgid "Styles not loading"
+msgstr "Gli stili non vengono caricati"
+
+#: templates/help-page.php:278
+msgid "Clear your browser cache"
+msgstr "Svuota la cache del browser"
+
+#: templates/help-page.php:279
+msgid "Check if your theme or a caching plugin is minifying CSS incorrectly"
+msgstr ""
+"Controlla se il tuo tema o un plugin di cache sta minimizzando il CSS in "
+"modo errato"
+
+#: templates/help-page.php:282
+msgid "Need more help?"
+msgstr "Hai bisogno di ulteriore aiuto?"
+
+#: templates/help-page.php:289
+#, php-format
+msgid "Visit our %s for support and feature requests."
+msgstr "Visita la nostra %s per supporto e richieste di funzionalita."
+
+#: templates/help-page.php:293
+msgid "GitHub Issues page"
+msgstr "Pagina Issues di GitHub"
+
+#: templates/settings-page.php:12
+msgid "Agenda Settings"
+msgstr "Impostazioni agenda"
+
+#: templates/settings-page.php:18
+msgid "Support this plugin!"
+msgstr "Supporta questo plugin!"
+
+#: templates/settings-page.php:19
+msgid ""
+"If you find this plugin useful, please consider making a donation to support "
+"development."
+msgstr ""
+"Se trovi utile questo plugin, considera di fare una donazione per supportare "
+"lo sviluppo."
+
+#: templates/settings-page.php:23
+msgid "Donate via PayPal"
+msgstr "Dona via PayPal"
+
+#: templates/settings-page.php:29
+msgid "About This Plugin"
+msgstr "Informazioni su questo plugin"
+
+#: templates/settings-page.php:31
 msgid ""
 "This plugin creates a simple agenda page where you can display events. The "
 "default page is \"Agenda\" and is created upon activation."
@@ -663,210 +893,278 @@ msgstr ""
 "Questo plugin crea una semplice pagina agenda dove puoi visualizzare eventi. "
 "La pagina predefinita e \"Agenda\" e viene creata all'attivazione."
 
-msgid "Thursday"
-msgstr "Giovedi"
-
-msgid "Title"
-msgstr "Titolo"
-
-msgid "Title is required"
-msgstr "Il titolo e obbligatorio"
-
-msgid ""
-"To add a new event, click the \"Add New Event\" button on the Agenda admin "
-"page. A dialog will appear with the following fields:"
-msgstr ""
-"Per aggiungere un nuovo evento, fai clic sul pulsante \"Aggiungi nuovo evento\" "
-"nella pagina amministrativa Agenda. Apparira una finestra con i seguenti "
-"campi:"
-
-msgid ""
-"To delete a single event, hover over the event row and click the Delete "
-"link. To delete multiple events, select them using the checkboxes and choose "
-"\"Delete\" from the Bulk Actions dropdown."
-msgstr ""
-"Per eliminare un singolo evento, passa con il mouse sulla riga e fai clic sul "
-"link Elimina. Per eliminare piu eventi, selezionali con le caselle di spunta "
-"e scegli \"Elimina\" dal menu Azioni di massa."
-
-msgid ""
-"To edit an event, click the Edit action in the event row. A dialog will open "
-"allowing you to modify the event details. Click Update to save your changes."
-msgstr ""
-"Per modificare un evento, fai clic sull'azione Modifica nella riga dell'evento. "
-"Si aprira una finestra che ti consentira di modificare i dettagli dell'evento. "
-"Fai clic su Aggiorna per salvare le modifiche."
-
-msgid "Today"
-msgstr "Oggi"
-
-msgid "Troubleshooting"
-msgstr "Risoluzione problemi"
-
-msgid "Try deactivating other plugins to check for conflicts"
-msgstr "Prova a disattivare altri plugin per verificare eventuali conflitti"
-
-msgid "Tuesday"
-msgstr "Martedi"
-
-msgid "Update"
-msgstr "Aggiorna"
-
-msgid "Upload or select an image from the Media Library"
-msgstr "Carica o seleziona un'immagine dalla Libreria Media"
-
-msgid "Usage"
-msgstr "Utilizzo"
-
-msgid ""
-"Use the filter dropdown above the events list to show only events matching a "
-"specific title and category combination."
-msgstr ""
-"Usa il menu a discesa dei filtri sopra la lista eventi per mostrare solo gli "
-"eventi che corrispondono a una specifica combinazione di titolo e categoria."
-
-msgid ""
-"Use the search box to find events by title, category, location, or "
-"description."
-msgstr ""
-"Usa la casella di ricerca per trovare eventi per titolo, categoria, posizione "
-"o descrizione."
-
-msgid "Use the shortcode below to display the agenda on any page:"
-msgstr ""
-"Usa lo shortcode qui sotto per visualizzare l'agenda su qualsiasi pagina:"
-
-msgid "User Guide"
-msgstr "Guida utente"
-
-msgid "Using the Shortcode"
-msgstr "Usare lo shortcode"
-
-#, fuzzy
-msgid "Verify the shortcode [acsagma_agenda] is on the page"
-msgstr ""
-"Usa lo shortcode qui sotto per visualizzare l'agenda su qualsiasi pagina:"
-
-msgid "View Agenda"
-msgstr "Visualizza agenda"
-
-msgid "Visit our %s for support and feature requests."
-msgstr "Visita la nostra %s per supporto e richieste di funzionalita."
-
-msgid "Visit your %s page to see your events"
-msgstr "Visita la tua pagina %s per vedere i tuoi eventi"
-
-msgid "Wednesday"
-msgstr "Mercoledi"
-
-msgid "Where the event takes place"
-msgstr "Dove si svolge l'evento"
-
-msgid "Where the event will be held. Shown in the left column."
-msgstr "Dove si terra l'evento. Mostrato nella colonna sinistra."
-
-msgid "Whether advance payment is accepted for this event"
-msgstr "Se per questo evento e accettato un pagamento anticipato"
-
-msgid "Yes"
-msgstr "Si"
-
-msgid "Yes - Hide past dates only"
-msgstr "Si - Nascondi solo le date passate"
-
-#, fuzzy
-msgid "Yes - Required"
-msgstr "Obbligatorio"
-
+#: templates/settings-page.php:34
 msgid ""
 "You can change the page name below. The plugin will try to rename the "
 "existing agenda page to preserve your content and links."
 msgstr ""
-"Puoi cambiare il nome della pagina qui sotto. Il plugin cerchera di rinominare "
-"la pagina agenda esistente per preservare i tuoi contenuti e i tuoi link."
+"Puoi cambiare il nome della pagina qui sotto. Il plugin cerchera di "
+"rinominare la pagina agenda esistente per preservare i tuoi contenuti e i "
+"tuoi link."
 
+#: templates/settings-page.php:37
 msgid ""
-"You can enable Google Places Autocomplete for the Location field to help "
-"users find addresses easily."
+"For consistent styling across themes, this plugin uses its own template. "
+"Tested with default themes and others."
 msgstr ""
-"Puoi attivare il completamento automatico Google Places per il campo Posizione "
-"per aiutare gli utenti a trovare facilmente gli indirizzi."
+"Per uno stile coerente tra i temi, questo plugin usa il proprio template. "
+"Testato con i temi predefiniti e altri."
 
+#: templates/settings-page.php:40
+msgid "Questions or issues?"
+msgstr "Domande o problemi?"
+
+#: templates/settings-page.php:41
+msgid "Report on GitHub"
+msgstr "Segnala su GitHub"
+
+#: templates/settings-page.php:42
+msgid "or contact"
+msgstr "o contatta"
+
+#: templates/settings-page.php:53
+msgid "Agenda Page Name"
+msgstr "Nome pagina agenda"
+
+#: templates/settings-page.php:63
+msgid "The name of the page where the agenda will be displayed."
+msgstr "Il nome della pagina dove verra visualizzata l'agenda."
+
+#: templates/settings-page.php:69
+msgid "Google Maps API Key"
+msgstr "Chiave API Google Maps"
+
+#: templates/settings-page.php:79
+msgid ""
+"Optional. Enter your Google Maps API key to enable location autocomplete."
+msgstr ""
+"Opzionale. Inserisci la tua chiave API Google Maps per abilitare "
+"l'autocompletamento della posizione."
+
+#: templates/settings-page.php:81
+msgid "Get an API key"
+msgstr "Ottieni una chiave API"
+
+#: templates/settings-page.php:85
+msgid "Required APIs: Maps JavaScript API, Places API"
+msgstr "API richieste: Maps JavaScript API, Places API"
+
+#: templates/settings-page.php:91
 msgid "Delete Data on Uninstall"
 msgstr "Elimina dati alla disinstallazione"
 
-msgid "Remove all plugin data (events, settings, database table) when the plugin is deleted"
-msgstr "Rimuovi tutti i dati del plugin (eventi, impostazioni, tabella database) quando il plugin viene eliminato"
+#: templates/settings-page.php:100
+msgid ""
+"Remove all plugin data (events, settings, database table) when the plugin is "
+"deleted"
+msgstr ""
+"Rimuovi tutti i dati del plugin (eventi, impostazioni, tabella database) "
+"quando il plugin viene eliminato"
 
+#: templates/settings-page.php:103
+msgid "Warning: This will permanently delete all your events and settings!"
+msgstr ""
+"Attenzione: Questo eliminerà permanentemente tutti i tuoi eventi e "
+"impostazioni!"
+
+#: templates/settings-page.php:109
+msgid "Save Settings"
+msgstr "Salva impostazioni"
+
+#: templates/settings-page.php:113
+msgid "Usage"
+msgstr "Utilizzo"
+
+#: templates/settings-page.php:114
+msgid "Use the shortcode below to display the agenda on any page:"
+msgstr ""
+"Usa lo shortcode qui sotto per visualizzare l'agenda su qualsiasi pagina:"
+
+#: templates/admin-page.php:12
+msgid "Agenda Manager"
+msgstr "Gestore Agenda"
+
+#: templates/admin-page.php:15
+msgid "View Agenda"
+msgstr "Visualizza agenda"
+
+#: templates/admin-page.php:25
+msgid "Event(s) deleted successfully."
+msgstr "Evento/i eliminato/i con successo."
+
+#: templates/admin-page.php:34
+#, fuzzy
+msgid "Event created successfully."
+msgstr "Evento aggiornato con successo"
+
+#: templates/admin-page.php:43
+#, fuzzy
+msgid "Event updated successfully."
+msgstr "Evento aggiornato con successo"
+
+#: templates/admin-page.php:53
+msgid "Add New Event"
+msgstr "Aggiungi nuovo evento"
+
+#: templates/admin-page.php:59 templates/admin-page.php:75
+msgid "Help"
+msgstr "Aiuto"
+
+#: templates/admin-page.php:68
+msgid "Search Events"
+msgstr "Cerca eventi"
+
+#: templates/admin-page.php:79
+msgid "Field Descriptions"
+msgstr "Descrizione campi"
+
+#: templates/admin-page.php:85
+msgid "How you want to categorize your event. Displayed in the widget title."
+msgstr ""
+"Come vuoi categorizzare il tuo evento. Visualizzato nel titolo del widget."
+
+#: templates/admin-page.php:89
+msgid "The event title shown in the middle column."
+msgstr "Il titolo dell'evento mostrato nella colonna centrale."
+
+#: templates/admin-page.php:93
+msgid "Where the event will be held. Shown in the left column."
+msgstr "Dove si terra l'evento. Mostrato nella colonna sinistra."
+
+#: templates/admin-page.php:97
+msgid "An image associated with the event. Shown in the right column."
+msgstr "Un'immagine associata all'evento. Mostrata nella colonna destra."
+
+#: templates/admin-page.php:101
+msgid "A short introduction to the event."
+msgstr "Una breve introduzione all'evento."
+
+#: templates/admin-page.php:105
+msgid "Internal or external link to the full event page."
+msgstr "Link interno o esterno alla pagina completa dell'evento."
+
+#: templates/admin-page.php:109
+msgid "Event dates. Can be a single day, a range, or multiple dates."
+msgstr ""
+"Date dell'evento. Puo essere un singolo giorno, un intervallo o piu date."
+
+#: templates/admin-page.php:113
+msgid ""
+"No: Event disappears after start. Yes: Past days are hidden. Keep until end: "
+"All days shown until expiration."
+msgstr ""
+"No: L'evento scompare dopo l'inizio. Si: I giorni passati sono nascosti. "
+"Mantieni fino alla fine: Tutti i giorni mostrati fino alla scadenza."
+
+#: templates/admin-page.php:120
+msgid "Confirm Delete"
+msgstr "Conferma eliminazione"
+
+#: templates/admin-page.php:123
+msgid "Are you sure you want to delete this event?"
+msgstr "Sei sicuro di voler eliminare questo evento?"
+
+#: templates/admin-page.php:140
+msgid "Basic Information"
+msgstr "Informazioni di base"
+
+#: templates/admin-page.php:149
+msgid "e.g., Workshop, Course, Seminar"
+msgstr "es. Workshop, Corso, Seminario"
+
+#: templates/admin-page.php:156
+msgid "e.g., Conference Room A"
+msgstr "es. Sala conferenze A"
+
+#: templates/admin-page.php:165
+msgid "Enter event title..."
+msgstr "Inserisci il titolo dell'evento..."
+
+#: templates/admin-page.php:173
+msgid "A brief description of the event..."
+msgstr "Una breve descrizione dell'evento."
+
+#: templates/admin-page.php:186
+msgid "Event Dates"
+msgstr "Date dell'evento"
+
+#: templates/admin-page.php:191
+msgid "Click calendar to select dates"
+msgstr "Fai clic sul calendario per selezionare le date"
+
+#: templates/admin-page.php:197
+msgid ""
+"Select one or more dates. Use the calendar for easy multi-date selection."
+msgstr ""
+"Seleziona una o piu date. Usa il calendario per una facile selezione multi-"
+"data."
+
+#: templates/admin-page.php:205
+msgid "No - Hide after first date"
+msgstr "No - Nascondi dopo la prima data"
+
+#: templates/admin-page.php:206
+msgid "Yes - Hide past dates only"
+msgstr "Si - Nascondi solo le date passate"
+
+#: templates/admin-page.php:207
+msgid "Keep until end - Show all dates"
+msgstr "Mantieni fino alla fine - Mostra tutte le date"
+
+#: templates/admin-page.php:216
+msgid "Media"
+msgstr "Media"
+
+#: templates/admin-page.php:221
+msgid "Event Image"
+msgstr "Immagine evento"
+
+#: templates/admin-page.php:226
+msgid "No image selected"
+msgstr "Nessuna immagine selezionata"
+
+#: templates/admin-page.php:229
+msgid "Image URL or select from library"
+msgstr "URL immagine o seleziona dalla libreria"
+
+#: templates/admin-page.php:232
+msgid "Select"
+msgstr "Seleziona"
+
+#: templates/admin-page.php:234
 msgid "Remove image"
 msgstr "Rimuovi immagine"
 
-msgid "Warning: This will permanently delete all your events and settings!"
-msgstr "Attenzione: Questo eliminerà permanentemente tutti i tuoi eventi e impostazioni!"
+#: templates/admin-page.php:246
+msgid "Links & Pricing"
+msgstr "Link e prezzi"
 
-msgid "Unable to load details. Please try again."
-msgstr "Impossibile caricare i dettagli. Riprova."
+#: templates/admin-page.php:254 templates/admin-page.php:261
+msgid "https://..."
+msgstr "https://..."
 
-msgid "No events match your filters."
-msgstr "Nessun evento corrisponde ai filtri."
+#: templates/admin-page.php:255
+msgid "Link to event details page"
+msgstr "Link alla pagina dei dettagli evento"
 
+#: class/class-acs-admin.php:96
 msgid "No page link"
 msgstr "Nessun link alla pagina"
 
-#, php-format
-msgid "Showing %1$d-%2$d of %3$d events"
-msgstr "Visualizzazione %1$d-%2$d di %3$d eventi"
+#: templates/admin-page.php:262
+msgid "External registration link"
+msgstr "Link esterno di registrazione"
 
-msgid "Compact mode on"
-msgstr "Modalita compatta attivata"
+#: templates/admin-page.php:272
+msgid "e.g., CHF 150.-"
+msgstr "es. CHF 150.-"
 
-msgid "Compact mode off"
-msgstr "Modalita compatta disattivata"
+#: templates/admin-page.php:280
+msgid "Yes - Required"
+msgstr "Si - Obbligatorio"
 
-msgid "Previous"
-msgstr "Precedente"
+#~ msgid "Open Calendar"
+#~ msgstr "Apri calendario"
 
-msgid "Next"
-msgstr "Successivo"
-
-msgid "Agenda filters and sorting"
-msgstr "Filtri e ordinamento agenda"
-
-msgid "Search"
-msgstr "Cerca"
-
-msgid "Search title or description"
-msgstr "Cerca nel titolo o nella descrizione"
-
-msgid "All categories"
-msgstr "Tutte le categorie"
-
-msgid "Date"
-msgstr "Data"
-
-msgid "All dates"
-msgstr "Tutte le date"
-
-msgid "This week"
-msgstr "Questa settimana"
-
-msgid "This month"
-msgstr "Questo mese"
-
-msgid "Sort"
-msgstr "Ordina"
-
-msgid "Soonest first"
-msgstr "Prima i piu vicini"
-
-msgid "Latest first"
-msgstr "Prima i piu recenti"
-
-msgid "Title A-Z"
-msgstr "Titolo A-Z"
-
-msgid "Compact mode"
-msgstr "Modalita compatta"
-
-msgid "Agenda pagination"
-msgstr "Paginazione agenda"
+#~ msgid "Select Image"
+#~ msgstr "Seleziona immagine"

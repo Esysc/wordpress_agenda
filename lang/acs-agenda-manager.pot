@@ -81,22 +81,38 @@ msgid "Invalid date format. Use dd/mm/yy"
 msgstr ""
 
 #: acs-agenda-manager.php:275
-msgid "Select or upload an image"
+msgid "Past date unavailable"
 msgstr ""
 
 #: acs-agenda-manager.php:276
-msgid "Filtered events"
+msgid "No dates selected yet"
 msgstr ""
 
 #: acs-agenda-manager.php:277
-msgid "Do you really want to delete this event?"
+msgid "Remove date"
 msgstr ""
 
 #: acs-agenda-manager.php:278
-msgid "Editor"
+msgid "Request failed"
 msgstr ""
 
 #: acs-agenda-manager.php:279
+msgid "Select or upload an image"
+msgstr ""
+
+#: acs-agenda-manager.php:280
+msgid "Filtered events"
+msgstr ""
+
+#: acs-agenda-manager.php:281
+msgid "Do you really want to delete this event?"
+msgstr ""
+
+#: acs-agenda-manager.php:282
+msgid "Editor"
+msgstr ""
+
+#: acs-agenda-manager.php:283
 msgid "Add an event"
 msgstr ""
 
@@ -480,6 +496,10 @@ msgstr ""
 msgid "ACS Agenda Manager - User Guide"
 msgstr ""
 
+#: templates/admin-page.php:180
+msgid "Advanced settings"
+msgstr ""
+
 #: templates/help-page.php:21
 msgid "Contents"
 msgstr ""
@@ -504,7 +524,7 @@ msgid "Click \"Add New Event\" to create your first event"
 msgstr ""
 
 #: templates/help-page.php:41
-msgid "Fill in the event details and click Add"
+msgid "Fill in the event details. Optional fields are grouped under Advanced settings."
 msgstr ""
 
 #: templates/help-page.php:52
@@ -742,7 +762,7 @@ msgid "Verify the shortcode [acsagma_agenda] is on the page"
 msgstr ""
 
 #: templates/help-page.php:266
-msgid "Check the Partial Attendance setting"
+msgid "Check the Partial Attendance setting in Advanced settings."
 msgstr ""
 
 #: templates/help-page.php:269

@@ -4,834 +4,1136 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ACS Agenda Manager 3.2.0\n"
 "Report-Msgid-Bugs-To: https://github.com/Esysc/wordpress_agenda/issues\n"
-"POT-Creation-Date: 2025-12-25 00:00+0000\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-05-22 20:22+0200\n"
 "PO-Revision-Date: 2026-01-02 12:00+0100\n"
 "Last-Translator: GitHub Copilot <copilot@github.com>\n"
 "Language-Team: Japanese <translation-team-ja@lists.sourceforge.net>\n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
 "X-Generator: GitHub Copilot\n"
 "X-Domain: acs-agenda-manager\n"
-"Language: ja\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-msgid "A brief description of the event..."
-msgstr "イベントの簡単な説明..."
+#: acs-agenda-manager.php:141
+msgid "Unable to load details. Please try again."
+msgstr "詳細を読み込めませんでした。もう一度お試しください。"
 
-msgid "A short introduction to the event."
-msgstr "イベントの簡単な紹介。"
+#: acs-agenda-manager.php:142 class/class-acs-template.php:29
+msgid "No events match your filters."
+msgstr "フィルターに一致するイベントはありません。"
 
-msgid "About This Plugin"
-msgstr "このプラグインについて"
+#: acs-agenda-manager.php:143
+#, php-format
+msgid "Showing %1$d-%2$d of %3$d events"
+msgstr "%3$d 件中 %1$d-%2$d 件を表示"
 
+#: acs-agenda-manager.php:144
+msgid "Compact mode on"
+msgstr "コンパクトモードをオンにしました"
+
+#: acs-agenda-manager.php:145
+msgid "Compact mode off"
+msgstr "コンパクトモードをオフにしました"
+
+#: acs-agenda-manager.php:146
+msgid "Previous"
+msgstr "前へ"
+
+#: acs-agenda-manager.php:147
+msgid "Next"
+msgstr "次へ"
+
+#: acs-agenda-manager.php:266
+msgid "Confirm"
+msgstr "確認"
+
+#: acs-agenda-manager.php:267
+msgid "Cancel"
+msgstr "キャンセル"
+
+#: acs-agenda-manager.php:268
+msgid "Update"
+msgstr "更新"
+
+#: acs-agenda-manager.php:269
+msgid "Add"
+msgstr "追加"
+
+#: acs-agenda-manager.php:270
+msgid "Close"
+msgstr "閉じる"
+
+#: acs-agenda-manager.php:271 templates/admin-page.php:194
+msgid "Calendar"
+msgstr "カレンダー"
+
+#: acs-agenda-manager.php:272
+msgid "Copied"
+msgstr "コピーしました"
+
+#: acs-agenda-manager.php:273
+msgid "The field is empty"
+msgstr "フィールドが空です"
+
+#: acs-agenda-manager.php:274
+msgid "Invalid date format. Use dd/mm/yy"
+msgstr "無効な日付形式です。dd/mm/yyを使用してください"
+
+#: acs-agenda-manager.php:275
+msgid "Past date unavailable"
+msgstr "過去の日付は選択できません"
+
+#: acs-agenda-manager.php:276
+msgid "No dates selected yet"
+msgstr "日付がまだ選択されていません"
+
+#: acs-agenda-manager.php:277
+msgid "Remove date"
+msgstr "日付を削除"
+
+#: acs-agenda-manager.php:278
+msgid "Request failed"
+msgstr "リクエストに失敗しました"
+
+#: acs-agenda-manager.php:279
+msgid "Select or upload an image"
+msgstr "画像を選択またはアップロード"
+
+#: acs-agenda-manager.php:280
+msgid "Filtered events"
+msgstr "フィルターされたイベント"
+
+#: acs-agenda-manager.php:281
+msgid "Do you really want to delete this event?"
+msgstr "本当にこのイベントを削除しますか？"
+
+#: acs-agenda-manager.php:282
+msgid "Editor"
+msgstr "編集者"
+
+#: acs-agenda-manager.php:283
+msgid "Add an event"
+msgstr "イベントを追加"
+
+#: acs-agenda-manager.php:302
+msgid "No upcoming events."
+msgstr "今後のイベントはありません。"
+
+#: acs-agenda-manager.php:318
+msgid "Invalid post ID"
+msgstr "無効な投稿ID"
+
+#: acs-agenda-manager.php:324
+msgid "Post not found"
+msgstr "投稿が見つかりません"
+
+#: class/class-acs-event.php:187
+msgid "Sunday"
+msgstr "日曜日"
+
+#: class/class-acs-event.php:188
+msgid "Monday"
+msgstr "月曜日"
+
+#: class/class-acs-event.php:189
+msgid "Tuesday"
+msgstr "火曜日"
+
+#: class/class-acs-event.php:190
+msgid "Wednesday"
+msgstr "水曜日"
+
+#: class/class-acs-event.php:191
+msgid "Thursday"
+msgstr "木曜日"
+
+#: class/class-acs-event.php:192
+msgid "Friday"
+msgstr "金曜日"
+
+#: class/class-acs-event.php:193
+msgid "Saturday"
+msgstr "土曜日"
+
+#: class/class-acs-event.php:204
+msgid "January"
+msgstr "1月"
+
+#: class/class-acs-event.php:205
+msgid "February"
+msgstr "2月"
+
+#: class/class-acs-event.php:206
+msgid "March"
+msgstr "3月"
+
+#: class/class-acs-event.php:207
+msgid "April"
+msgstr "4月"
+
+#: class/class-acs-event.php:208
+msgid "May"
+msgstr "5月"
+
+#: class/class-acs-event.php:209
+msgid "June"
+msgstr "6月"
+
+#: class/class-acs-event.php:210
+msgid "July"
+msgstr "7月"
+
+#: class/class-acs-event.php:211
+msgid "August"
+msgstr "8月"
+
+#: class/class-acs-event.php:212
+msgid "September"
+msgstr "9月"
+
+#: class/class-acs-event.php:213
+msgid "October"
+msgstr "10月"
+
+#: class/class-acs-event.php:214
+msgid "November"
+msgstr "11月"
+
+#: class/class-acs-event.php:215
+msgid "December"
+msgstr "12月"
+
+#: class/class-acs-help.php:74 class/class-acs-help.php:75
+msgid "User Guide"
+msgstr "ユーザーガイド"
+
+#: class/class-acs-help.php:89 class/class-acs-options.php:63
+#: class/class-acs-admin.php:328 class/class-acs-admin.php:350
+#: class/class-acs-admin.php:409 class/class-acs-admin.php:440
+msgid "Permission denied"
+msgstr "権限がありません"
+
+#: class/class-acs-help.php:102 templates/help-page.php:34
+msgid "Getting Started"
+msgstr "はじめに"
+
+#: class/class-acs-help.php:103 templates/help-page.php:64
+msgid "Adding Events"
+msgstr "イベントの追加"
+
+#: class/class-acs-help.php:104 templates/help-page.php:137
+msgid "Managing Events"
+msgstr "イベントの管理"
+
+#: class/class-acs-help.php:105 templates/help-page.php:154
+msgid "Using the Shortcode"
+msgstr "ショートコードの使用"
+
+#: class/class-acs-help.php:106 class/class-acs-admin.php:39
+#: templates/help-page.php:122 templates/help-page.php:185
+#: templates/admin-page.php:112 templates/admin-page.php:202
+msgid "Partial Attendance"
+msgstr "部分出席"
+
+#: class/class-acs-help.php:107 templates/help-page.php:214
+msgid "Customization"
+msgstr "カスタマイズ"
+
+#: class/class-acs-help.php:108 templates/help-page.php:260
+msgid "Troubleshooting"
+msgstr "トラブルシューティング"
+
+#: class/class-acs-options.php:33 class/class-acs-options.php:34
+msgid "Settings"
+msgstr "設定"
+
+#: class/class-acs-options.php:121
+msgid "Settings saved successfully."
+msgstr "設定が正常に保存されました。"
+
+#: class/class-acs-admin.php:21 templates/admin-page.php:129
+msgid "Event"
+msgstr "イベント"
+
+#: class/class-acs-admin.php:22
+msgid "Events"
+msgstr "イベント"
+
+#: class/class-acs-admin.php:30 class/class-acs-template.php:80
+#: templates/help-page.php:77 templates/admin-page.php:84
+#: templates/admin-page.php:146
+msgid "Category"
+msgstr "カテゴリー"
+
+#: class/class-acs-admin.php:31 templates/help-page.php:82
+#: templates/admin-page.php:88 templates/admin-page.php:162
+msgid "Title"
+msgstr "タイトル"
+
+#: class/class-acs-admin.php:32 templates/help-page.php:87
+#: templates/admin-page.php:92 templates/admin-page.php:154
+msgid "Location"
+msgstr "場所"
+
+#: class/class-acs-admin.php:33 templates/help-page.php:92
+#: templates/admin-page.php:96
+msgid "Image"
+msgstr "画像"
+
+#: class/class-acs-admin.php:34 templates/help-page.php:71
+#: templates/help-page.php:97 templates/admin-page.php:100
+#: templates/admin-page.php:171
+msgid "Description"
+msgstr "説明"
+
+#: class/class-acs-admin.php:35 templates/help-page.php:102
+#: templates/admin-page.php:104 templates/admin-page.php:252
+msgid "Page Link"
+msgstr "ページリンク"
+
+#: class/class-acs-admin.php:36 templates/help-page.php:107
+#: templates/admin-page.php:108 templates/admin-page.php:181
+msgid "Schedule"
+msgstr "スケジュール"
+
+#: class/class-acs-admin.php:37 templates/help-page.php:112
+#: templates/admin-page.php:270
+msgid "Price"
+msgstr "料金"
+
+#: class/class-acs-admin.php:38 templates/help-page.php:117
+#: templates/admin-page.php:276
+msgid "Advance Payment"
+msgstr "前払い"
+
+#: class/class-acs-admin.php:40 templates/help-page.php:127
+#: templates/admin-page.php:259
+msgid "External URL"
+msgstr "外部URL"
+
+#: class/class-acs-admin.php:41
+msgid "Created"
+msgstr "作成日"
+
+#: class/class-acs-admin.php:56 class/class-acs-admin.php:162
+msgid "Delete"
+msgstr "削除"
+
+#: class/class-acs-admin.php:65 class/class-acs-admin.php:71
+#: templates/help-page.php:89 templates/help-page.php:94
+#: templates/help-page.php:99 templates/help-page.php:104
+#: templates/help-page.php:114 templates/help-page.php:119
+#: templates/help-page.php:124 templates/help-page.php:129
+#: templates/help-page.php:197 templates/admin-page.php:279
+msgid "No"
+msgstr "いいえ"
+
+#: class/class-acs-admin.php:66 class/class-acs-admin.php:72
+#: templates/help-page.php:79 templates/help-page.php:84
+#: templates/help-page.php:109 templates/help-page.php:201
+msgid "Yes"
+msgstr "はい"
+
+#: class/class-acs-admin.php:67 templates/help-page.php:205
+msgid "Keep until end"
+msgstr "最後まで保持"
+
+#: class/class-acs-admin.php:92 class/class-acs-template.php:246
+msgid "Read more"
+msgstr "もっと読む"
+
+#: class/class-acs-admin.php:93
+msgid "Hide"
+msgstr "非表示"
+
+#: class/class-acs-admin.php:117
+msgid "Open page"
+msgstr "ページを開く"
+
+#: class/class-acs-admin.php:157
+msgid "Edit"
+msgstr "編集"
+
+#: class/class-acs-admin.php:198
+msgid "Contact Form Shortcode"
+msgstr "お問い合わせフォームショートコード"
+
+#: class/class-acs-admin.php:204
+msgid "Copy!"
+msgstr "コピー！"
+
+#: class/class-acs-admin.php:210
+msgid "Form shortcode"
+msgstr "フォームショートコード"
+
+#: class/class-acs-admin.php:248
+msgid "No events found."
+msgstr "イベントが見つかりません。"
+
+#: class/class-acs-admin.php:267
+msgid "All Events"
+msgstr "全イベント"
+
+#: class/class-acs-admin.php:276
+msgid "Filter"
+msgstr "フィルター"
+
+#: class/class-acs-admin.php:334 class/class-acs-admin.php:354
+#: class/class-acs-admin.php:405 class/class-acs-admin.php:436
+msgid "Security check failed"
+msgstr "セキュリティチェックに失敗しました"
+
+#: class/class-acs-admin.php:370 class/class-acs-admin.php:371
 msgid "ACS Agenda"
 msgstr "ACS アジェンダ"
 
+#: class/class-acs-admin.php:383
+msgid "Events per page"
+msgstr "ページあたりのイベント数"
+
+#: class/class-acs-admin.php:415
+msgid "Invalid event ID"
+msgstr "無効なイベントID"
+
+#: class/class-acs-admin.php:427
+msgid "Event updated successfully"
+msgstr "イベントが正常に更新されました"
+
+#: class/class-acs-admin.php:429
+msgid "Failed to update event"
+msgstr "イベントの更新に失敗しました"
+
+#: class/class-acs-admin.php:452
+msgid "Event added successfully"
+msgstr "イベントが正常に追加されました"
+
+#: class/class-acs-admin.php:454
+msgid "Failed to add event"
+msgstr "イベントの追加に失敗しました"
+
+#: class/class-acs-admin.php:467
+msgid "Title is required"
+msgstr "タイトルは必須です"
+
+#: class/class-acs-template.php:32
+msgid "Agenda pagination"
+msgstr "アジェンダのページ送り"
+
+#: class/class-acs-template.php:77
+msgid "Agenda filters and sorting"
+msgstr "アジェンダのフィルターと並び替え"
+
+#: class/class-acs-template.php:78
+msgid "Search"
+msgstr "検索"
+
+#: class/class-acs-template.php:79
+msgid "Search title or description"
+msgstr "タイトルまたは説明を検索"
+
+#: class/class-acs-template.php:81
+msgid "All categories"
+msgstr "すべてのカテゴリ"
+
+#: class/class-acs-template.php:82
+msgid "Date"
+msgstr "日付"
+
+#: class/class-acs-template.php:83
+msgid "All dates"
+msgstr "すべての日付"
+
+#: class/class-acs-template.php:84 class/class-acs-template.php:223
+msgid "Today"
+msgstr "今日"
+
+#: class/class-acs-template.php:85
+msgid "This week"
+msgstr "今週"
+
+#: class/class-acs-template.php:86
+msgid "This month"
+msgstr "今月"
+
+#: class/class-acs-template.php:87
+msgid "Sort"
+msgstr "並び替え"
+
+#: class/class-acs-template.php:88
+msgid "Soonest first"
+msgstr "近い順"
+
+#: class/class-acs-template.php:89
+msgid "Latest first"
+msgstr "新しい順"
+
+#: class/class-acs-template.php:90
+msgid "Title A-Z"
+msgstr "タイトル A-Z"
+
+#: class/class-acs-template.php:91
+msgid "Compact mode"
+msgstr "コンパクトモード"
+
+#: class/class-acs-template.php:108
+msgid "Agenda Administration"
+msgstr "アジェンダ管理"
+
+#: class/class-acs-template.php:225
+msgid "Running"
+msgstr "実行中"
+
+#: class/class-acs-template.php:348
+msgid "Close dialog"
+msgstr "ダイアログを閉じる"
+
+#: class/class-acs-template.php:351
+msgid "Go to page"
+msgstr "ページに移動"
+
+#: templates/help-page.php:16
 msgid "ACS Agenda Manager - User Guide"
 msgstr "ACS アジェンダマネージャー - ユーザーガイド"
 
+#: templates/admin-page.php:180
+msgid "Advanced settings"
+msgstr "詳細設定"
+
+#: templates/help-page.php:41
+msgid "Fill in the event details. Optional fields are grouped under Advanced settings."
+msgstr "イベントの詳細を入力します。オプション項目は「詳細設定」にまとめられています。"
+
+#: templates/help-page.php:35
 msgid ""
 "ACS Agenda Manager allows you to create and manage an event agenda on your "
 "WordPress site. When activated, the plugin automatically creates an Agenda "
 "page with the shortcode included."
 msgstr ""
-"ACS アジェンダマネージャーは、WordPressサイトでイベントアジェンダを作成・管理できます。"
-"有効化すると、ショートコードを含むアジェンダページが自動的に作成されます。"
-
-msgid "Add"
-msgstr "追加"
-
-msgid "Add an event"
-msgstr "イベントを追加"
-
-msgid "Add New Event"
-msgstr "新しいイベントを追加"
-
-msgid "Adding Events"
-msgstr "イベントの追加"
-
-msgid "Advance Payment"
-msgstr "前払い"
-
-msgid "Agenda"
-msgstr "アジェンダ"
-
-msgid "Agenda Administration"
-msgstr "アジェンダ管理"
-
-msgid "Agenda Manager"
-msgstr "アジェンダマネージャー"
-
-msgid "Agenda Page Name"
-msgstr "アジェンダページ名"
-
-msgid "Agenda Settings"
-msgstr "アジェンダ設定"
-
-msgid ""
-"All dates remain visible until the last date passes. Use this for multi-day "
-"events where you want to show the complete schedule."
-msgstr ""
-"最終日が過ぎるまで全ての日付が表示されます。完全なスケジュールを表示したい複数日イベント"
-"に使用してください。"
-
-msgid "All Events"
-msgstr "全イベント"
-
-msgid "An image associated with the event. Shown in the right column."
-msgstr "イベントに関連する画像。右列に表示されます。"
-
-msgid "April"
-msgstr "4月"
-
-msgid "Are you sure you want to delete this event?"
-msgstr "このイベントを削除してもよろしいですか？"
-
-msgid "August"
-msgstr "8月"
-
-msgid "Basic Information"
-msgstr "基本情報"
-
-msgid "Behavior"
-msgstr "動作"
-
-msgid "Brief description shown in the \"Read More\" dialog"
-msgstr "「もっと読む」ダイアログに表示される簡単な説明"
-
-msgid "Calendar"
-msgstr "カレンダー"
-
-msgid "Calendar not working"
-msgstr "カレンダーが動作しない"
-
-msgid "Cancel"
-msgstr "キャンセル"
-
-msgid "Category"
-msgstr "カテゴリー"
-
-msgid "Check if your theme or a caching plugin is minifying CSS incorrectly"
-msgstr "テーマまたはキャッシュプラグインがCSSを誤って縮小していないか確認してください"
-
-msgid "Check that the event has dates in the future"
-msgstr "イベントに将来の日付があるか確認してください"
-
-msgid "Check the browser console for JavaScript errors"
-msgstr "ブラウザコンソールでJavaScriptエラーを確認してください"
-
-msgid "Check the Partial Attendance setting"
-msgstr "部分出席設定を確認してください"
-
-msgid "Clear your browser cache"
-msgstr "ブラウザキャッシュをクリアしてください"
-
-msgid "Click \"Add New Event\" to create your first event"
-msgstr "「新しいイベントを追加」をクリックして最初のイベントを作成してください"
-
-msgid "Click calendar to select dates"
-msgstr "カレンダーをクリックして日付を選択"
-
-msgid "Close"
-msgstr "閉じる"
-
-msgid "Confirm"
-msgstr "確認"
-
-msgid "Confirm Delete"
-msgstr "削除の確認"
-
-msgid "Contact Form Shortcode"
-msgstr "お問い合わせフォームショートコード"
-
-msgid "Contents"
-msgstr "目次"
-
-msgid "Controls how multi-day events behave when dates pass"
-msgstr "日付が過ぎた時の複数日イベントの動作を制御"
-
-msgid "Copied"
-msgstr "コピーしました"
-
-msgid "Copy: wp-content/plugins/acs-agenda-manager/themefiles/page-agenda.php"
-msgstr "コピー元: wp-content/plugins/acs-agenda-manager/themefiles/page-agenda.php"
-
-msgid "Copy!"
-msgstr "コピー！"
-
-msgid "Create an API key and restrict it to your domain"
-msgstr "APIキーを作成してドメインを制限してください"
-
-msgid "Created"
-msgstr "作成日"
-
-msgid "CSS Styling"
-msgstr "CSSスタイル"
-
-msgid "Customization"
-msgstr "カスタマイズ"
-
-msgid "Customize the template as needed"
-msgstr "必要に応じてテンプレートをカスタマイズ"
-
-msgid "December"
-msgstr "12月"
-
-msgid "Default Agenda Page"
-msgstr "デフォルトアジェンダページ"
-
-msgid "Delete"
-msgstr "削除"
-
-msgid "Deleting Events"
-msgstr "イベントの削除"
-
-msgid "Description"
-msgstr "説明"
-
-msgid "Display your agenda on any page or post using the shortcode:"
-msgstr "ショートコードを使用して任意のページまたは投稿にアジェンダを表示："
-
-msgid "Do you really want to delete this event?"
-msgstr "本当にこのイベントを削除しますか？"
-
-msgid "Donate via PayPal"
-msgstr "PayPalで寄付"
-
-msgid "e.g., CHF 150.-"
-msgstr "例: CHF 150.-"
-
-msgid "e.g., Conference Room A"
-msgstr "例: 会議室A"
-
-msgid "e.g., Workshop, Course, Seminar"
-msgstr "例: ワークショップ、コース、セミナー"
-
-msgid "Edit"
-msgstr "編集"
-
-msgid "Editing Events"
-msgstr "イベントの編集"
-
-msgid "Editor"
-msgstr "編集者"
-
-msgid "Enable the \"Maps JavaScript API\" and \"Places API\""
-msgstr "「Maps JavaScript API」と「Places API」を有効にしてください"
-
-msgid "Ensure jQuery UI is not being blocked by another plugin"
-msgstr "jQuery UIが他のプラグインによってブロックされていないことを確認してください"
-
-msgid "Enter event title..."
-msgstr "イベントタイトルを入力..."
-
-msgid "Event"
-msgstr "イベント"
-
-msgid "Event added successfully"
-msgstr "イベントが正常に追加されました"
-
-msgid "Event cost (e.g., CHF 150, Free, On request)"
-msgstr "イベント費用（例: CHF 150、無料、要相談）"
-
-msgid "Event created successfully."
-msgstr "イベントが正常に作成されました。"
-
-msgid "Event Dates"
-msgstr "イベント日程"
-
-msgid "Event dates. Can be a single day, a range, or multiple dates."
-msgstr "イベント日程。単日、期間、または複数日を指定できます。"
-
-msgid "Event Image"
-msgstr "イベント画像"
-
-msgid "Event updated successfully"
-msgstr "イベントが正常に更新されました"
-
-msgid "Event updated successfully."
-msgstr "イベントが正常に更新されました。"
-
-msgid "Event(s) deleted successfully."
-msgstr "イベントが正常に削除されました。"
-
-msgid "Events"
-msgstr "イベント"
-
-msgid "Events not showing"
-msgstr "イベントが表示されない"
-
-msgid "Events per page"
-msgstr "ページあたりのイベント数"
-
-msgid "External registration link"
-msgstr "外部登録リンク"
-
-msgid "External URL"
-msgstr "外部URL"
-
-msgid "Failed to add event"
-msgstr "イベントの追加に失敗しました"
-
-msgid "Failed to update event"
-msgstr "イベントの更新に失敗しました"
-
-msgid "February"
-msgstr "2月"
-
-msgid "Field"
-msgstr "フィールド"
-
-msgid "Field Descriptions"
-msgstr "フィールドの説明"
-
-msgid "Fill in the event details and click Add"
-msgstr "イベント詳細を入力して追加をクリック"
-
-msgid "Filter"
-msgstr "フィルター"
-
-msgid "Filtered events"
-msgstr "フィルターされたイベント"
-
-msgid "Filtering Events"
-msgstr "イベントのフィルタリング"
-
-msgid ""
-"For complete control over the agenda display, copy the template file from "
-"the plugin to your theme:"
-msgstr ""
-"アジェンダ表示を完全に制御するには、プラグインからテーマにテンプレートファイルをコピー"
-"してください："
-
-msgid ""
-"For consistent styling across themes, this plugin uses its own template. "
-"Tested with default themes and others."
-msgstr ""
-"テーマ間で一貫したスタイリングを実現するため、このプラグインは独自のテンプレートを使用"
-"します。デフォルトテーマなどでテスト済みです。"
-
-msgid "Form shortcode"
-msgstr "フォームショートコード"
-
-msgid "Friday"
-msgstr "金曜日"
-
-msgid "Get an API key"
-msgstr "APIキーを取得"
-
-msgid "Getting Started"
-msgstr "はじめに"
-
-msgid "GitHub Issues page"
-msgstr "GitHub Issuesページ"
-
-msgid "Go to Agenda > Settings and enter your API key"
-msgstr "アジェンダ > 設定に移動してAPIキーを入力してください"
-
-msgid "Go to Agenda in the admin menu to view your events list"
-msgstr "管理メニューのアジェンダに移動してイベントリストを表示"
-
-msgid "Go to page"
-msgstr "ページに移動"
-
-msgid "Go to the Google Cloud Console and create a project"
-msgstr "Google Cloud Consoleに移動してプロジェクトを作成してください"
-
-msgid "Google Maps API Key"
-msgstr "Google Maps APIキー"
-
-msgid "Google Maps Location Autocomplete"
-msgstr "Google Maps位置情報オートコンプリート"
-
-msgid "Group your events (e.g., Workshop, Conference, Course)"
-msgstr "イベントをグループ化（例: ワークショップ、会議、コース）"
-
-msgid "Help"
-msgstr "ヘルプ"
-
-msgid "Hide"
-msgstr "非表示"
-
-msgid "How you want to categorize your event. Displayed in the widget title."
-msgstr "イベントの分類方法。ウィジェットタイトルに表示されます。"
-
-msgid "https://..."
-msgstr "https://..."
-
-msgid ""
-"If you find this plugin useful, please consider making a donation to support "
-"development."
-msgstr ""
-"このプラグインが役立つと思われた場合は、開発をサポートするための寄付をご検討ください。"
-
-msgid "Image"
-msgstr "画像"
-
-msgid "Image URL or select from library"
-msgstr "画像URLまたはライブラリから選択"
-
-msgid "Internal or external link to the full event page."
-msgstr "完全なイベントページへの内部または外部リンク。"
-
-msgid "Invalid date format. Use dd/mm/yy"
-msgstr "無効な日付形式です。dd/mm/yyを使用してください"
-
-msgid "Invalid event ID"
-msgstr "無効なイベントID"
-
-msgid "Invalid post ID"
-msgstr "無効な投稿ID"
-
-msgid "January"
-msgstr "1月"
-
-msgid "July"
-msgstr "7月"
-
-msgid "June"
-msgstr "6月"
-
-msgid "Keep until end"
-msgstr "最後まで保持"
-
-msgid "Keep until end - Show all dates"
-msgstr "最後まで保持 - 全ての日付を表示"
-
-msgid "Link to a detailed event page on your site"
-msgstr "サイト上の詳細なイベントページへのリンク"
-
-msgid "Link to event details page"
-msgstr "イベント詳細ページへのリンク"
-
-msgid "Links & Pricing"
-msgstr "リンクと料金"
-
-msgid "Location"
-msgstr "場所"
-
-msgid "Managing Events"
-msgstr "イベントの管理"
-
-msgid "March"
-msgstr "3月"
-
-msgid "May"
-msgstr "5月"
-
-msgid "Media"
-msgstr "メディア"
-
-msgid "Monday"
-msgstr "月曜日"
-
-msgid "Need more help?"
-msgstr "さらにヘルプが必要ですか？"
-
-msgid "No"
-msgstr "いいえ"
-
-msgid "No - Hide after first date"
-msgstr "いいえ - 最初の日付後に非表示"
-
-msgid "No events found."
-msgstr "イベントが見つかりません。"
-
-msgid "No image selected"
-msgstr "画像が選択されていません"
-
-msgid "No upcoming events."
-msgstr "今後のイベントはありません。"
-
-msgid ""
-"No: Event disappears after start. Yes: Past days are hidden. Keep until end: "
-"All days shown until expiration."
-msgstr ""
-"いいえ: イベントは開始後に消えます。はい: 過去の日付は非表示になります。最後まで保持: "
-"期限まで全ての日付が表示されます。"
-
-msgid "November"
-msgstr "11月"
-
-msgid "October"
-msgstr "10月"
-
-msgid ""
-"Once configured, the Location field will show address suggestions as you "
-"type."
-msgstr "設定すると、場所フィールドに入力時に住所の候補が表示されます。"
-
-msgid "Open Calendar"
-msgstr "カレンダーを開く"
-
-msgid "Open page"
-msgstr "ページを開く"
-
-msgid "Option"
-msgstr "オプション"
-
-msgid "Optional external link (e.g., registration on another site)"
-msgstr "オプションの外部リンク（例: 他サイトでの登録）"
-
-msgid ""
-"Optional. Enter your Google Maps API key to enable location autocomplete."
-msgstr "オプション。位置情報オートコンプリートを有効にするにはGoogle Maps APIキーを入力してください。"
-
-msgid "or contact"
-msgstr "またはお問い合わせ"
-
-msgid ""
-"Override the default styles by adding custom CSS to your theme. The plugin "
-"uses CSS variables for easy customization:"
-msgstr ""
-"テーマにカスタムCSSを追加してデフォルトスタイルを上書きできます。プラグインは簡単な"
-"カスタマイズのためにCSS変数を使用しています："
-
-msgid "Page Link"
-msgstr "ページリンク"
-
-msgid "Partial Attendance"
-msgstr "部分出席"
-
-msgid ""
-"Past dates are hidden, but future dates remain visible. Use this for events "
-"where participants can join for remaining sessions."
-msgstr ""
-"過去の日付は非表示になりますが、将来の日付は表示されたままです。参加者が残りのセッション"
-"に参加できるイベントに使用してください。"
-
-msgid "Paste to: wp-content/themes/your-theme/page-agenda.php"
-msgstr "貼り付け先: wp-content/themes/your-theme/page-agenda.php"
-
-msgid "Permission denied"
-msgstr "権限がありません"
-
-msgid "Post not found"
-msgstr "投稿が見つかりません"
-
-msgid "Price"
-msgstr "料金"
-
-msgid "Questions or issues?"
-msgstr "質問や問題がありますか？"
-
+"ACS アジェンダマネージャーは、WordPressサイトでイベントアジェンダを作成・管理"
+"できます。有効化すると、ショートコードを含むアジェンダページが自動的に作成さ"
+"れます。"
+
+#: templates/help-page.php:37
 msgid "Quick Start"
 msgstr "クイックスタート"
 
-msgid "Read more"
-msgstr "もっと読む"
+#: templates/help-page.php:39
+msgid "Go to Agenda in the admin menu to view your events list"
+msgstr "管理メニューのアジェンダに移動してイベントリストを表示"
 
-msgid "Report on GitHub"
-msgstr "GitHubで報告"
+#: templates/help-page.php:40
+msgid "Click \"Add New Event\" to create your first event"
+msgstr "「新しいイベントを追加」をクリックして最初のイベントを作成してください"
 
-msgid "Required"
-msgstr "必須"
+#: templates/help-page.php:52
+#, php-format
+msgid "Visit your %s page to see your events"
+msgstr "イベントを確認するには %s ページにアクセスしてください"
 
-msgid "Required APIs: Maps JavaScript API, Places API"
-msgstr "必要なAPI: Maps JavaScript API、Places API"
-
-msgid "Running"
-msgstr "実行中"
-
-msgid "Saturday"
-msgstr "土曜日"
-
-msgid "Save Settings"
-msgstr "設定を保存"
-
-msgid "Schedule"
-msgstr "スケジュール"
-
-msgid "Search Events"
-msgstr "イベントを検索"
-
-msgid "Searching Events"
-msgstr "イベントの検索"
-
-msgid "Security check failed"
-msgstr "セキュリティチェックに失敗しました"
-
-msgid "Select"
-msgstr "選択"
-
-msgid "Select Image"
-msgstr "画像を選択"
-
-msgid "Select one or more dates using the calendar picker"
-msgstr "カレンダーピッカーを使用して1つ以上の日付を選択"
-
-msgid ""
-"Select one or more dates. Use the calendar for easy multi-date selection."
-msgstr "1つ以上の日付を選択してください。複数日の選択にはカレンダーを使用してください。"
-
-msgid "Select or upload an image"
-msgstr "画像を選択またはアップロード"
-
-msgid "September"
-msgstr "9月"
-
-msgid "Settings"
-msgstr "設定"
-
-msgid "Settings saved successfully."
-msgstr "設定が正常に保存されました。"
-
-msgid "Styles not loading"
-msgstr "スタイルが読み込まれない"
-
-msgid "Sunday"
-msgstr "日曜日"
-
-msgid "Support this plugin!"
-msgstr "このプラグインをサポート！"
-
-msgid "Template Override"
-msgstr "テンプレートのオーバーライド"
-
-msgid ""
-"The entire event disappears after the first date passes. Use this for single-"
-"session events where late registration is not possible."
-msgstr ""
-"最初の日付が過ぎるとイベント全体が消えます。遅れての登録ができない単回セッションのイベント"
-"に使用してください。"
-
-msgid "The event title shown in the middle column."
-msgstr "中央列に表示されるイベントタイトル。"
-
-msgid "The field is empty"
-msgstr "フィールドが空です"
-
-msgid "The name of the page where the agenda will be displayed."
-msgstr "アジェンダが表示されるページの名前。"
-
-msgid "The name of your event"
-msgstr "イベントの名前"
-
-msgid ""
-"The Partial Attendance setting controls how events with multiple dates "
-"behave when some dates have passed:"
-msgstr ""
-"部分出席設定は、一部の日付が過ぎた時に複数日イベントがどのように動作するかを制御します："
-
-msgid ""
-"The plugin creates a page called \"%s\" upon activation. You can change this "
-"name in Settings."
-msgstr ""
-"プラグインは有効化時に「%s」というページを作成します。この名前は設定で変更できます。"
-
-msgid ""
-"The shortcode will display all upcoming events in a responsive card layout. "
-"Past events are automatically hidden based on their Partial Attendance "
-"setting."
-msgstr ""
-"ショートコードは、今後のイベントをすべてレスポンシブなカードレイアウトで表示します。"
-"過去のイベントは部分出席設定に基づいて自動的に非表示になります。"
-
-msgid ""
-"This plugin creates a simple agenda page where you can display events. The "
-"default page is \"Agenda\" and is created upon activation."
-msgstr ""
-"このプラグインは、イベントを表示できるシンプルなアジェンダページを作成します。デフォルト"
-"ページは「アジェンダ」で、有効化時に作成されます。"
-
-msgid "Thursday"
-msgstr "木曜日"
-
-msgid "Title"
-msgstr "タイトル"
-
-msgid "Title is required"
-msgstr "タイトルは必須です"
-
+#: templates/help-page.php:65
 msgid ""
 "To add a new event, click the \"Add New Event\" button on the Agenda admin "
 "page. A dialog will appear with the following fields:"
 msgstr ""
-"新しいイベントを追加するには、アジェンダ管理ページの「新しいイベントを追加」ボタンを"
-"クリックしてください。次のフィールドを含むダイアログが表示されます："
+"新しいイベントを追加するには、アジェンダ管理ページの「新しいイベントを追加」"
+"ボタンをクリックしてください。次のフィールドを含むダイアログが表示されます："
 
+#: templates/help-page.php:70
+msgid "Field"
+msgstr "フィールド"
+
+#: templates/help-page.php:72
+msgid "Required"
+msgstr "必須"
+
+#: templates/help-page.php:78
+msgid "Group your events (e.g., Workshop, Conference, Course)"
+msgstr "イベントをグループ化（例: ワークショップ、会議、コース）"
+
+#: templates/help-page.php:83
+msgid "The name of your event"
+msgstr "イベントの名前"
+
+#: templates/help-page.php:88
+msgid "Where the event takes place"
+msgstr "イベントが開催される場所"
+
+#: templates/help-page.php:93
+msgid "Upload or select an image from the Media Library"
+msgstr "メディアライブラリから画像をアップロードまたは選択"
+
+#: templates/help-page.php:98
+msgid "Brief description shown in the \"Read More\" dialog"
+msgstr "「もっと読む」ダイアログに表示される簡単な説明"
+
+#: templates/help-page.php:103
+msgid "Link to a detailed event page on your site"
+msgstr "サイト上の詳細なイベントページへのリンク"
+
+#: templates/help-page.php:108
+msgid "Select one or more dates using the calendar picker"
+msgstr "カレンダーピッカーを使用して1つ以上の日付を選択"
+
+#: templates/help-page.php:113
+msgid "Event cost (e.g., CHF 150, Free, On request)"
+msgstr "イベント費用（例: CHF 150、無料、要相談）"
+
+#: templates/help-page.php:118
+msgid "Whether advance payment is accepted for this event"
+msgstr "このイベントで前払いが受け付けられるかどうか"
+
+#: templates/help-page.php:123
+msgid "Controls how multi-day events behave when dates pass"
+msgstr "日付が過ぎた時の複数日イベントの動作を制御"
+
+#: templates/help-page.php:128
+msgid "Optional external link (e.g., registration on another site)"
+msgstr "オプションの外部リンク（例: 他サイトでの登録）"
+
+#: templates/help-page.php:139
+msgid "Editing Events"
+msgstr "イベントの編集"
+
+#: templates/help-page.php:140
+msgid ""
+"To edit an event, click the Edit action in the event row. A dialog will open "
+"allowing you to modify the event details. Click Update to save your changes."
+msgstr ""
+"イベントを編集するには、イベント行の「編集」アクションをクリックしてくださ"
+"い。イベント詳細を変更できるダイアログが開きます。変更を保存するには更新をク"
+"リックしてください。"
+
+#: templates/help-page.php:142
+msgid "Deleting Events"
+msgstr "イベントの削除"
+
+#: templates/help-page.php:143
 msgid ""
 "To delete a single event, hover over the event row and click the Delete "
 "link. To delete multiple events, select them using the checkboxes and choose "
 "\"Delete\" from the Bulk Actions dropdown."
 msgstr ""
-"単一のイベントを削除するには、イベント行にマウスを合わせて削除リンクをクリックしてください。"
-"複数のイベントを削除するには、チェックボックスで選択し、一括操作ドロップダウンから「削除」を"
-"選択してください。"
+"単一のイベントを削除するには、イベント行にマウスを合わせて削除リンクをクリッ"
+"クしてください。複数のイベントを削除するには、チェックボックスで選択し、一括"
+"操作ドロップダウンから「削除」を選択してください。"
 
-msgid ""
-"To edit an event, click the Edit action in the event row. A dialog will open "
-"allowing you to modify the event details. Click Update to save your changes."
-msgstr ""
-"イベントを編集するには、イベント行の「編集」アクションをクリックしてください。イベント詳細を"
-"変更できるダイアログが開きます。変更を保存するには更新をクリックしてください。"
+#: templates/help-page.php:145
+msgid "Filtering Events"
+msgstr "イベントのフィルタリング"
 
-msgid "Today"
-msgstr "今日"
-
-msgid "Troubleshooting"
-msgstr "トラブルシューティング"
-
-msgid "Try deactivating other plugins to check for conflicts"
-msgstr "競合をチェックするために他のプラグインを無効にしてみてください"
-
-msgid "Tuesday"
-msgstr "火曜日"
-
-msgid "Update"
-msgstr "更新"
-
-msgid "Upload or select an image from the Media Library"
-msgstr "メディアライブラリから画像をアップロードまたは選択"
-
-msgid "Usage"
-msgstr "使用方法"
-
+#: templates/help-page.php:146
 msgid ""
 "Use the filter dropdown above the events list to show only events matching a "
 "specific title and category combination."
 msgstr ""
-"イベントリストの上にあるフィルタードロップダウンを使用して、特定のタイトルとカテゴリーの"
-"組み合わせに一致するイベントのみを表示します。"
+"イベントリストの上にあるフィルタードロップダウンを使用して、特定のタイトルと"
+"カテゴリーの組み合わせに一致するイベントのみを表示します。"
 
+#: templates/help-page.php:148
+msgid "Searching Events"
+msgstr "イベントの検索"
+
+#: templates/help-page.php:149
 msgid ""
 "Use the search box to find events by title, category, location, or "
 "description."
 msgstr ""
-"検索ボックスを使用して、タイトル、カテゴリー、場所、または説明でイベントを検索します。"
+"検索ボックスを使用して、タイトル、カテゴリー、場所、または説明でイベントを検"
+"索します。"
 
-msgid "Use the shortcode below to display the agenda on any page:"
-msgstr "以下のショートコードを使用して任意のページにアジェンダを表示："
+#: templates/help-page.php:155
+msgid "Display your agenda on any page or post using the shortcode:"
+msgstr "ショートコードを使用して任意のページまたは投稿にアジェンダを表示："
 
-msgid "User Guide"
-msgstr "ユーザーガイド"
-
-msgid "Using the Shortcode"
-msgstr "ショートコードの使用"
-
-msgid "Verify the shortcode [acsagma_agenda] is on the page"
-msgstr "ページにショートコード [acsagma_agenda] があることを確認してください"
-
-msgid "View Agenda"
-msgstr "アジェンダを表示"
-
-msgid "Visit our %s for support and feature requests."
-msgstr "サポートと機能リクエストについては %s をご覧ください。"
-
-msgid "Visit your %s page to see your events"
-msgstr "イベントを確認するには %s ページにアクセスしてください"
-
-msgid "Wednesday"
-msgstr "水曜日"
-
-msgid "Where the event takes place"
-msgstr "イベントが開催される場所"
-
-msgid "Where the event will be held. Shown in the left column."
-msgstr "イベントが開催される場所。左列に表示されます。"
-
-msgid "Whether advance payment is accepted for this event"
-msgstr "このイベントで前払いが受け付けられるかどうか"
-
-msgid "Yes"
-msgstr "はい"
-
-msgid "Yes - Hide past dates only"
-msgstr "はい - 過去の日付のみ非表示"
-
-msgid "Yes - Required"
-msgstr "はい - 必須"
-
+#: templates/help-page.php:161
 msgid ""
-"You can change the page name below. The plugin will try to rename the "
-"existing agenda page to preserve your content and links."
+"The shortcode will display all upcoming events in a responsive card layout. "
+"Past events are automatically hidden based on their Partial Attendance "
+"setting."
 msgstr ""
-"以下でページ名を変更できます。プラグインは既存のアジェンダページの名前変更を試み、"
-"コンテンツとリンクを保持します。"
+"ショートコードは、今後のイベントをすべてレスポンシブなカードレイアウトで表示"
+"します。過去のイベントは部分出席設定に基づいて自動的に非表示になります。"
 
+#: templates/help-page.php:163
+msgid "Default Agenda Page"
+msgstr "デフォルトアジェンダページ"
+
+#: templates/help-page.php:174
+#, php-format
+msgid ""
+"The plugin creates a page called \"%s\" upon activation. You can change this "
+"name in Settings."
+msgstr ""
+"プラグインは有効化時に「%s」というページを作成します。この名前は設定で変更で"
+"きます。"
+
+#: templates/help-page.php:186
+msgid ""
+"The Partial Attendance setting controls how events with multiple dates "
+"behave when some dates have passed:"
+msgstr ""
+"部分出席設定は、一部の日付が過ぎた時に複数日イベントがどのように動作するかを"
+"制御します："
+
+#: templates/help-page.php:191
+msgid "Option"
+msgstr "オプション"
+
+#: templates/help-page.php:192
+msgid "Behavior"
+msgstr "動作"
+
+#: templates/help-page.php:198
+msgid ""
+"The entire event disappears after the first date passes. Use this for single-"
+"session events where late registration is not possible."
+msgstr ""
+"最初の日付が過ぎるとイベント全体が消えます。遅れての登録ができない単回セッ"
+"ションのイベントに使用してください。"
+
+#: templates/help-page.php:202
+msgid ""
+"Past dates are hidden, but future dates remain visible. Use this for events "
+"where participants can join for remaining sessions."
+msgstr ""
+"過去の日付は非表示になりますが、将来の日付は表示されたままです。参加者が残り"
+"のセッションに参加できるイベントに使用してください。"
+
+#: templates/help-page.php:266
+msgid "Check the Partial Attendance setting in Advanced settings."
+msgstr "「詳細設定」で部分参加の設定を確認してください。"
+
+#: templates/help-page.php:216
+msgid "Google Maps Location Autocomplete"
+msgstr "Google Maps位置情報オートコンプリート"
+
+#: templates/help-page.php:217
 msgid ""
 "You can enable Google Places Autocomplete for the Location field to help "
 "users find addresses easily."
 msgstr ""
-"場所フィールドでGoogle Places オートコンプリートを有効にして、ユーザーが住所を簡単に"
-"見つけられるようにできます。"
+"場所フィールドでGoogle Places オートコンプリートを有効にして、ユーザーが住所"
+"を簡単に見つけられるようにできます。"
 
+#: templates/help-page.php:219
+msgid "Go to the Google Cloud Console and create a project"
+msgstr "Google Cloud Consoleに移動してプロジェクトを作成してください"
+
+#: templates/help-page.php:220
+msgid "Enable the \"Maps JavaScript API\" and \"Places API\""
+msgstr "「Maps JavaScript API」と「Places API」を有効にしてください"
+
+#: templates/help-page.php:221
+msgid "Create an API key and restrict it to your domain"
+msgstr "APIキーを作成してドメインを制限してください"
+
+#: templates/help-page.php:222
+msgid "Go to Agenda > Settings and enter your API key"
+msgstr "アジェンダ > 設定に移動してAPIキーを入力してください"
+
+#: templates/help-page.php:224
+msgid ""
+"Once configured, the Location field will show address suggestions as you "
+"type."
+msgstr "設定すると、場所フィールドに入力時に住所の候補が表示されます。"
+
+#: templates/help-page.php:226
+msgid "CSS Styling"
+msgstr "CSSスタイル"
+
+#: templates/help-page.php:227
+msgid ""
+"Override the default styles by adding custom CSS to your theme. The plugin "
+"uses CSS variables for easy customization:"
+msgstr ""
+"テーマにカスタムCSSを追加してデフォルトスタイルを上書きできます。プラグインは"
+"簡単なカスタマイズのためにCSS変数を使用しています："
+
+#: templates/help-page.php:249
+msgid "Template Override"
+msgstr "テンプレートのオーバーライド"
+
+#: templates/help-page.php:250
+msgid ""
+"For complete control over the agenda display, copy the template file from "
+"the plugin to your theme:"
+msgstr ""
+"アジェンダ表示を完全に制御するには、プラグインからテーマにテンプレートファイ"
+"ルをコピーしてください："
+
+#: templates/help-page.php:252
+msgid "Copy: wp-content/plugins/acs-agenda-manager/themefiles/page-agenda.php"
+msgstr ""
+"コピー元: wp-content/plugins/acs-agenda-manager/themefiles/page-agenda.php"
+
+#: templates/help-page.php:253
+msgid "Paste to: wp-content/themes/your-theme/page-agenda.php"
+msgstr "貼り付け先: wp-content/themes/your-theme/page-agenda.php"
+
+#: templates/help-page.php:254
+msgid "Customize the template as needed"
+msgstr "必要に応じてテンプレートをカスタマイズ"
+
+#: templates/help-page.php:262
+msgid "Events not showing"
+msgstr "イベントが表示されない"
+
+#: templates/help-page.php:264
+msgid "Check that the event has dates in the future"
+msgstr "イベントに将来の日付があるか確認してください"
+
+#: templates/help-page.php:265
+msgid "Verify the shortcode [acsagma_agenda] is on the page"
+msgstr "ページにショートコード [acsagma_agenda] があることを確認してください"
+
+#: templates/help-page.php:266
+msgid "Check the Partial Attendance setting"
+msgstr "部分出席設定を確認してください"
+
+#: templates/help-page.php:269
+msgid "Calendar not working"
+msgstr "カレンダーが動作しない"
+
+#: templates/help-page.php:271
+msgid "Ensure jQuery UI is not being blocked by another plugin"
+msgstr ""
+"jQuery UIが他のプラグインによってブロックされていないことを確認してください"
+
+#: templates/help-page.php:272
+msgid "Check the browser console for JavaScript errors"
+msgstr "ブラウザコンソールでJavaScriptエラーを確認してください"
+
+#: templates/help-page.php:273
+msgid "Try deactivating other plugins to check for conflicts"
+msgstr "競合をチェックするために他のプラグインを無効にしてみてください"
+
+#: templates/help-page.php:276
+msgid "Styles not loading"
+msgstr "スタイルが読み込まれない"
+
+#: templates/help-page.php:278
+msgid "Clear your browser cache"
+msgstr "ブラウザキャッシュをクリアしてください"
+
+#: templates/help-page.php:279
+msgid "Check if your theme or a caching plugin is minifying CSS incorrectly"
+msgstr ""
+"テーマまたはキャッシュプラグインがCSSを誤って縮小していないか確認してください"
+
+#: templates/help-page.php:282
+msgid "Need more help?"
+msgstr "さらにヘルプが必要ですか？"
+
+#: templates/help-page.php:289
+#, php-format
+msgid "Visit our %s for support and feature requests."
+msgstr "サポートと機能リクエストについては %s をご覧ください。"
+
+#: templates/help-page.php:293
+msgid "GitHub Issues page"
+msgstr "GitHub Issuesページ"
+
+#: templates/settings-page.php:12
+msgid "Agenda Settings"
+msgstr "アジェンダ設定"
+
+#: templates/settings-page.php:18
+msgid "Support this plugin!"
+msgstr "このプラグインをサポート！"
+
+#: templates/settings-page.php:19
+msgid ""
+"If you find this plugin useful, please consider making a donation to support "
+"development."
+msgstr ""
+"このプラグインが役立つと思われた場合は、開発をサポートするための寄付をご検討"
+"ください。"
+
+#: templates/settings-page.php:23
+msgid "Donate via PayPal"
+msgstr "PayPalで寄付"
+
+#: templates/settings-page.php:29
+msgid "About This Plugin"
+msgstr "このプラグインについて"
+
+#: templates/settings-page.php:31
+msgid ""
+"This plugin creates a simple agenda page where you can display events. The "
+"default page is \"Agenda\" and is created upon activation."
+msgstr ""
+"このプラグインは、イベントを表示できるシンプルなアジェンダページを作成しま"
+"す。デフォルトページは「アジェンダ」で、有効化時に作成されます。"
+
+#: templates/settings-page.php:34
+msgid ""
+"You can change the page name below. The plugin will try to rename the "
+"existing agenda page to preserve your content and links."
+msgstr ""
+"以下でページ名を変更できます。プラグインは既存のアジェンダページの名前変更を"
+"試み、コンテンツとリンクを保持します。"
+
+#: templates/settings-page.php:37
+msgid ""
+"For consistent styling across themes, this plugin uses its own template. "
+"Tested with default themes and others."
+msgstr ""
+"テーマ間で一貫したスタイリングを実現するため、このプラグインは独自のテンプ"
+"レートを使用します。デフォルトテーマなどでテスト済みです。"
+
+#: templates/settings-page.php:40
+msgid "Questions or issues?"
+msgstr "質問や問題がありますか？"
+
+#: templates/settings-page.php:41
+msgid "Report on GitHub"
+msgstr "GitHubで報告"
+
+#: templates/settings-page.php:42
+msgid "or contact"
+msgstr "またはお問い合わせ"
+
+#: templates/settings-page.php:53
+msgid "Agenda Page Name"
+msgstr "アジェンダページ名"
+
+#: templates/settings-page.php:63
+msgid "The name of the page where the agenda will be displayed."
+msgstr "アジェンダが表示されるページの名前。"
+
+#: templates/settings-page.php:69
+msgid "Google Maps API Key"
+msgstr "Google Maps APIキー"
+
+#: templates/settings-page.php:79
+msgid ""
+"Optional. Enter your Google Maps API key to enable location autocomplete."
+msgstr ""
+"オプション。位置情報オートコンプリートを有効にするにはGoogle Maps APIキーを入"
+"力してください。"
+
+#: templates/settings-page.php:81
+msgid "Get an API key"
+msgstr "APIキーを取得"
+
+#: templates/settings-page.php:85
+msgid "Required APIs: Maps JavaScript API, Places API"
+msgstr "必要なAPI: Maps JavaScript API、Places API"
+
+#: templates/settings-page.php:91
 msgid "Delete Data on Uninstall"
 msgstr "アンインストール時にデータを削除"
 
-msgid "Remove all plugin data (events, settings, database table) when the plugin is deleted"
-msgstr "プラグイン削除時にすべてのプラグインデータ（イベント、設定、データベーステーブル）を削除する"
+#: templates/settings-page.php:100
+msgid ""
+"Remove all plugin data (events, settings, database table) when the plugin is "
+"deleted"
+msgstr ""
+"プラグイン削除時にすべてのプラグインデータ（イベント、設定、データベーステー"
+"ブル）を削除する"
 
-msgid "Remove image"
-msgstr "画像を削除"
-
+#: templates/settings-page.php:103
 msgid "Warning: This will permanently delete all your events and settings!"
 msgstr "警告：これによりすべてのイベントと設定が完全に削除されます！"
 
-msgid "Unable to load details. Please try again."
-msgstr "詳細を読み込めませんでした。もう一度お試しください。"
+#: templates/settings-page.php:109
+msgid "Save Settings"
+msgstr "設定を保存"
 
-msgid "No events match your filters."
-msgstr "フィルターに一致するイベントはありません。"
+#: templates/settings-page.php:113
+msgid "Usage"
+msgstr "使用方法"
 
+#: templates/settings-page.php:114
+msgid "Use the shortcode below to display the agenda on any page:"
+msgstr "以下のショートコードを使用して任意のページにアジェンダを表示："
+
+#: templates/admin-page.php:12
+msgid "Agenda Manager"
+msgstr "アジェンダマネージャー"
+
+#: templates/admin-page.php:15
+msgid "View Agenda"
+msgstr "アジェンダを表示"
+
+#: templates/admin-page.php:25
+msgid "Event(s) deleted successfully."
+msgstr "イベントが正常に削除されました。"
+
+#: templates/admin-page.php:34
+msgid "Event created successfully."
+msgstr "イベントが正常に作成されました。"
+
+#: templates/admin-page.php:43
+msgid "Event updated successfully."
+msgstr "イベントが正常に更新されました。"
+
+#: templates/admin-page.php:53
+msgid "Add New Event"
+msgstr "新しいイベントを追加"
+
+#: templates/admin-page.php:59 templates/admin-page.php:75
+msgid "Help"
+msgstr "ヘルプ"
+
+#: templates/admin-page.php:68
+msgid "Search Events"
+msgstr "イベントを検索"
+
+#: templates/admin-page.php:79
+msgid "Field Descriptions"
+msgstr "フィールドの説明"
+
+#: templates/admin-page.php:85
+msgid "How you want to categorize your event. Displayed in the widget title."
+msgstr "イベントの分類方法。ウィジェットタイトルに表示されます。"
+
+#: templates/admin-page.php:89
+msgid "The event title shown in the middle column."
+msgstr "中央列に表示されるイベントタイトル。"
+
+#: templates/admin-page.php:93
+msgid "Where the event will be held. Shown in the left column."
+msgstr "イベントが開催される場所。左列に表示されます。"
+
+#: templates/admin-page.php:97
+msgid "An image associated with the event. Shown in the right column."
+msgstr "イベントに関連する画像。右列に表示されます。"
+
+#: templates/admin-page.php:101
+msgid "A short introduction to the event."
+msgstr "イベントの簡単な紹介。"
+
+#: templates/admin-page.php:105
+msgid "Internal or external link to the full event page."
+msgstr "完全なイベントページへの内部または外部リンク。"
+
+#: templates/admin-page.php:109
+msgid "Event dates. Can be a single day, a range, or multiple dates."
+msgstr "イベント日程。単日、期間、または複数日を指定できます。"
+
+#: templates/admin-page.php:113
+msgid ""
+"No: Event disappears after start. Yes: Past days are hidden. Keep until end: "
+"All days shown until expiration."
+msgstr ""
+"いいえ: イベントは開始後に消えます。はい: 過去の日付は非表示になります。最後"
+"まで保持: 期限まで全ての日付が表示されます。"
+
+#: templates/admin-page.php:120
+msgid "Confirm Delete"
+msgstr "削除の確認"
+
+#: templates/admin-page.php:123
+msgid "Are you sure you want to delete this event?"
+msgstr "このイベントを削除してもよろしいですか？"
+
+#: templates/admin-page.php:140
+msgid "Basic Information"
+msgstr "基本情報"
+
+#: templates/admin-page.php:149
+msgid "e.g., Workshop, Course, Seminar"
+msgstr "例: ワークショップ、コース、セミナー"
+
+#: templates/admin-page.php:156
+msgid "e.g., Conference Room A"
+msgstr "例: 会議室A"
+
+#: templates/admin-page.php:165
+msgid "Enter event title..."
+msgstr "イベントタイトルを入力..."
+
+#: templates/admin-page.php:173
+msgid "A brief description of the event..."
+msgstr "イベントの簡単な説明..."
+
+#: templates/admin-page.php:186
+msgid "Event Dates"
+msgstr "イベント日程"
+
+#: templates/admin-page.php:191
+msgid "Click calendar to select dates"
+msgstr "カレンダーをクリックして日付を選択"
+
+#: templates/admin-page.php:197
+msgid ""
+"Select one or more dates. Use the calendar for easy multi-date selection."
+msgstr ""
+"1つ以上の日付を選択してください。複数日の選択にはカレンダーを使用してくださ"
+"い。"
+
+#: templates/admin-page.php:205
+msgid "No - Hide after first date"
+msgstr "いいえ - 最初の日付後に非表示"
+
+#: templates/admin-page.php:206
+msgid "Yes - Hide past dates only"
+msgstr "はい - 過去の日付のみ非表示"
+
+#: templates/admin-page.php:207
+msgid "Keep until end - Show all dates"
+msgstr "最後まで保持 - 全ての日付を表示"
+
+#: templates/admin-page.php:216
+msgid "Media"
+msgstr "メディア"
+
+#: templates/admin-page.php:221
+msgid "Event Image"
+msgstr "イベント画像"
+
+#: templates/admin-page.php:226
+msgid "No image selected"
+msgstr "画像が選択されていません"
+
+#: templates/admin-page.php:229
+msgid "Image URL or select from library"
+msgstr "画像URLまたはライブラリから選択"
+
+#: templates/admin-page.php:232
+msgid "Select"
+msgstr "選択"
+
+#: templates/admin-page.php:234
+msgid "Remove image"
+msgstr "画像を削除"
+
+#: templates/admin-page.php:246
+msgid "Links & Pricing"
+msgstr "リンクと料金"
+
+#: templates/admin-page.php:254 templates/admin-page.php:261
+msgid "https://..."
+msgstr "https://..."
+
+#: templates/admin-page.php:255
+msgid "Link to event details page"
+msgstr "イベント詳細ページへのリンク"
+
+#: class/class-acs-admin.php:96
 msgid "No page link"
 msgstr "ページリンクなし"
 
-#, php-format
-msgid "Showing %1$d-%2$d of %3$d events"
-msgstr "%3$d 件中 %1$d-%2$d 件を表示"
+#: templates/admin-page.php:262
+msgid "External registration link"
+msgstr "外部登録リンク"
 
-msgid "Compact mode on"
-msgstr "コンパクトモードをオンにしました"
+#: templates/admin-page.php:272
+msgid "e.g., CHF 150.-"
+msgstr "例: CHF 150.-"
 
-msgid "Compact mode off"
-msgstr "コンパクトモードをオフにしました"
+#: templates/admin-page.php:280
+msgid "Yes - Required"
+msgstr "はい - 必須"
 
-msgid "Previous"
-msgstr "前へ"
+#~ msgid "Agenda"
+#~ msgstr "アジェンダ"
 
-msgid "Next"
-msgstr "次へ"
+#~ msgid "Open Calendar"
+#~ msgstr "カレンダーを開く"
 
-msgid "Agenda filters and sorting"
-msgstr "アジェンダのフィルターと並び替え"
-
-msgid "Search"
-msgstr "検索"
-
-msgid "Search title or description"
-msgstr "タイトルまたは説明を検索"
-
-msgid "All categories"
-msgstr "すべてのカテゴリ"
-
-msgid "Date"
-msgstr "日付"
-
-msgid "All dates"
-msgstr "すべての日付"
-
-msgid "This week"
-msgstr "今週"
-
-msgid "This month"
-msgstr "今月"
-
-msgid "Sort"
-msgstr "並び替え"
-
-msgid "Soonest first"
-msgstr "近い順"
-
-msgid "Latest first"
-msgstr "新しい順"
-
-msgid "Title A-Z"
-msgstr "タイトル A-Z"
-
-msgid "Compact mode"
-msgstr "コンパクトモード"
-
-msgid "Agenda pagination"
-msgstr "アジェンダのページ送り"
+#~ msgid "Select Image"
+#~ msgstr "画像を選択"

@@ -80,22 +80,7 @@ class ACSAGMA_Database {
      * Update database schema for plugin updates
      */
     public static function update_schema(): bool {
-        global $wpdb;
-
-        $result = self::create_table();
-
-        // Backfill last_date_ts for rows added before this column existed.
-        // STR_TO_DATE with '%d/%m/%y' parses dd/mm/yy; SUBSTRING_INDEX gets the
-        // last comma-separated date which represents the event's end date.
-        $table_name = self::get_table_name();
-        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- One-time migration, no user input.
-        $wpdb->query(
-            "UPDATE {$table_name}
-             SET last_date_ts = UNIX_TIMESTAMP(STR_TO_DATE(TRIM(SUBSTRING_INDEX(TRIM(date), ',', -1)), '%d/%m/%y'))
-             WHERE last_date_ts IS NULL"
-        );
-
-        return $result;
+        return self::create_table();
     }
 
     /**
@@ -152,9 +137,11 @@ class ACSAGMA_Database {
         }
 
         // Optional pre-filter: skip events whose last date ended before the given timestamp.
-        // Rows with last_date_ts = NULL (pre-migration data) are always included as a safe fallback.
+        // For legacy rows where last_date_ts is NULL, compute a fallback timestamp from
+        // the last comma-separated date token (dd/mm/yy) at query time.
         if (isset($args['min_last_date_ts'])) {
-            $clauses[] = '(last_date_ts IS NULL OR last_date_ts >= %d)';
+            $clauses[] = "(last_date_ts >= %d OR (last_date_ts IS NULL AND UNIX_TIMESTAMP(STR_TO_DATE(TRIM(SUBSTRING_INDEX(TRIM(date), ',', -1)), '%%d/%%m/%%y')) >= %d))";
+            $params[] = (int) $args['min_last_date_ts'];
             $params[] = (int) $args['min_last_date_ts'];
         }
 

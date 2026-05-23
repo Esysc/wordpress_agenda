@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/donate?business=KG9SDHM7VUP6Y&currency_code=
 Tags: agenda, events, calendar, schedule, workshop
 Requires at least: 6.2
 Tested up to: 7.0
-Stable tag: 3.5.0
+Stable tag: 3.5.1
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -81,7 +81,7 @@ Yes, events can have multiple dates. Use the calendar in the event editor to sel
 
 = What happens when an event expires? =
 
-By default, events are hidden after their last date passes. You can control this behavior with the "Partial Attendance" setting.
+By default, events are hidden after their last date passes. You can control this behavior with the "Partial Attendance" setting under "Advanced settings" in the event editor.
 
 = Can I customize the appearance? =
 
@@ -96,6 +96,13 @@ Yes, you can override the CSS in your theme or copy the template file to your th
 5. Plugin settings and configuration options
 
 == Changelog ==
+
+= 3.5.1 =
+* Fixed intermittent E2E/global-setup login reliability in CI after fresh environment restarts
+* Improved admin image preview hardening by validating URLs and rendering preview nodes via safe DOM APIs
+* Improved date-chip accessibility with visible keyboard focus styling in the admin calendar UI
+* Updated help/README wording for Advanced settings and Partial Attendance to keep instructions aligned
+* Refined translation entries and rebuilt locale assets for updated help/instruction strings
 
 = 3.5.0 =
 * Added frontend toolbar with search, category filter, date-range filter (today/week/month), sort toggle, and compact/full layout toggle
@@ -184,6 +191,9 @@ Yes, you can override the CSS in your theme or copy the template file to your th
 
 == Upgrade Notice ==
 
+= 3.5.1 =
+Maintenance update focused on reliability, admin UI hardening, aligned help instructions, and refreshed translations.
+
 = 3.3.4 =
 Improved WordPress.org compliance with proper shortcode naming and complete Japanese translation.
 
@@ -195,8 +205,5 @@ Major update with complete code rewrite. Backup your database before upgrading.
 
 == Credits ==
 
-* jQuery UI Multi Dates Picker v1.6.6: https://github.com/dubrox/Multiple-Dates-Picker-for-jQuery-UI
-  - Loaded as minified version (js/jquery-ui-multidatespicker.min.js)
-  - Source code available at: https://github.com/dubrox/Multiple-Dates-Picker-for-jQuery-UI
-  - Licensed under MIT License
+* jQuery UI Datepicker: bundled with WordPress core
 * Icons: WordPress Dashicons

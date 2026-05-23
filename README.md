@@ -5,7 +5,7 @@ A WordPress plugin for managing and displaying event agendas. Perfect for worksh
 ![WordPress Version](https://img.shields.io/badge/WordPress-6.2%2B-blue)
 ![PHP Version](https://img.shields.io/badge/PHP-7.4%2B-purple)
 ![License](https://img.shields.io/badge/License-GPL--2.0--or--later-green)
-![Version](https://img.shields.io/badge/Version-3.3.4-orange)
+![Version](https://img.shields.io/badge/Version-3.5.1-orange)
 
 ## Description
 
@@ -65,13 +65,14 @@ The plugin automatically creates an "Agenda" page upon activation with the short
    - **Category**: Group your events (e.g., "Workshop", "Conference")
    - **Title**: Event name
    - **Location**: Where the event takes place
-   - **Image**: Upload or select an event image
    - **Description**: Brief event description
-   - **Page Link**: Link to a detailed event page
-   - **Schedule**: Select event date(s) using the calendar
-   - **Price**: Event cost (optional)
-   - **Advance Payment**: Whether advance payment is accepted
-   - **Partial Attendance**: How to handle multi-day events
+    - **Schedule**: Select event date(s) using the calendar
+    - **Advanced settings**: Expand to configure behavior and optional fields
+        - **Partial Attendance**: How to handle multi-day events
+        - **Image**: Upload or select an event image
+        - **Page Link**: Link to a detailed event page
+        - **Price**: Event cost (optional)
+        - **Advance Payment**: Whether advance payment is accepted
 4. Click **Add** to save
 
 ### Partial Attendance Options
@@ -165,5 +166,5 @@ This project is licensed under the GPL-2.0-or-later License - see the [LICENSE](
 
 ## Credits
 
-- **jQuery UI Multi Dates Picker**: Loaded from [jsDelivr CDN](https://www.jsdelivr.com/package/npm/jquery-ui-multidatespicker)
+- **jQuery UI Datepicker**: Bundled with WordPress core
 - **Icons**: WordPress Dashicons

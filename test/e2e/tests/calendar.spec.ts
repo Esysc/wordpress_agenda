@@ -1,4 +1,22 @@
 import { test, expect, AgendaPage } from './fixtures';
+import type { Page } from '@playwright/test';
+
+async function setDateInputValue(page: Page, value: string) {
+  await page.evaluate((dateValue) => {
+    const input = document.getElementById('event-date') as HTMLInputElement | null;
+    if (!input) {
+      return;
+    }
+
+    const previousReadOnly = input.readOnly;
+    input.readOnly = false;
+    input.value = dateValue;
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+    input.dispatchEvent(new Event('change', { bubbles: true }));
+    input.dispatchEvent(new FocusEvent('blur', { bubbles: true }));
+    input.readOnly = previousReadOnly;
+  }, value);
+}
 
 test.describe('Calendar Functionality', () => {
   let agendaPage: AgendaPage;
@@ -208,9 +226,8 @@ test.describe('Calendar Functionality', () => {
 
     const dateInput = page.locator('#event-date');
 
-    // Type an invalid date
-    await dateInput.fill('invalid-date');
-    await dateInput.blur();
+    // Set invalid date value and trigger blur validation on readonly field.
+    await setDateInputValue(page, 'invalid-date');
 
     // Check that field has error class
     await expect(dateInput).toHaveClass(/error/);
@@ -221,9 +238,8 @@ test.describe('Calendar Functionality', () => {
 
     const dateInput = page.locator('#event-date');
 
-    // Type a valid date
-    await dateInput.fill('25/12/25');
-    await dateInput.blur();
+    // Set valid date value and trigger blur validation on readonly field.
+    await setDateInputValue(page, '25/12/25');
 
     // Check that field does NOT have error class
     await expect(dateInput).not.toHaveClass(/error/);
@@ -238,9 +254,8 @@ test.describe('Calendar Functionality', () => {
 
     const dateInput = page.locator('#event-date');
 
-    // Type multiple dates
-    await dateInput.fill('31/12/25, 25/12/25, 28/12/25');
-    await dateInput.blur();
+    // Set multiple dates and trigger blur validation on readonly field.
+    await setDateInputValue(page, '31/12/25, 25/12/25, 28/12/25');
 
     // Check that field does NOT have error class (multiple dates are valid)
     await expect(dateInput).not.toHaveClass(/error/);
@@ -298,8 +313,8 @@ test.describe('Calendar Functionality', () => {
     // Close calendar
     await page.click('.acs-datepicker-close');
 
-    // Manually clear the date field
-    await page.fill('#event-date', '');
+    // Manually clear the readonly date field.
+    await setDateInputValue(page, '');
 
     // Reopen calendar and select a new date
     await page.click('.acs-open-calendar');
