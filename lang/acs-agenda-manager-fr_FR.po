@@ -531,10 +531,6 @@ msgid "Click \"Add New Event\" to create your first event"
 msgstr ""
 "Cliquez sur \"Ajouter un evenement\" pour creer votre premier evenement"
 
-#: templates/help-page.php:41
-msgid "Fill in the event details and click Add"
-msgstr "Renseignez les details de l'evenement et cliquez sur Ajouter"
-
 #: templates/help-page.php:52
 #, php-format
 msgid "Visit your %s page to see your events"

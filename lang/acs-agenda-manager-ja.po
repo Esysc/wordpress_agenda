@@ -527,10 +527,6 @@ msgstr "管理メニューのアジェンダに移動してイベントリスト
 msgid "Click \"Add New Event\" to create your first event"
 msgstr "「新しいイベントを追加」をクリックして最初のイベントを作成してください"
 
-#: templates/help-page.php:41
-msgid "Fill in the event details and click Add"
-msgstr "イベント詳細を入力して追加をクリック"
-
 #: templates/help-page.php:52
 #, php-format
 msgid "Visit your %s page to see your events"

@@ -49,6 +49,11 @@ async function globalSetup(config: FullConfig) {
       const englishLocale = await localeSelect.evaluate((el) => {
         const options = Array.from((el as HTMLSelectElement).options);
 
+        const siteDefault = options.find((opt) => opt.value === '');
+        if (siteDefault) {
+          return siteDefault.value;
+        }
+
         const exact = options.find((opt) => opt.value === 'en_US');
         if (exact) {
           return exact.value;
@@ -60,15 +65,15 @@ async function globalSetup(config: FullConfig) {
         }
 
         const byValue = options.find((opt) => /^en([_-]|$)/i.test(opt.value));
-        return byValue ? byValue.value : '';
+        return byValue ? byValue.value : null;
       });
 
-      if (englishLocale && currentLocale !== englishLocale) {
+      if (englishLocale !== null && currentLocale !== englishLocale) {
         await localeSelect.selectOption(englishLocale);
         await page.click('input#submit');
         await page.waitForLoadState('networkidle');
-        console.log(`🌐 Locale switched to ${englishLocale} for E2E tests`);
-      } else if (!englishLocale) {
+        console.log(`🌐 Locale switched to ${englishLocale || 'Site Default'} for E2E tests`);
+      } else if (englishLocale === null) {
         console.log('ℹ️ No English locale option available in profile settings');
       }
     }

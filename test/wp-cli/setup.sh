@@ -46,11 +46,11 @@ wp option update blogdescription "Testing environment for ACS Agenda Manager"
 wp option update timezone_string "Europe/Zurich"
 wp option update date_format "d/m/Y"
 wp option update permalink_structure "/%postname%/"
-wp option update WPLANG "en_US"
+wp option update WPLANG ""
 
 # Keep admin locale aligned with site language for stable text-based E2E checks.
 ADMIN_ID=$(wp user get admin --field=ID)
-wp user meta update "$ADMIN_ID" locale "en_US"
+wp user meta delete "$ADMIN_ID" locale || true
 
 # Install language packs for translation testing
 echo "[*] Installing WordPress language packs..."

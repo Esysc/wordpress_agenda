@@ -66,13 +66,13 @@ The plugin automatically creates an "Agenda" page upon activation with the short
    - **Title**: Event name
    - **Location**: Where the event takes place
    - **Description**: Brief event description
-   - **Schedule**: Select event date(s) using the calendar
+    - **Schedule**: Select event date(s) using the calendar
     - **Advanced settings**: Expand to configure behavior and optional fields
-      - **Partial Attendance**: How to handle multi-day events
-      - **Image**: Upload or select an event image
-      - **Page Link**: Link to a detailed event page
-      - **Price**: Event cost (optional)
-      - **Advance Payment**: Whether advance payment is accepted
+        - **Partial Attendance**: How to handle multi-day events
+        - **Image**: Upload or select an event image
+        - **Page Link**: Link to a detailed event page
+        - **Price**: Event cost (optional)
+        - **Advance Payment**: Whether advance payment is accepted
 4. Click **Add** to save
 
 ### Partial Attendance Options
