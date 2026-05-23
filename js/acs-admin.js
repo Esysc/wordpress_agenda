@@ -198,6 +198,7 @@
             this.$deleteDialog = $('#acs-delete-dialog');
             this.$helpDialog = $('#acs-help-dialog');
             this.$notices = $('#acs-admin-notices');
+            this.$advancedSection = $('#acs-advanced-settings');
             this.$dateInput = $('#event-date');
             this.$dateContainer = $('#acs-datepicker-container');
             this.$calendarButton = $('.acs-open-calendar');
@@ -236,6 +237,11 @@
 
             // Image URL change - update preview
             $(document).on('input', '#event-image', this.updateImagePreview.bind(this));
+
+            // Keep advanced section open when the user adds advanced data
+            $(document).on('input change', '#event-image, #event-link, #event-redirect, #event-price, #event-account, #event-candopartial', function () {
+                self.syncAdvancedSectionState();
+            });
 
             // Calendar button
             $(document).on('click', '.acs-open-calendar', this.openCalendar.bind(this));
@@ -567,6 +573,28 @@
                 buttons: {},
                 open: this.updateCalendarPosition.bind(this),
             });
+            this.$eventDialog.on('dialogopen', () => {
+                this.syncImagePreviewText();
+            });
+
+            const preview = document.getElementById('event-image-preview');
+            if (preview && typeof MutationObserver !== 'undefined') {
+                const desiredText = acsagmaAgendaAdmin.i18n.noImageSelected || '';
+                const observer = new MutationObserver(() => {
+                    const previewText = preview.querySelector('.acs-image-preview-text');
+                    if (previewText && previewText.textContent !== desiredText) {
+                        previewText.textContent = desiredText;
+                    }
+                });
+
+                observer.observe(preview, {
+                    childList: true,
+                    subtree: true,
+                    characterData: true,
+                });
+
+                this.imagePreviewObserver = observer;
+            }
 
             this.$deleteDialog.dialog({
                 autoOpen: false,
@@ -605,6 +633,9 @@
             });
 
             this.$eventDialog.dialog('open');
+            window.setTimeout(() => {
+                this.$eventDialog.find('.acs-image-preview-text').text(acsagmaAgendaAdmin.i18n.noImageSelected || '');
+            }, 0);
         },
 
         /**
@@ -661,6 +692,7 @@
             });
 
             self.updateImagePreview();
+            self.syncAdvancedSectionState();
             self.validateDateField({ currentTarget: self.$dateInput[0] });
         },
 
@@ -675,8 +707,46 @@
             this.showDateError('');
             this.$dateInput.removeClass('error');
             this.updateSelectedDatesUI([]);
+            this.syncAdvancedSectionState(false);
             this.$eventForm.find('.error').removeClass('error');
             $('#acs-dialog-notices').empty();
+        },
+
+        /**
+         * Determine whether advanced fields contain meaningful values
+         */
+        hasAdvancedValues: function () {
+            const image = $('#event-image').val().trim();
+            const link = $('#event-link').val().trim();
+            const redirect = $('#event-redirect').val().trim();
+            const price = $('#event-price').val().trim();
+            const account = $('#event-account').val();
+            const partialAttendance = $('#event-candopartial').val();
+
+            return Boolean(
+                image ||
+                    link ||
+                    redirect ||
+                    price ||
+                    account !== '0' ||
+                    partialAttendance !== '0'
+            );
+        },
+
+        /**
+         * Expand or collapse the advanced section based on current form state
+         */
+        syncAdvancedSectionState: function (forceOpen) {
+            if (!this.$advancedSection || !this.$advancedSection.length) {
+                return;
+            }
+
+            if (typeof forceOpen === 'boolean') {
+                this.$advancedSection.prop('open', forceOpen);
+                return;
+            }
+
+            this.$advancedSection.prop('open', this.hasAdvancedValues());
         },
 
         /**
@@ -793,7 +863,7 @@
             const frame = wp.media({
                 title: acsagmaAgendaAdmin.i18n.selectImage,
                 library: { type: 'image' },
-                button: { text: 'Select' },
+                button: { text: acsagmaAgendaAdmin.i18n.select || 'Select' },
                 multiple: false,
             });
 
@@ -832,11 +902,21 @@
 
             $preview
                 .removeClass('has-image')
-                .html(
-                    '<span class="dashicons dashicons-format-image"></span>' +
-                        '<span class="acs-image-preview-text">No image selected</span>'
-                );
+                .html('<span class="dashicons dashicons-format-image"></span><span class="acs-image-preview-text"></span>');
+            this.syncImagePreviewText();
             $removeBtn.hide();
+        },
+
+        /**
+         * Keep the empty image preview label localized.
+         */
+        syncImagePreviewText: function () {
+            const $text = $('#event-image-preview .acs-image-preview-text');
+            if (!$text.length) {
+                return;
+            }
+
+            $text.text(acsagmaAgendaAdmin.i18n.noImageSelected || '');
         },
 
         /**

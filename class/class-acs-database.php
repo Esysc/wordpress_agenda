@@ -80,22 +80,7 @@ class ACSAGMA_Database {
      * Update database schema for plugin updates
      */
     public static function update_schema(): bool {
-        global $wpdb;
-
-        $result = self::create_table();
-
-        // Backfill last_date_ts for rows added before this column existed.
-        // STR_TO_DATE with '%d/%m/%y' parses dd/mm/yy; SUBSTRING_INDEX gets the
-        // last comma-separated date which represents the event's end date.
-        $table_name = self::get_table_name();
-        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- One-time migration, no user input.
-        $wpdb->query(
-            "UPDATE {$table_name}
-             SET last_date_ts = UNIX_TIMESTAMP(STR_TO_DATE(TRIM(SUBSTRING_INDEX(TRIM(date), ',', -1)), '%d/%m/%y'))
-             WHERE last_date_ts IS NULL"
-        );
-
-        return $result;
+        return self::create_table();
     }
 
     /**

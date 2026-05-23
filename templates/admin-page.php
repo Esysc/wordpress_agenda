@@ -215,92 +215,106 @@ defined('ABSPATH') || exit;
                 <p id="event-date-error" class="acs-field-error" role="alert" hidden></p>
             </div>
 
-            <div class="acs-form-field">
-                <label for="event-candopartial" class="acs-form-label">
-                    <?php esc_html_e('Partial Attendance', 'acs-agenda-manager'); ?>
-                </label>
-                <select id="event-candopartial" name="candopartial" class="acs-form-select">
-                    <option value="0"><?php esc_html_e('No - Hide after first date', 'acs-agenda-manager'); ?></option>
-                    <option value="1"><?php esc_html_e('Yes - Hide past dates only', 'acs-agenda-manager'); ?></option>
-                    <option value="2"><?php esc_html_e('Keep until end - Show all dates', 'acs-agenda-manager'); ?></option>
-                </select>
-            </div>
         </div>
 
-        <!-- Media Section -->
-        <div class="acs-form-section">
-            <h3 class="acs-form-section-title">
-                <span class="dashicons dashicons-format-image" aria-hidden="true"></span>
-                <?php esc_html_e('Media', 'acs-agenda-manager'); ?>
-            </h3>
+              <details class="acs-form-advanced" id="acs-advanced-settings">
+                  <summary class="acs-form-advanced-summary">
+                      <span class="dashicons dashicons-admin-generic" aria-hidden="true"></span>
+                      <span><?php esc_html_e('Advanced settings', 'acs-agenda-manager'); ?></span>
+                      <span class="dashicons dashicons-arrow-down-alt2 acs-form-advanced-toggle" aria-hidden="true"></span>
+                  </summary>
 
-            <div class="acs-form-field">
-                <label for="event-image" class="acs-form-label">
-                    <?php esc_html_e('Event Image', 'acs-agenda-manager'); ?>
-                </label>
-                <div class="acs-image-upload-wrapper">
-                    <div class="acs-image-preview" id="event-image-preview">
-                        <span class="dashicons dashicons-format-image" aria-hidden="true"></span>
-                        <span class="acs-image-preview-text"><?php esc_html_e('No image selected', 'acs-agenda-manager'); ?></span>
-                    </div>
-                    <div class="acs-image-input-group">
-                        <input type="text" id="event-image" name="image" class="acs-form-input" placeholder="<?php esc_attr_e('Image URL or select from library', 'acs-agenda-manager'); ?>" />
-                        <button type="button" class="button button-secondary acs-upload-image">
-                            <span class="dashicons dashicons-upload" aria-hidden="true"></span>
-                            <?php esc_html_e('Select', 'acs-agenda-manager'); ?>
-                        </button>
-                        <button type="button" class="button acs-remove-image" style="display:none;" aria-label="<?php esc_attr_e('Remove image', 'acs-agenda-manager'); ?>" title="<?php esc_attr_e('Remove image', 'acs-agenda-manager'); ?>">
-                            <span class="dashicons dashicons-no" aria-hidden="true"></span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
+                  <div class="acs-form-advanced-content">
+                      <div class="acs-form-section">
+                          <h3 class="acs-form-section-title">
+                              <span class="dashicons dashicons-visibility" aria-hidden="true"></span>
+                              <?php esc_html_e('Behavior', 'acs-agenda-manager'); ?>
+                          </h3>
 
-        <!-- Links & Pricing Section -->
-        <div class="acs-form-section">
-            <h3 class="acs-form-section-title">
-                <span class="dashicons dashicons-admin-links" aria-hidden="true"></span>
-                <?php esc_html_e('Links & Pricing', 'acs-agenda-manager'); ?>
-            </h3>
+                          <div class="acs-form-field">
+                              <label for="event-candopartial" class="acs-form-label">
+                                  <?php esc_html_e('Partial Attendance', 'acs-agenda-manager'); ?>
+                              </label>
+                              <select id="event-candopartial" name="candopartial" class="acs-form-select">
+                                  <option value="0"><?php esc_html_e('No - Hide after first date', 'acs-agenda-manager'); ?></option>
+                                  <option value="1"><?php esc_html_e('Yes - Hide past dates only', 'acs-agenda-manager'); ?></option>
+                                  <option value="2"><?php esc_html_e('Keep until end - Show all dates', 'acs-agenda-manager'); ?></option>
+                              </select>
+                          </div>
+                      </div>
 
-            <div class="acs-form-row">
-                <div class="acs-form-field acs-form-field-half">
-                    <label for="event-link" class="acs-form-label">
-                        <?php esc_html_e('Page Link', 'acs-agenda-manager'); ?>
-                    </label>
-                    <input type="url" id="event-link" name="link" class="acs-form-input" placeholder="<?php esc_attr_e('https://...', 'acs-agenda-manager'); ?>" />
-                    <p class="acs-form-hint"><?php esc_html_e('Link to event details page', 'acs-agenda-manager'); ?></p>
-                </div>
-                <div class="acs-form-field acs-form-field-half">
-                    <label for="event-redirect" class="acs-form-label">
-                        <?php esc_html_e('External URL', 'acs-agenda-manager'); ?>
-                    </label>
-                    <input type="url" id="event-redirect" name="redirect" class="acs-form-input" placeholder="<?php esc_attr_e('https://...', 'acs-agenda-manager'); ?>" />
-                    <p class="acs-form-hint"><?php esc_html_e('External registration link', 'acs-agenda-manager'); ?></p>
-                </div>
-            </div>
+                      <!-- Media Section -->
+                      <div class="acs-form-section">
+                          <h3 class="acs-form-section-title">
+                              <span class="dashicons dashicons-format-image" aria-hidden="true"></span>
+                              <?php esc_html_e('Media', 'acs-agenda-manager'); ?>
+                          </h3>
 
-            <div class="acs-form-row">
-                <div class="acs-form-field acs-form-field-half">
-                    <label for="event-price" class="acs-form-label">
-                        <span class="dashicons dashicons-money-alt" aria-hidden="true"></span>
-                        <?php esc_html_e('Price', 'acs-agenda-manager'); ?>
-                    </label>
-                    <input type="text" id="event-price" name="price" class="acs-form-input" placeholder="<?php esc_attr_e('e.g., CHF 150.-', 'acs-agenda-manager'); ?>" />
-                </div>
-                <div class="acs-form-field acs-form-field-half">
-                    <label for="event-account" class="acs-form-label">
-                        <?php esc_html_e('Advance Payment', 'acs-agenda-manager'); ?>
-                    </label>
-                    <select id="event-account" name="account" class="acs-form-select">
-                        <option value="0"><?php esc_html_e('No', 'acs-agenda-manager'); ?></option>
-                        <option value="1"><?php esc_html_e('Yes - Required', 'acs-agenda-manager'); ?></option>
-                    </select>
-                </div>
-            </div>
-        </div>
-    </form>
-</div>
+                          <div class="acs-form-field">
+                              <label for="event-image" class="acs-form-label">
+                                  <?php esc_html_e('Event Image', 'acs-agenda-manager'); ?>
+                              </label>
+                              <div class="acs-image-upload-wrapper">
+                                  <div class="acs-image-preview" id="event-image-preview">
+                                      <span class="dashicons dashicons-format-image" aria-hidden="true"></span>
+                                      <span class="acs-image-preview-text"><?php esc_html_e('No image selected', 'acs-agenda-manager'); ?></span>
+                                  </div>
+                                  <div class="acs-image-input-group">
+                                      <input type="text" id="event-image" name="image" class="acs-form-input" placeholder="<?php esc_attr_e('Image URL or select from library', 'acs-agenda-manager'); ?>" />
+                                      <button type="button" class="button button-secondary acs-upload-image">
+                                          <span class="dashicons dashicons-upload" aria-hidden="true"></span>
+                                          <?php esc_html_e('Select', 'acs-agenda-manager'); ?>
+                                      </button>
+                                      <button type="button" class="button acs-remove-image" style="display:none;" aria-label="<?php esc_attr_e('Remove image', 'acs-agenda-manager'); ?>" title="<?php esc_attr_e('Remove image', 'acs-agenda-manager'); ?>">
+                                          <span class="dashicons dashicons-no" aria-hidden="true"></span>
+                                      </button>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
 
-<div class="spinner2" style="display: none;"></div>
+                      <!-- Links & Pricing Section -->
+                      <div class="acs-form-section">
+                          <h3 class="acs-form-section-title">
+                              <span class="dashicons dashicons-admin-links" aria-hidden="true"></span>
+                              <?php esc_html_e('Links & Pricing', 'acs-agenda-manager'); ?>
+                          </h3>
+
+                          <div class="acs-form-row">
+                              <div class="acs-form-field acs-form-field-half">
+                                  <label for="event-link" class="acs-form-label">
+                                      <?php esc_html_e('Page Link', 'acs-agenda-manager'); ?>
+                                  </label>
+                                  <input type="url" id="event-link" name="link" class="acs-form-input" placeholder="<?php esc_attr_e('https://...', 'acs-agenda-manager'); ?>" />
+                                  <p class="acs-form-hint"><?php esc_html_e('Link to event details page', 'acs-agenda-manager'); ?></p>
+                              </div>
+                              <div class="acs-form-field acs-form-field-half">
+                                  <label for="event-redirect" class="acs-form-label">
+                                      <?php esc_html_e('External URL', 'acs-agenda-manager'); ?>
+                                  </label>
+                                  <input type="url" id="event-redirect" name="redirect" class="acs-form-input" placeholder="<?php esc_attr_e('https://...', 'acs-agenda-manager'); ?>" />
+                                  <p class="acs-form-hint"><?php esc_html_e('External registration link', 'acs-agenda-manager'); ?></p>
+                              </div>
+                          </div>
+
+                          <div class="acs-form-row">
+                              <div class="acs-form-field acs-form-field-half">
+                                  <label for="event-price" class="acs-form-label">
+                                      <span class="dashicons dashicons-money-alt" aria-hidden="true"></span>
+                                      <?php esc_html_e('Price', 'acs-agenda-manager'); ?>
+                                  </label>
+                                  <input type="text" id="event-price" name="price" class="acs-form-input" placeholder="<?php esc_attr_e('e.g., CHF 150.-', 'acs-agenda-manager'); ?>" />
+                              </div>
+                              <div class="acs-form-field acs-form-field-half">
+                                  <label for="event-account" class="acs-form-label">
+                                      <?php esc_html_e('Advance Payment', 'acs-agenda-manager'); ?>
+                                  </label>
+                                  <select id="event-account" name="account" class="acs-form-select">
+                                      <option value="0"><?php esc_html_e('No', 'acs-agenda-manager'); ?></option>
+                                      <option value="1"><?php esc_html_e('Yes - Required', 'acs-agenda-manager'); ?></option>
+                                  </select>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </details>

@@ -132,6 +132,8 @@ final class ACSAGMA_Agenda_Manager {
             'i18n' => [
                 'readMoreError' => __('Unable to load details. Please try again.', 'acs-agenda-manager'),
                 'noResults' => __('No events match your filters.', 'acs-agenda-manager'),
+                  // phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment -- Placeholder context is documented directly above this localized string.
+                  /* translators: %1$d is the first item number, %2$d the last item number, %3$d the total number of events. */
                 'resultsLabel' => __('Showing %1$d-%2$d of %3$d events', 'acs-agenda-manager'),
                 'compactOn' => __('Compact mode on', 'acs-agenda-manager'),
                 'compactOff' => __('Compact mode off', 'acs-agenda-manager'),
@@ -259,6 +261,8 @@ final class ACSAGMA_Agenda_Manager {
             'noDatesSelected' => __('No dates selected yet', 'acs-agenda-manager'),
             'removeDate' => __('Remove date', 'acs-agenda-manager'),
             'requestFailed' => __('Request failed', 'acs-agenda-manager'),
+            'select' => __('Select', 'acs-agenda-manager'),
+            'noImageSelected' => __('No image selected', 'acs-agenda-manager'),
             'selectImage' => __('Select or upload an image', 'acs-agenda-manager'),
             'filteredEvents' => __('Filtered events', 'acs-agenda-manager'),
             'confirmDelete' => __('Do you really want to delete this event?', 'acs-agenda-manager'),

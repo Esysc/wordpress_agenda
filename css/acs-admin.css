@@ -197,6 +197,47 @@ textarea.col-editagenda {
     font-weight: 500;
 }
 
+.acs-form-advanced {
+    border: 1px solid #dbe4ee;
+    border-radius: 10px;
+    background: #fff;
+    overflow: hidden;
+}
+
+.acs-form-advanced > summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 1rem 1.25rem;
+    cursor: pointer;
+    list-style: none;
+    background: linear-gradient(180deg, #f8fafc 0%, #eef4fb 100%);
+    color: #1e293b;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.acs-form-advanced > summary::-webkit-details-marker {
+    display: none;
+}
+
+.acs-form-advanced-toggle {
+    transition: transform 0.2s ease;
+    color: #64748b;
+}
+
+.acs-form-advanced[open] .acs-form-advanced-toggle {
+    transform: rotate(180deg);
+}
+
+.acs-form-advanced-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 1rem 1.25rem 1.25rem;
+}
+
 /* ==========================================================================
    Date Input Wrapper
    ========================================================================== */
