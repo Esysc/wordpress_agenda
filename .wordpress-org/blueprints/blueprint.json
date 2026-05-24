@@ -1,0 +1,40 @@
+{
+  "$schema": "https://playground.wordpress.net/blueprint-schema.json",
+  "landingPage": "/agenda/",
+  "preferredVersions": {
+    "php": "8.3",
+    "wp": "latest"
+  },
+  "phpExtensionBundles": [
+    "kitchen-sink"
+  ],
+  "features": {
+    "networking": true
+  },
+  "steps": [
+    {
+      "step": "activatePlugin",
+      "pluginName": "ACS Agenda Manager",
+      "pluginPath": "acs-agenda-manager/acs-agenda-manager.php"
+    },
+    {
+      "step": "login"
+    },
+    {
+      "step": "runPHP",
+      "code": "<?php require_once '/wordpress/wp-load.php'; if (class_exists('ACSAGMA_Database')) { ACSAGMA_Database::create_table(); }"
+    },
+    {
+      "step": "runPHP",
+      "code": "<?php require_once '/wordpress/wp-load.php'; if (!get_page_by_path('agenda', OBJECT, 'page')) { wp_insert_post(['post_title' => 'Agenda', 'post_name' => 'agenda', 'post_status' => 'publish', 'post_type' => 'page', 'post_content' => '[acsagma_agenda]', 'comment_status' => 'closed', 'ping_status' => 'closed']); } update_option('acsagma_page', 'Agenda');"
+    },
+    {
+      "step": "runPHP",
+      "code": "<?php require_once '/wordpress/wp-load.php'; global $wpdb; $table = $wpdb->prefix . 'acs_agenda_manager'; $count = (int) $wpdb->get_var('SELECT COUNT(*) FROM ' . $table); if ($count === 0 && class_exists('ACSAGMA_Database')) { $d1 = gmdate('d/m/y', strtotime('+5 days')); ACSAGMA_Database::insert_event(['categorie' => 'Workshop', 'title' => 'Yoga Basics', 'emplacement' => 'Community Center', 'intro' => 'Introduction class for all levels.', 'date' => $d1, 'price' => 'CHF 20.-', 'account' => 1, 'candopartial' => 0]); }"
+    },
+    {
+      "step": "runPHP",
+      "code": "<?php require_once '/wordpress/wp-load.php'; global $wpdb; $table = $wpdb->prefix . 'acs_agenda_manager'; $count = (int) $wpdb->get_var('SELECT COUNT(*) FROM ' . $table); if ($count === 1 && class_exists('ACSAGMA_Database')) { $d2 = gmdate('d/m/y', strtotime('+12 days')); ACSAGMA_Database::insert_event(['categorie' => 'Course', 'title' => 'Mindfulness Practice', 'emplacement' => 'Studio Room B', 'intro' => 'Weekly guided session focused on breathing and relaxation.', 'date' => $d2, 'price' => 'CHF 35.-', 'account' => 1, 'candopartial' => 1]); }"
+    }
+  ]
+}
