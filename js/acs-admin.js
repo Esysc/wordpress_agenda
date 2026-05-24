@@ -1000,6 +1000,11 @@
         $('#MSGWrapper' + textareaId).show();
     };
 
+    $(document).on('click', '.copy-shortcode', function (e) {
+        e.preventDefault();
+        window.copyShortcode($(this).data('textarea-id'));
+    });
+
     $(document).ready(function () {
         ACSAgendaAdmin.init();
     });

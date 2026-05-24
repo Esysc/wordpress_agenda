@@ -349,7 +349,7 @@ class ACSAGMA_Template {
             '<div id="postdata">
                 <div id="dialog" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="acs-readmore-title">
                     <div class="acs-dialog-panel">
-                        <button id="close" type="button" onclick="closeDialog()" aria-label="%s">&times;</button>
+                        <button id="close" type="button" aria-label="%s">&times;</button>
                         <h2 id="acs-readmore-title">%s</h2>
                         <p class="acs-dialog-link">
                             <a href="%s" target="_blank" rel="noopener noreferrer">%s</a>

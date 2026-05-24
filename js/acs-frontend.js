@@ -46,6 +46,12 @@
                 }
             });
 
+            $(document).on('click', '#dialog #close', function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                window.closeDialog();
+            });
+
             $(document).on('keydown', function (e) {
                 if ($('#dialog').hasClass('shown') && e.key === 'Escape') {
                     window.closeDialog();

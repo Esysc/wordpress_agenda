@@ -205,7 +205,7 @@ class ACSAGMA_Agenda_List_Table extends WP_List_Table {
                     <p id="ACSmessage%s"></p>
                 </div>
                 <p><textarea id="%s" disabled>%s</textarea></p>
-                <p><button class="button4 info" onclick="copyShortcode(\'%s\')">%s</button></p>
+                <p><button type="button" class="button4 info copy-shortcode" data-textarea-id="%s">%s</button></p>
             </div>',
             esc_attr($dialog_id),
             esc_html__('Contact Form Shortcode', 'acs-agenda-manager'),
