@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/donate?business=KG9SDHM7VUP6Y&currency_code=
 Tags: agenda, events, calendar, schedule, workshop
 Requires at least: 6.2
 Tested up to: 7.0
-Stable tag: 3.5.2
+Stable tag: 3.6.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -26,6 +26,7 @@ ACS Agenda Manager provides an easy way to create and manage an event agenda on 
 * Modern responsive design: CSS Grid layout with glass-morphism effects
 * Easy administration: Intuitive admin interface with card-based form sections
 * Real-time validation: In-dialog error messages and success notifications
+* Native contact form: Built-in organizer contact form available via the dedicated Contact action
 
 = Supported Languages =
 
@@ -92,6 +93,13 @@ Yes, you can override the CSS in your theme or copy the template file to your th
 5. Plugin settings and configuration options
 
 == Changelog ==
+
+= 3.6.0 =
+* Added dedicated Contact button and split dialog modes so Read More shows linked page preview content while Contact shows event intro plus the contact form (without linked page preview)
+* Improved contact-form UX and styling, including clearer field states for validation feedback
+* Strengthened contact email validation in frontend and backend (rejects invalid one-letter TLD addresses)
+* Added and updated E2E coverage for contact mode behavior, validation messages, and settings persistence
+* Updated translations and regenerated locale assets for new and adjusted contact/validation strings
 
 = 3.5.2 =
 * Removed obsolete ACScontactform integration references from the plugin codebase, documentation, and tests
@@ -189,6 +197,9 @@ Yes, you can override the CSS in your theme or copy the template file to your th
 * Initial public release
 
 == Upgrade Notice ==
+
+= 3.6.0 =
+Feature release focused on native contact-form UX, stricter validation, updated translations, and expanded E2E regression coverage.
 
 = 3.5.2 =
 Maintenance update focused on removing obsolete ACScontactform integration references from the plugin codebase and release materials.

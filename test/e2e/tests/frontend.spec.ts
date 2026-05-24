@@ -349,6 +349,127 @@ test.describe('Frontend Agenda Display', () => {
     await expect(page.locator('#dialog.shown')).toHaveCount(0);
   });
 
+  test('should show preview in Read more and contact form in contact mode', async ({ page }) => {
+    const agendaUrl = await getAgendaPageUrl(page);
+    const siteOrigin = new URL(page.url()).origin;
+    const detailsLink = `${siteOrigin}/?p=1`;
+    const eventTitle = `Contact Form ${Date.now()}`;
+
+    await createEvent(page, {
+      title: eventTitle,
+      category: 'Contact Test',
+      intro: 'Event with details dialog',
+      link: detailsLink,
+    });
+
+    await page.goto(agendaUrl, { waitUntil: 'networkidle' });
+    await filterByTitle(page, eventTitle);
+
+    const eventCard = page.locator('.column-center').filter({ hasText: eventTitle }).first();
+
+    await eventCard.locator('.readmore.show').first().click();
+
+    const dialog = page.locator('#dialog.shown');
+    await expect(dialog).toBeVisible({ timeout: 10000 });
+    await expect(dialog.locator('.acs-readmore-content')).toContainText('Welcome to WordPress.');
+    await expect(dialog.locator('.acs-contact-form')).toHaveCount(0);
+    await page.locator('#dialog #close').click();
+
+    await eventCard.locator('.acs-contact-trigger').first().click();
+    await expect(dialog).toBeVisible({ timeout: 10000 });
+    await expect(dialog.locator('.acs-contact-form')).toBeVisible();
+    await expect(dialog.locator('input[name="name"]')).toBeVisible();
+    await expect(dialog.locator('input[name="email"]')).toBeVisible();
+    await expect(dialog.locator('textarea[name="message"]')).toBeVisible();
+    await expect(dialog.locator('button.acs-contact-submit')).toBeVisible();
+  });
+
+  test('should open contact mode without linked post content', async ({ page }) => {
+    const agendaUrl = await getAgendaPageUrl(page);
+    const siteOrigin = new URL(page.url()).origin;
+    const detailsLink = `${siteOrigin}/?p=1`;
+    const eventTitle = `Contact Mode ${Date.now()}`;
+    const eventIntro = 'Contact-only intro text';
+
+    await createEvent(page, {
+      title: eventTitle,
+      category: 'Contact Test',
+      intro: eventIntro,
+      link: detailsLink,
+    });
+
+    await page.goto(agendaUrl, { waitUntil: 'networkidle' });
+    await filterByTitle(page, eventTitle);
+
+    const eventCard = page.locator('.column-center').filter({ hasText: eventTitle }).first();
+    await eventCard.locator('.acs-contact-trigger').first().click();
+
+    const dialog = page.locator('#dialog.shown');
+    await expect(dialog).toBeVisible({ timeout: 10000 });
+    await expect(dialog.locator('#acs-readmore-title')).toHaveText(eventTitle);
+    await expect(dialog.locator('.acs-dialog-link')).toHaveCount(0);
+    await expect(dialog).not.toContainText('Hello world!');
+    await expect(dialog).toContainText(eventIntro);
+    await expect(dialog.locator('.acs-contact-form')).toBeVisible();
+  });
+
+  test('should validate contact form fields and highlight invalid inputs', async ({ page }) => {
+    const agendaUrl = await getAgendaPageUrl(page);
+    const siteOrigin = new URL(page.url()).origin;
+    const detailsLink = `${siteOrigin}/?p=1`;
+    const eventTitle = `Contact Validation ${Date.now()}`;
+
+    await createEvent(page, {
+      title: eventTitle,
+      category: 'Contact Test',
+      intro: 'Validation test event',
+      link: detailsLink,
+    });
+
+    await page.goto(agendaUrl, { waitUntil: 'networkidle' });
+    await filterByTitle(page, eventTitle);
+
+    const eventCard = page.locator('.column-center').filter({ hasText: eventTitle }).first();
+    await eventCard.locator('.acs-contact-trigger').first().click();
+
+    const dialog = page.locator('#dialog.shown');
+    const form = dialog.locator('.acs-contact-form');
+    const nameField = form.locator('input[name="name"]');
+    const emailField = form.locator('input[name="email"]');
+    const messageField = form.locator('textarea[name="message"]');
+    const statusMessage = form.locator('.acs-contact-form-message');
+
+    await expect(form).toBeVisible({ timeout: 10000 });
+
+    await form.locator('.acs-contact-submit').click();
+    await expect(statusMessage).toHaveText(/name/i);
+    await expect(nameField).toHaveClass(/is-invalid/);
+    await expect(emailField).toHaveClass(/is-invalid/);
+    await expect(messageField).toHaveClass(/is-invalid/);
+
+    await nameField.fill('Tester User');
+    await emailField.fill('invalid-email');
+    await messageField.fill('');
+    await form.locator('.acs-contact-submit').click();
+
+    await expect(statusMessage).toHaveText(/valid email/i);
+    await expect(emailField).toHaveClass(/is-invalid/);
+    await expect(messageField).toHaveClass(/is-invalid/);
+
+    await emailField.fill('andrea.cristalli@hispeed.c');
+    await messageField.fill('Testing invalid TLD');
+    await form.locator('.acs-contact-submit').click();
+
+    await expect(statusMessage).toHaveText(/valid email/i);
+    await expect(emailField).toHaveClass(/is-invalid/);
+
+    await emailField.fill('tester@example.com');
+    await messageField.fill('');
+    await form.locator('.acs-contact-submit').click();
+    await expect(statusMessage).toHaveText(/message/i);
+    await expect(messageField).toHaveClass(/is-invalid/);
+  });
+
   test('should show an error when Read more details fail to load', async ({ page }) => {
     const agendaUrl = await getAgendaPageUrl(page);
     const siteOrigin = new URL(page.url()).origin;

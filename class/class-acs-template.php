@@ -13,6 +13,78 @@ defined('ABSPATH') || exit;
 class ACSAGMA_Template {
 
     /**
+     * Return allowed HTML for the read-more dialog response.
+     */
+    public static function get_allowed_read_more_html(): array {
+        $allowed = wp_kses_allowed_html('post');
+
+        $extend_allowed_attributes = static function (string $tag, array $attributes) use (&$allowed): void {
+            $existing = (isset($allowed[$tag]) && is_array($allowed[$tag])) ? $allowed[$tag] : [];
+            $allowed[$tag] = array_merge($existing, $attributes);
+        };
+
+        $extend_allowed_attributes('form', [
+            'action' => true,
+            'method' => true,
+            'class' => true,
+            'id' => true,
+            'novalidate' => true,
+        ]);
+        $extend_allowed_attributes('label', [
+            'for' => true,
+            'class' => true,
+        ]);
+        $extend_allowed_attributes('input', [
+            'type' => true,
+            'name' => true,
+            'value' => true,
+            'class' => true,
+            'id' => true,
+            'required' => true,
+            'autocomplete' => true,
+            'tabindex' => true,
+            'aria-hidden' => true,
+        ]);
+        $extend_allowed_attributes('textarea', [
+            'name' => true,
+            'class' => true,
+            'id' => true,
+            'required' => true,
+            'rows' => true,
+        ]);
+        $extend_allowed_attributes('button', [
+            'type' => true,
+            'class' => true,
+            'id' => true,
+            'aria-label' => true,
+            'aria-busy' => true,
+        ]);
+        $extend_allowed_attributes('small', [
+            'class' => true,
+        ]);
+        $extend_allowed_attributes('output', [
+            'class' => true,
+            'aria-live' => true,
+        ]);
+        $extend_allowed_attributes('div', [
+            'class' => true,
+            'id' => true,
+            'role' => true,
+            'aria-modal' => true,
+            'aria-labelledby' => true,
+            'aria-live' => true,
+            'aria-hidden' => true,
+        ]);
+        $extend_allowed_attributes('span', [
+            'class' => true,
+            'aria-hidden' => true,
+            'focusable' => true,
+        ]);
+
+        return $allowed;
+    }
+
+    /**
      * Render the main agenda display
      */
     public static function render_agenda(array $events): string {
@@ -244,17 +316,44 @@ class ACSAGMA_Template {
             );
         }
 
+        $event_dates = implode(', ', array_map('sanitize_text_field', $event['dates'] ?? []));
+
         $read_more_html = '';
         if (self::should_show_read_more($post_id)) {
             $read_more_html = sprintf(
-                '<button type="button" data-href="%s" class="readmore show" data-postid="%d" data-id="%s">
+                '<button type="button" data-href="%s" class="readmore show" data-postid="%d" data-id="%s" data-event-title="%s" data-event-dates="%s" data-event-intro="%s">
                     %s <span class="dashicons dashicons-arrow-right-alt2" aria-hidden="true" focusable="false"></span>
                 </button>',
                 esc_url($event['link']),
                 $post_id,
                 esc_attr($section_id),
+                esc_attr((string) ($event['title'] ?? '')),
+                esc_attr($event_dates),
+                esc_attr((string) ($event['intro'] ?? '')),
                 esc_html__('Read more', 'acs-agenda-manager')
             );
+        }
+
+        $contact_html = '';
+        if ((bool) get_option('acsagma_contact_form_enabled', true)) {
+            $contact_html = sprintf(
+                '<button type="button" data-href="%s" class="acs-contact-trigger" data-postid="%d" data-id="%s" data-event-title="%s" data-event-dates="%s" data-event-intro="%s">
+                    <span class="dashicons dashicons-email-alt" aria-hidden="true" focusable="false"></span>
+                    %s
+                </button>',
+                esc_url($event['link']),
+                $post_id,
+                esc_attr($section_id),
+                esc_attr((string) ($event['title'] ?? '')),
+                esc_attr($event_dates),
+                esc_attr((string) ($event['intro'] ?? '')),
+                esc_html__('Ask a question', 'acs-agenda-manager')
+            );
+        }
+
+        $actions_html = '';
+        if ($read_more_html !== '' || $contact_html !== '') {
+            $actions_html = '<div class="acs-event-actions">' . $read_more_html . $contact_html . '</div>';
         }
 
         return sprintf(
@@ -273,7 +372,7 @@ class ACSAGMA_Template {
             $category_html,
             esc_html($event['title']),
             esc_html($event['intro']),
-            $read_more_html
+            $actions_html
         );
     }
 
@@ -320,25 +419,127 @@ class ACSAGMA_Template {
     /**
      * Render the read more dialog content
      */
-    public static function render_read_more_dialog(WP_Post $post, string $href): string {
+    public static function render_read_more_dialog(?WP_Post $post, string $href, array $context = []): string {
+        $event_title = sanitize_text_field((string) ($context['title'] ?? ''));
+        $event_dates = sanitize_text_field((string) ($context['dates'] ?? ''));
+        $event_intro = sanitize_text_field((string) ($context['intro'] ?? ''));
+        $dialog_mode = sanitize_key((string) ($context['mode'] ?? 'readmore'));
+        $post_id = absint($context['post_id'] ?? 0);
+
+        $dialog_title = '';
+        if ($dialog_mode === 'contact') {
+            $dialog_title = $event_title;
+        } elseif ($post instanceof WP_Post) {
+            $dialog_title = get_the_title($post);
+        }
+        if ($dialog_title === '') {
+            $dialog_title = $event_title;
+        }
+        if ($dialog_title === '') {
+            $dialog_title = __('Event details', 'acs-agenda-manager');
+        }
+
+        $content_html = '';
+        if ($dialog_mode !== 'contact' && $post instanceof WP_Post) {
+            $content_html = do_shortcode($post->post_content);
+        } elseif ($event_intro !== '') {
+            $content_html = wpautop(esc_html($event_intro));
+        }
+
+        $link_html = '';
+        if ($dialog_mode !== 'contact' && $href !== '') {
+            $link_html = sprintf(
+                '<p class="acs-dialog-link"><a href="%s" target="_blank" rel="noopener noreferrer">%s</a></p>',
+                esc_url($href),
+                esc_html__('Go to page', 'acs-agenda-manager')
+            );
+        }
+
         return sprintf(
             '<div id="postdata">
                 <div id="dialog" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="acs-readmore-title">
                     <div class="acs-dialog-panel">
                         <button id="close" type="button" aria-label="%s">&times;</button>
                         <h2 id="acs-readmore-title">%s</h2>
-                        <p class="acs-dialog-link">
-                            <a href="%s" target="_blank" rel="noopener noreferrer">%s</a>
-                        </p>
+                        %s
+                        <div class="acs-readmore-content">%s</div>
                         %s
                     </div>
                 </div>
             </div>',
             esc_attr__('Close dialog', 'acs-agenda-manager'),
-            esc_html(get_the_title($post)),
-            esc_url($href),
-            esc_html__('Go to page', 'acs-agenda-manager'),
-            do_shortcode($post->post_content)
+            esc_html($dialog_title),
+            $link_html,
+            $content_html,
+            $dialog_mode === 'contact'
+                ? self::render_contact_form([
+                    'title' => $event_title,
+                    'dates' => $event_dates,
+                    'href' => $href,
+                    'post_id' => $post_id,
+                ])
+                : ''
         );
+    }
+
+    /**
+     * Render the built-in contact form in the read-more dialog.
+     */
+    private static function render_contact_form(array $context): string {
+        $enabled = (bool) get_option('acsagma_contact_form_enabled', true);
+        if (!$enabled) {
+            return '';
+        }
+
+        $show_phone = (bool) get_option('acsagma_contact_form_show_phone', false);
+        $event_title = sanitize_text_field((string) ($context['title'] ?? ''));
+        $event_dates = sanitize_text_field((string) ($context['dates'] ?? ''));
+        $event_href = esc_url_raw((string) ($context['href'] ?? ''));
+        $post_id = absint($context['post_id'] ?? 0);
+
+        ob_start();
+        ?>
+        <div class="acs-contact-form-wrap">
+            <h3 class="acs-contact-form-title"><?php esc_html_e('Contact the organizer', 'acs-agenda-manager'); ?></h3>
+            <p class="acs-contact-form-intro"><?php esc_html_e('Ask a question about this event and we will get back to you by email.', 'acs-agenda-manager'); ?></p>
+
+            <form class="acs-contact-form" method="post" novalidate>
+                <output class="acs-contact-form-message" aria-live="polite"></output>
+
+                <input type="hidden" name="action" value="acsagma_contact_form_submit" />
+                <input type="hidden" name="nonce" value="<?php echo esc_attr(wp_create_nonce('acsagma_contact_form_nonce')); ?>" />
+                <input type="hidden" name="event_title" value="<?php echo esc_attr($event_title); ?>" />
+                <input type="hidden" name="event_dates" value="<?php echo esc_attr($event_dates); ?>" />
+                <input type="hidden" name="event_href" value="<?php echo esc_attr($event_href); ?>" />
+                <input type="hidden" name="post_id" value="<?php echo esc_attr((string) $post_id); ?>" />
+                <input type="text" name="acsagma_contact_company" value="" tabindex="-1" autocomplete="off" class="acs-contact-honeypot" aria-hidden="true" />
+
+                <div class="acs-contact-form-grid">
+                    <label>
+                        <span><?php esc_html_e('Name', 'acs-agenda-manager'); ?></span>
+                        <input type="text" name="name" required class="acs-contact-input" />
+                    </label>
+                    <label>
+                        <span><?php esc_html_e('Email', 'acs-agenda-manager'); ?></span>
+                        <input type="email" name="email" required class="acs-contact-input" />
+                    </label>
+                    <?php if ($show_phone) : ?>
+                        <label>
+                            <span><?php esc_html_e('Phone', 'acs-agenda-manager'); ?></span>
+                            <input type="tel" name="phone" class="acs-contact-input" />
+                        </label>
+                    <?php endif; ?>
+                    <label class="acs-contact-message-field">
+                        <span><?php esc_html_e('Message', 'acs-agenda-manager'); ?></span>
+                        <textarea name="message" rows="5" required class="acs-contact-textarea"></textarea>
+                    </label>
+                </div>
+
+                <button type="submit" class="acs-contact-submit button button-primary"><?php esc_html_e('Send message', 'acs-agenda-manager'); ?></button>
+            </form>
+        </div>
+        <?php
+
+        return (string) ob_get_clean();
     }
 }

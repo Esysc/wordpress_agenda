@@ -3,7 +3,7 @@
  * Plugin Name: ACS Agenda Manager
  * Plugin URI: https://github.com/Esysc/wordpress_agenda
  * Description: A WordPress plugin for managing and displaying event agendas. Perfect for workshops, courses, and event organizers.
- * Version: 3.5.2
+ * Version: 3.6.0
  * Requires at least: 6.2
  * Requires PHP: 7.4
  * Author: Andrea Cristalli
@@ -19,7 +19,7 @@
 defined('ABSPATH') || exit;
 
 // Plugin constants
-define('ACSAGMA_AGENDA_VERSION', '3.5.2');
+define('ACSAGMA_AGENDA_VERSION', '3.6.0');
 define('ACSAGMA_AGENDA_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('ACSAGMA_AGENDA_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('ACSAGMA_AGENDA_TABLE_NAME', 'acs_agenda_manager');
@@ -80,6 +80,8 @@ final class ACSAGMA_Agenda_Manager {
         // AJAX handlers
         add_action('wp_ajax_acsagma_read_more', [$this, 'ajax_read_more']);
         add_action('wp_ajax_nopriv_acsagma_read_more', [$this, 'ajax_read_more']);
+        add_action('wp_ajax_acsagma_contact_form_submit', [$this, 'ajax_contact_form_submit']);
+        add_action('wp_ajax_nopriv_acsagma_contact_form_submit', [$this, 'ajax_contact_form_submit']);
 
         // Shortcode
         add_shortcode('acsagma_agenda', [$this, 'render_agenda_shortcode']);
@@ -92,6 +94,8 @@ final class ACSAGMA_Agenda_Manager {
         if (!$force && !$this->should_load_frontend_assets()) {
             return;
         }
+
+        $contact_form_enabled = (bool) get_option('acsagma_contact_form_enabled', true);
 
         // Common styles (variables, buttons, spinner)
         wp_enqueue_style(
@@ -128,6 +132,8 @@ final class ACSAGMA_Agenda_Manager {
         wp_localize_script('acs-agenda-frontend', 'acsagmaAgenda', [
             'ajaxUrl' => admin_url('admin-ajax.php'),
             'nonce' => wp_create_nonce('acsagma_agenda_nonce'),
+            'contactFormNonce' => $contact_form_enabled ? wp_create_nonce('acsagma_contact_form_nonce') : '',
+            'contactFormEnabled' => $contact_form_enabled,
             'fallbackImage' => ACSAGMA_AGENDA_PLUGIN_URL . 'css/images/Accept-icon.png',
             'i18n' => [
                 'readMoreError' => __('Unable to load details. Please try again.', 'acs-agenda-manager'),
@@ -138,6 +144,15 @@ final class ACSAGMA_Agenda_Manager {
                 'compactOff' => __('Compact mode off', 'acs-agenda-manager'),
                 'prev' => __('Previous', 'acs-agenda-manager'),
                 'next' => __('Next', 'acs-agenda-manager'),
+                'contactFormSuccess' => $contact_form_enabled ? __('Thanks! Your message has been sent.', 'acs-agenda-manager') : '',
+                'contactFormError' => $contact_form_enabled ? __('Unable to send your message. Please try again.', 'acs-agenda-manager') : '',
+                'contactFormSending' => $contact_form_enabled ? __('Sending...', 'acs-agenda-manager') : '',
+                'contactFormRequired' => $contact_form_enabled ? __('Please fill in all required fields.', 'acs-agenda-manager') : '',
+                'contactFormNameRequired' => $contact_form_enabled ? __('Please enter your name.', 'acs-agenda-manager') : '',
+                'contactFormEmailRequired' => $contact_form_enabled ? __('Please enter your email address.', 'acs-agenda-manager') : '',
+                'contactFormInvalidEmail' => $contact_form_enabled ? __('Please enter a valid email address.', 'acs-agenda-manager') : '',
+                'contactFormMessageRequired' => $contact_form_enabled ? __('Please enter your message.', 'acs-agenda-manager') : '',
+                'contactFormSubmitLabel' => $contact_form_enabled ? __('Send message', 'acs-agenda-manager') : '',
             ],
         ]);
     }
@@ -303,19 +318,171 @@ final class ACSAGMA_Agenda_Manager {
 
         $post_id = isset($_POST['postid']) ? absint($_POST['postid']) : 0;
         $href = isset($_POST['href']) ? esc_url_raw(wp_unslash($_POST['href'])) : '';
+        $event_title = isset($_POST['event_title']) ? sanitize_text_field(wp_unslash($_POST['event_title'])) : '';
+        $event_dates = isset($_POST['event_dates']) ? sanitize_text_field(wp_unslash($_POST['event_dates'])) : '';
+        $event_intro = isset($_POST['event_intro']) ? sanitize_text_field(wp_unslash($_POST['event_intro'])) : '';
+        $dialog_mode = isset($_POST['dialog_mode']) ? sanitize_key(wp_unslash($_POST['dialog_mode'])) : 'readmore';
 
-        if (!$post_id) {
-            wp_send_json_error(__('Invalid post ID', 'acs-agenda-manager'));
+        $post = null;
+        if ($post_id > 0) {
+            $post = get_post($post_id);
+            if (!$post) {
+                wp_send_json_error(__('Post not found', 'acs-agenda-manager'));
+            }
         }
 
-        $post = get_post($post_id);
+        $response = ACSAGMA_Template::render_read_more_dialog($post, $href, [
+            'title' => $event_title,
+            'dates' => $event_dates,
+            'intro' => $event_intro,
+            'mode' => $dialog_mode,
+            'post_id' => $post_id,
+            'href' => $href,
+        ]);
 
-        if (!$post) {
-            wp_send_json_error(__('Post not found', 'acs-agenda-manager'));
-        }
-
-        echo wp_kses_post(ACSAGMA_Template::render_read_more_dialog($post, $href));
+        echo wp_kses($response, ACSAGMA_Template::get_allowed_read_more_html());
         wp_die();
+    }
+
+    /**
+     * AJAX handler for contact form submission.
+     */
+    public function ajax_contact_form_submit(): void {
+        check_ajax_referer('acsagma_contact_form_nonce', 'nonce', true);
+
+        $contact_form_enabled = (bool) get_option('acsagma_contact_form_enabled', true);
+        if (!$contact_form_enabled) {
+            wp_send_json_error(['message' => __('Unable to send your message. Please try again.', 'acs-agenda-manager')]);
+        }
+
+        $honeypot = isset($_POST['acsagma_contact_company']) ? sanitize_text_field(wp_unslash($_POST['acsagma_contact_company'])) : '';
+        if ($honeypot !== '') {
+            wp_send_json_error(['message' => __('Unable to send your message. Please try again.', 'acs-agenda-manager')]);
+        }
+
+        $name = isset($_POST['name']) ? sanitize_text_field(wp_unslash($_POST['name'])) : '';
+        $email = isset($_POST['email']) ? sanitize_email(wp_unslash($_POST['email'])) : '';
+        $phone = isset($_POST['phone']) ? sanitize_text_field(wp_unslash($_POST['phone'])) : '';
+        $message = isset($_POST['message']) ? sanitize_textarea_field(wp_unslash($_POST['message'])) : '';
+        $event_title = isset($_POST['event_title']) ? sanitize_text_field(wp_unslash($_POST['event_title'])) : '';
+        $event_dates = isset($_POST['event_dates']) ? sanitize_text_field(wp_unslash($_POST['event_dates'])) : '';
+        $event_href = isset($_POST['event_href']) ? esc_url_raw(wp_unslash($_POST['event_href'])) : '';
+
+        if ($name === '') {
+            wp_send_json_error(['message' => __('Please enter your name.', 'acs-agenda-manager')]);
+        }
+
+        if ($email === '') {
+            wp_send_json_error(['message' => __('Please enter your email address.', 'acs-agenda-manager')]);
+        }
+
+        if (!$this->is_valid_contact_email($email)) {
+            wp_send_json_error(['message' => __('Please enter a valid email address.', 'acs-agenda-manager')]);
+        }
+
+        if ($message === '') {
+            wp_send_json_error(['message' => __('Please enter your message.', 'acs-agenda-manager')]);
+        }
+
+        $recipient_setting = sanitize_text_field((string) get_option('acsagma_contact_form_recipient_email', ''));
+        $recipient_candidates = preg_split('/[;,\s]+/', $recipient_setting) ?: [];
+        $recipient_emails = array_values(array_filter(array_map('sanitize_email', $recipient_candidates), 'is_email'));
+        $default_recipient = sanitize_email((string) get_option('admin_email'));
+
+        if (empty($recipient_emails) && $default_recipient !== '') {
+            $recipient_emails = [$default_recipient];
+        }
+
+        if (empty($recipient_emails)) {
+            wp_send_json_error(['message' => __('Unable to send your message. Please try again.', 'acs-agenda-manager')]);
+        }
+
+        $subject_prefix = sanitize_text_field((string) get_option('acsagma_contact_form_subject_prefix', 'ACS Agenda'));
+        $include_dates = (bool) get_option('acsagma_contact_form_include_dates', true);
+        $show_phone = (bool) get_option('acsagma_contact_form_show_phone', false);
+
+        $subject_parts = [];
+        if ($subject_prefix !== '') {
+            $subject_parts[] = $subject_prefix;
+        }
+        if ($event_title !== '') {
+            $subject_parts[] = $event_title;
+        }
+        if ($include_dates && $event_dates !== '') {
+            $subject_parts[] = $event_dates;
+        }
+
+        $subject = implode(' - ', $subject_parts);
+        if ($subject === '') {
+            $subject = __('Contact request', 'acs-agenda-manager');
+        }
+
+        $body = [];
+        $body[] = sprintf('%s: %s', __('Name', 'acs-agenda-manager'), $name);
+        $body[] = sprintf('%s: %s', __('Email', 'acs-agenda-manager'), $email);
+        if ($show_phone && $phone !== '') {
+            $body[] = sprintf('%s: %s', __('Phone', 'acs-agenda-manager'), $phone);
+        }
+        if ($event_title !== '') {
+            $body[] = sprintf('%s: %s', __('Event', 'acs-agenda-manager'), $event_title);
+        }
+        if ($event_dates !== '') {
+            $body[] = sprintf('%s: %s', __('Dates', 'acs-agenda-manager'), $event_dates);
+        }
+        if ($event_href !== '') {
+            $body[] = sprintf('%s: %s', __('Event page', 'acs-agenda-manager'), $event_href);
+        }
+        $body[] = '';
+        $body[] = __('Message', 'acs-agenda-manager') . ':';
+        $body[] = $message;
+
+        $headers = [
+            sprintf('Reply-To: %s <%s>', $name, $email),
+            'Content-Type: text/plain; charset=UTF-8',
+        ];
+
+        $sent = wp_mail($recipient_emails, $subject, implode("\n", $body), $headers);
+
+        if (!$sent) {
+            wp_send_json_error(['message' => __('Unable to send your message. Please try again.', 'acs-agenda-manager')]);
+        }
+
+        wp_send_json_success([
+            'message' => __('Thanks! Your message has been sent.', 'acs-agenda-manager'),
+        ]);
+        wp_die();
+    }
+
+    /**
+     * Stricter email validation for contact form submissions.
+     *
+     * Requires a domain with at least one dot and a TLD of at least 2 chars.
+     */
+    private function is_valid_contact_email(string $email): bool {
+        if (!is_email($email)) {
+            return false;
+        }
+
+        $at_pos = strrpos($email, '@');
+        if ($at_pos === false) {
+            return false;
+        }
+
+        $domain = substr($email, $at_pos + 1);
+        if ($domain === '' || strpos($domain, '.') === false) {
+            return false;
+        }
+
+        if (!preg_match('/^(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+(?:[A-Z]{2,63}|XN--(?:[A-Z0-9]|[A-Z0-9][A-Z0-9-]{0,57}[A-Z0-9]))$/i', $domain)) {
+            return false;
+        }
+
+        $tld = (string) strrchr($domain, '.');
+        if ($tld === '') {
+            return false;
+        }
+
+        return strlen(ltrim($tld, '.')) >= 2;
     }
 
     /**

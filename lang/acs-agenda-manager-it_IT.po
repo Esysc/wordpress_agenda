@@ -387,9 +387,8 @@ msgid "Security check failed"
 msgstr "Controllo di sicurezza fallito"
 
 #: class/class-acs-admin.php:370 class/class-acs-admin.php:371
-#, fuzzy
 msgid "ACS Agenda"
-msgstr "Agenda"
+msgstr "ACS Agenda"
 
 #: class/class-acs-admin.php:383
 msgid "Events per page"
@@ -496,9 +495,8 @@ msgid "Go to page"
 msgstr "Vai alla pagina"
 
 #: templates/help-page.php:16
-#, fuzzy
 msgid "ACS Agenda Manager - User Guide"
-msgstr "ACS Gestore Agenda"
+msgstr "ACS Agenda Manager - Guida utente"
 
 #: templates/admin-page.php:180
 msgid "Advanced settings"
@@ -603,9 +601,8 @@ msgid "Optional external link (e.g., registration on another site)"
 msgstr "Link esterno opzionale (es. registrazione su un altro sito)"
 
 #: templates/help-page.php:139
-#, fuzzy
 msgid "Editing Events"
-msgstr "Aggiungere eventi"
+msgstr "Modifica eventi"
 
 #: templates/help-page.php:140
 msgid ""
@@ -617,9 +614,8 @@ msgstr ""
 "dettagli dell'evento. Fai clic su Aggiorna per salvare le modifiche."
 
 #: templates/help-page.php:142
-#, fuzzy
 msgid "Deleting Events"
-msgstr "Aggiungere eventi"
+msgstr "Elimina eventi"
 
 #: templates/help-page.php:143
 msgid ""
@@ -632,9 +628,8 @@ msgstr ""
 "spunta e scegli \"Elimina\" dal menu Azioni di massa."
 
 #: templates/help-page.php:145
-#, fuzzy
 msgid "Filtering Events"
-msgstr "Eventi filtrati"
+msgstr "Filtraggio eventi"
 
 #: templates/help-page.php:146
 msgid ""
@@ -645,9 +640,8 @@ msgstr ""
 "eventi che corrispondono a una specifica combinazione di titolo e categoria."
 
 #: templates/help-page.php:148
-#, fuzzy
 msgid "Searching Events"
-msgstr "Cerca eventi"
+msgstr "Ricerca eventi"
 
 #: templates/help-page.php:149
 msgid ""
@@ -673,9 +667,8 @@ msgstr ""
 "all'impostazione di Partecipazione parziale."
 
 #: templates/help-page.php:163
-#, fuzzy
 msgid "Default Agenda Page"
-msgstr "Nome pagina agenda"
+msgstr "Pagina Agenda predefinita"
 
 #: templates/help-page.php:174
 #, php-format
@@ -745,9 +738,8 @@ msgid "Go to the Google Cloud Console and create a project"
 msgstr "Vai alla Google Cloud Console e crea un progetto"
 
 #: templates/help-page.php:220
-#, fuzzy
 msgid "Enable the \"Maps JavaScript API\" and \"Places API\""
-msgstr "API richieste: Maps JavaScript API, Places API"
+msgstr "Abilita \"Maps JavaScript API\" e \"Places API\""
 
 #: templates/help-page.php:221
 msgid "Create an API key and restrict it to your domain"
@@ -993,12 +985,10 @@ msgid "Event(s) deleted successfully."
 msgstr "Evento/i eliminato/i con successo."
 
 #: templates/admin-page.php:34
-#, fuzzy
 msgid "Event created successfully."
-msgstr "Evento aggiornato con successo"
+msgstr "Evento creato con successo"
 
 #: templates/admin-page.php:43
-#, fuzzy
 msgid "Event updated successfully."
 msgstr "Evento aggiornato con successo"
 
@@ -1168,3 +1158,126 @@ msgstr "Si - Obbligatorio"
 
 #~ msgid "Select Image"
 #~ msgstr "Seleziona immagine"
+
+msgid "Contact Form"
+msgstr "Modulo di contatto"
+
+msgid "Thanks! Your message has been sent."
+msgstr "Grazie! Il tuo messaggio e stato inviato."
+
+msgid "Unable to send your message. Please try again."
+msgstr "Impossibile inviare il tuo messaggio. Riprova."
+
+msgid "Sending..."
+msgstr "Invio in corso..."
+
+msgid "Please fill in all required fields."
+msgstr "Compila tutti i campi obbligatori."
+
+msgid "Send message"
+msgstr "Invia messaggio"
+
+msgid "Contact request"
+msgstr "Richiesta di contatto"
+
+msgid "Name"
+msgstr "Nome"
+
+msgid "Email"
+msgstr "Email"
+
+msgid "Phone"
+msgstr "Telefono"
+
+msgid "Message"
+msgstr "Messaggio"
+
+msgid "Dates"
+msgstr "Date"
+
+msgid "Event page"
+msgstr "Pagina evento"
+
+msgid "Contact the organizer"
+msgstr "Contatta l'organizzatore"
+
+msgid "Ask a question about this event and we will get back to you by email."
+msgstr "Fai una domanda su questo evento e ti risponderemo via email."
+
+msgid "Enable Contact Form"
+msgstr "Abilita modulo di contatto"
+
+msgid "Display a built-in contact form in the event details dialog"
+msgstr "Mostra un modulo di contatto integrato nella finestra di dettaglio evento"
+
+msgid "Contact Recipient Email"
+msgstr "Email destinatario contatti"
+
+msgid "Leave empty to use the site admin email. You can provide multiple recipients separated by comma, semicolon, or space."
+msgstr "Lascia vuoto per usare l'email amministratore del sito. Puoi indicare piu destinatari separati da virgola, punto e virgola o spazio."
+
+msgid "Contact Subject Prefix"
+msgstr "Prefisso oggetto contatto"
+
+msgid "Prepended to generated subject lines. Event title is added automatically."
+msgstr "Anteposto all'oggetto generato. Il titolo dell'evento viene aggiunto automaticamente."
+
+msgid "Include Event Dates in Subject"
+msgstr "Includi le date evento nell'oggetto"
+
+msgid "Append event dates to the email subject when available"
+msgstr "Aggiungi le date evento all'oggetto dell'email quando disponibili"
+
+msgid "Show Phone Field"
+msgstr "Mostra campo telefono"
+
+msgid "Allow visitors to include a phone number (optional)"
+msgstr "Consenti ai visitatori di includere un numero di telefono (opzionale)"
+
+msgid "Visitors can use the Contact action in the event details dialog to send questions about a specific event."
+msgstr "I visitatori possono usare l'azione Contatto nella finestra dei dettagli evento per inviare domande su un evento specifico."
+
+msgid "What gets sent"
+msgstr "Dati inviati"
+
+msgid "Visitor name and email (required)"
+msgstr "Nome ed email del visitatore (obbligatorio)"
+
+msgid "Visitor phone number (optional, if enabled)"
+msgstr "Numero di telefono del visitatore (opzionale, se abilitato)"
+
+msgid "Event title and dates from the selected event"
+msgstr "Titolo e date dell'evento selezionato"
+
+msgid "The message typed by the visitor"
+msgstr "Il messaggio digitato dal visitatore"
+
+msgid "Configuration"
+msgstr "Configurazione"
+
+msgid "Go to Agenda > Settings to configure recipient email, subject prefix, optional phone field, and whether event dates are appended to the subject."
+msgstr "Vai su Agenda > Impostazioni per configurare email destinatario, prefisso oggetto, campo telefono opzionale e inclusione delle date evento nell'oggetto."
+
+msgid "If no recipient email is configured, the plugin sends messages to the site admin email address."
+msgstr "Se non e configurata un'email destinatario, il plugin invia i messaggi all'indirizzo email amministratore del sito."
+
+msgid "Contact organizer"
+msgstr "Contatta organizzatore"
+
+msgid "Event details"
+msgstr "Dettagli evento"
+
+msgid "Ask a question"
+msgstr "Fai una domanda"
+
+msgid "Please enter your name."
+msgstr "Inserisci il tuo nome."
+
+msgid "Please enter your email address."
+msgstr "Inserisci il tuo indirizzo email."
+
+msgid "Please enter a valid email address."
+msgstr "Inserisci un indirizzo email valido."
+
+msgid "Please enter your message."
+msgstr "Inserisci il tuo messaggio."

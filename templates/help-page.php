@@ -180,6 +180,24 @@ $acsagma_agenda_page = get_option('acsagma_page', 'Agenda');
                 </p>
             </section>
 
+            <!-- Contact Form -->
+            <section id="contact-form" class="acs-help-section">
+                <h2><?php esc_html_e('Contact Form', 'acs-agenda-manager'); ?></h2>
+                <p><?php esc_html_e('Visitors can use the Contact action in the event details dialog to send questions about a specific event.', 'acs-agenda-manager'); ?></p>
+
+                <h3><?php esc_html_e('What gets sent', 'acs-agenda-manager'); ?></h3>
+                <ul>
+                    <li><?php esc_html_e('Visitor name and email (required)', 'acs-agenda-manager'); ?></li>
+                    <li><?php esc_html_e('Visitor phone number (optional, if enabled)', 'acs-agenda-manager'); ?></li>
+                    <li><?php esc_html_e('Event title and dates from the selected event', 'acs-agenda-manager'); ?></li>
+                    <li><?php esc_html_e('The message typed by the visitor', 'acs-agenda-manager'); ?></li>
+                </ul>
+
+                <h3><?php esc_html_e('Configuration', 'acs-agenda-manager'); ?></h3>
+                <p><?php esc_html_e('Go to Agenda > Settings to configure recipient email, subject prefix, optional phone field, and whether event dates are appended to the subject.', 'acs-agenda-manager'); ?></p>
+                <p><?php esc_html_e('If no recipient email is configured, the plugin sends messages to the site admin email address.', 'acs-agenda-manager'); ?></p>
+            </section>
+
             <!-- Partial Attendance -->
             <section id="partial-attendance" class="acs-help-section">
                 <h2><?php esc_html_e('Partial Attendance', 'acs-agenda-manager'); ?></h2>

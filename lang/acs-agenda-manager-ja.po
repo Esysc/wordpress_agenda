@@ -1137,3 +1137,126 @@ msgstr "はい - 必須"
 
 #~ msgid "Select Image"
 #~ msgstr "画像を選択"
+
+msgid "Contact Form"
+msgstr "お問い合わせフォーム"
+
+msgid "Thanks! Your message has been sent."
+msgstr "ありがとうございます。メッセージを送信しました。"
+
+msgid "Unable to send your message. Please try again."
+msgstr "メッセージを送信できませんでした。もう一度お試しください。"
+
+msgid "Sending..."
+msgstr "送信中..."
+
+msgid "Please fill in all required fields."
+msgstr "必須項目をすべて入力してください。"
+
+msgid "Send message"
+msgstr "メッセージを送信"
+
+msgid "Contact request"
+msgstr "お問い合わせ"
+
+msgid "Name"
+msgstr "お名前"
+
+msgid "Email"
+msgstr "メールアドレス"
+
+msgid "Phone"
+msgstr "電話番号"
+
+msgid "Message"
+msgstr "メッセージ"
+
+msgid "Dates"
+msgstr "日程"
+
+msgid "Event page"
+msgstr "イベントページ"
+
+msgid "Contact the organizer"
+msgstr "主催者に連絡"
+
+msgid "Ask a question about this event and we will get back to you by email."
+msgstr "このイベントについて質問を送信できます。返信はメールでお送りします。"
+
+msgid "Enable Contact Form"
+msgstr "お問い合わせフォームを有効化"
+
+msgid "Display a built-in contact form in the event details dialog"
+msgstr "イベント詳細ダイアログに組み込みお問い合わせフォームを表示"
+
+msgid "Contact Recipient Email"
+msgstr "お問い合わせ先メールアドレス"
+
+msgid "Leave empty to use the site admin email. You can provide multiple recipients separated by comma, semicolon, or space."
+msgstr "空欄の場合はサイト管理者のメールアドレスを使用します。複数の宛先はカンマ、セミコロン、または空白で区切って指定できます。"
+
+msgid "Contact Subject Prefix"
+msgstr "件名プレフィックス"
+
+msgid "Prepended to generated subject lines. Event title is added automatically."
+msgstr "生成される件名の先頭に追加されます。イベントタイトルは自動で追加されます。"
+
+msgid "Include Event Dates in Subject"
+msgstr "件名にイベント日程を含める"
+
+msgid "Append event dates to the email subject when available"
+msgstr "利用可能な場合はメール件名にイベント日程を追加"
+
+msgid "Show Phone Field"
+msgstr "電話番号フィールドを表示"
+
+msgid "Allow visitors to include a phone number (optional)"
+msgstr "訪問者が電話番号を入力できるようにする（任意）"
+
+msgid "Visitors can use the Contact action in the event details dialog to send questions about a specific event."
+msgstr "訪問者はイベント詳細ダイアログの「Contact」アクションを使って、特定のイベントに関する質問を送信できます。"
+
+msgid "What gets sent"
+msgstr "送信される内容"
+
+msgid "Visitor name and email (required)"
+msgstr "訪問者の名前とメールアドレス（必須）"
+
+msgid "Visitor phone number (optional, if enabled)"
+msgstr "訪問者の電話番号（任意、有効時）"
+
+msgid "Event title and dates from the selected event"
+msgstr "選択したイベントのタイトルと日程"
+
+msgid "The message typed by the visitor"
+msgstr "訪問者が入力したメッセージ"
+
+msgid "Configuration"
+msgstr "設定"
+
+msgid "Go to Agenda > Settings to configure recipient email, subject prefix, optional phone field, and whether event dates are appended to the subject."
+msgstr "Agenda > Settings で、宛先メール、件名プレフィックス、任意の電話番号フィールド、件名へのイベント日程追加を設定します。"
+
+msgid "If no recipient email is configured, the plugin sends messages to the site admin email address."
+msgstr "宛先メールが未設定の場合、プラグインはサイト管理者のメールアドレスにメッセージを送信します。"
+
+msgid "Contact organizer"
+msgstr "主催者に連絡"
+
+msgid "Event details"
+msgstr "イベント詳細"
+
+msgid "Ask a question"
+msgstr "質問する"
+
+msgid "Please enter your name."
+msgstr "お名前を入力してください。"
+
+msgid "Please enter your email address."
+msgstr "メールアドレスを入力してください。"
+
+msgid "Please enter a valid email address."
+msgstr "有効なメールアドレスを入力してください。"
+
+msgid "Please enter your message."
+msgstr "メッセージを入力してください。"

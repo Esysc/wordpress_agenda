@@ -5,7 +5,7 @@ A WordPress plugin for managing and displaying event agendas. Perfect for worksh
 ![WordPress Version](https://img.shields.io/badge/WordPress-6.2%2B-blue)
 ![PHP Version](https://img.shields.io/badge/PHP-7.4%2B-purple)
 ![License](https://img.shields.io/badge/License-GPL--2.0--or--later-green)
-![Version](https://img.shields.io/badge/Version-3.5.2-orange)
+![Version](https://img.shields.io/badge/Version-3.6.0-orange)
 
 ## Description
 
@@ -21,6 +21,7 @@ ACS Agenda Manager provides an easy way to create and manage an event agenda on 
 - **Responsive design**: Looks great on all devices
 - **Internationalization**: Supports French and English translations
 - **Easy administration**: Intuitive admin interface with inline editing
+- **Native contact form**: Built-in event contact form available via the dedicated Contact action with configurable recipient and subject
 
 ## Requirements
 
@@ -86,6 +87,7 @@ The plugin automatically creates an "Agenda" page upon activation with the short
 Navigate to **Agenda → Settings** to:
 
 - Change the default agenda page name
+- Configure native contact form behavior (recipient email, subject prefix, optional phone field)
 - View usage instructions
 
 ## File Structure
