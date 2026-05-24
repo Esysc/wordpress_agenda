@@ -36,7 +36,7 @@
         bindEvents: function () {
             const self = this;
 
-            $(document).on('click', '.readmore', this.handleReadMore.bind(this));
+            $(document).on('click', '.readmore, .acs-contact-trigger', this.handleReadMore.bind(this));
             $(window).on('scroll', this.trackScroll);
 
             // Read more dialog close handlers
@@ -50,6 +50,16 @@
                 e.preventDefault();
                 e.stopPropagation();
                 window.closeDialog();
+            });
+
+            $(document).on('submit', '.acs-contact-form', function (e) {
+                e.preventDefault();
+                self.handleContactFormSubmit(e);
+            });
+
+            $(document).on('input change', '.acs-contact-form input, .acs-contact-form textarea', function (e) {
+                const $field = $(e.currentTarget);
+                $field.removeClass('is-invalid').removeAttr('aria-invalid');
             });
 
             $(document).on('keydown', function (e) {
@@ -527,8 +537,12 @@
             const postId = $button.data('postid');
             const sectionId = $button.data('id');
             const href = $button.data('href');
+            const eventTitle = ($button.data('event-title') || '').toString();
+            const eventDates = ($button.data('event-dates') || '').toString();
+            const eventIntro = ($button.data('event-intro') || '').toString();
+            const dialogMode = $button.hasClass('acs-contact-trigger') ? 'contact' : 'readmore';
 
-            if (!postId || !agendaConfig || !agendaConfig.ajaxUrl) {
+            if (!agendaConfig || !agendaConfig.ajaxUrl) {
                 return;
             }
 
@@ -541,6 +555,10 @@
                     action: 'acsagma_read_more',
                     postid: postId,
                     href: href,
+                    event_title: eventTitle,
+                    event_dates: eventDates,
+                    event_intro: eventIntro,
+                    dialog_mode: dialogMode,
                     nonce: agendaConfig.nonce,
                 },
                 success: function (response) {
@@ -559,6 +577,120 @@
                     $button.prop('disabled', false).removeClass('is-loading').removeAttr('aria-busy');
                 }
             });
+        },
+
+        /**
+         * Submit the built-in contact form from read-more dialog.
+         */
+        handleContactFormSubmit: function (e) {
+            const agendaConfig = window.acsagmaAgenda || window.acsAgenda || {};
+            const i18n = agendaConfig.i18n || {};
+            const $form = $(e.currentTarget);
+            const $message = $form.find('.acs-contact-form-message');
+            const $submit = $form.find('.acs-contact-submit');
+            const submitLabel = i18n.contactFormSubmitLabel || 'Send message';
+
+            if (!$form.length || !agendaConfig.ajaxUrl) {
+                return;
+            }
+
+            $message.removeClass('is-error is-success').empty();
+            const validation = this.validateContactForm($form, i18n);
+            if (!validation.valid) {
+                $message.addClass('is-error').text(validation.message);
+                return;
+            }
+
+            $submit.prop('disabled', true).attr('aria-busy', 'true').text(i18n.contactFormSending || 'Sending...');
+
+            const payload = $form.serialize();
+
+            $.ajax({
+                url: agendaConfig.ajaxUrl,
+                type: 'POST',
+                dataType: 'json',
+                data: payload,
+                success: function (response) {
+                    if (response && response.success) {
+                        const successMessage = response.data && response.data.message
+                            ? response.data.message
+                            : (i18n.contactFormSuccess || 'Thanks! Your message has been sent.');
+
+                        $message.addClass('is-success').text(successMessage);
+                        $form[0].reset();
+                        return;
+                    }
+
+                    const errorMessage = response && response.data && response.data.message
+                        ? response.data.message
+                        : (i18n.contactFormError || 'Unable to send your message. Please try again.');
+                    $message.addClass('is-error').text(errorMessage);
+                },
+                error: function () {
+                    $message.addClass('is-error').text(i18n.contactFormError || 'Unable to send your message. Please try again.');
+                },
+                complete: function () {
+                    $submit.prop('disabled', false).removeAttr('aria-busy').text(submitLabel);
+                }
+            });
+        },
+
+        /**
+         * Validate contact form fields and highlight invalid inputs.
+         */
+        validateContactForm: function ($form, i18n) {
+            const $name = $form.find('input[name="name"]');
+            const $email = $form.find('input[name="email"]');
+            const $message = $form.find('textarea[name="message"]');
+
+            const nameValue = ($name.val() || '').toString().trim();
+            const emailValue = ($email.val() || '').toString().trim();
+            const messageValue = ($message.val() || '').toString().trim();
+
+            let firstError = '';
+
+            const markInvalid = function ($field, errorMessage) {
+                $field.addClass('is-invalid').attr('aria-invalid', 'true');
+                if (!firstError) {
+                    firstError = errorMessage;
+                }
+            };
+
+            $form.find('input, textarea').removeClass('is-invalid').removeAttr('aria-invalid');
+
+            if (!nameValue) {
+                markInvalid($name, i18n.contactFormNameRequired || 'Please enter your name.');
+            }
+
+            if (!emailValue) {
+                markInvalid($email, i18n.contactFormEmailRequired || 'Please enter your email address.');
+            } else if (!this.isValidContactEmail(emailValue)) {
+                markInvalid($email, i18n.contactFormInvalidEmail || 'Please enter a valid email address.');
+            }
+
+            if (!messageValue) {
+                markInvalid($message, i18n.contactFormMessageRequired || 'Please enter your message.');
+            }
+
+            if (firstError) {
+                return {
+                    valid: false,
+                    message: firstError,
+                };
+            }
+
+            return {
+                valid: true,
+                message: '',
+            };
+        },
+
+        /**
+         * Validate contact email with stricter domain rules (requires multi-char TLD).
+         */
+        isValidContactEmail: function (email) {
+            const emailPattern = /^(?=.{1,254}$)(?=.{1,64}@)[A-Za-z0-9.!#$%&'*+/=?^_`{|}~-]+@(?:[A-Za-z0-9-]+\.)+(?:[A-Za-z]{2,63}|xn--[A-Za-z0-9-]{2,59})$/;
+            return emailPattern.test((email || '').toString().trim());
         },
 
         /**

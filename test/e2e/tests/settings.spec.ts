@@ -34,6 +34,39 @@ test.describe('Settings Page', () => {
     await expect(apiKeyInput).toBeVisible();
   });
 
+  test('should display and save contact form settings', async ({ page }) => {
+    await page.goto('/wp-admin/admin.php?page=acsagma-settings');
+    await page.waitForLoadState('networkidle');
+
+    const enabled = page.locator('input[name="acsagma_contact_form_enabled"]');
+    const recipient = page.locator('input[name="acsagma_contact_form_recipient_email"]');
+    const subjectPrefix = page.locator('input[name="acsagma_contact_form_subject_prefix"]');
+    const includeDates = page.locator('input[name="acsagma_contact_form_include_dates"]');
+    const showPhone = page.locator('input[name="acsagma_contact_form_show_phone"]');
+
+    await expect(enabled).toBeVisible();
+    await expect(recipient).toBeVisible();
+    await expect(subjectPrefix).toBeVisible();
+    await expect(includeDates).toBeVisible();
+    await expect(showPhone).toBeVisible();
+
+    await recipient.fill('contact@example.com');
+    await subjectPrefix.fill('Agenda Contact');
+    await includeDates.check();
+    await showPhone.check();
+
+    await page.click('input[type="submit"]');
+    await page.waitForLoadState('networkidle');
+
+    const successNotice = page.locator('.notice-success, .updated');
+    await expect(successNotice).toBeVisible({ timeout: 5000 });
+
+    await expect(recipient).toHaveValue('contact@example.com');
+    await expect(subjectPrefix).toHaveValue('Agenda Contact');
+    await expect(includeDates).toBeChecked();
+    await expect(showPhone).toBeChecked();
+  });
+
   test('should save Google Maps API key', async ({ page }) => {
     await page.goto('/wp-admin/admin.php?page=acsagma-settings');
     await page.waitForLoadState('networkidle');

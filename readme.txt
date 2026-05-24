@@ -26,6 +26,7 @@ ACS Agenda Manager provides an easy way to create and manage an event agenda on 
 * Modern responsive design: CSS Grid layout with glass-morphism effects
 * Easy administration: Intuitive admin interface with card-based form sections
 * Real-time validation: In-dialog error messages and success notifications
+* Native contact form: Built-in organizer contact form inside the Read More dialog
 
 = Supported Languages =
 
@@ -95,6 +96,7 @@ Yes, you can override the CSS in your theme or copy the template file to your th
 
 = 3.5.2 =
 * Removed obsolete ACScontactform integration references from the plugin codebase, documentation, and tests
+* Added native contact form in Read More dialog with configurable recipient, subject, and optional phone field
 
 = 3.5.1 =
 * Fixed intermittent E2E/global-setup login reliability in CI after fresh environment restarts

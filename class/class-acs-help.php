@@ -103,6 +103,7 @@ class ACSAGMA_Help {
             'adding-events' => __('Adding Events', 'acs-agenda-manager'),
             'managing-events' => __('Managing Events', 'acs-agenda-manager'),
             'shortcode' => __('Using the Shortcode', 'acs-agenda-manager'),
+            'contact-form' => __('Contact Form', 'acs-agenda-manager'),
             'partial-attendance' => __('Partial Attendance', 'acs-agenda-manager'),
             'customization' => __('Customization', 'acs-agenda-manager'),
             'troubleshooting' => __('Troubleshooting', 'acs-agenda-manager'),

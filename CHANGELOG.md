@@ -6,6 +6,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- **Native contact form**: Added a built-in contact form inside the Read More dialog with AJAX submission and anti-spam honeypot
+- **Contact form settings**: Added recipient email, subject prefix, subject date toggle, optional phone field, and enable/disable switch in Settings
+- **Documentation and tests**: Updated help/settings docs and added E2E coverage for contact-form visibility and settings persistence
+
+### Changed
+
+- **Translations**: Added new contact-form strings to POT and locale PO files for DE/CH, DE/DE, FR/FR, IT/IT, and JA
+
 ## [3.5.2] - 2026-05-24
 
 ### Fixed

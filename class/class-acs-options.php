@@ -56,6 +56,36 @@ class ACSAGMA_Options {
             'sanitize_callback' => 'rest_sanitize_boolean',
             'default' => false,
         ]);
+
+        register_setting('acsagma_agenda_settings', 'acsagma_contact_form_enabled', [
+            'type' => 'boolean',
+            'sanitize_callback' => 'rest_sanitize_boolean',
+            'default' => true,
+        ]);
+
+        register_setting('acsagma_agenda_settings', 'acsagma_contact_form_recipient_email', [
+            'type' => 'string',
+            'sanitize_callback' => 'sanitize_text_field',
+            'default' => '',
+        ]);
+
+        register_setting('acsagma_agenda_settings', 'acsagma_contact_form_subject_prefix', [
+            'type' => 'string',
+            'sanitize_callback' => 'sanitize_text_field',
+            'default' => 'ACS Agenda',
+        ]);
+
+        register_setting('acsagma_agenda_settings', 'acsagma_contact_form_include_dates', [
+            'type' => 'boolean',
+            'sanitize_callback' => 'rest_sanitize_boolean',
+            'default' => true,
+        ]);
+
+        register_setting('acsagma_agenda_settings', 'acsagma_contact_form_show_phone', [
+            'type' => 'boolean',
+            'sanitize_callback' => 'rest_sanitize_boolean',
+            'default' => false,
+        ]);
     }
 
     public function render_settings_page(): void {
@@ -71,6 +101,11 @@ class ACSAGMA_Options {
         $agenda_page = get_option('acsagma_page', 'Agenda');
         $google_maps_api_key = get_option('acsagma_google_maps_api_key', '');
         $delete_data_on_uninstall = get_option('acsagma_delete_data_on_uninstall', false);
+        $contact_form_enabled = get_option('acsagma_contact_form_enabled', true);
+        $contact_form_recipient_email = get_option('acsagma_contact_form_recipient_email', '');
+        $contact_form_subject_prefix = get_option('acsagma_contact_form_subject_prefix', 'ACS Agenda');
+        $contact_form_include_dates = get_option('acsagma_contact_form_include_dates', true);
+        $contact_form_show_phone = get_option('acsagma_contact_form_show_phone', false);
 
         include ACSAGMA_AGENDA_PLUGIN_DIR . 'templates/settings-page.php';
     }
@@ -88,6 +123,22 @@ class ACSAGMA_Options {
         // Save delete data on uninstall option
         $delete_data = isset($_POST['acsagma_delete_data_on_uninstall']) ? true : false;
         update_option('acsagma_delete_data_on_uninstall', $delete_data);
+
+        // Save contact form options
+        $contact_form_enabled = isset($_POST['acsagma_contact_form_enabled']) ? true : false;
+        update_option('acsagma_contact_form_enabled', $contact_form_enabled);
+
+        $recipient_email = sanitize_text_field(wp_unslash($_POST['acsagma_contact_form_recipient_email'] ?? ''));
+        update_option('acsagma_contact_form_recipient_email', $recipient_email);
+
+        $subject_prefix = sanitize_text_field(wp_unslash($_POST['acsagma_contact_form_subject_prefix'] ?? 'ACS Agenda'));
+        update_option('acsagma_contact_form_subject_prefix', $subject_prefix);
+
+        $include_dates = isset($_POST['acsagma_contact_form_include_dates']) ? true : false;
+        update_option('acsagma_contact_form_include_dates', $include_dates);
+
+        $show_phone = isset($_POST['acsagma_contact_form_show_phone']) ? true : false;
+        update_option('acsagma_contact_form_show_phone', $show_phone);
 
         if ($old_page_name !== $new_page_name) {
             // Prefer updating the existing page to avoid data loss and broken links.

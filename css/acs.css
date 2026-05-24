@@ -571,7 +571,8 @@ body.acs-lightbox-open {
     cursor: pointer;
     transition: all 0.2s ease;
     width: auto;
-    margin-top: auto;
+    margin-top: 0;
+    min-height: 40px;
 }
 
 .readmore.show:focus-visible {
@@ -601,6 +602,48 @@ body.acs-lightbox-open {
     transform: translateX(3px);
 }
 
+.acs-event-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 1rem;
+    align-items: center;
+}
+
+.acs-contact-trigger {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    border: 1px solid #0f172a;
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    padding: 0.6rem 1rem;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-height: 40px;
+    box-shadow: 0 7px 16px rgba(15, 23, 42, 0.22);
+}
+
+.acs-contact-trigger:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 9px 18px rgba(15, 23, 42, 0.3);
+}
+
+.acs-contact-trigger:focus-visible {
+    outline: 3px solid var(--acs-accent-color);
+    outline-offset: 2px;
+}
+
+.acs-contact-trigger .dashicons {
+    font-size: 15px;
+    width: 15px;
+    height: 15px;
+}
+
 /* ==========================================================================
    Dialog (Frontend Event Details)
    ========================================================================== */
@@ -627,7 +670,7 @@ body.acs-lightbox-open {
 .acs-dialog-panel {
     width: min(860px, calc(100% - 2rem));
     margin: 2.5rem auto;
-    background: #fff;
+    background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
     border: 1px solid var(--acs-border-color);
     border-radius: var(--acs-border-radius);
     box-shadow: var(--acs-shadow-lg);
@@ -684,6 +727,119 @@ body.acs-lightbox-open {
     box-shadow: var(--acs-shadow-lg);
     z-index: 1000000;
     font-size: 0.9rem;
+}
+
+.acs-contact-form-wrap {
+    margin-top: 1.5rem;
+    border-top: 1px solid var(--acs-border-color);
+    padding-top: 1.25rem;
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 1rem;
+}
+
+.acs-contact-form-title {
+    margin: 0 0 0.4rem;
+    font-size: 1.15rem;
+    letter-spacing: 0.01em;
+}
+
+.acs-contact-form-intro {
+    margin: 0 0 1rem;
+    color: var(--acs-text-muted);
+    font-size: 0.95rem;
+}
+
+.acs-contact-form-grid {
+    display: grid;
+    gap: 0.9rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.acs-contact-form-grid label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    font-weight: 600;
+    color: var(--acs-text-color);
+}
+
+.acs-contact-message-field {
+    grid-column: 1 / -1;
+}
+
+.acs-contact-input,
+.acs-contact-textarea {
+    border: 1px solid var(--acs-border-color);
+    border-radius: 10px;
+    padding: 0.6rem 0.7rem;
+    font-size: 0.95rem;
+    background: #fff;
+    box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.04);
+}
+
+.acs-contact-input:focus,
+.acs-contact-textarea:focus {
+    outline: none;
+    border-color: var(--acs-accent-color);
+    box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.15);
+}
+
+.acs-contact-input.is-invalid,
+.acs-contact-textarea.is-invalid {
+    border-color: #dc2626;
+    background: #fff7f7;
+    box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.14);
+}
+
+.acs-contact-textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.acs-contact-submit {
+    margin-top: 0.9rem;
+    min-height: 40px;
+    border-radius: 999px;
+    padding: 0.55rem 1.1rem;
+    border: none !important;
+    background: linear-gradient(135deg, var(--acs-primary-color) 0%, var(--acs-accent-color) 100%) !important;
+    color: #fff !important;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(3, 105, 161, 0.22);
+}
+
+.acs-contact-submit:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 22px rgba(3, 105, 161, 0.28);
+}
+
+.acs-contact-submit:disabled {
+    opacity: 0.65;
+    cursor: wait;
+}
+
+.acs-contact-form-message {
+    margin-bottom: 0.8rem;
+    font-weight: 600;
+}
+
+.acs-contact-form-message.is-error {
+    color: #9f1239;
+}
+
+.acs-contact-form-message.is-success {
+    color: #166534;
+}
+
+.acs-contact-honeypot {
+    position: absolute;
+    left: -9999px;
+    opacity: 0;
+    pointer-events: none;
 }
 
 /* ==========================================================================
@@ -765,6 +921,20 @@ body.acs-lightbox-open {
     .readmore.show {
         align-self: center;
     }
+
+    .acs-event-actions {
+        justify-content: center;
+    }
+
+    .acs-contact-trigger,
+    .readmore.show {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .acs-contact-form-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
 @media screen and (max-width: 480px) {
@@ -777,7 +947,8 @@ body.acs-lightbox-open {
         font-size: 1.1rem;
     }
 
-    .readmore.show {
+    .readmore.show,
+    .acs-contact-trigger {
         width: 100%;
         justify-content: center;
     }

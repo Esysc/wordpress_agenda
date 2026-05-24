@@ -104,6 +104,83 @@ defined('ABSPATH') || exit;
                     </p>
                 </td>
             </tr>
+            <tr>
+                <th scope="row">
+                    <label for="acsagma_contact_form_enabled"><?php esc_html_e('Enable Contact Form', 'acs-agenda-manager'); ?></label>
+                </th>
+                <td>
+                    <label>
+                        <input type="checkbox"
+                               name="acsagma_contact_form_enabled"
+                               id="acsagma_contact_form_enabled"
+                               value="1"
+                               <?php checked($contact_form_enabled, true); ?> />
+                        <?php esc_html_e('Display a built-in contact form in the event details dialog', 'acs-agenda-manager'); ?>
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">
+                    <label for="acsagma_contact_form_recipient_email"><?php esc_html_e('Contact Recipient Email', 'acs-agenda-manager'); ?></label>
+                </th>
+                <td>
+                    <input type="text"
+                           name="acsagma_contact_form_recipient_email"
+                           id="acsagma_contact_form_recipient_email"
+                           value="<?php echo esc_attr($contact_form_recipient_email); ?>"
+                           class="regular-text"
+                           placeholder="organizer@example.com" />
+                    <p class="description">
+                        <?php esc_html_e('Leave empty to use the site admin email. You can provide multiple recipients separated by comma, semicolon, or space.', 'acs-agenda-manager'); ?>
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">
+                    <label for="acsagma_contact_form_subject_prefix"><?php esc_html_e('Contact Subject Prefix', 'acs-agenda-manager'); ?></label>
+                </th>
+                <td>
+                    <input type="text"
+                           name="acsagma_contact_form_subject_prefix"
+                           id="acsagma_contact_form_subject_prefix"
+                           value="<?php echo esc_attr($contact_form_subject_prefix); ?>"
+                           class="regular-text"
+                           placeholder="ACS Agenda" />
+                    <p class="description">
+                        <?php esc_html_e('Prepended to generated subject lines. Event title is added automatically.', 'acs-agenda-manager'); ?>
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">
+                    <label for="acsagma_contact_form_include_dates"><?php esc_html_e('Include Event Dates in Subject', 'acs-agenda-manager'); ?></label>
+                </th>
+                <td>
+                    <label>
+                        <input type="checkbox"
+                               name="acsagma_contact_form_include_dates"
+                               id="acsagma_contact_form_include_dates"
+                               value="1"
+                               <?php checked($contact_form_include_dates, true); ?> />
+                        <?php esc_html_e('Append event dates to the email subject when available', 'acs-agenda-manager'); ?>
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">
+                    <label for="acsagma_contact_form_show_phone"><?php esc_html_e('Show Phone Field', 'acs-agenda-manager'); ?></label>
+                </th>
+                <td>
+                    <label>
+                        <input type="checkbox"
+                               name="acsagma_contact_form_show_phone"
+                               id="acsagma_contact_form_show_phone"
+                               value="1"
+                               <?php checked($contact_form_show_phone, true); ?> />
+                        <?php esc_html_e('Allow visitors to include a phone number (optional)', 'acs-agenda-manager'); ?>
+                    </label>
+                </td>
+            </tr>
         </table>
 
         <?php submit_button(__('Save Settings', 'acs-agenda-manager')); ?>

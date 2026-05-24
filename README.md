@@ -21,6 +21,7 @@ ACS Agenda Manager provides an easy way to create and manage an event agenda on 
 - **Responsive design**: Looks great on all devices
 - **Internationalization**: Supports French and English translations
 - **Easy administration**: Intuitive admin interface with inline editing
+- **Native contact form**: Built-in event contact form in the Read More dialog with configurable recipient and subject
 
 ## Requirements
 
@@ -86,6 +87,7 @@ The plugin automatically creates an "Agenda" page upon activation with the short
 Navigate to **Agenda → Settings** to:
 
 - Change the default agenda page name
+- Configure native contact form behavior (recipient email, subject prefix, optional phone field)
 - View usage instructions
 
 ## File Structure
