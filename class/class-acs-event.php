@@ -27,18 +27,16 @@ class ACSAGMA_Event {
     public static function get_upcoming_events(): array {
         $now = time();
 
-        // Pre-filter at the DB level: exclude events whose last date ended more
-        // than 24 hours ago. Legacy rows with last_date_ts = NULL are filtered
-        // using a query-time fallback parser for the last date token.
+        // Keep this query DB-agnostic (MySQL and SQLite/Playground) and apply
+        // expiration logic in PHP via process_event().
         //
-        // The fetch limit defaults to 500 – enough for any realistic agenda –
+        // The fetch limit defaults to 500 - enough for any realistic agenda -
         // and can be raised by site owners via the filter hook when needed.
         $max_events = (int) apply_filters('acsagma_max_events', 500);
         $all_events = ACSAGMA_Database::get_events([
             'per_page' => $max_events,
             'orderby' => 'date',
             'order' => 'ASC',
-            'min_last_date_ts' => $now - DAY_IN_SECONDS,
         ]);
         $events = [];
 
