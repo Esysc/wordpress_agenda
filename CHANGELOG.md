@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.6.0] - 2026-05-24
+
 ### Added
 
 - **Native contact form**: Added a built-in contact form inside the Read More dialog with AJAX submission and anti-spam honeypot
@@ -17,6 +19,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - **Translations**: Added new contact-form strings to POT and locale PO files for DE/CH, DE/DE, FR/FR, IT/IT, and JA
+
+### Fixed
+
+- **Read More vs Contact mode**: Read More now consistently shows event/page preview content only, while the dedicated Contact action shows the contact form
+- **Email validation strictness**: Contact-form validation now rejects invalid one-letter TLD email domains on both frontend and backend
 
 ## [3.5.2] - 2026-05-24
 
