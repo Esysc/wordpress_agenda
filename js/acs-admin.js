@@ -987,19 +987,6 @@
         },
     };
 
-    /**
-     * Copy shortcode to clipboard
-     */
-    window.copyShortcode = function (textareaId) {
-        const $textarea = $('#' + textareaId);
-        $textarea.prop('disabled', false).select();
-        document.execCommand('copy');
-        $textarea.prop('disabled', true);
-
-        $('#ACSmessage' + textareaId).html('<strong>' + acsagmaAgendaAdmin.i18n.copied + '!</strong>');
-        $('#MSGWrapper' + textareaId).show();
-    };
-
     $(document).ready(function () {
         ACSAgendaAdmin.init();
     });

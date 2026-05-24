@@ -259,7 +259,7 @@ test.describe('Advanced Event Fields', () => {
     expect(exists).toBeTruthy();
   });
 
-  test('should display contact form shortcode button', async ({ page }) => {
+  test('should not display contact form shortcode button', async ({ page }) => {
     const timestamp = Date.now();
 
     // Create an event first
@@ -277,12 +277,8 @@ test.describe('Advanced Event Fields', () => {
     // Find the event row
     const eventRow = page.locator('table.wp-list-table tbody tr').filter({ hasText: `Shortcode Test ${timestamp}` });
 
-    // Should have shortcode action
     const shortcodeButton = eventRow.locator('.row-actions .shortcode, a:has-text("Form shortcode")');
-
-    // Check if visible (may require hovering)
-    const count = await shortcodeButton.count();
-    expect(count).toBeGreaterThanOrEqual(0); // May need hover to show
+    await expect(shortcodeButton).toHaveCount(0);
   });
 
   test('should update event with new advanced fields', async ({ page }) => {

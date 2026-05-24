@@ -154,9 +154,6 @@ class ACSAGMA_Template {
         // Right column - image
         $output .= self::render_image_column($event);
 
-        // Contact form shortcode if available
-        $output .= self::render_contact_form($event);
-
         $output .= '</div>';
 
         return $output;
@@ -321,27 +318,6 @@ class ACSAGMA_Template {
     }
 
     /**
-     * Render contact form shortcode if available
-     */
-    private static function render_contact_form(array $event): string {
-        if (!shortcode_exists('ACScontactform')) {
-            return '';
-        }
-
-        $shortcode = sprintf(
-            '[ACScontactform dates="%s" subject="%s" price="%s" account="%s" candopartial="%s" redirect="%s"]',
-            esc_attr(implode(',', $event['dates'])),
-            esc_attr($event['title']),
-            esc_attr($event['price']),
-            esc_attr($event['account']),
-            esc_attr($event['candopartial']),
-            esc_attr($event['redirect'])
-        );
-
-        return do_shortcode($shortcode);
-    }
-
-    /**
      * Render the read more dialog content
      */
     public static function render_read_more_dialog(WP_Post $post, string $href): string {
@@ -349,7 +325,7 @@ class ACSAGMA_Template {
             '<div id="postdata">
                 <div id="dialog" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="acs-readmore-title">
                     <div class="acs-dialog-panel">
-                        <button id="close" type="button" onclick="closeDialog()" aria-label="%s">&times;</button>
+                        <button id="close" type="button" aria-label="%s">&times;</button>
                         <h2 id="acs-readmore-title">%s</h2>
                         <p class="acs-dialog-link">
                             <a href="%s" target="_blank" rel="noopener noreferrer">%s</a>

@@ -183,6 +183,61 @@ test.describe('Frontend Agenda Display', () => {
     await expect(eventElement).toBeVisible({ timeout: 30000 });
   });
 
+  test('should open and close the image lightbox', async ({ page }) => {
+    await page.goto('/wp-admin/admin.php?page=acsagma-agenda');
+    await page.waitForLoadState('networkidle');
+
+    const timestamp = Date.now();
+    const eventTitle = `Lightbox Event ${timestamp}`;
+    const siteOrigin = new URL(page.url()).origin;
+    const localImageUrl = `${siteOrigin}/wp-includes/images/w-logo-blue.png`;
+
+    await page.click('#acs-add-event');
+    await page.waitForSelector('.ui-dialog:has(#acs-event-dialog)', { state: 'visible' });
+    await ensureAdvancedSettingsOpen(page);
+
+    await page.fill('#event-title', eventTitle);
+    await page.fill('#event-categorie', 'Frontend Test');
+    await page.fill('#event-image', localImageUrl);
+
+    await setTomorrowDate(page);
+    await submitEventDialog(page);
+
+    const agendaUrl = await getAgendaPageUrl(page);
+    await page.goto(agendaUrl, { waitUntil: 'networkidle' });
+    await filterByTitle(page, eventTitle);
+
+    const eventCard = page.locator('#acs-agenda-list .acsagenda').filter({ hasText: eventTitle }).first();
+    const image = eventCard.locator('.image-agenda').first();
+
+    await expect(image).toBeVisible({ timeout: 30000 });
+    await image.click();
+
+    const lightbox = page.locator('#acs-lightbox-overlay');
+    await expect(lightbox).toHaveClass(/active/);
+    await expect(page.locator('body')).toHaveClass(/acs-lightbox-open/);
+
+    await lightbox.locator('.acs-lightbox-close').click();
+    await expect(lightbox).not.toHaveClass(/active/);
+    await expect(page.locator('body')).not.toHaveClass(/acs-lightbox-open/);
+
+    await image.click();
+    await expect(lightbox).toHaveClass(/active/);
+    await page.keyboard.press('Escape');
+    await expect(lightbox).not.toHaveClass(/active/);
+
+    await image.click();
+    await expect(lightbox).toHaveClass(/active/);
+    await lightbox.click({ position: { x: 8, y: 8 } });
+    await expect(lightbox).not.toHaveClass(/active/);
+
+    await image.press('Enter');
+    await expect(lightbox).toHaveClass(/active/);
+
+    await page.keyboard.press('Escape');
+    await expect(lightbox).not.toHaveClass(/active/);
+  });
+
   test('should display event price on frontend', async ({ page }) => {
     // Create event with price
     await page.goto('/wp-admin/admin.php?page=acsagma-agenda');
@@ -249,6 +304,94 @@ test.describe('Frontend Agenda Display', () => {
 
     await eventCard.locator('.readmore.show').first().click();
     await expect(page.locator('#dialog.shown')).toBeVisible({ timeout: 10000 });
+
+    // Verify close button (X) closes the dialog.
+    await page.locator('#dialog #close').click();
+    await expect(page.locator('#dialog.shown')).toHaveCount(0);
+    await expect(page.locator('#dialog')).toBeHidden();
+  });
+
+  test('should close Read more with Escape and overlay click', async ({ page }) => {
+    const agendaUrl = await getAgendaPageUrl(page);
+    const siteOrigin = new URL(page.url()).origin;
+    const detailsLink = `${siteOrigin}/?p=1`;
+
+    await page.goto('/wp-admin/admin.php?page=acsagma-agenda');
+    await page.waitForLoadState('networkidle');
+
+    const eventTitle = `Keyboard Close ${Date.now()}`;
+
+    await page.click('#acs-add-event');
+    await page.waitForSelector('.ui-dialog:has(#acs-event-dialog)', { state: 'visible' });
+    await ensureAdvancedSettingsOpen(page);
+
+    await page.fill('#event-title', eventTitle);
+    await page.fill('#event-categorie', 'UX Test');
+    await page.fill('#event-link', detailsLink);
+
+    await setTomorrowDate(page);
+    await submitEventDialog(page);
+
+    await page.goto(agendaUrl, { waitUntil: 'networkidle' });
+    await filterByTitle(page, eventTitle);
+
+    const eventCard = page.locator('.column-center').filter({ hasText: eventTitle }).first();
+    await eventCard.locator('.readmore.show').first().click();
+    await expect(page.locator('#dialog.shown')).toBeVisible({ timeout: 10000 });
+
+    await page.keyboard.press('Escape');
+    await expect(page.locator('#dialog.shown')).toHaveCount(0);
+
+    await eventCard.locator('.readmore.show').first().click();
+    await expect(page.locator('#dialog.shown')).toBeVisible({ timeout: 10000 });
+
+    await page.mouse.click(8, 8);
+    await expect(page.locator('#dialog.shown')).toHaveCount(0);
+  });
+
+  test('should show an error when Read more details fail to load', async ({ page }) => {
+    const agendaUrl = await getAgendaPageUrl(page);
+    const siteOrigin = new URL(page.url()).origin;
+    const detailsLink = `${siteOrigin}/?p=1`;
+
+    await page.route('**/admin-ajax.php', async (route) => {
+      const postData = route.request().postData() || '';
+
+      if (postData.includes('acsagma_read_more')) {
+        await route.fulfill({
+          status: 500,
+          contentType: 'text/plain',
+          body: 'Server error',
+        });
+        return;
+      }
+
+      await route.continue();
+    });
+
+    await page.goto('/wp-admin/admin.php?page=acsagma-agenda');
+    await page.waitForLoadState('networkidle');
+
+    const eventTitle = `Read More Error ${Date.now()}`;
+
+    await page.click('#acs-add-event');
+    await page.waitForSelector('.ui-dialog:has(#acs-event-dialog)', { state: 'visible' });
+    await ensureAdvancedSettingsOpen(page);
+
+    await page.fill('#event-title', eventTitle);
+    await page.fill('#event-categorie', 'UX Test');
+    await page.fill('#event-link', detailsLink);
+
+    await setTomorrowDate(page);
+    await submitEventDialog(page);
+
+    await page.goto(agendaUrl, { waitUntil: 'networkidle' });
+    await filterByTitle(page, eventTitle);
+
+    const eventCard = page.locator('.column-center').filter({ hasText: eventTitle }).first();
+    await eventCard.locator('.readmore.show').first().click();
+
+    await expect(page.locator('#acs-readmore-error')).toBeVisible({ timeout: 10000 });
   });
 
   test('should hide Read more when there is no additional content', async ({ page }) => {
@@ -321,7 +464,7 @@ test.describe('Frontend Agenda Display', () => {
     await page.goto(agendaUrl, { waitUntil: 'networkidle' });
 
     // Check that shortcode content is rendered (not raw shortcode text)
-    const rawShortcode = page.locator('text=/\\[acsagma_agenda\\]/');
+    const rawShortcode = page.locator(String.raw`text=/\[acsagma_agenda\]/`);
     const hasRawShortcode = await rawShortcode.isVisible().catch(() => false);
 
     // Should NOT see raw shortcode (it should be processed)

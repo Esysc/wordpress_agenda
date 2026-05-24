@@ -176,52 +176,7 @@ class ACSAGMA_Agenda_List_Table extends WP_List_Table {
             ),
         ];
 
-        // Add shortcode button if contact form exists
-        if (shortcode_exists('ACScontactform')) {
-            $actions['shortcode'] = $this->render_shortcode_button($item);
-        }
-
         return $name . str_replace('|', '', $this->row_actions($actions));
-    }
-
-    private function render_shortcode_button(array $item): string {
-        $shortcode = sprintf(
-            '[ACScontactform dates="%s" subject="%s" price="%s" account="%s" candopartial="%s" redirect="%s"]',
-            esc_attr($item['date']),
-            esc_attr($item['title']),
-            esc_attr($item['price']),
-            esc_attr($item['account']),
-            esc_attr($item['candopartial']),
-            esc_attr($item['redirect'] ?? '')
-        );
-
-        $dialog_id = 'shortcode' . $item['id'];
-        $textarea_id = 'shortcodeText' . $item['id'];
-
-        $dialog = sprintf(
-            '<div id="%s" style="display:none">
-                <h2>%s</h2>
-                <div class="alert alert-success" id="MSGWrapper%s" style="display:none">
-                    <p id="ACSmessage%s"></p>
-                </div>
-                <p><textarea id="%s" disabled>%s</textarea></p>
-                <p><button class="button4 info" onclick="copyShortcode(\'%s\')">%s</button></p>
-            </div>',
-            esc_attr($dialog_id),
-            esc_html__('Contact Form Shortcode', 'acs-agenda-manager'),
-            esc_attr($textarea_id),
-            esc_attr($textarea_id),
-            esc_attr($textarea_id),
-            esc_attr($shortcode),
-            esc_attr($textarea_id),
-            esc_html__('Copy!', 'acs-agenda-manager')
-        );
-
-        return $dialog . sprintf(
-            '<a href="#TB_inline?width=400&height=250&inlineId=%s" class="thickbox button4 info">%s</a>',
-            esc_attr($dialog_id),
-            esc_html__('Form shortcode', 'acs-agenda-manager')
-        );
     }
 
     public function prepare_items(): void {
