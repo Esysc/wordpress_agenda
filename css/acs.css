@@ -731,12 +731,12 @@ body.acs-lightbox-open {
 
 .acs-contact-form-wrap {
     margin-top: 1.5rem;
-    border-top: 1px solid var(--acs-border-color);
-    padding-top: 1.25rem;
     background: rgba(255, 255, 255, 0.92);
     border: 1px solid #e2e8f0;
+    border-top: 1px solid var(--acs-border-color);
     border-radius: 12px;
     padding: 1rem;
+    padding-top: 1.25rem;
 }
 
 .acs-contact-form-title {

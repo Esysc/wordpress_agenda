@@ -50,6 +50,8 @@ test.describe('Settings Page', () => {
     await expect(includeDates).toBeVisible();
     await expect(showPhone).toBeVisible();
 
+    // Force a known state so this test cannot persist a disabled contact form.
+    await enabled.check();
     await recipient.fill('contact@example.com');
     await subjectPrefix.fill('Agenda Contact');
     await includeDates.check();
@@ -61,6 +63,7 @@ test.describe('Settings Page', () => {
     const successNotice = page.locator('.notice-success, .updated');
     await expect(successNotice).toBeVisible({ timeout: 5000 });
 
+    await expect(enabled).toBeChecked();
     await expect(recipient).toHaveValue('contact@example.com');
     await expect(subjectPrefix).toHaveValue('Agenda Contact');
     await expect(includeDates).toBeChecked();

@@ -36,7 +36,7 @@
         bindEvents: function () {
             const self = this;
 
-            $(document).on('click', '.readmore, .acs-contact-trigger', this.handleReadMore.bind(this));
+            $(document).on('click', '.readmore, .acs-contact-trigger', this.handleDialogTrigger.bind(this));
             $(window).on('scroll', this.trackScroll);
 
             // Read more dialog close handlers
@@ -527,9 +527,9 @@
         },
 
         /**
-         * Handle "Read More" button click
+         * Handle Read More and Contact button clicks.
          */
-        handleReadMore: function (e) {
+        handleDialogTrigger: function (e) {
             e.preventDefault();
 
             const agendaConfig = window.acsagmaAgenda || window.acsAgenda;
@@ -689,7 +689,11 @@
          * Validate contact email with stricter domain rules (requires multi-char TLD).
          */
         isValidContactEmail: function (email) {
-            const emailPattern = /^(?=.{1,254}$)(?=.{1,64}@)[A-Za-z0-9.!#$%&'*+/=?^_`{|}~-]+@(?:[A-Za-z0-9-]+\.)+(?:[A-Za-z]{2,63}|xn--[A-Za-z0-9-]{2,59})$/;
+            const domainLabel = '[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?';
+            const tldLabel = '(?:[A-Za-z]{2,63}|xn--[A-Za-z0-9](?:[A-Za-z0-9-]{0,57}[A-Za-z0-9])?)';
+            const emailPattern = new RegExp(
+                '^(?=.{1,254}$)(?=.{1,64}@)[A-Za-z0-9.!#$%&\'*+/=?^_`{|}~-]+@(?:' + domainLabel + '\\.)+' + tldLabel + '$'
+            );
             return emailPattern.test((email || '').toString().trim());
         },
 
