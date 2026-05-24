@@ -154,9 +154,6 @@ class ACSAGMA_Template {
         // Right column - image
         $output .= self::render_image_column($event);
 
-        // Contact form shortcode if available
-        $output .= self::render_contact_form($event);
-
         $output .= '</div>';
 
         return $output;
@@ -318,27 +315,6 @@ class ACSAGMA_Template {
             esc_attr($event['title']),
             esc_url($event['image'])
         );
-    }
-
-    /**
-     * Render contact form shortcode if available
-     */
-    private static function render_contact_form(array $event): string {
-        if (!shortcode_exists('ACScontactform')) {
-            return '';
-        }
-
-        $shortcode = sprintf(
-            '[ACScontactform dates="%s" subject="%s" price="%s" account="%s" candopartial="%s" redirect="%s"]',
-            esc_attr(implode(',', $event['dates'])),
-            esc_attr($event['title']),
-            esc_attr($event['price']),
-            esc_attr($event['account']),
-            esc_attr($event['candopartial']),
-            esc_attr($event['redirect'])
-        );
-
-        return do_shortcode($shortcode);
     }
 
     /**

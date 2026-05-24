@@ -135,10 +135,6 @@ Override default styles by adding custom CSS to your theme:
 
 Copy `themefiles/page-agenda.php` to your theme directory to customize the agenda page template.
 
-## Integration with ACScontactform
-
-This plugin integrates with the [ACScontactform](https://github.com/Esysc) plugin to provide event registration forms. When ACScontactform is active, a shortcode button appears in the event list for easy form generation.
-
 ## Contributing
 
 Contributions are welcome! Please:

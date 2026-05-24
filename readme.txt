@@ -43,10 +43,6 @@ Display the agenda on any page or post using the shortcode:
 
 The plugin automatically creates an "Agenda" page upon activation with the shortcode included.
 
-= Integration =
-
-This plugin integrates with the ACScontactform plugin to provide event registration forms.
-
 == External Services ==
 
 This plugin uses external services as follows:
