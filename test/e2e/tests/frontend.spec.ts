@@ -249,6 +249,11 @@ test.describe('Frontend Agenda Display', () => {
 
     await eventCard.locator('.readmore.show').first().click();
     await expect(page.locator('#dialog.shown')).toBeVisible({ timeout: 10000 });
+
+    // Verify close button (X) closes the dialog.
+    await page.locator('#dialog #close').click();
+    await expect(page.locator('#dialog.shown')).toHaveCount(0);
+    await expect(page.locator('#dialog')).toBeHidden();
   });
 
   test('should hide Read more when there is no additional content', async ({ page }) => {
