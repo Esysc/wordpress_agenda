@@ -1,0 +1,25 @@
+{
+  "$schema": "https://playground.wordpress.net/blueprint-schema.json",
+  "landingPage": "/agenda/",
+  "preferredVersions": {
+    "php": "8.3",
+    "wp": "latest"
+  },
+  "phpExtensionBundles": [
+    "kitchen-sink"
+  ],
+  "steps": [
+    {
+      "step": "activatePlugin",
+      "pluginName": "ACS Agenda Manager",
+      "pluginPath": "acs-agenda-manager/acs-agenda-manager.php"
+    },
+    {
+      "step": "login"
+    },
+    {
+      "step": "runPHP",
+      "code": "<?php require_once '/wordpress/wp-load.php'; if (class_exists('ACSAGMA_Database')) { $count = (int) ACSAGMA_Database::count_events(); if ($count === 0) { $d1 = gmdate('d/m/y', strtotime('+5 days')); ACSAGMA_Database::insert_event(['categorie' => 'Workshop', 'title' => 'Yoga Basics', 'emplacement' => 'Community Center', 'intro' => 'Introduction class for all levels.', 'date' => $d1, 'price' => 'CHF 20.-', 'image' => '', 'link' => '', 'account' => 1, 'candopartial' => 0]); $count = 1; } if ($count === 1) { $d2 = gmdate('d/m/y', strtotime('+12 days')); ACSAGMA_Database::insert_event(['categorie' => 'Course', 'title' => 'Mindfulness Practice', 'emplacement' => 'Studio Room B', 'intro' => 'Weekly guided session focused on breathing and relaxation.', 'date' => $d2, 'price' => 'CHF 35.-', 'image' => '', 'link' => '', 'account' => 1, 'candopartial' => 1]); } }"
+    }
+  ]
+}
