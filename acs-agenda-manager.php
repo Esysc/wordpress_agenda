@@ -473,7 +473,7 @@ final class ACSAGMA_Agenda_Manager {
             return false;
         }
 
-        if (!preg_match('/^(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+(?:[A-Z]{2,63}|XN--[A-Z0-9-]{2,59})$/i', $domain)) {
+        if (!preg_match('/^(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+(?:[A-Z]{2,63}|XN--(?:[A-Z0-9]|[A-Z0-9][A-Z0-9-]{0,57}[A-Z0-9]))$/i', $domain)) {
             return false;
         }
 

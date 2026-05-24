@@ -95,7 +95,7 @@ Yes, you can override the CSS in your theme or copy the template file to your th
 == Changelog ==
 
 = 3.6.0 =
-* Added dedicated Contact button and split dialog modes so Read More shows preview content while Contact shows only the contact form
+* Added dedicated Contact button and split dialog modes so Read More shows linked page preview content while Contact shows event intro plus the contact form (without linked page preview)
 * Improved contact-form UX and styling, including clearer field states for validation feedback
 * Strengthened contact email validation in frontend and backend (rejects invalid one-letter TLD addresses)
 * Added and updated E2E coverage for contact mode behavior, validation messages, and settings persistence
@@ -103,7 +103,6 @@ Yes, you can override the CSS in your theme or copy the template file to your th
 
 = 3.5.2 =
 * Removed obsolete ACScontactform integration references from the plugin codebase, documentation, and tests
-* Added native contact form in Read More dialog with configurable recipient, subject, and optional phone field
 
 = 3.5.1 =
 * Fixed intermittent E2E/global-setup login reliability in CI after fresh environment restarts
