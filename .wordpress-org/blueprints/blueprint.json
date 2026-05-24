@@ -10,11 +10,6 @@
   ],
   "steps": [
     {
-      "step": "activatePlugin",
-      "pluginName": "ACS Agenda Manager",
-      "pluginPath": "acs-agenda-manager/acs-agenda-manager.php"
-    },
-    {
       "step": "login"
     },
     {
