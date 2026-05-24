@@ -8,9 +8,6 @@
   "phpExtensionBundles": [
     "kitchen-sink"
   ],
-  "features": {
-    "networking": true
-  },
   "steps": [
     {
       "step": "activatePlugin",
@@ -19,14 +16,6 @@
     },
     {
       "step": "login"
-    },
-    {
-      "step": "runPHP",
-      "code": "<?php require_once '/wordpress/wp-load.php'; if (class_exists('ACSAGMA_Database')) { ACSAGMA_Database::create_table(); }"
-    },
-    {
-      "step": "runPHP",
-      "code": "<?php require_once '/wordpress/wp-load.php'; if (!get_page_by_path('agenda', OBJECT, 'page')) { wp_insert_post(['post_title' => 'Agenda', 'post_name' => 'agenda', 'post_status' => 'publish', 'post_type' => 'page', 'post_content' => '[acsagma_agenda]', 'comment_status' => 'closed', 'ping_status' => 'closed']); } update_option('acsagma_page', 'Agenda');"
     },
     {
       "step": "runPHP",
