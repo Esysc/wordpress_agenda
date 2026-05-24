@@ -18,18 +18,23 @@ class ACSAGMA_Template {
     public static function get_allowed_read_more_html(): array {
         $allowed = wp_kses_allowed_html('post');
 
-        $allowed['form'] = [
+        $extend_allowed_attributes = static function (string $tag, array $attributes) use (&$allowed): void {
+            $existing = (isset($allowed[$tag]) && is_array($allowed[$tag])) ? $allowed[$tag] : [];
+            $allowed[$tag] = array_merge($existing, $attributes);
+        };
+
+        $extend_allowed_attributes('form', [
             'action' => true,
             'method' => true,
             'class' => true,
             'id' => true,
             'novalidate' => true,
-        ];
-        $allowed['label'] = [
+        ]);
+        $extend_allowed_attributes('label', [
             'for' => true,
             'class' => true,
-        ];
-        $allowed['input'] = [
+        ]);
+        $extend_allowed_attributes('input', [
             'type' => true,
             'name' => true,
             'value' => true,
@@ -39,40 +44,42 @@ class ACSAGMA_Template {
             'autocomplete' => true,
             'tabindex' => true,
             'aria-hidden' => true,
-        ];
-        $allowed['textarea'] = [
+        ]);
+        $extend_allowed_attributes('textarea', [
             'name' => true,
             'class' => true,
             'id' => true,
             'required' => true,
             'rows' => true,
-        ];
-        $allowed['button'] = [
+        ]);
+        $extend_allowed_attributes('button', [
             'type' => true,
             'class' => true,
             'id' => true,
             'aria-label' => true,
             'aria-busy' => true,
-        ];
-        $allowed['small'] = [
+        ]);
+        $extend_allowed_attributes('small', [
             'class' => true,
-        ];
-        $allowed['output'] = [
+        ]);
+        $extend_allowed_attributes('output', [
             'class' => true,
             'aria-live' => true,
-        ];
-        $allowed['div'] = [
+        ]);
+        $extend_allowed_attributes('div', [
             'class' => true,
             'id' => true,
             'role' => true,
+            'aria-modal' => true,
+            'aria-labelledby' => true,
             'aria-live' => true,
             'aria-hidden' => true,
-        ];
-        $allowed['span'] = [
+        ]);
+        $extend_allowed_attributes('span', [
             'class' => true,
             'aria-hidden' => true,
             'focusable' => true,
-        ];
+        ]);
 
         return $allowed;
     }

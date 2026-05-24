@@ -1168,6 +1168,9 @@ msgstr "メールアドレス"
 msgid "Phone"
 msgstr "電話番号"
 
+msgid "Message"
+msgstr "メッセージ"
+
 msgid "Dates"
 msgstr "日程"
 
@@ -1210,8 +1213,8 @@ msgstr "電話番号フィールドを表示"
 msgid "Allow visitors to include a phone number (optional)"
 msgstr "訪問者が電話番号を入力できるようにする（任意）"
 
-msgid "The Read More dialog includes a built-in contact form so visitors can send questions about a specific event."
-msgstr "「続きを読む」ダイアログには、特定イベントについて質問を送信できる組み込みお問い合わせフォームが含まれます。"
+msgid "Visitors can use the Contact action in the event details dialog to send questions about a specific event."
+msgstr "訪問者はイベント詳細ダイアログの「Contact」アクションを使って、特定のイベントに関する質問を送信できます。"
 
 msgid "What gets sent"
 msgstr "送信される内容"

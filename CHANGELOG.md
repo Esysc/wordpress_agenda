@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- **Native contact form**: Added a built-in contact form inside the Read More dialog with AJAX submission and anti-spam honeypot
+- **Native contact form**: Added a built-in contact form in the event details dialog via the dedicated Contact action, with AJAX submission and anti-spam honeypot
 - **Contact form settings**: Added recipient email, subject prefix, subject date toggle, optional phone field, and enable/disable switch in Settings
 - **Documentation and tests**: Updated help/settings docs and added E2E coverage for contact-form visibility and settings persistence
 

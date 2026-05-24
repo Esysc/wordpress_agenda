@@ -183,7 +183,7 @@ $acsagma_agenda_page = get_option('acsagma_page', 'Agenda');
             <!-- Contact Form -->
             <section id="contact-form" class="acs-help-section">
                 <h2><?php esc_html_e('Contact Form', 'acs-agenda-manager'); ?></h2>
-                <p><?php esc_html_e('The Read More dialog includes a built-in contact form so visitors can send questions about a specific event.', 'acs-agenda-manager'); ?></p>
+                <p><?php esc_html_e('Visitors can use the Contact action in the event details dialog to send questions about a specific event.', 'acs-agenda-manager'); ?></p>
 
                 <h3><?php esc_html_e('What gets sent', 'acs-agenda-manager'); ?></h3>
                 <ul>

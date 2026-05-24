@@ -1189,6 +1189,9 @@ msgstr "Email"
 msgid "Phone"
 msgstr "Telefono"
 
+msgid "Message"
+msgstr "Messaggio"
+
 msgid "Dates"
 msgstr "Date"
 
@@ -1231,8 +1234,8 @@ msgstr "Mostra campo telefono"
 msgid "Allow visitors to include a phone number (optional)"
 msgstr "Consenti ai visitatori di includere un numero di telefono (opzionale)"
 
-msgid "The Read More dialog includes a built-in contact form so visitors can send questions about a specific event."
-msgstr "La finestra Leggi di piu include un modulo di contatto integrato per consentire ai visitatori di inviare domande su un evento specifico."
+msgid "Visitors can use the Contact action in the event details dialog to send questions about a specific event."
+msgstr "I visitatori possono usare l'azione Contatto nella finestra dei dettagli evento per inviare domande su un evento specifico."
 
 msgid "What gets sent"
 msgstr "Dati inviati"

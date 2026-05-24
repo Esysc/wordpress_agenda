@@ -1120,6 +1120,10 @@ msgstr ""
 msgid "Phone"
 msgstr ""
 
+#: acs-agenda-manager.php:401 class/class-acs-template.php:468
+msgid "Message"
+msgstr ""
+
 #: acs-agenda-manager.php:406
 msgid "Dates"
 msgstr ""
@@ -1177,7 +1181,7 @@ msgid "Allow visitors to include a phone number (optional)"
 msgstr ""
 
 #: templates/help-page.php:184
-msgid "The Read More dialog includes a built-in contact form so visitors can send questions about a specific event."
+msgid "Visitors can use the Contact action in the event details dialog to send questions about a specific event."
 msgstr ""
 
 #: class/class-acs-help.php:95 templates/help-page.php:183

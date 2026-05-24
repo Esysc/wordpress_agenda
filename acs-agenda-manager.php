@@ -95,6 +95,8 @@ final class ACSAGMA_Agenda_Manager {
             return;
         }
 
+        $contact_form_enabled = (bool) get_option('acsagma_contact_form_enabled', true);
+
         // Common styles (variables, buttons, spinner)
         wp_enqueue_style(
             'acs-agenda-common',
@@ -130,7 +132,8 @@ final class ACSAGMA_Agenda_Manager {
         wp_localize_script('acs-agenda-frontend', 'acsagmaAgenda', [
             'ajaxUrl' => admin_url('admin-ajax.php'),
             'nonce' => wp_create_nonce('acsagma_agenda_nonce'),
-            'contactFormNonce' => wp_create_nonce('acsagma_contact_form_nonce'),
+            'contactFormNonce' => $contact_form_enabled ? wp_create_nonce('acsagma_contact_form_nonce') : '',
+            'contactFormEnabled' => $contact_form_enabled,
             'fallbackImage' => ACSAGMA_AGENDA_PLUGIN_URL . 'css/images/Accept-icon.png',
             'i18n' => [
                 'readMoreError' => __('Unable to load details. Please try again.', 'acs-agenda-manager'),
@@ -141,15 +144,15 @@ final class ACSAGMA_Agenda_Manager {
                 'compactOff' => __('Compact mode off', 'acs-agenda-manager'),
                 'prev' => __('Previous', 'acs-agenda-manager'),
                 'next' => __('Next', 'acs-agenda-manager'),
-                'contactFormSuccess' => __('Thanks! Your message has been sent.', 'acs-agenda-manager'),
-                'contactFormError' => __('Unable to send your message. Please try again.', 'acs-agenda-manager'),
-                'contactFormSending' => __('Sending...', 'acs-agenda-manager'),
-                'contactFormRequired' => __('Please fill in all required fields.', 'acs-agenda-manager'),
-                'contactFormNameRequired' => __('Please enter your name.', 'acs-agenda-manager'),
-                'contactFormEmailRequired' => __('Please enter your email address.', 'acs-agenda-manager'),
-                'contactFormInvalidEmail' => __('Please enter a valid email address.', 'acs-agenda-manager'),
-                'contactFormMessageRequired' => __('Please enter your message.', 'acs-agenda-manager'),
-                'contactFormSubmitLabel' => __('Send message', 'acs-agenda-manager'),
+                'contactFormSuccess' => $contact_form_enabled ? __('Thanks! Your message has been sent.', 'acs-agenda-manager') : '',
+                'contactFormError' => $contact_form_enabled ? __('Unable to send your message. Please try again.', 'acs-agenda-manager') : '',
+                'contactFormSending' => $contact_form_enabled ? __('Sending...', 'acs-agenda-manager') : '',
+                'contactFormRequired' => $contact_form_enabled ? __('Please fill in all required fields.', 'acs-agenda-manager') : '',
+                'contactFormNameRequired' => $contact_form_enabled ? __('Please enter your name.', 'acs-agenda-manager') : '',
+                'contactFormEmailRequired' => $contact_form_enabled ? __('Please enter your email address.', 'acs-agenda-manager') : '',
+                'contactFormInvalidEmail' => $contact_form_enabled ? __('Please enter a valid email address.', 'acs-agenda-manager') : '',
+                'contactFormMessageRequired' => $contact_form_enabled ? __('Please enter your message.', 'acs-agenda-manager') : '',
+                'contactFormSubmitLabel' => $contact_form_enabled ? __('Send message', 'acs-agenda-manager') : '',
             ],
         ]);
     }
@@ -346,6 +349,11 @@ final class ACSAGMA_Agenda_Manager {
      */
     public function ajax_contact_form_submit(): void {
         check_ajax_referer('acsagma_contact_form_nonce', 'nonce', true);
+
+        $contact_form_enabled = (bool) get_option('acsagma_contact_form_enabled', true);
+        if (!$contact_form_enabled) {
+            wp_send_json_error(['message' => __('Unable to send your message. Please try again.', 'acs-agenda-manager')]);
+        }
 
         $honeypot = isset($_POST['acsagma_contact_company']) ? sanitize_text_field(wp_unslash($_POST['acsagma_contact_company'])) : '';
         if ($honeypot !== '') {

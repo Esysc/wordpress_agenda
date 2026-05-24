@@ -26,7 +26,7 @@ ACS Agenda Manager provides an easy way to create and manage an event agenda on 
 * Modern responsive design: CSS Grid layout with glass-morphism effects
 * Easy administration: Intuitive admin interface with card-based form sections
 * Real-time validation: In-dialog error messages and success notifications
-* Native contact form: Built-in organizer contact form inside the Read More dialog
+* Native contact form: Built-in organizer contact form available via the dedicated Contact action
 
 = Supported Languages =
 
