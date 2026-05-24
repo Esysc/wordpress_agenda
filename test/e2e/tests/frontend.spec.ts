@@ -207,7 +207,7 @@ test.describe('Frontend Agenda Display', () => {
     await page.goto(agendaUrl, { waitUntil: 'networkidle' });
     await filterByTitle(page, eventTitle);
 
-    const eventCard = page.locator('.column-center').filter({ hasText: eventTitle }).first();
+    const eventCard = page.locator('#acs-agenda-list .acsagenda').filter({ hasText: eventTitle }).first();
     const image = eventCard.locator('.image-agenda').first();
 
     await expect(image).toBeVisible({ timeout: 30000 });
@@ -228,11 +228,10 @@ test.describe('Frontend Agenda Display', () => {
 
     await image.click();
     await expect(lightbox).toHaveClass(/active/);
-    await page.mouse.click(8, 8);
+    await lightbox.click({ position: { x: 8, y: 8 } });
     await expect(lightbox).not.toHaveClass(/active/);
 
-    await image.focus();
-    await page.keyboard.press('Enter');
+    await image.press('Enter');
     await expect(lightbox).toHaveClass(/active/);
 
     await page.keyboard.press('Escape');
