@@ -94,6 +94,10 @@ Yes, you can override the CSS in your theme or copy the template file to your th
 
 == Changelog ==
 
+= 3.6.1 =
+* Bumped "Tested up to" from 7.0 to 7.1 for WordPress 7.1 compatibility
+* Updated test environment to WordPress 7.1
+
 = 3.6.0 =
 * Added dedicated Contact button and split dialog modes so Read More shows linked page preview content while Contact shows event intro plus the contact form (without linked page preview)
 * Improved contact-form UX and styling, including clearer field states for validation feedback
