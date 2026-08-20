@@ -8,6 +8,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.6.1] - 2026-08-20
+
+### Changed
+
+- **WordPress 7.1 compatibility**: Bumped "Tested up to" from 7.0 to 7.1 in readme.txt and updated the test environment to WordPress 7.1 (Docker image and documentation)
+
 ## [3.6.0] - 2026-05-24
 
 ### Added

@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: ACS Agenda Manager 3.6.0\n"
+"Project-Id-Version: ACS Agenda Manager 3.6.1\n"
 "Report-Msgid-Bugs-To: https://github.com/Esysc/wordpress_agenda/issues\n"
 "POT-Creation-Date: 2026-05-24 18:01+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
