@@ -66,7 +66,7 @@ docker compose down --remove-orphans 2>/dev/null || true
 
 # Start fresh
 echo "🚀 Starting WordPress environment..."
-docker compose up -d wordpress db phpmyadmin
+docker compose up -d --build wordpress db phpmyadmin
 
 # Wait for WordPress to be healthy
 echo "⏳ Waiting for WordPress to be ready (this may take a minute)..."

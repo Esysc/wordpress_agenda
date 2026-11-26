@@ -3,8 +3,8 @@ Contributors: masteracs
 Donate link: https://www.paypal.com/donate?business=KG9SDHM7VUP6Y&currency_code=CHF
 Tags: agenda, events, calendar, schedule, workshop
 Requires at least: 6.2
-Tested up to: 7.1
-Stable tag: 3.6.1
+Tested up to: 7.2
+Stable tag: 3.6.2
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -93,6 +93,10 @@ Yes, you can override the CSS in your theme or copy the template file to your th
 5. Plugin settings and configuration options
 
 == Changelog ==
+
+= 3.6.2 =
+* Bumped "Tested up to" from 7.1 to 7.2 for WordPress 7.2 compatibility
+* Updated test environment to WordPress 7.2 RC1
 
 = 3.6.1 =
 * Bumped "Tested up to" from 7.0 to 7.1 for WordPress 7.1 compatibility
