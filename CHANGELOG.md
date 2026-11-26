@@ -8,6 +8,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.6.2] - 2026-11-26
+
+### Changed
+
+- **WordPress 7.2 compatibility**: Bumped "Tested up to" from 7.1 to 7.2 in readme.txt and updated the test environment to WordPress 7.2 RC1 (custom Docker image build and documentation)
+- **Test dependencies**: Updated the transitive `diff` dependency to 4.0.4 to clear a low-severity jsdiff advisory; confirmed the jQuery 3.7.1, jQuery Migrate 3.6.0 and jQuery UI 1.14.2 libraries bundled with WordPress 7.2 have no known advisories
+
 ## [3.6.1] - 2026-08-20
 
 ### Changed

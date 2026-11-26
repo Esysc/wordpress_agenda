@@ -16,6 +16,20 @@ This directory contains a Docker-based testing environment for the ACS Agenda Ma
 ./stop.sh
 ```
 
+## WordPress / PHP versions
+
+The `wordpress` service is built from `Dockerfile` because there is no official WordPress 7.2 image yet. It defaults to WordPress 7.2 RC1 with PHP 8.3. Override either version when starting the stack:
+
+```bash
+# Check PHP 8.6 compatibility announced for WordPress 7.2
+PHP_VERSION=8.6 ./start.sh
+
+# Test against the final 7.2 release once it is published
+WP_VERSION=7.2 ./start.sh
+```
+
+Run `./clean.sh` before switching versions so the persisted `wordpress_data` volume does not keep the previous WordPress core files.
+
 ## URLs
 
 | Service      | URL                              | Credentials       |
@@ -36,8 +50,8 @@ This directory contains a Docker-based testing environment for the ACS Agenda Ma
 
 ## What Gets Set Up Automatically
 
-1. WordPress 7.1 with PHP 8.3
-2. MariaDB 12.2 database
+1. WordPress 7.2 RC1 with PHP 8.3 (built from `Dockerfile`; override with `WP_VERSION` / `PHP_VERSION`)
+2. MariaDB 13.0 database
 3. WordPress configured and installed
 4. ACS Agenda Manager plugin activated
 5. Sample test events created

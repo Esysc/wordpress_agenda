@@ -1,6 +1,11 @@
 services:
   wordpress:
-    image: wordpress:7.1-php8.3-apache
+    build:
+      context: .
+      args:
+        WP_VERSION: ${WP_VERSION:-7.2-RC1}
+        PHP_VERSION: ${PHP_VERSION:-8.3}
+    image: acs-agenda-wordpress-test:latest
     container_name: acs_agenda_wordpress
     restart: unless-stopped
     ports:
