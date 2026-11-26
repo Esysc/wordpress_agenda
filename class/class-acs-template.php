@@ -351,9 +351,18 @@ class ACSAGMA_Template {
             );
         }
 
+        $redirect_html = '';
+        if (!empty($event['redirect'])) {
+            $redirect_html = sprintf(
+                '<a href="%s" target="_blank" rel="noopener noreferrer" class="acs-external-link">%s <span class="dashicons dashicons-external" aria-hidden="true" focusable="false"></span></a>',
+                esc_url((string) $event['redirect']),
+                esc_html__('External link', 'acs-agenda-manager')
+            );
+        }
+
         $actions_html = '';
-        if ($read_more_html !== '' || $contact_html !== '') {
-            $actions_html = '<div class="acs-event-actions">' . $read_more_html . $contact_html . '</div>';
+        if ($read_more_html !== '' || $contact_html !== '' || $redirect_html !== '') {
+            $actions_html = '<div class="acs-event-actions">' . $read_more_html . $contact_html . $redirect_html . '</div>';
         }
 
         return sprintf(

@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: ACS Agenda Manager 3.6.2\n"
+"Project-Id-Version: ACS Agenda Manager 3.6.3\n"
 "Report-Msgid-Bugs-To: https://github.com/Esysc/wordpress_agenda/issues\n"
 "POT-Creation-Date: 2026-05-24 18:01+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
@@ -439,6 +439,10 @@ msgstr ""
 msgid "External URL"
 msgstr ""
 
+#: class/class-acs-template.php:359
+msgid "External link"
+msgstr ""
+
 #: templates/admin-page.php:296
 msgid "External registration link"
 msgstr ""
@@ -585,7 +589,7 @@ msgid "Internal or external link to the full event page."
 msgstr ""
 
 #: acs-agenda-manager.php:273
-msgid "Invalid date format. Use dd/mm/yy"
+msgid "Invalid date format. Use dd/mm/yy or dd/mm/yyyy"
 msgstr ""
 
 #: class/class-acs-admin.php:386

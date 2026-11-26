@@ -3,7 +3,7 @@
  * Plugin Name: ACS Agenda Manager
  * Plugin URI: https://github.com/Esysc/wordpress_agenda
  * Description: A WordPress plugin for managing and displaying event agendas. Perfect for workshops, courses, and event organizers.
- * Version: 3.6.2
+ * Version: 3.6.3
  * Requires at least: 6.2
  * Requires PHP: 7.4
  * Author: Andrea Cristalli
@@ -19,7 +19,7 @@
 defined('ABSPATH') || exit;
 
 // Plugin constants
-define('ACSAGMA_AGENDA_VERSION', '3.6.2');
+define('ACSAGMA_AGENDA_VERSION', '3.6.3');
 define('ACSAGMA_AGENDA_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('ACSAGMA_AGENDA_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('ACSAGMA_AGENDA_TABLE_NAME', 'acs_agenda_manager');
@@ -76,6 +76,7 @@ final class ACSAGMA_Agenda_Manager {
         add_action('wp_enqueue_scripts', [$this, 'enqueue_frontend_assets']);
         add_action('admin_enqueue_scripts', [$this, 'enqueue_admin_assets']);
         add_action('plugins_loaded', [$this, 'check_version']);
+        add_action('upgrader_process_complete', [$this, 'refresh_translations_on_update'], 10, 2);
 
         // AJAX handlers
         add_action('wp_ajax_acsagma_read_more', [$this, 'ajax_read_more']);
@@ -270,7 +271,7 @@ final class ACSAGMA_Agenda_Manager {
             'calendar' => __('Calendar', 'acs-agenda-manager'),
             'copied' => __('Copied', 'acs-agenda-manager'),
             'fieldEmpty' => __('The field is empty', 'acs-agenda-manager'),
-            'invalidDate' => __('Invalid date format. Use dd/mm/yy', 'acs-agenda-manager'),
+            'invalidDate' => __('Invalid date format. Use dd/mm/yy or dd/mm/yyyy', 'acs-agenda-manager'),
             'pastDateUnavailable' => __('Past date unavailable', 'acs-agenda-manager'),
             'noDatesSelected' => __('No dates selected yet', 'acs-agenda-manager'),
             'removeDate' => __('Remove date', 'acs-agenda-manager'),
@@ -294,6 +295,32 @@ final class ACSAGMA_Agenda_Manager {
         if (version_compare($installed_version, ACSAGMA_AGENDA_VERSION, '<')) {
             ACSAGMA_Database::update_schema();
             update_option('acsagma_agenda_manager_plugin_version', ACSAGMA_AGENDA_VERSION);
+        }
+    }
+
+    /**
+     * Refresh bundled .mo files when the plugin is updated.
+     *
+     * Activation only runs once, so without this hook sites would keep using
+     * stale translations after an upgrade.
+     *
+     * @param mixed $upgrader   Upgrader instance (unused).
+     * @param array $hook_extra Details about the upgrade.
+     */
+    public function refresh_translations_on_update($upgrader, array $hook_extra): void {
+        if (
+            !isset($hook_extra['type'], $hook_extra['action'])
+            || $hook_extra['type'] !== 'plugin'
+            || $hook_extra['action'] !== 'update'
+        ) {
+            return;
+        }
+
+        $this_plugin = plugin_basename(__FILE__);
+        $plugins = isset($hook_extra['plugins']) ? (array) $hook_extra['plugins'] : [];
+
+        if (in_array($this_plugin, $plugins, true) || (isset($hook_extra['plugin']) && $hook_extra['plugin'] === $this_plugin)) {
+            self::install_translations();
         }
     }
 
@@ -327,6 +354,24 @@ final class ACSAGMA_Agenda_Manager {
         if ($post_id > 0) {
             $post = get_post($post_id);
             if (!$post) {
+                wp_send_json_error(__('Post not found', 'acs-agenda-manager'));
+            }
+
+            // The AJAX nonce is public on the frontend, so this endpoint must
+            // only ever render publicly viewable content. Do not make an
+            // exception for logged-in users: the admin already exposes drafts
+            // through proper capability-checked screens.
+            $post_type = get_post_type_object($post->post_type);
+            $status_object = get_post_status_object($post->post_status);
+            $is_public = $post->post_status === 'publish'
+                || ($status_object && ($status_object->public || $status_object->publicly_queryable));
+
+            if (
+                !$post_type
+                || !is_post_type_viewable($post_type)
+                || !$is_public
+                || post_password_required($post)
+            ) {
                 wp_send_json_error(__('Post not found', 'acs-agenda-manager'));
             }
         }

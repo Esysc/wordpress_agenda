@@ -8,6 +8,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.6.3] - 2026-11-26
+
+### Added
+
+- **External registration link**: The External URL field now renders as a frontend action link alongside Read More and Contact actions
+
+### Fixed
+
+- **Read-more access control**: The public AJAX endpoint no longer exposes draft, private or password-protected post content; published posts remain readable by anonymous visitors
+- **Edit form values**: Reopening an event now preserves Advance Payment and Partial Attendance values instead of silently resetting them to "No"
+- **Date validation**: Impossible calendar dates and malformed date tokens are rejected with a clear error that mentions both accepted formats instead of being silently dropped or normalized
+- **Google Places initialization**: Autocomplete setup now gives up after a limited number of retries when the Maps API is blocked or misconfigured
+
+### Changed
+
+- **Translations**: Bundled `.mo` files are refreshed automatically after plugin updates instead of only on activation
+- **Uninstall cleanup**: Removed contact-form options and replaced the deprecated page lookup with a supported `WP_Query` using explicit post statuses
+
 ## [3.6.2] - 2026-11-26
 
 ### Changed

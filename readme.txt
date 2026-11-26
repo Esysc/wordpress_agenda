@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/donate?business=KG9SDHM7VUP6Y&currency_code=
 Tags: agenda, events, calendar, schedule, workshop
 Requires at least: 6.2
 Tested up to: 7.2
-Stable tag: 3.6.2
+Stable tag: 3.6.3
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -93,6 +93,14 @@ Yes, you can override the CSS in your theme or copy the template file to your th
 5. Plugin settings and configuration options
 
 == Changelog ==
+
+= 3.6.3 =
+* Fixed a read-more access-control issue that could expose draft, private or password-protected post content through the public AJAX endpoint
+* Fixed editing events silently resetting Advance Payment and Partial Attendance values to "No"
+* Fixed invalid and impossible dates being silently dropped; submissions now report a clear validation error mentioning both accepted date formats
+* Rendered the External URL field as a frontend action link
+* Capped Google Places initialization retries when the Maps API is unavailable
+* Refreshed bundled translations after plugin updates and cleaned up contact-form options on uninstall
 
 = 3.6.2 =
 * Bumped "Tested up to" from 7.1 to 7.2 for WordPress 7.2 compatibility

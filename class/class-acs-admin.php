@@ -77,12 +77,14 @@ class ACSAGMA_Agenda_List_Table extends WP_List_Table {
 
         switch ($column_name) {
             case 'candopartial':
-                $value = isset($partial_options[$item[$column_name]]) ? $partial_options[$item[$column_name]] : '';
-                return sprintf('<span class="%s" %s>%s</span>', esc_attr($item_class), $name_attr, esc_html($value));
+                $raw_value = (string) ($item[$column_name] ?? '');
+                $value = isset($partial_options[$raw_value]) ? $partial_options[$raw_value] : '';
+                return sprintf('<span class="%s" %s data-value="%s">%s</span>', esc_attr($item_class), $name_attr, esc_attr($raw_value), esc_html($value));
 
             case 'account':
-                $value = isset($yes_no[$item[$column_name]]) ? $yes_no[$item[$column_name]] : '';
-                return sprintf('<span class="%s" %s>%s</span>', esc_attr($item_class), $name_attr, esc_html($value));
+                $raw_value = (string) ($item[$column_name] ?? '');
+                $value = isset($yes_no[$raw_value]) ? $yes_no[$raw_value] : '';
+                return sprintf('<span class="%s" %s data-value="%s">%s</span>', esc_attr($item_class), $name_attr, esc_attr($raw_value), esc_html($value));
 
             case 'intro':
                 return sprintf(
@@ -438,41 +440,39 @@ class ACSAGMA_Admin {
             return esc_html__('Title is required', 'acs-agenda-manager');
         }
 
-        // Validate and sanitize date field.
+        // Validate and sanitize date field. Invalid tokens are rejected instead
+        // of being silently discarded, so the user never loses a date unnoticed.
         if (!empty($data['date'])) {
             $dates = array_map('trim', explode(',', $data['date']));
             $valid_dates = [];
 
             foreach ($dates as $date_str) {
-                if (empty($date_str)) {
+                if ($date_str === '') {
                     continue;
                 }
 
                 // Check format: dd/mm/yy or dd/mm/yyyy.
                 if (!preg_match('/^(\d{1,2})\/(\d{1,2})\/(\d{2,4})$/', $date_str, $matches)) {
-                    continue; // Skip invalid format.
+                    return esc_html__('Invalid date format. Use dd/mm/yy or dd/mm/yyyy', 'acs-agenda-manager');
                 }
 
                 $day = (int) $matches[1];
                 $month = (int) $matches[2];
                 $year = (int) $matches[3];
+                $full_year = $year < 100 ? 2000 + $year : $year;
 
-                // Validate ranges.
-                if ($month < 1 || $month > 12 || $day < 1 || $day > 31) {
-                    continue; // Skip invalid date.
+                // Reject impossible calendar dates such as 31/02/26.
+                if (!checkdate($month, $day, $full_year)) {
+                    return esc_html__('Invalid date format. Use dd/mm/yy or dd/mm/yyyy', 'acs-agenda-manager');
                 }
 
-                // Normalize year to 2-digit.
-                if ($year >= 2000) {
-                    $year -= 2000;
-                }
+                // Store 2000s years as two digits, leave other years untouched.
+                $stored_year = ($full_year >= 2000 && $full_year < 2100) ? $full_year - 2000 : $full_year;
 
-                // Format consistently.
-                $valid_dates[] = sprintf('%02d/%02d/%02d', $day, $month, $year);
+                $valid_dates[] = sprintf('%02d/%02d/%02d', $day, $month, $stored_year);
             }
 
-            // Update data with only valid dates.
-            $data['date'] = implode(', ', $valid_dates);
+            $data['date'] = implode(', ', array_unique($valid_dates));
         }
 
         return null;
