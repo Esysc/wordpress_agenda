@@ -589,7 +589,7 @@ msgid "Internal or external link to the full event page."
 msgstr ""
 
 #: acs-agenda-manager.php:273
-msgid "Invalid date format. Use dd/mm/yy"
+msgid "Invalid date format. Use dd/mm/yy or dd/mm/yyyy"
 msgstr ""
 
 #: class/class-acs-admin.php:386

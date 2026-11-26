@@ -271,7 +271,7 @@ final class ACSAGMA_Agenda_Manager {
             'calendar' => __('Calendar', 'acs-agenda-manager'),
             'copied' => __('Copied', 'acs-agenda-manager'),
             'fieldEmpty' => __('The field is empty', 'acs-agenda-manager'),
-            'invalidDate' => __('Invalid date format. Use dd/mm/yy', 'acs-agenda-manager'),
+            'invalidDate' => __('Invalid date format. Use dd/mm/yy or dd/mm/yyyy', 'acs-agenda-manager'),
             'pastDateUnavailable' => __('Past date unavailable', 'acs-agenda-manager'),
             'noDatesSelected' => __('No dates selected yet', 'acs-agenda-manager'),
             'removeDate' => __('Remove date', 'acs-agenda-manager'),

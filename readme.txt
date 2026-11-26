@@ -97,7 +97,7 @@ Yes, you can override the CSS in your theme or copy the template file to your th
 = 3.6.3 =
 * Fixed a read-more access-control issue that could expose draft, private or password-protected post content through the public AJAX endpoint
 * Fixed editing events silently resetting Advance Payment and Partial Attendance values to "No"
-* Fixed invalid and impossible dates being silently dropped; submissions now report a clear validation error
+* Fixed invalid and impossible dates being silently dropped; submissions now report a clear validation error mentioning both accepted date formats
 * Rendered the External URL field as a frontend action link
 * Capped Google Places initialization retries when the Maps API is unavailable
 * Refreshed bundled translations after plugin updates and cleaned up contact-form options on uninstall

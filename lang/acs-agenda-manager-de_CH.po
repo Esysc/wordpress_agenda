@@ -79,8 +79,8 @@ msgid "The field is empty"
 msgstr "Das Feld ist leer"
 
 #: acs-agenda-manager.php:274
-msgid "Invalid date format. Use dd/mm/yy"
-msgstr "Ungueltiges Datumsformat. Verwenden Sie dd/mm/yy"
+msgid "Invalid date format. Use dd/mm/yy or dd/mm/yyyy"
+msgstr "Ungueltiges Datumsformat. Verwenden Sie dd/mm/yy oder dd/mm/yyyy"
 
 #: acs-agenda-manager.php:275
 msgid "Past date unavailable"

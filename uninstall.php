@@ -58,7 +58,9 @@ function acsagma_uninstall_cleanup() {
         $acsagma_page_query = new WP_Query([
             'post_type' => 'page',
             'title' => $acsagma_page_name,
-            'post_status' => 'all',
+            // WP_Query does not accept "all"; list the statuses explicitly so
+            // a trashed or unpublished Agenda page is still found.
+            'post_status' => ['publish', 'draft', 'pending', 'private', 'trash'],
             'posts_per_page' => 1,
             'no_found_rows' => true,
             'ignore_sticky_posts' => true,

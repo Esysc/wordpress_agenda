@@ -285,7 +285,7 @@
             const normalized = this.normalizeDateList(value);
             if (!normalized.valid) {
                 $input.addClass('error');
-                this.showDateError(acsagmaAgendaAdmin.i18n.invalidDate || 'Invalid date format. Use dd/mm/yy');
+                this.showDateError(acsagmaAgendaAdmin.i18n.invalidDate || 'Invalid date format. Use dd/mm/yy or dd/mm/yyyy');
                 return false;
             }
 

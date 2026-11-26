@@ -78,12 +78,12 @@ class ACSAGMA_Agenda_List_Table extends WP_List_Table {
         switch ($column_name) {
             case 'candopartial':
                 $raw_value = (string) ($item[$column_name] ?? '');
-                $value = isset($partial_options[$item[$column_name]]) ? $partial_options[$item[$column_name]] : '';
+                $value = isset($partial_options[$raw_value]) ? $partial_options[$raw_value] : '';
                 return sprintf('<span class="%s" %s data-value="%s">%s</span>', esc_attr($item_class), $name_attr, esc_attr($raw_value), esc_html($value));
 
             case 'account':
                 $raw_value = (string) ($item[$column_name] ?? '');
-                $value = isset($yes_no[$item[$column_name]]) ? $yes_no[$item[$column_name]] : '';
+                $value = isset($yes_no[$raw_value]) ? $yes_no[$raw_value] : '';
                 return sprintf('<span class="%s" %s data-value="%s">%s</span>', esc_attr($item_class), $name_attr, esc_attr($raw_value), esc_html($value));
 
             case 'intro':
@@ -453,7 +453,7 @@ class ACSAGMA_Admin {
 
                 // Check format: dd/mm/yy or dd/mm/yyyy.
                 if (!preg_match('/^(\d{1,2})\/(\d{1,2})\/(\d{2,4})$/', $date_str, $matches)) {
-                    return esc_html__('Invalid date format. Use dd/mm/yy', 'acs-agenda-manager');
+                    return esc_html__('Invalid date format. Use dd/mm/yy or dd/mm/yyyy', 'acs-agenda-manager');
                 }
 
                 $day = (int) $matches[1];
@@ -463,7 +463,7 @@ class ACSAGMA_Admin {
 
                 // Reject impossible calendar dates such as 31/02/26.
                 if (!checkdate($month, $day, $full_year)) {
-                    return esc_html__('Invalid date format. Use dd/mm/yy', 'acs-agenda-manager');
+                    return esc_html__('Invalid date format. Use dd/mm/yy or dd/mm/yyyy', 'acs-agenda-manager');
                 }
 
                 // Store 2000s years as two digits, leave other years untouched.
