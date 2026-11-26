@@ -242,4 +242,33 @@ test.describe('Form Validation', () => {
     const exists = await agendaPage.eventExists(`Multiline Test ${timestamp}`);
     expect(exists).toBeTruthy();
   });
+
+  test('should reject invalid dates on the server instead of silently dropping them', async ({ page }) => {
+    const title = `Invalid Server Date ${Date.now()}`;
+    const nonce = await page.locator('#acs-event-form input[name="nonce"]').inputValue();
+
+    const response = await page.request.post('/wp-admin/admin-ajax.php', {
+      form: {
+        action: 'acsagma_add_item_agenda',
+        nonce,
+        categorie: 'Test',
+        title,
+        emplacement: '',
+        intro: '',
+        link: '',
+        // Impossible calendar date, malformed token and out-of-range month.
+        date: '31/02/26, garbage, 01/13/26, 15/03/26',
+        price: '',
+        account: '0',
+        candopartial: '0',
+        redirect: '',
+      },
+    });
+
+    const body = await response.json();
+    expect(body.success).toBeFalsy();
+
+    await agendaPage.goto();
+    expect(await agendaPage.eventExists(title, true)).toBeFalsy();
+  });
 });

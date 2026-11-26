@@ -313,4 +313,49 @@ test.describe('Advanced Event Fields', () => {
     const exists = await agendaPage.eventExists(originalTitle);
     expect(exists).toBeTruthy();
   });
+
+  test('should render the external URL as a link on the frontend', async ({ page }) => {
+    const timestamp = Date.now();
+    const title = `External Link ${timestamp}`;
+    const externalUrl = 'https://register.example.com/frontend';
+
+    await agendaPage.clickAddEvent();
+    await agendaPage.fillEventForm({ title, category: 'Test', date: '31/12/30' });
+    await page.fill('#event-redirect', externalUrl);
+    await agendaPage.submitForm();
+    await agendaPage.waitForPageReload();
+
+    await page.goto(`/agenda/?acs_search=${encodeURIComponent(title)}`);
+    const link = page.locator(`.acsagenda:has-text("${title}") .acs-external-link`);
+    await expect(link).toHaveAttribute('href', externalUrl);
+  });
+
+  test('should preserve advanced select values when reopening the edit dialog', async ({ page }) => {
+    const timestamp = Date.now();
+    const title = `Preserve Advanced ${timestamp}`;
+
+    await agendaPage.clickAddEvent();
+    await agendaPage.fillEventForm({ title, category: 'Test', date: '31/12/25' });
+    await page.selectOption('#event-candopartial', '2');
+    await page.selectOption('#event-account', '1');
+    await agendaPage.submitForm();
+    await agendaPage.waitForPageReload();
+
+    await agendaPage.goto();
+    expect(await agendaPage.eventExists(title, true)).toBeTruthy();
+    await agendaPage.editEvent(title);
+    await expect(page.locator('#event-candopartial')).toHaveValue('2');
+    await expect(page.locator('#event-account')).toHaveValue('1');
+
+    // Saving an unrelated change must not reset the advanced fields.
+    await page.fill('#event-price', 'CHF 42.-');
+    await agendaPage.submitForm();
+    await agendaPage.waitForPageReload();
+
+    await agendaPage.goto();
+    expect(await agendaPage.eventExists(title, true)).toBeTruthy();
+    await agendaPage.editEvent(title);
+    await expect(page.locator('#event-candopartial')).toHaveValue('2');
+    await expect(page.locator('#event-account')).toHaveValue('1');
+  });
 });

@@ -53,19 +53,38 @@ function acsagma_uninstall_cleanup() {
         // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
         $wpdb->query("DROP TABLE IF EXISTS `{$acsagma_table_name}`");
 
-        // Remove the Agenda page
+        // Remove the Agenda page without using deprecated get_page_by_path().
         $acsagma_page_name = get_option('acsagma_page', 'Agenda');
-        $acsagma_page = get_page_by_path(sanitize_title($acsagma_page_name));
-        if ($acsagma_page) {
-            wp_delete_post($acsagma_page->ID, true);
+        $acsagma_page_query = new WP_Query([
+            'post_type' => 'page',
+            'title' => $acsagma_page_name,
+            'post_status' => 'all',
+            'posts_per_page' => 1,
+            'no_found_rows' => true,
+            'ignore_sticky_posts' => true,
+        ]);
+
+        if ($acsagma_page_query->have_posts()) {
+            wp_delete_post($acsagma_page_query->posts[0]->ID, true);
         }
     }
 
     // Always remove options (small footprint)
-    delete_option('acsagma_page');
-    delete_option('acsagma_google_maps_api_key');
-    delete_option('acsagma_agenda_manager_plugin_version');
-    delete_option('acsagma_delete_data_on_uninstall');
+    $acsagma_options = [
+        'acsagma_page',
+        'acsagma_google_maps_api_key',
+        'acsagma_agenda_manager_plugin_version',
+        'acsagma_delete_data_on_uninstall',
+        'acsagma_contact_form_enabled',
+        'acsagma_contact_form_recipient_email',
+        'acsagma_contact_form_subject_prefix',
+        'acsagma_contact_form_include_dates',
+        'acsagma_contact_form_show_phone',
+    ];
+
+    foreach ($acsagma_options as $acsagma_option) {
+        delete_option($acsagma_option);
+    }
 
     // Remove transients
     delete_transient('acsagma_agenda_events_cache');

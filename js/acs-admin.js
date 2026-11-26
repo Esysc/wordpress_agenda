@@ -8,6 +8,8 @@
     'use strict';
 
     const ACSAgendaAdmin = {
+        placesInitAttempts: 0,
+
         /**
          * Initialize admin functionality
          */
@@ -364,7 +366,7 @@
          * Initialize Google Places Autocomplete
          */
         initPlacesAutocomplete: function () {
-            if (!acsagmaAgendaAdmin.hasGoogleMaps || typeof google === 'undefined') {
+            if (!acsagmaAgendaAdmin.hasGoogleMaps) {
                 return;
             }
 
@@ -375,8 +377,14 @@
                 return;
             }
 
-            // Wait for Google Maps API to load
-            if (typeof google.maps === 'undefined' || typeof google.maps.places === 'undefined') {
+            // Wait briefly for the asynchronously loaded Maps API, but give up
+            // instead of retrying forever when it is blocked or misconfigured.
+            if (typeof google === 'undefined' || typeof google.maps === 'undefined' || typeof google.maps.places === 'undefined') {
+                if (this.placesInitAttempts >= 20) {
+                    return;
+                }
+
+                this.placesInitAttempts += 1;
                 setTimeout(function () {
                     self.initPlacesAutocomplete();
                 }, 500);
@@ -521,11 +529,31 @@
                     const $input = $('#event-' + name);
 
                     if ($input.is('select')) {
-                        $input.find('option').each(function () {
-                            if ($(this).text().trim().toLowerCase() === value.toLowerCase()) {
-                                $(this).prop('selected', true);
+                        // Prefer the raw value from the list table. Matching the
+                        // localized label fails when the option text is more
+                        // descriptive than the short cell value (e.g. "Yes - Required").
+                        const rawValue = $el.attr('data-value');
+
+                        let matched = false;
+
+                        if (rawValue !== undefined && rawValue !== '') {
+                            const $matchingOption = $input.find('option').filter(function () {
+                                return String($(this).val()) === String(rawValue);
+                            });
+
+                            if ($matchingOption.length) {
+                                $input.val(rawValue);
+                                matched = true;
                             }
-                        });
+                        }
+
+                        if (!matched) {
+                            $input.find('option').each(function () {
+                                if ($(this).text().trim().toLowerCase() === value.toLowerCase()) {
+                                    $(this).prop('selected', true);
+                                }
+                            });
+                        }
                     } else {
                         $input.val(value);
                     }

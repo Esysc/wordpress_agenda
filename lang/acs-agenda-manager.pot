@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: ACS Agenda Manager 3.6.2\n"
+"Project-Id-Version: ACS Agenda Manager 3.6.3\n"
 "Report-Msgid-Bugs-To: https://github.com/Esysc/wordpress_agenda/issues\n"
 "POT-Creation-Date: 2026-05-24 18:01+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
@@ -437,6 +437,10 @@ msgstr ""
 #: class/class-acs-admin.php:40 templates/admin-page.php:293
 #: templates/help-page.php:127
 msgid "External URL"
+msgstr ""
+
+#: class/class-acs-template.php:359
+msgid "External link"
 msgstr ""
 
 #: templates/admin-page.php:296

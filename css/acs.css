@@ -644,6 +644,39 @@ body.acs-lightbox-open {
     height: 15px;
 }
 
+.acs-external-link {
+    background: transparent;
+    border: 1px solid var(--acs-accent-color);
+    color: var(--acs-accent-color);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    padding: 0.6rem 1rem;
+    border-radius: 25px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    min-height: 40px;
+}
+
+.acs-external-link:hover {
+    background: var(--acs-accent-color);
+    color: #fff;
+}
+
+.acs-external-link:focus-visible {
+    outline: 3px solid var(--acs-accent-color);
+    outline-offset: 2px;
+}
+
+.acs-external-link .dashicons {
+    font-size: 15px;
+    width: 15px;
+    height: 15px;
+}
+
 /* ==========================================================================
    Dialog (Frontend Event Details)
    ========================================================================== */
@@ -927,6 +960,7 @@ body.acs-lightbox-open {
     }
 
     .acs-contact-trigger,
+    .acs-external-link,
     .readmore.show {
         width: 100%;
         justify-content: center;
@@ -948,7 +982,8 @@ body.acs-lightbox-open {
     }
 
     .readmore.show,
-    .acs-contact-trigger {
+    .acs-contact-trigger,
+    .acs-external-link {
         width: 100%;
         justify-content: center;
     }
